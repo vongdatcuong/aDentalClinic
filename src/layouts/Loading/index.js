@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import BounceLoader from "react-spinners/BounceLoader";
-import { loadingStore } from "../../../context/loading-context";
+import { loadingStore } from "../../contexts/loading-context";
 
 // Can be a string as well. Need to ensure each key-value pair ends with ;
 const override = {

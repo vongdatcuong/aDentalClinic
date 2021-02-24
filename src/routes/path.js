@@ -1,11 +1,19 @@
 const defaultPath = '/';
 
 // Main Path
-const dashBoardPath = '/dashBoard';
+const dashboardPath = '/dashboard';
+const patientPath = '/patientPath';
+const reportPath = '/report';
+const documentPath = '/document';
+const settingPath = '/setting';
 
 const path = {
-    defaultPath: defaultPath,
-    dashBoardPath: dashBoardPath
+    defaultPath,
+    dashboardPath,
+    patientPath,
+    reportPath, 
+    documentPath,
+    settingPath,
 }
 
 export default path;

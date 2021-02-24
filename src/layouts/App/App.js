@@ -4,21 +4,22 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Routes from '../../routes';
+import moment from "moment";
 
 // Material UI Core
-//import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 // Context
 import { LoadingStateProvider } from '../../contexts/loading-context';
 
 // Components
-//import Loading from '../Loading';
+import Loading from '../Loading';
 
 const App = () => {
   return (
     <LoadingStateProvider>
-      {/*<CssBaseline />*/}
-      {/*<Loading />*/}
+      <CssBaseline />
+      <Loading />
       <Router>
         <Routes/>
       </Router>
