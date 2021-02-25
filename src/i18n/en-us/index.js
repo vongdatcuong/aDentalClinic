@@ -6,6 +6,8 @@ export default {
         "Documents" : "Documents",
         "Setting" : "Setting",
         "Notifications": "Notifications",
+        "Remove Notification": "Remove Notification",
+        "No notifications to display yet": "No notification to display yet",
         // Common
         "Yes" : "Yes",
         "No": "No",

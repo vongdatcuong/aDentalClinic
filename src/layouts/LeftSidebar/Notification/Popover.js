@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 import strings from '../../../configs/strings';
 // @material-ui/core 
 import Popover from '@material-ui/core/Popover';
@@ -13,13 +12,20 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+
+// Components
+import NotificationFuncPopover from './NotificationFuncPopover';
 
 // @material-ui/core Icons
 import PersonIcon from '@material-ui/icons/Person';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddAlertIcon from '@material-ui/icons/AddAlert';
 
 // Theme
 import {
   notificationPopoverWidth,
+  notificationPopoverMinHeight,
   notificationPopoverMaxHeight,
   grayColor,
   primaryColor,
@@ -31,10 +37,8 @@ import ConvertDateTimeUtils from '../../../utils/datetimes/convertDateTimes';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: notificationPopoverWidth + 'px',
-    '& .MuiSvgIcon-root': {
-      fontSize: '1.5em !important'
-    },
-    maxHeight: notificationPopoverMaxHeight + 'px'
+    minHeight: notificationPopoverMinHeight + 'px',
+    maxHeight: notificationPopoverMaxHeight + 'px',
   },
   list: {
     width: '100%'
@@ -51,18 +55,63 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: grayColor[11]
-    }
+    },
+    '&:hover .MuiSvgIcon-root': {
+      visibility: 'visible'
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: '1.5em'
+    },
   },
   listItemTextNotRead: {
     '& .MuiListItemText-secondary': {
       color: primaryColor[0]
     }
+  },
+  listItemFunction: {
+    '& .MuiSvgIcon-root': {
+      fontSize: '1em',
+      visibility: 'hidden',
+    },
+  },
+  noNotiDisplayWrapper: {
+    padding: theme.spacing(3),
+    fontStyle: 'italic',
+    textAlign: 'center',
+    '& .MuiSvgIcon-root': {
+      fontSize: '2.5em',
+    },
   }
 }));
 
-const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNotificationClick}) => {
+const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNotificationClick, onRemoveNotification}) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
+
+  const [openNotiFuncPopover, setOpenNotiFuncPopover] = useState(false);
+  const [notiFuncPopAnchorEl, setNotiFuncopAnchorEl] = useState(null);
+  const popOverId = openNotiFuncPopover? "notification-function-popover" : undefined;
+
+  // Notification to display Popover
+  const [chosenNotiFunc, setChosenNotiFunc] = useState(-1);
+
+  // Notifications Function Popover
+  const handleOpenNotiFuncPopover = (evt, notiId) => {
+    setNotiFuncopAnchorEl(evt.currentTarget);
+    setChosenNotiFunc(notiId);
+    setOpenNotiFuncPopover(true);
+  }
+
+  const handleCloseNotiFuncPopover = () => {
+    setNotiFuncopAnchorEl(null);
+    setChosenNotiFunc(-1);
+    setOpenNotiFuncPopover(false);
+  }
+
+  const handleRemoveNotification = () => {
+    onRemoveNotification(chosenNotiFunc);
+    handleCloseNotiFuncPopover();
+  }
 
   return (
     <Popover
@@ -88,33 +137,56 @@ const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNoti
           {t(strings.notifications)}
         </Typography>
         <List className={classes.list}>
-          {notifications.map((notification, index) => {
-            return (
-              <React.Fragment>
-                <ListItem alignItems="flex-start" className={classes.listItem} onClick={(evt) => onNotificationClick(index)}>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <PersonIcon/>
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText 
-                    className={clsx(!notification.isRead && classes.listItemTextNotRead)}
-                    primary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
-                        {notification.content}
+          {(notifications.length > 0)? 
+
+          
+            notifications.map((notification, index) => {
+              return (
+                <React.Fragment>
+                  <ListItem alignItems="flex-start" className={classes.listItem} onClick={(evt) => onNotificationClick(notification.id)}>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <PersonIcon/>
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      className={clsx(!notification.isRead && classes.listItemTextNotRead)}
+                      primary={
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                          {notification.content}
+                        </Typography>
+                      } 
+                      secondary={ConvertDateTimeUtils.formatDate(notification.date, "MMMM DD, YYYY") || '...'} />
+                      <Typography className={classes.listItemFunction} variant="div" component="div">
+                        <IconButton onClick={(evt) => handleOpenNotiFuncPopover(evt, notification.id)}>
+                          <MoreVertIcon/>
+                        </IconButton>
                       </Typography>
-                    } 
-                    secondary={ConvertDateTimeUtils.formatDate(notification.date, "MMMM DD, YYYY") || '...'} />
-                </ListItem>
-                <Divider component="li" />
-              </React.Fragment>
-            )
-          })}
+                  </ListItem>
+                  <Divider component="li" />
+                </React.Fragment>
+              )
+            })
+           : 
+           <div className={classes.noNotiDisplayWrapper}>
+            <Typography variant="h6" component="h6" color="textSecondary">
+              <AddAlertIcon/> <br/>
+              {t(strings.noNotificationToDisplay)} ...
+            </Typography>
+           </div>
+          }
         </List>
+        <NotificationFuncPopover
+          id={popOverId}
+          open={openNotiFuncPopover}
+          onClose={handleCloseNotiFuncPopover}
+          anchorEl={notiFuncPopAnchorEl}
+          onRemoveNotification={handleRemoveNotification}
+        />
     </Popover>
   );
 }

@@ -38,24 +38,27 @@ const LeftSidebar = (props) => {
     const [openLeftSidebarGhost, setOpenLeftSidebarGhost] = useState(false);
     const [openNotiPopover, setOpenNotiPopover] = useState(false);
 
-    const [notiPopAnchorEl, setNotiPopAnchorEl] = React.useState(null);
+    const [notiPopAnchorEl, setNotiPopAnchorEl] = useState(null);
     const popOverId = openNotiPopover? "notification-popover" : undefined;
 
     // Notification
     const [notifications, setNotifications] = useState([
       {
+        id: 1,
         user: {},
         content: "User 1 register package ABC for 3 years from 2021",
         date: new Date(),
         isRead: false
       },
       {
+        id: 2,
         user: {},
         content: "User 2 register package ABC for 3 years from 2021",
         date: new Date(),
         isRead: false
       },
       {
+        id: 3,
         user: {},
         content: "User 3 register package ABC for 3 years from 2021",
         date: new Date(),
@@ -106,10 +109,18 @@ const LeftSidebar = (props) => {
       setOpenNotiPopover(false);
     }
 
-    const onNotificationClick = (notiIndex) => {
+    const onNotificationClick = (notiId) => {
       const newNotifications = [...notifications];
-      newNotifications[notiIndex].isRead = true;
+      newNotifications.forEach((notification) => {
+        if (notification.id == notiId){
+          notification.isRead = true;
+        }
+      })
       setNotifications(newNotifications);
+    }
+
+    const handleRemoveNotification = (notiId) => {
+      setNotifications(notifications.filter((notification) => notification.id != notiId));
     }
 
     const notification = 
@@ -189,6 +200,7 @@ const LeftSidebar = (props) => {
           anchorEl={notiPopAnchorEl}
           notifications={notifications}
           onNotificationClick={onNotificationClick}
+          onRemoveNotification={handleRemoveNotification}
         />
       </div>
     );

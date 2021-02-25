@@ -5,15 +5,16 @@ const report = "Report";
 const documents = "Documents";
 const setting = "Setting";
 const notifications = "Notifications";
-const logout = "Log out";
-const login = "Log in";
-
+const removeNotification = "Remove Notification";
+const noNotificationToDisplay = "No notification to display yet";
 
 // Common
 const yes = "Yes";
 const no = "No";
 const ok = "OK";
 const cancel = "Cancel";
+const logout = "Sign out";
+const login = "Sign in";
 
 // Messages
 
@@ -31,6 +32,8 @@ export default {
     documents,
     setting,
     notifications,
+    removeNotification,
+    noNotificationToDisplay,
     // Common
     yes,
     no,

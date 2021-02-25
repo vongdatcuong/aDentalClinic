@@ -1,7 +1,8 @@
 import {hexToRgb} from '../utils/colors';
   
   const drawerLeftWidth = 120;
-  const notificationPopoverWidth = 400;
+  const notificationPopoverWidth = 420;
+  const notificationPopoverMinHeight = 300;
   const notificationPopoverMaxHeight = 600;
 
   const transition = {
@@ -160,6 +161,7 @@ import {hexToRgb} from '../utils/colors';
     hexToRgb,
     drawerLeftWidth,
     notificationPopoverWidth,
+    notificationPopoverMinHeight,
     notificationPopoverMaxHeight,
     transition,
     boxShadow,
