@@ -6,7 +6,9 @@ const documents = "Documents";
 const setting = "Setting";
 const notifications = "Notifications";
 const removeNotification = "Remove Notification";
-const noNotificationToDisplay = "No notification to display yet";
+const noNotificationToDisplay = "No notifications to display yet";
+const appointmentHolder = "Appointment holder";
+const todayAppointment = "Today's Appoinment";
 
 // Common
 const yes = "Yes";
@@ -34,6 +36,8 @@ export default {
     notifications,
     removeNotification,
     noNotificationToDisplay,
+    appointmentHolder,
+    todayAppointment,
     // Common
     yes,
     no,

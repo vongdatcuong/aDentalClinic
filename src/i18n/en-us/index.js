@@ -8,6 +8,8 @@ export default {
         "Notifications": "Notifications",
         "Remove Notification": "Remove Notification",
         "No notifications to display yet": "No notification to display yet",
+        "Appointment holder": "Appointment holder",
+        "Today's Appoinment": "Today's Appoinment",
         // Common
         "Yes" : "Yes",
         "No": "No",

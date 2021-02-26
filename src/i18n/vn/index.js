@@ -6,8 +6,10 @@ export default {
         "Documents" : "Tài liệu",
         "Setting" : "Cài đặt",
         "Notifications": "Thông báo",
-        "removeNotification": "Gỡ thông báo",
+        "Remove Notification": "Gỡ thông báo",
         "No notifications to display yet": "Không có thông báo để hiện thị",
+        "Appointment holder": "Người hẹn",
+        "Today's Appoinment": "Cuộc hẹn hôm nay",
         // Common
         "Yes" : "Có",
         "No": "Không",

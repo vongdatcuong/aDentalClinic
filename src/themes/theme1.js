@@ -1,6 +1,8 @@
 import {hexToRgb} from '../utils/colors';
   
   const drawerLeftWidth = 120;
+  const drawerRightWidth = 240;
+  const drawerRightCloseWidth = 50;
   const notificationPopoverWidth = 420;
   const notificationPopoverMinHeight = 300;
   const notificationPopoverMaxHeight = 600;
@@ -160,6 +162,8 @@ import {hexToRgb} from '../utils/colors';
   export {
     hexToRgb,
     drawerLeftWidth,
+    drawerRightWidth,
+    drawerRightCloseWidth,
     notificationPopoverWidth,
     notificationPopoverMinHeight,
     notificationPopoverMaxHeight,

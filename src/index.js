@@ -5,6 +5,8 @@ import App from './layouts/App/App';
 import reportWebVitals from './reportWebVitals';
 // i18n
 import './i18n';
+// react-day-picker
+import 'react-day-picker/lib/style.css';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,24 +1,17 @@
 import {
     drawerLeftWidth,
-    transition,
-    boxShadow,
     primaryColor,
-    primaryBoxShadow,
-    infoColor,
-    successColor,
-    warningColor,
-    dangerColor,
     fontColor,
     whiteColor,
-    grayColor,
-    blackColor,
     hoverBrightColor,
-    hexToRgb
+    blackColor,
   } from "../../themes/theme1";
   
 const sidebarStyle = (theme) => ({
     leftSidebarWrapper: {
-      color: fontColor
+      color: fontColor,
+      width: drawerLeftWidth,
+      flexShrink: 0
     },
     drawer: {
       '& .MuiDrawer-paper': {
@@ -70,6 +63,17 @@ const sidebarStyle = (theme) => ({
         backgroundColor: hoverBrightColor[0]
       }
     },
+    // Mini Left Sidebar
+    miniLeftSidebarWrapper: {
+      position: 'absolute',
+      top: '15px',
+      backgroundColor: blackColor,
+      opacity: 0.3,
+      borderRadius: '0 5px 5px 0',
+      '& .MuiSvgIcon-root': {
+        color: whiteColor, 
+      },
+    }
   });
   
 export default sidebarStyle;  

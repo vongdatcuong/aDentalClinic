@@ -145,53 +145,57 @@ const LeftSidebar = (props) => {
 
 
     return (
-      <div className={classes.leftSidebarWrapper}>
-        <Hidden mdUp implementation="css">
-            <IconButton color="default" aria-label="toggle sidebar" component="span"
-                onClick={() => toggleLeftSidebar(true)}
-            >
-                <MenuIcon />
-            </IconButton>
-            <Drawer
-                variant="temporary"
-                anchor="left"
-                open={openLeftSidebarGhost}
-                onClose={() => toggleLeftSidebar(false)}
-                ModalProps={{
-                keepMounted: true // Better open performance on mobile.
-                }}
-                className={classes.drawer}
-            >
-              <CustomAvatar
-                  link="https://www.creative-tim.com?ref=mdr-sidebar"
-                  src="https://www.w3schools.com/w3images/avatar2.png"
-                  text="Jiwon"
-                />
-                {/*<Divider className={classes.divider}/>*/}
-                <div className={classes.sidebarWrapper}>
-                  {links}
-                  {funcList}
-                </div>
-            </Drawer>
-        </Hidden>
-        <Hidden smDown implementation="css">
-            <Drawer
-                anchor="left"
-                variant="permanent"
-                open
-                className={classes.drawer}
-            >
+      <React.Fragment>
+        <div className={classes.miniLeftSidebarWrapper}>
+          <Hidden mdUp implementation="css">
+              <IconButton color="default" aria-label="toggle sidebar" component="span"
+                  onClick={() => toggleLeftSidebar(true)}
+              >
+                  <MenuIcon />
+              </IconButton>
+              <Drawer
+                  variant="temporary"
+                  anchor="left"
+                  open={openLeftSidebarGhost}
+                  onClose={() => toggleLeftSidebar(false)}
+                  ModalProps={{
+                  keepMounted: true // Better open performance on mobile.
+                  }}
+                  className={classes.drawer}
+              >
                 <CustomAvatar
-                  link="https://www.creative-tim.com?ref=mdr-sidebar"
-                  src="https://www.w3schools.com/w3images/avatar2.png"
-                  text="Jiwon"
-                />
-                {/*<Divider className={classes.divider}/>*/}
-                <div className={classes.sidebarWrapper}>
-                  {links}
-                  {funcList}
-                </div>
-            </Drawer>
+                    link="https://www.creative-tim.com?ref=mdr-sidebar"
+                    src="https://www.w3schools.com/w3images/avatar2.png"
+                    text="Jiwon"
+                  />
+                  {/*<Divider className={classes.divider}/>*/}
+                  <div className={classes.sidebarWrapper}>
+                    {links}
+                    {funcList}
+                  </div>
+              </Drawer>
+          </Hidden>
+        </div>
+        <Hidden smDown implementation="css">
+          <div className={classes.leftSidebarWrapper}>
+            <Drawer
+                  anchor="left"
+                  variant="permanent"
+                  open
+                  className={classes.drawer}
+              >
+                  <CustomAvatar
+                    link="https://www.creative-tim.com?ref=mdr-sidebar"
+                    src="https://www.w3schools.com/w3images/avatar2.png"
+                    text="Jiwon"
+                  />
+                  {/*<Divider className={classes.divider}/>*/}
+                  <div className={classes.sidebarWrapper}>
+                    {links}
+                    {funcList}
+                  </div>
+              </Drawer>
+          </div>
         </Hidden>
         <NotificationPopover
           id={popOverId}
@@ -202,7 +206,7 @@ const LeftSidebar = (props) => {
           onNotificationClick={onNotificationClick}
           onRemoveNotification={handleRemoveNotification}
         />
-      </div>
+      </React.Fragment>
     );
   }
 
