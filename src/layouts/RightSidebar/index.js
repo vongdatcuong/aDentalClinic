@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import clsx from "clsx";
 import { useTranslation } from 'react-i18next';
 import {moment} from 'moment';
@@ -21,6 +21,8 @@ import DayPicker from 'react-day-picker';
 
 // Components
 
+// Contexts
+
 
 import styles from "./jss";
 import { Typography } from "@material-ui/core";
@@ -42,8 +44,6 @@ const RightSidebar = (props) => {
     const handleSelectDate = (date) => {
       alert(date);
     }
-
-
 
     return (
       <div className={clsx(classes.rightSidebarWrapper, !rightSidebarOpen && classes.rightSidebarCloseWrapper)}>

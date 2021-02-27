@@ -8,16 +8,16 @@ const useStyles = makeStyles((theme) => ({
     container: {
         padding: 0,
         margin: 0,
-        display: 'flex'
+        display: 'flex',
     }
 }))
 
 const PageContainer = ({children}) => {
     const classes = useStyles();
     return (
-        <Container className={classes.container}>
+        <div className={classes.container}>
             {children}
-        </Container>
+        </div>
     );
 }
 

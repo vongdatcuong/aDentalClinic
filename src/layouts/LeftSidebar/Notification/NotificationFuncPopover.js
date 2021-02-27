@@ -13,11 +13,6 @@ import ListItemIcon from '@material-ui/core/ListItemAvatar';
 // @material-ui/core Icons
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 
-// Theme
-import {
-  
-} from '../../../themes/theme1';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiSvgIcon-root': {

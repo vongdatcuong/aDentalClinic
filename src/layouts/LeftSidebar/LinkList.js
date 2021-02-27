@@ -10,12 +10,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // Utils
 import {activeRoute} from '../../utils/routes';
-import {
-    fontColor,
-    primaryColor,
-    whiteColor,
-    hoverBrightColor,
-  } from "../../themes/theme1";
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -38,20 +32,20 @@ const useStyles = makeStyles((theme) => ({
     listItemBtn: {
       width: '60px',
       height: '60px',
-      color: whiteColor,
+      color: theme.whiteColor,
       borderRadius: '5px',
-      backgroundColor: primaryColor[2],
+      backgroundColor: theme.primaryColor[2],
       '& .MuiIconButton-label': {
         '& .MuiSvgIcon-root': {
           fontSize: '1.2em'
         }
       },
       '&:hover': {
-        backgroundColor: hoverBrightColor[0]
+        backgroundColor: theme.hoverBrightColor[0]
       }
     },
     activeRoute: {
-        borderLeft: `4px solid ${fontColor}`
+        borderLeft: `4px solid ${theme.fontColor}`
     }
 }));
 const LinkList = ({links}) => {

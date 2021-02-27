@@ -15,8 +15,8 @@ const yes = "Yes";
 const no = "No";
 const ok = "OK";
 const cancel = "Cancel";
-const logout = "Sign out";
-const login = "Sign in";
+const logout = "Log out";
+const login = "Log in";
 
 // Messages
 
@@ -26,6 +26,8 @@ const login = "Sign in";
 
     // Confirm Messages
 
+// Context Actions
+const setTheme = "Set-Theme";
 
 export default {
     appointment,
@@ -49,4 +51,6 @@ export default {
     // Success Messages
     // Error Messages
     // Confirm Messages
+    // Context Actions
+    setTheme,
 };

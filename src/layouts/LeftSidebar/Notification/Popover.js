@@ -22,23 +22,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddAlertIcon from '@material-ui/icons/AddAlert';
 
-// Theme
-import {
-  notificationPopoverWidth,
-  notificationPopoverMinHeight,
-  notificationPopoverMaxHeight,
-  grayColor,
-  primaryColor,
-} from '../../../themes/theme1';
-
 // Utils
 import ConvertDateTimeUtils from '../../../utils/datetimes/convertDateTimes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: notificationPopoverWidth + 'px',
-    minHeight: notificationPopoverMinHeight + 'px',
-    maxHeight: notificationPopoverMaxHeight + 'px',
+    width: theme.notificationPopoverWidth + 'px',
+    minHeight: theme.notificationPopoverMinHeight + 'px',
+    maxHeight: theme.notificationPopoverMaxHeight + 'px',
   },
   list: {
     width: '100%'
@@ -54,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: grayColor[11]
+      backgroundColor: theme.grayColor[11]
     },
     '&:hover .MuiSvgIcon-root': {
       visibility: 'visible'
@@ -65,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listItemTextNotRead: {
     '& .MuiListItemText-secondary': {
-      color: primaryColor[0]
+      color: theme.primaryColor[0]
     }
   },
   listItemFunction: {

@@ -1,3 +1,18 @@
+/* Default theme properties 
+    (Not Allowed Names) 
+*/
+// breakpoints
+// direction
+// mixins
+// overrides
+// palette
+// props
+// shadows
+// typography
+// spacing
+// transitions
+// zIndex
+
 import {hexToRgb} from '../utils/colors';
   
   const drawerLeftWidth = 120;
@@ -159,41 +174,41 @@ import {hexToRgb} from '../utils/colors';
     }
   };
   
-  export {
-    hexToRgb,
-    drawerLeftWidth,
-    drawerRightWidth,
-    drawerRightCloseWidth,
-    notificationPopoverWidth,
-    notificationPopoverMinHeight,
-    notificationPopoverMaxHeight,
-    transition,
-    boxShadow,
-    fontColor,
-    primaryColor,
-    secondaryColor,
-    warningColor,
-    dangerColor,
-    successColor,
-    infoColor,
-    roseColor,
-    grayColor,
-    blackColor,
-    whiteColor,
-    hoverBrightColor,
-    hoverDarkColor,
-    primaryBoxShadow,
-    infoBoxShadow,
-    successBoxShadow,
-    warningBoxShadow,
-    dangerBoxShadow,
-    roseBoxShadow,
-    warningCardHeader,
-    successCardHeader,
-    dangerCardHeader,
-    infoCardHeader,
-    primaryCardHeader,
-    roseCardHeader,
-    defaultBoxShadow,
-    title,
-  };  
+export default {
+  hexToRgb,
+  drawerLeftWidth,
+  drawerRightWidth,
+  drawerRightCloseWidth,
+  notificationPopoverWidth,
+  notificationPopoverMinHeight,
+  notificationPopoverMaxHeight,
+  transition,
+  boxShadow,
+  fontColor,
+  primaryColor,
+  secondaryColor,
+  warningColor,
+  dangerColor,
+  successColor,
+  infoColor,
+  roseColor,
+  grayColor,
+  blackColor,
+  whiteColor,
+  hoverBrightColor,
+  hoverDarkColor,
+  primaryBoxShadow,
+  infoBoxShadow,
+  successBoxShadow,
+  warningBoxShadow,
+  dangerBoxShadow,
+  roseBoxShadow,
+  warningCardHeader,
+  successCardHeader,
+  dangerCardHeader,
+  infoCardHeader,
+  primaryCardHeader,
+  roseCardHeader,
+  defaultBoxShadow,
+  title,
+};  

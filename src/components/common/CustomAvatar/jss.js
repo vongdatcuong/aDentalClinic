@@ -1,8 +1,4 @@
-import {
-    fontColor,
-  } from "../../../themes/theme1";
-  
-  const customAvatarStyle = (theme) => ({
+const customAvatarStyle = (theme) => ({
     avatarWrapper: {
       marginLeft: theme.spacing(3),
       marginRight: theme.spacing(3),
@@ -21,7 +17,7 @@ import {
       margin: '0 auto'
     },
     avatarText: {
-      color: fontColor,
+      color: theme.fontColor,
       fontSize: '1.2em',
       marginTop: theme.spacing(1),
     },

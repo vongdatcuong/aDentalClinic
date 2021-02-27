@@ -8,12 +8,6 @@ import ListItem from "@material-ui/core/ListItem";
 // Utils
 import {disableClick} from '../../utils/general';
 
-import {
-    primaryColor,
-    whiteColor,
-    hoverBrightColor,
-  } from "../../themes/theme1";
-
 const useStyles = makeStyles((theme) => ({
     list: {
       marginTop: "0",
@@ -35,16 +29,16 @@ const useStyles = makeStyles((theme) => ({
     listItemBtn: {
       width: '60px',
       height: '60px',
-      color: whiteColor,
+      color: theme.whiteColor,
       borderRadius: '5px',
-      backgroundColor: primaryColor[2],
+      backgroundColor: theme.primaryColor[2],
       '& .MuiIconButton-label': {
         '& .MuiSvgIcon-root': {
           fontSize: '1.2em'
         }
       },
       '&:hover': {
-        backgroundColor: hoverBrightColor[0]
+        backgroundColor: theme.hoverBrightColor[0]
       }
     },
 }));

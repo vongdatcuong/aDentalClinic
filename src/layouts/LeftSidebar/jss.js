@@ -1,32 +1,23 @@
-import {
-    drawerLeftWidth,
-    primaryColor,
-    fontColor,
-    whiteColor,
-    hoverBrightColor,
-    blackColor,
-  } from "../../themes/theme1";
-  
 const sidebarStyle = (theme) => ({
     leftSidebarWrapper: {
-      color: fontColor,
-      width: drawerLeftWidth,
+      color: theme.fontColor,
+      width: theme.drawerLeftWidth,
       flexShrink: 0
     },
     drawer: {
       '& .MuiDrawer-paper': {
-        backgroundColor: primaryColor[0]
+        backgroundColor: theme.primaryColor[0]
       }
     },
     divider: {
-      backgroundColor: whiteColor,
+      backgroundColor: theme.whiteColor,
       height: '1.5px'
     },
     sidebarWrapper: {
       position: "relative",
       height: "calc(100vh - 75px)",
       overflow: "auto",
-      width: drawerLeftWidth,
+      width: theme.drawerLeftWidth,
       zIndex: "4",
       overflowScrolling: "touch",
       marginTop: '10px'
@@ -51,27 +42,27 @@ const sidebarStyle = (theme) => ({
     listItemBtn: {
       width: '60px',
       height: '60px',
-      color: whiteColor,
+      color: theme.whiteColor,
       borderRadius: '5px',
-      backgroundColor: primaryColor[2],
+      backgroundColor: theme.primaryColor[2],
       '& .MuiIconButton-label': {
         '& .MuiSvgIcon-root': {
           fontSize: '1.2em'
         }
       },
       '&:hover': {
-        backgroundColor: hoverBrightColor[0]
+        backgroundColor: theme.hoverBrightColor[0]
       }
     },
     // Mini Left Sidebar
     miniLeftSidebarWrapper: {
       position: 'absolute',
       top: '15px',
-      backgroundColor: blackColor,
+      backgroundColor: theme.blackColor,
       opacity: 0.3,
       borderRadius: '0 5px 5px 0',
       '& .MuiSvgIcon-root': {
-        color: whiteColor, 
+        color: theme.whiteColor, 
       },
     }
   });

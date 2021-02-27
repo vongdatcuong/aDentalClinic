@@ -1,32 +1,13 @@
-import {
-    drawerRightWidth,
-    drawerRightCloseWidth,
-    transition,
-    boxShadow,
-    primaryColor,
-    primaryBoxShadow,
-    infoColor,
-    successColor,
-    warningColor,
-    dangerColor,
-    fontColor,
-    whiteColor,
-    grayColor,
-    blackColor,
-    hoverBrightColor,
-    hexToRgb
-  } from "../../themes/theme1";
-  
-const sidebarStyle = (theme) => ({
+const sidebarStyle = (theme) => ({ 
     rightSidebarWrapper: {
-      color: fontColor,
-      width: drawerRightWidth,
+      color: theme.fontColor,
+      width: theme.drawerRightWidth,
       flexShrink: 0,
       '& .MuiSvgIcon-root': {
-          color: fontColor
+          color: theme.fontColor
       },
       '& .MuiDivider-root': {
-        backgroundColor: whiteColor,
+        backgroundColor: theme.whiteColor,
         height: '1px',
         width: '90%',
         margin: '0 auto'
@@ -34,21 +15,22 @@ const sidebarStyle = (theme) => ({
     },
     drawer: {
       '& .MuiDrawer-paper': {
-        backgroundColor: primaryColor[0],
-        color: fontColor,
+        backgroundColor: theme.primaryColor[0],
+        color: theme.fontColor,
+        overflow: 'hidden',
       }
     },
     sidebarWrapper: {
       position: "relative",
       height: "calc(100vh - 75px)",
       overflow: "auto",
-      width: drawerRightWidth,
+      width: theme.drawerRightWidth,
       zIndex: "4",
       overflowScrolling: "touch",
       marginTop: '10px'
     },
     drawerOpen: {
-        width: drawerRightWidth,
+        width: theme.drawerRightWidth,
         transition: theme.transitions.create('width', {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
@@ -60,9 +42,9 @@ const sidebarStyle = (theme) => ({
           duration: theme.transitions.duration.leavingScreen,
         }),
         overflowX: 'hidden',
-        width: drawerRightCloseWidth,
+        width: theme.drawerRightCloseWidth,
         [theme.breakpoints.up('sm')]: {
-          width: drawerRightCloseWidth + 10,
+          width: theme.drawerRightCloseWidth + 10,
         },
     },
     toggleBtn: {
@@ -72,27 +54,27 @@ const sidebarStyle = (theme) => ({
       } 
     },
     rightSidebarCloseWrapper: {
-      width: drawerRightCloseWidth,
+      width: theme.drawerRightCloseWidth,
     },
     sidebarContent: {
-      //width: 0,
-      display: 'none',
+      width: 0,
+      //display: 'none',
       transition: theme.transitions.create('display', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
-      paddingLeft: drawerRightCloseWidth + 20,
-      paddingRight: drawerRightCloseWidth + 20,
+      paddingLeft: theme.drawerRightCloseWidth + 20,
+      paddingRight: theme.drawerRightCloseWidth + 20,
       transition: theme.transitions.create('padding', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
     },
     displayBlock: {
-      //width: '100%',
-      display: 'block',
+      width: '100%',
+      //display: 'block',
       transition: theme.transitions.create('display', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -106,8 +88,8 @@ const sidebarStyle = (theme) => ({
     },
     calendar: {
       fontSize: '0.93em',
-      backgroundColor: whiteColor,
-      color: blackColor,
+      backgroundColor: theme.whiteColor,
+      color: theme.blackColor,
     },
     appointmentHolder: {
       marginTop: theme.spacing(2),
@@ -119,7 +101,7 @@ const sidebarStyle = (theme) => ({
     appointmentHolderBox: {
       width: '100%',
       minHeight: '100px',
-      backgroundColor: whiteColor,
+      backgroundColor: theme.whiteColor,
       borderRadius: '10px',
       marginTop: theme.spacing(1)
     },
@@ -133,7 +115,7 @@ const sidebarStyle = (theme) => ({
     todayAppoinmentBox: {
       width: '100%',
       minHeight: '100px',
-      backgroundColor: whiteColor,
+      backgroundColor: theme.whiteColor,
       borderRadius: '10px',
       marginTop: theme.spacing(1)
     }
