@@ -13,7 +13,7 @@ export default {
         // Common
         "Yes" : "Có",
         "No": "Không",
-        "OK": "OK",
+        "OK": "Đồng ý",
         "Cancel": "Hủy",
         "Log in": "Đăng nhập",
         "Log out": "Đăng xuất"

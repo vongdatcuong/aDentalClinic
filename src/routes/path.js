@@ -6,6 +6,7 @@ const patientPath = '/patientPath';
 const reportPath = '/report';
 const documentPath = '/document';
 const settingPath = '/setting';
+const loginPath = '/login';
 
 const path = {
     defaultPath,
@@ -14,6 +15,7 @@ const path = {
     reportPath, 
     documentPath,
     settingPath,
+    loginPath,
 }
 
 export default path;
