@@ -16,10 +16,18 @@ export default {
         "OK": "OK",
         "Cancel": "Cancel",
         "Log in": "Log in",
-        "Log out": "Log out"
+        "Log out": "Log out",
         // Messages
         // Success Messages
         // Error Messages
         // Confirm Messages
+        // Login Page
+        "<strong>Login</strong> your account": "<strong>Login</strong> your account",
+        "Username": "Username",
+        "Password": "Password",
+        "Continue": "Continue",
+        "Forgot password?": "Forgot password?",
+        "Don't have an account? Sign Up": "Don't have an account? Sign Up",
+        "Copyright by": "Copyright by",
     }
 }

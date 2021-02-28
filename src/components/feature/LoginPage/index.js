@@ -4,8 +4,9 @@ import { makeStyles, useTheme  } from "@material-ui/core/styles";
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import styles from "./jss";
-
-import Avatar from '@material-ui/core/Avatar';
+import strings from '../../../configs/strings';
+// use i18next
+import { useTranslation, Trans } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -19,15 +20,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 
 function Copyright() {
+    const {t, i18n } = useTranslation();
     const classes = useStyles();
     return (
       <Typography variant="body2" color="textSecondary" align="center" className={classes.copyright}>
-        {'Copyright by '}
+        {t(strings.copyrightBy)} {' '}
         <Link color="inherit" href="https://material-ui.com/">
           Hcmus student
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
+        </Link>
       </Typography>
     );
 }
@@ -35,6 +35,7 @@ function Copyright() {
 const useStyles = makeStyles(styles);
 
 const LoginPage = () => {
+    const {t, i18n } = useTranslation();
     const classes = useStyles();
 
     return (
@@ -43,11 +44,9 @@ const LoginPage = () => {
                 <CssBaseline />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        <Trans i18nKey={strings.loginYourAccount}>
+                        </Trans>
                     </Typography>
                     <form className={classes.form} noValidate>
                         <TextField
@@ -55,10 +54,10 @@ const LoginPage = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label={t(strings.username)}
+                        name="username"
+                        autoComplete="username"
                         autoFocus
                         />
                         <TextField
@@ -67,15 +66,15 @@ const LoginPage = () => {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label={t(strings.password)}
                         type="password"
                         id="password"
                         autoComplete="current-password"
                         />
-                        <FormControlLabel
+                        {/* <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
-                        />
+                        /> */}
                         <Button
                         type="submit"
                         fullWidth
@@ -83,17 +82,17 @@ const LoginPage = () => {
                         color="primary"
                         className={classes.submit}
                         >
-                        Sign In
+                        {t(strings.continueLogin)}
                         </Button>
                         <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
-                            Forgot password?
+                            {t(strings.forgotPassword)}
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
+                            {t(strings.dontHaveAccount)}
                             </Link>
                         </Grid>
                         </Grid>

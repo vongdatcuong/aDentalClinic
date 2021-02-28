@@ -29,6 +29,15 @@ const login = "Log in";
 // Context Actions
 const setTheme = "Set-Theme";
 
+// Login page
+const loginYourAccount = "<strong>Login</strong> your account";
+const username = "Username";
+const password = "Password";
+const continueLogin = "Continue"; // "continue" in not valid name
+const forgotPassword = "Forgot password?";
+const dontHaveAccount = "Don't have an account? Sign Up"
+const copyrightBy = "Copyright by";
+
 export default {
     appointment,
     patient,
@@ -53,4 +62,12 @@ export default {
     // Confirm Messages
     // Context Actions
     setTheme,
+    // Login page
+    loginYourAccount,
+    username,
+    password,
+    continueLogin,
+    forgotPassword,
+    dontHaveAccount,
+    copyrightBy,
 };

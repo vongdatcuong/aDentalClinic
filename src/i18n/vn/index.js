@@ -16,10 +16,18 @@ export default {
         "OK": "Đồng ý",
         "Cancel": "Hủy",
         "Log in": "Đăng nhập",
-        "Log out": "Đăng xuất"
+        "Log out": "Đăng xuất",
         // Messages
         // Success Messages
         // Error Messages
         // Confirm Messages
+        // Login Page
+        "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
+        "Username": "Tên đăng nhập",
+        "Password": "Mật khẩu",
+        "Continue": "Tiếp tục",
+        "Forgot password?": "Quên mật khẩu?",
+        "Don't have an account? Sign Up": "Chưa có tài khoản? Đăng ký",
+        "Copyright by": "Bản quyền thuộc về",
     }
 }
