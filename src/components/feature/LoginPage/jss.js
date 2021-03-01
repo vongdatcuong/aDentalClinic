@@ -5,15 +5,25 @@ const loginStyle = (theme) => ({
   },
   root: {
     height: "100vh",
+    color: theme.primaryColor[0],
+  },
+  loginContainer: {
+    height: "65vh",
+  },
+  loginHeader: {
+    height: "15vh",
+  },
+  loginFooter: {
+    display: "flex",
+    height: "20vh",
   },
   image: {
     backgroundImage:  "url(" + loginBackground + ")",   // notice the url!
     backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: "cover",
+    // backgroundColor:
+    //   theme.palette.type === "light"
+    //     ? theme.palette.grey[50]
+    //     : theme.palette.grey[900],
     backgroundPosition: "center",
   },
   paper: {
@@ -27,15 +37,82 @@ const loginStyle = (theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "90%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    marginLeft: "5rem",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: theme.primaryColor[0],
+    height: "3rem",
+    fontWeight: "bold",
+  },
+  copyrightBox : {
+    alignSelf: "flex-end",
+    marginBottom: "2rem",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   copyright : {
-    fontStyle: "italic"
+    fontStyle: "italic",
+    fontWeight: "bold",
   },
+  brandContainer: {
+    marginLeft: "7%",
+    marginTop: "5%",
+    display: "flex"
+  },
+  brandName : {
+    fontStyle: "italic",
+    fontWeight: "bold",
+    fontSize: "3rem",
+    marginLeft: theme.spacing(1),
+  },
+  logo : {
+      width: "4rem",
+      height: "4rem"
+  },
+  link : {
+    fontWeight: "bold",
+  },
+  inputContainer: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    '& div': {
+        '& label': {
+            color: theme.primaryColor[3],
+            fontWeight: "bold",
+        }
+    }
+  },
+  inputText: {
+    height: "3rem",
+    '& div': {
+        '& input': {
+            // color: theme.primaryColor[0] + "!important",
+            fontWeight: "bold",
+        },
+        '&::before': {
+            borderBottomColor: theme.primaryColor[0]
+        },
+        '&::after': {
+            borderBottomColor: theme.primaryColor[0]
+        }
+    }
+  },
+  inputTextContainer: {
+      width: "85%",
+  },
+  btnToggleVisibility: {
+    fontWeight: "bold",
+    color: theme.primaryColor[0],
+  },
+  loginIcons: {
+    fontSize: "2rem"
+  },
+  loginTitle: {
+    minWidth: "20rem"
+  }
 });
 
 export default loginStyle;
