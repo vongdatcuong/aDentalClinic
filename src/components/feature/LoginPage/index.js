@@ -28,18 +28,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Lock from '@material-ui/icons/Lock';
 
-function Copyright() {
-    const {t, i18n } = useTranslation();
-    const classes = useStyles();
-    return (
-      <Typography variant="body2" color="textSecondary" align="center" className={classes.copyright}>
-        {t(strings.copyrightBy)} {' '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Hcmus student
-        </Link>
-      </Typography>
-    );
-}
+// Component
+import Footer from '../../../layouts/Footer';
 
 const useStyles = makeStyles(styles);
 
@@ -162,11 +152,7 @@ const LoginPage = () => {
                     </Grid>
                     <Grid item xs={false} sm={4} md={7} className={classes.image} />
                 </Grid>
-                <Grid container className={classes.loginFooter}>
-                    <Box mt={5} className={classes.copyrightBox}>
-                        <Copyright />
-                    </Box>
-                </Grid>
+                <Footer/>
                 
             </Grid>
         </Container>

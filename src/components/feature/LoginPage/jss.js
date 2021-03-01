@@ -13,10 +13,6 @@ const loginStyle = (theme) => ({
   loginHeader: {
     height: "15vh",
   },
-  loginFooter: {
-    display: "flex",
-    height: "20vh",
-  },
   image: {
     backgroundImage:  "url(" + loginBackground + ")",   // notice the url!
     backgroundRepeat: "no-repeat",
@@ -25,6 +21,7 @@ const loginStyle = (theme) => ({
     //     ? theme.palette.grey[50]
     //     : theme.palette.grey[900],
     backgroundPosition: "center",
+    backgroundSize: 'contain'
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -45,16 +42,6 @@ const loginStyle = (theme) => ({
     margin: theme.spacing(3, 0, 2),
     backgroundColor: theme.primaryColor[0],
     height: "3rem",
-    fontWeight: "bold",
-  },
-  copyrightBox : {
-    alignSelf: "flex-end",
-    marginBottom: "2rem",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  copyright : {
-    fontStyle: "italic",
     fontWeight: "bold",
   },
   brandContainer: {
