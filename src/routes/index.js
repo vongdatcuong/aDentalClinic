@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import path from './path';
 
 // @material-ui/core Component
@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import PageContainer from '../layouts/PageContainer';
 import LeftSidebar from '../layouts/LeftSidebar';
 import RightSidebar from '../layouts/RightSidebar';
-import DashBoard from '../components/feature/DashBoard';
+import Dashboard from '../components/feature/Dashboard';
 
 function Routes() {
   return (
@@ -17,16 +17,12 @@ function Routes() {
         <Route path={path.dashboardPath}>
           <PageContainer>
             <LeftSidebar/>
-            <DashBoard/>
+            <Dashboard/>
             <RightSidebar/>
           </PageContainer>
         </Route>
         <Route path={path.defaultPath} exact>
-          <PageContainer>
-            <LeftSidebar/>
-            <DashBoard/>
-            <RightSidebar/>
-          </PageContainer>
+          <Redirect to={path.dashboardPath}/>
         </Route>
     </Switch>
   );

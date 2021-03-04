@@ -15,12 +15,16 @@
 
 import {hexToRgb} from '../utils/colors';
   
+  // Width
   const drawerLeftWidth = 120;
   const drawerRightWidth = 240;
   const drawerRightCloseWidth = 50;
   const notificationPopoverWidth = 420;
   const notificationPopoverMinHeight = 300;
   const notificationPopoverMaxHeight = 600;
+
+  // Z-index
+  const miniLeftSidebarZIndex = 999;
 
   const transition = {
     transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
@@ -176,12 +180,15 @@ import {hexToRgb} from '../utils/colors';
   
 export default {
   hexToRgb,
+  // Width
   drawerLeftWidth,
   drawerRightWidth,
   drawerRightCloseWidth,
   notificationPopoverWidth,
   notificationPopoverMinHeight,
   notificationPopoverMaxHeight,
+  // Z-index
+  miniLeftSidebarZIndex,
   transition,
   boxShadow,
   fontColor,

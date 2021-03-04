@@ -61,6 +61,7 @@ const sidebarStyle = (theme) => ({
       backgroundColor: theme.blackColor,
       opacity: 0.3,
       borderRadius: '0 5px 5px 0',
+      zIndex: theme.miniLeftSidebarZIndex,
       '& .MuiSvgIcon-root': {
         color: theme.whiteColor, 
       },

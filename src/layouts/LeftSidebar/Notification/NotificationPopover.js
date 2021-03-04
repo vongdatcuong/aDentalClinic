@@ -129,11 +129,9 @@ const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNoti
         </Typography>
         <List className={classes.list}>
           {(notifications.length > 0)? 
-
-          
             notifications.map((notification, index) => {
               return (
-                <React.Fragment>
+                <React.Fragment  key={index}>
                   <ListItem alignItems="flex-start" className={classes.listItem} onClick={(evt) => onNotificationClick(notification.id)}>
                     <ListItemAvatar>
                       <Avatar>

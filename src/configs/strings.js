@@ -17,6 +17,9 @@ const ok = "OK";
 const cancel = "Cancel";
 const logout = "Log out";
 const login = "Log in";
+const chair = "Chair";
+const chairs = "Chairs";
+const all = "All";
 
 // Messages
 
@@ -47,6 +50,9 @@ export default {
     cancel,
     login,
     logout,
+    chair,
+    chairs,
+    all,
     // Messages
     // Success Messages
     // Error Messages

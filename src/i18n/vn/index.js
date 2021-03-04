@@ -16,7 +16,10 @@ export default {
         "OK": "OK",
         "Cancel": "Hủy",
         "Log in": "Đăng nhập",
-        "Log out": "Đăng xuất"
+        "Log out": "Đăng xuất",
+        "Chair": "Ghế",
+        "Chairs": "Ghế",
+        "All": "Tất cả",
         // Messages
         // Success Messages
         // Error Messages

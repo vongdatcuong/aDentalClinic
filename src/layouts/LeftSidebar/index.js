@@ -26,7 +26,7 @@ import CustomAvatar from '../../components/common/CustomAvatar';
 import LinkList from './LinkList';
 import FunctionList from './FunctionList';
 import Notification from './Notification';
-import NotificationPopover from './Notification/Popover';
+import NotificationPopover from './Notification/NotificationPopover';
 import styles from "./jss";
 
 const useStyles = makeStyles(styles);

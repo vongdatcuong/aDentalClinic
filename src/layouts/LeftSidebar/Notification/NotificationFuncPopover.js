@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NotificationPopover = ({id, open, onClose, anchorEl, onRemoveNotification}) => {
+const NotificationFuncPopover = ({id, open, onClose, anchorEl, onRemoveNotification}) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
 
@@ -42,7 +42,7 @@ const NotificationPopover = ({id, open, onClose, anchorEl, onRemoveNotification}
         className={classes.root}
     >
         <List className={classes.list}>
-            <ListItem button onClick={() => onRemoveNotification()}>
+            <ListItem key={0} button onClick={() => onRemoveNotification()}>
                 <ListItemIcon>
                     <CancelPresentationIcon />
                 </ListItemIcon>
@@ -53,4 +53,4 @@ const NotificationPopover = ({id, open, onClose, anchorEl, onRemoveNotification}
   );
 }
 
-export default NotificationPopover;
+export default NotificationFuncPopover;
