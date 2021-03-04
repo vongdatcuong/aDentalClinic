@@ -24,5 +24,13 @@ export default {
         // Success Messages
         // Error Messages
         // Confirm Messages
+        // Login Page
+        "<strong>Login</strong> your account": "<strong>Login</strong> your account",
+        "Username": "Username",
+        "Password": "Password",
+        "Continue": "Continue",
+        "Forgot password?": "Forgot password?",
+        "Don't have an account? Sign Up": "Don't have an account? Sign Up",
+        "Copyright by": "Copyright by",
     }
 }

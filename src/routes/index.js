@@ -10,6 +10,7 @@ import PageContainer from '../layouts/PageContainer';
 import LeftSidebar from '../layouts/LeftSidebar';
 import RightSidebar from '../layouts/RightSidebar';
 import Dashboard from '../components/feature/Dashboard';
+import LoginPage from '../components/feature/LoginPage';
 
 function Routes() {
   return (
@@ -19,6 +20,12 @@ function Routes() {
             <LeftSidebar/>
             <Dashboard/>
             <RightSidebar/>
+          </PageContainer>
+        </Route>
+
+        <Route path={path.loginPath}>
+          <PageContainer>
+            <LoginPage/>
           </PageContainer>
         </Route>
         <Route path={path.defaultPath} exact>
