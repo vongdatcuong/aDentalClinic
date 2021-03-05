@@ -10,6 +10,9 @@ export default {
         "No notifications to display yet": "Không có thông báo để hiện thị",
         "Appointment holder": "Người hẹn",
         "Today's Appoinment": "Cuộc hẹn hôm nay",
+        "Go back": "Trở về",
+        "Tooth chart": "Biểu đồ nha chu",
+        "Dashboard": "Hồ sơ",
         // Common
         "Yes" : "Có",
         "No": "Không",
