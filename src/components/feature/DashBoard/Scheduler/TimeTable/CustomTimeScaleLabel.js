@@ -4,10 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { 
 
 } from '@material-ui/core';
+import strings from '../../../../../configs/strings';
 import {
     DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 // Material UI Icons
+
+// utils
+import ConvertDateTimes from '../../../../../utils/datetimes/convertDateTimes';
 
 const useStyles = makeStyles((theme) => ({
     timeScaleLabel: {
@@ -22,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CustomTimeScaleLabel = memo(({ cellHeight, time, ...restProps }) => {
+const CustomTimeScaleLabel = memo(({ cellHeight, time, formatDate, ...restProps }) => {
   const classes = useStyles();
   let displayTime = "";
   if (time){
@@ -46,6 +50,7 @@ const CustomTimeScaleLabel = memo(({ cellHeight, time, ...restProps }) => {
         className={classes.timeScaleLabel}
         style={timeScaleLabelStyle}
         time={displayTime}
+        formatDate={(date, options) => ConvertDateTimes.formatDate(date, strings.defaultTimeFormat)}
         {...restProps}
     >
       {(displayTime)? "" : "-"}

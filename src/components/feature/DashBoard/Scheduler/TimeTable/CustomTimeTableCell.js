@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { 
 
 } from '@material-ui/core';
+import strings from '../../../../../configs/strings';
 import {
     DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
@@ -67,7 +68,7 @@ const CustomTimeTableCell = memo(({ cellHeight, onClick, startDate, endDate, gro
         className={classes.cellTooltipText}
         style={cellTooltipStyle}
         >
-        {ConvertDateTimes.formatDate(startDate, "hh:mm")}
+        {ConvertDateTimes.formatDate(startDate, strings.defaultTimeFormat)}
       </span>
     </DayView.TimeTableCell>
   );

@@ -41,6 +41,9 @@ const forgotPassword = "Forgot password?";
 const dontHaveAccount = "Don't have an account? Sign Up"
 const copyrightBy = "Copyright by";
 
+// Date
+const defaultTimeFormat = "HH:mm";
+
 export default {
     appointment,
     patient,
@@ -76,4 +79,6 @@ export default {
     forgotPassword,
     dontHaveAccount,
     copyrightBy,
+    // Date
+    defaultTimeFormat
 };
