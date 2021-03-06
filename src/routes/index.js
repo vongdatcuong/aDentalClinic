@@ -11,7 +11,10 @@ import LeftSidebar from '../layouts/LeftSidebar';
 import RightSidebar from '../layouts/RightSidebar';
 import DashBoard from '../components/feature/DashBoard';
 import LoginPage from '../components/feature/LoginPage';
-
+import Providers from "../components/feature/Providers";
+import Staffs from "../components/feature/Staffs";
+import Procedure from "../components/feature/Procedure";
+import Referral from "../components/feature/Referral";
 function Routes() {
   return (
     <Switch>
@@ -22,6 +25,75 @@ function Routes() {
             <RightSidebar/>
           </PageContainer>
         </Route>
+
+        
+        <Route path={path.providersPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Providers />
+          </PageContainer>
+            
+            
+        </Route>
+        {/* <Route path={path.practicesPath}>
+            <div>
+              Practices
+            </div>
+            
+            
+        </Route> */}
+        <Route path={path.staffsPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Staffs/>
+          </PageContainer>
+
+            
+        </Route>
+        <Route path={path.procedurePath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Procedure/>
+          </PageContainer>
+            
+        </Route>
+        <Route path={path.referralPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Referral/>
+          </PageContainer>
+            
+        </Route>
+        {/* <Route path={path.chairPath}>
+            <div>
+              Chair
+            </div>
+            
+            
+        </Route> */}
+        {/* <Route path={path.schedulePath}>
+            <div>
+              Schedule
+            </div>
+            
+            
+        </Route> */}
+        {/* <Route path={path.authenticationPath}>
+            <div>
+              Authentication
+            </div>
+            
+            
+        </Route> */}
+        {/* <Route path={path.documentPath}>
+            <div>
+              Document
+            </div>
+            
+            
+        </Route> */}
+        
+        
 
         <Route path={path.loginPath}>
           <PageContainer>

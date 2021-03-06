@@ -10,6 +10,33 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 
+const search="Search";
+//menu bar
+const providers="Providers";
+const practices="Practices";
+const staffs="Staffs";
+const procedure="Procedure";
+const chairs="Chairs";
+const referral="Referral";
+const schedule="Schedule";
+const authentication="Authentication";
+const document="Document";
+
+//provider
+const index="#";
+const id="ID";
+const fullname="Fullname";
+const birth="Birth";
+const gender="Gender";
+const address="Address";
+//procedure
+const code="Code";
+const fee="Fee";
+const ins="INS";
+const duration="Duration";
+const type="Type";
+const abbr="ABBR";
+const description="Description";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -70,4 +97,28 @@ export default {
     forgotPassword,
     dontHaveAccount,
     copyrightBy,
+    providers,
+    staffs,
+    practices,
+    document,
+    authentication,
+    referral,
+    procedure,
+    chairs,
+    schedule,
+    index,
+    fullname,
+    id,
+    birth,
+    gender,
+    address,
+    search,
+    code,
+    fee,
+    ins,
+    duration,
+    type,
+    abbr,
+    description,
+    
 };
