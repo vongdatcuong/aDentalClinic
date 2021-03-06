@@ -5,6 +5,9 @@ import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import styles from "./jss";
 
+// Components
+import Schedulerr from "./Scheduler";
+
 const useStyles = makeStyles(styles);
 
 const DashBoard = () => {
@@ -12,7 +15,7 @@ const DashBoard = () => {
 
     return (
         <Container className={classes.container}>
-            wqeqweqweqweqwe
+            <Schedulerr/>
         </Container>
     )
 }

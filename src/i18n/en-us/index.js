@@ -17,6 +17,9 @@ export default {
         "Cancel": "Cancel",
         "Log in": "Log in",
         "Log out": "Log out",
+        "Chair": "Chair",
+        "Chairs": "Chairs",
+        "All": "All",
         // Messages
         // Success Messages
         // Error Messages

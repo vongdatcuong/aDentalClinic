@@ -44,6 +44,9 @@ const ok = "OK";
 const cancel = "Cancel";
 const logout = "Log out";
 const login = "Log in";
+const chair = "Chair";
+const chairs = "Chairs";
+const all = "All";
 
 // Messages
 
@@ -65,6 +68,9 @@ const forgotPassword = "Forgot password?";
 const dontHaveAccount = "Don't have an account? Sign Up"
 const copyrightBy = "Copyright by";
 
+// Date
+const defaultTimeFormat = "HH:mm";
+
 export default {
     appointment,
     patient,
@@ -83,6 +89,9 @@ export default {
     cancel,
     login,
     logout,
+    chair,
+    chairs,
+    all,
     // Messages
     // Success Messages
     // Error Messages
@@ -121,4 +130,6 @@ export default {
     abbr,
     description,
     
+    // Date
+    defaultTimeFormat
 };
