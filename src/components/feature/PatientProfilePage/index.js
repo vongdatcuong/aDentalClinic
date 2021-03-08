@@ -30,33 +30,19 @@ import Lock from '@material-ui/icons/Lock';
 
 // Component
 import Footer from '../../../layouts/Footer';
+import PopupChat from '../../common/Messenger/PopupChat';
 
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        password: '',
-        showPassword: false,
-    });
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
 
     return (
         <Container className={classes.container}>
             <Grid container component="main" component={Paper} className={classes.root}>
                 Patient Profile Page
-                
+                <PopupChat></PopupChat>
             </Grid>
         </Container>
     )

@@ -30,6 +30,7 @@ import Lock from '@material-ui/icons/Lock';
 
 // Component
 import Footer from '../../../layouts/Footer';
+import PopupChat from '../../common/Messenger/PopupChat';
 
 const useStyles = makeStyles(styles);
 
@@ -54,6 +55,7 @@ const ToothChartPage = () => {
 
     return (
         <Container className={classes.container}>
+            <PopupChat></PopupChat>
             <Grid container component="main" component={Paper} className={classes.root}>
                 <CssBaseline />
                 <Grid container className={classes.loginHeader}>
