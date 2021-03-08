@@ -10,6 +10,9 @@ export default {
         "No notifications to display yet": "No notification to display yet",
         "Appointment holder": "Appointment holder",
         "Today's Appoinment": "Today's Appoinment",
+        "Go back": "Go back",
+        "Tooth chart": "Tooth chart",
+        "Dashboard": "Dashboard",
         // Common
         "Yes" : "Yes",
         "No": "No",

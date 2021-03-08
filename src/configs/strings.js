@@ -9,6 +9,9 @@ const removeNotification = "Remove Notification";
 const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
+const goBack = "Go back";
+const toothChart = "Tooth chart";
+const dashboard = "Dashboard";
 
 const search="Search";
 //menu bar
@@ -45,7 +48,6 @@ const cancel = "Cancel";
 const logout = "Log out";
 const login = "Log in";
 const chair = "Chair";
-const chairs = "Chairs";
 const all = "All";
 
 // Messages
@@ -82,6 +84,10 @@ export default {
     noNotificationToDisplay,
     appointmentHolder,
     todayAppointment,
+    goBack,
+    toothChart,
+    dashboard,
+    report,
     // Common
     yes,
     no,
