@@ -45,14 +45,14 @@ const TreatmentMenu = (props) => {
 
   const pathList = [
     {
+      link: path.patientProfilePath,
+      text: t(strings.patientProfile),
+      icon: <AssignmentInd />,
+    },
+    {
       link: path.toothChartPath,
       text: t(strings.toothChart),
       icon: <FaTeeth />,
-    },
-    {
-      link: path.patientDashboardPath,
-      text: t(strings.dashboard),
-      icon: <AssignmentInd />,
     },
     {
       link: path.patientReportPath,

@@ -12,7 +12,7 @@ export default {
         "Today's Appoinment": "Today's Appoinment",
         "Go back": "Go back",
         "Tooth chart": "Tooth chart",
-        "Dashboard": "Dashboard",
+        "Patient profile": "Patient profile",
         // Common
         "Yes" : "Yes",
         "No": "No",

@@ -17,7 +17,7 @@ import TreatmentMenu from '../layouts/TreatmentMenu';
 import DashBoard from '../components/feature/DashBoard';
 import LoginPage from '../components/feature/LoginPage';
 import ToothChartPage from '../components/feature/ToothChartPage';
-import PatientDashboardPage from '../components/feature/PatientDashboardPage';
+import PatientProfilePage from '../components/feature/PatientProfilePage';
 import PatientReportPage from '../components/feature/PatientReportPage';
 
 function Routes() {
@@ -109,10 +109,10 @@ function Routes() {
             <ToothChartPage/>
           </PageContainer>
         </Route>
-        <Route path={path.patientDashboardPath}>
+        <Route path={path.patientProfilePath}>
           <PageContainer>
             <TreatmentMenu/>
-            <PatientDashboardPage/>
+            <PatientProfilePage/>
           </PageContainer>
         </Route>
         <Route path={path.patientReportPath}>

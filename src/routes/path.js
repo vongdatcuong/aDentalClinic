@@ -17,7 +17,7 @@ const schedulePath="/schedule";
 const authentication="/authentication";
 const document="/document";
 const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường dẫn động với param là patient ID (/patient?id=0/toothChart)
-const patientDashboardPath = '/patient/dashboard';
+const patientProfilePath = '/patient/profile';
 const patientReportPath = '/patient/report';
 
 const path = {
@@ -38,7 +38,7 @@ const path = {
     authentication,
     document,
     toothChartPath,
-    patientDashboardPath,
+    patientProfilePath,
     patientReportPath,
 }
 

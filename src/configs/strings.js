@@ -11,7 +11,7 @@ const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
 const toothChart = "Tooth chart";
-const dashboard = "Dashboard";
+const patientProfile = "Patient profile";
 
 const search="Search";
 //menu bar
@@ -86,7 +86,7 @@ export default {
     todayAppointment,
     goBack,
     toothChart,
-    dashboard,
+    patientProfile,
     report,
     // Common
     yes,
@@ -96,7 +96,6 @@ export default {
     login,
     logout,
     chair,
-    chairs,
     all,
     // Messages
     // Success Messages

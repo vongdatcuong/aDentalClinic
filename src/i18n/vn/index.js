@@ -12,7 +12,7 @@ export default {
         "Today's Appoinment": "Cuộc hẹn hôm nay",
         "Go back": "Trở về",
         "Tooth chart": "Biểu đồ nha chu",
-        "Dashboard": "Hồ sơ",
+        "Patient profile": "Hồ sơ bệnh nhân",
         // Common
         "Yes" : "Có",
         "No": "Không",

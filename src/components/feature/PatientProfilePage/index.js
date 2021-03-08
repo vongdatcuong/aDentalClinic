@@ -33,7 +33,7 @@ import Footer from '../../../layouts/Footer';
 
 const useStyles = makeStyles(styles);
 
-const PatientDashboardPage = () => {
+const PatientProfilePage = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     const [values, setValues] = React.useState({
@@ -55,11 +55,11 @@ const PatientDashboardPage = () => {
     return (
         <Container className={classes.container}>
             <Grid container component="main" component={Paper} className={classes.root}>
-                Patient Dashboard Page
+                Patient Profile Page
                 
             </Grid>
         </Container>
     )
 }
 
-export default PatientDashboardPage;
+export default PatientProfilePage;
