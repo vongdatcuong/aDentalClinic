@@ -8,6 +8,18 @@ const documentPath = '/document';
 const settingsPath = '/settings';
 const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
+const providersPath='/providers';
+const staffsPath='/staffs';
+const practicesPath='/practices';
+const referralPath='/referral';
+const procedurePath='/procedure';
+const chairsPath="/chairs";
+const schedulePath="/schedule";
+const authentication="/authentication";
+const document="/document";
+const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường dẫn động với param là patient ID (/patient?id=0/toothChart)
+const patientProfilePath = '/patient/profile';
+const patientReportPath = '/patient/report';
 
 const path = {
     defaultPath,
@@ -18,6 +30,18 @@ const path = {
     settingsPath,
     settingsWithSectionPath,
     loginPath,
+    providersPath,
+    staffsPath,
+    practicesPath,
+    referralPath,
+    procedurePath,
+    chairsPath,
+    schedulePath,
+    authentication,
+    document,
+    toothChartPath,
+    patientProfilePath,
+    patientReportPath,
 }
 
 export default path;
