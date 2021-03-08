@@ -1,10 +1,12 @@
+import terms from './terms';
+
 export default {
     translation: {
         "Appointment" : "Cuộc hẹn",
         "Patient" : "Bệnh nhân",
         "Report" : "Báo cáo",
         "Documents" : "Tài liệu",
-        "Setting" : "Cài đặt",
+        "Settings" : "Cài đặt",
         "Notifications": "Thông báo",
         "Remove Notification": "Gỡ thông báo",
         "No notifications to display yet": "Không có thông báo để hiện thị",
@@ -32,5 +34,20 @@ export default {
         "Forgot password?": "Quên mật khẩu?",
         "Don't have an account? Sign Up": "Chưa có tài khoản? Đăng ký",
         "Copyright by": "Bản quyền thuộc về",
+        // Settings
+        "General" : "Chung",
+        "Account": "Tài khoản",
+        "Term & Policy": "Chính sách & Điều lệ",
+        "Location": "Vị trí",
+        "Language": "Ngôn ngữ",
+        "English": "Tiếng Anh",
+        "Vietnamese": "Tiếng Việt",
+        "Theme": "Chủ đề",
+        "Light": "Sáng",
+        "Dark": "Tối",
+        "Term Policy Full Text": terms,
+        "Notify when a STAFF sends you a message": "Thông báo khi có tin nhắn từ NHÂN VIÊN",
+        "Notify when a PATIENT sends you a message": "Thông báo khi có tin nhắn từ KHÁCH HÀNG",
+        "Notify when a you're having a MEETING": "Thông báo khi sắp có CUỘC HẸN"
     }
 }

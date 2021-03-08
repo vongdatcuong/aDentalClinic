@@ -5,7 +5,8 @@ const dashboardPath = '/dashboard';
 const patientPath = '/patientPath';
 const reportPath = '/report';
 const documentPath = '/document';
-const settingPath = '/setting';
+const settingsPath = '/settings';
+const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
 
 const path = {
@@ -14,7 +15,8 @@ const path = {
     patientPath,
     reportPath, 
     documentPath,
-    settingPath,
+    settingsPath,
+    settingsWithSectionPath,
     loginPath,
 }
 

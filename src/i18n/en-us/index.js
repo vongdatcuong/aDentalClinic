@@ -1,10 +1,12 @@
+import terms from './terms';
+
 export default {
     translation: {
         "Appointment" : "Appointment",
         "Patient" : "Patient",
         "Report" : "Report",
         "Documents" : "Documents",
-        "Setting" : "Setting",
+        "Settings" : "Settings",
         "Notifications": "Notifications",
         "Remove Notification": "Remove Notification",
         "No notifications to display yet": "No notification to display yet",
@@ -32,5 +34,20 @@ export default {
         "Forgot password?": "Forgot password?",
         "Don't have an account? Sign Up": "Don't have an account? Sign Up",
         "Copyright by": "Copyright by",
+        // Settings
+        "General" : "General",
+        "Account": "Account",
+        "Term & Policy": "Term & Policy",
+        "Location": "Location",
+        "Language": "Language",
+        "English": "English",
+        "Vietnamese": "Vietnamese",
+        "Theme": "Theme",
+        "Light": "Light",
+        "Dark": "Dark",
+        "Term Policy Full Text": terms,
+        "Notify when a STAFF sends you a message": "Notify when a STAFF sends you a message",
+        "Notify when a PATIENT sends you a message": "Notify when a PATIENT sends you a message",
+        "Notify when a you're having a MEETING": "Notify when a you're having a MEETING"
     }
 }

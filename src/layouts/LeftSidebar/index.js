@@ -89,8 +89,8 @@ const LeftSidebar = (props) => {
         icon: <InsertDriveFileIcon/>
       },
       {
-        link: path.settingPath,
-        text: t(strings.setting),
+        link: path.settingsPath,
+        text: t(strings.settings),
         icon: <SettingsIcon/>
       }
     ]

@@ -11,10 +11,18 @@ import LeftSidebar from '../layouts/LeftSidebar';
 import RightSidebar from '../layouts/RightSidebar';
 import Dashboard from '../components/feature/Dashboard';
 import LoginPage from '../components/feature/LoginPage';
+import Settings from '../components/feature/Settings';
 
 function Routes() {
   return (
     <Switch>
+        {/*Login*/}
+        <Route path={path.loginPath}>
+          <PageContainer>
+            <LoginPage/>
+          </PageContainer>
+        </Route>
+        {/*Dashboard*/}
         <Route path={path.dashboardPath}>
           <PageContainer>
             <LeftSidebar/>
@@ -22,12 +30,21 @@ function Routes() {
             <RightSidebar/>
           </PageContainer>
         </Route>
-
-        <Route path={path.loginPath}>
+        {/*Setting With Section*/}
+        <Route path={path.settingsWithSectionPath}>
           <PageContainer>
-            <LoginPage/>
+            <LeftSidebar/>
+            <Settings/>
           </PageContainer>
         </Route>
+        {/*Setting*/}
+        <Route path={path.settingsPath} exact>
+          <PageContainer>
+            <LeftSidebar/>
+            <Settings/>
+          </PageContainer>
+        </Route>
+        {/*Default*/}
         <Route path={path.defaultPath} exact>
           <Redirect to={path.dashboardPath}/>
         </Route>

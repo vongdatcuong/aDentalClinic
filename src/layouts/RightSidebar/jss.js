@@ -7,7 +7,7 @@ const sidebarStyle = (theme) => ({
           color: theme.fontColor
       },
       '& .MuiDivider-root': {
-        backgroundColor: theme.whiteColor,
+        backgroundColor: theme.fontColor,
         height: '1px',
         width: '90%',
         margin: '0 auto'
