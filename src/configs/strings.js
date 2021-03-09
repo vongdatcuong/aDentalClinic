@@ -45,6 +45,7 @@ const yes = "Yes";
 const no = "No";
 const ok = "OK";
 const cancel = "Cancel";
+const edit = "Edit";
 const logout = "Log out";
 const login = "Log in";
 const chair = "Chair";
@@ -70,14 +71,25 @@ const forgotPassword = "Forgot password?";
 const dontHaveAccount = "Don't have an account? Sign Up"
 const copyrightBy = "Copyright by";
 
+// Patient Profile page
+const treatmentPlan = "Treatment plan";
+const history = "History";
+const oralHealth = "Oral Health";
+const medicalIssues = "Medical Issues";
+const noTreatmentsPending = "Currently there are no treatments pending";
+const addRecord = "Add record";
+const plaqueIndex = "Plaque index";
+const bleedingIndex = "Bleeding index";
+const halitosis = "Halitosis";
+
 // Settings
 const general = "General";
 const account = "Account";
 const termPolicy = "Term & Policy";
 const location = "Location";
 const language = "Language";
-    const english = "English";
-    const vietnamese = "Vietnamese";
+const english = "English";
+const vietnamese = "Vietnamese";
 const theme = "Theme";
 const light = "Light";
 const dark = "Dark";
@@ -109,6 +121,7 @@ export default {
     no,
     ok,
     cancel,
+    edit,
     login,
     logout,
     chair,
@@ -127,6 +140,16 @@ export default {
     forgotPassword,
     dontHaveAccount,
     copyrightBy,
+    // Patient Profile page
+    treatmentPlan,
+    history,
+    oralHealth,
+    medicalIssues,
+    noTreatmentsPending,
+    addRecord,
+    plaqueIndex,
+    bleedingIndex,
+    halitosis,
     // Management
     providers,
     staffs,
