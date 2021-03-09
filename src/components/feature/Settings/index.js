@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 // Component
+import General from './General';
 import TermPrivacy from './TermPrivacy';
 import Notifications from './Notifications';
 
@@ -65,19 +66,23 @@ const Settings = () => {
     })
 
     const sections = ["general", "account", "password", "termPrivacy", "notifications", "location"];
-    const curSection = Math.max(0, sections.indexOf(section));
+    let curSection = sections.indexOf(section);
+    if (curSection == -1){
+      history.push(routePaths.settingsPath + "/general");
+      curSection = 0;
+    }
 
     // States
     const [tabValue, setTabValue] = useState(curSection);
 
     const handleChangeTab = (event, newValue) => {
-      //history.push(routePaths.settingsPath + "/" + sections[newValue]);
+      history.push(routePaths.settingsPath + "/" + sections[newValue]);
       setTabValue(newValue);
     };
 
     const tabs = [t(strings.general), t(strings.account), t(strings.password), t(strings.termPolicy), t(strings.notifications), t(strings.location)];
     const tablePanels = [
-      <TermPrivacy/>,
+      <General/>,
       <TermPrivacy/>,
       <TermPrivacy/>,
       <TermPrivacy/>,

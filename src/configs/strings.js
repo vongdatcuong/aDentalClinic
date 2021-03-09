@@ -60,6 +60,7 @@ const all = "All";
 
 // Context Actions
 const setTheme = "Set-Theme";
+const setLoading = "Set-Loading";
 
 // Login page
 const loginYourAccount = "<strong>Login</strong> your account";
@@ -119,6 +120,7 @@ export default {
     // Confirm Messages
     // Context Actions
     setTheme,
+    setLoading,
     // Login page
     loginYourAccount,
     username,

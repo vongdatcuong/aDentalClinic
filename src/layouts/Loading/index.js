@@ -1,25 +1,38 @@
 import React, {useContext} from "react";
-import BounceLoader from "react-spinners/BounceLoader";
+import { makeStyles,  } from "@material-ui/core/styles";
+
+// @icons
+import loadingIcon from '../../assets/images/loading-icon.gif';
+
+// Context
 import { loadingStore } from "../../contexts/loading-context";
 
-// Can be a string as well. Need to ensure each key-value pair ends with ;
-const override = {
-    display: 'block',
-    left: '40%',
-    top: '30%',
-    zIndex: '99999'
-};
+const useStyles = makeStyles((theme) => ({
+    sweetLoading: {
+        position: 'fixed',
+        width: '100%',
+        height: '100vh',
+        backgroundColor: 'rgba(0, 0,0, 0.3)',
+        textAlign: 'center',
+        zIndex: theme.loadingZIndex,
+    },
+    loadingIconWrapper: {
+        position: 'relative',
+        '& img': {
+            position: 'relative',
+            top: '30%'
+        }
+    }
+}));
 
  const Loading = (props) => {
+    const classes = useStyles();
     const { loadingState, dispatchLoading } = useContext(loadingStore);
     return (
-        <div className="sweet-loading" style={{'display': (loadingState.isLoading)? 'block' : 'none'}}>
-            <BounceLoader
-                css={override}
-                size={300}
-                color={"#014a0c"}
-                loading={loadingState.isLoading}
-            />
+        <div className={classes.sweetLoading} style={{'display': (loadingState.isLoading)? 'block' : 'none'}}>
+            <span className={classes.loadingIconWrapper}>
+                <img src={loadingIcon} alt="Loading"/>
+            </span>
         </div>
     );
 }

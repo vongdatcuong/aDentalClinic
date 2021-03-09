@@ -9,7 +9,8 @@ import ThemeType from '../utils/types/Theme';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const initState = {
-  theme: lightTheme
+  theme: lightTheme,
+  type: ThemeType.LIGHT
 };
 const themeStore = createContext(initState);
 const { Provider } = themeStore;
@@ -20,12 +21,13 @@ const ThemeStateProvider = ({ children }) => {
       case "Set-Theme":
         switch(action.theme){
           case ThemeType.LIGHT:
-            return {theme: lightTheme};
+            return {theme: lightTheme, type: ThemeType.LIGHT};
           case ThemeType.DARK:
-            return {theme: darkTheme}
+            return {theme: darkTheme, type: ThemeType.DARK};
         }
       default:
-        throw new Error();
+        return {...themeState};
+        //throw new Error();
     }
   }, initState);
   return <Provider value={{ themeState, dispatchTheme }}>
