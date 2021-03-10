@@ -27,36 +27,77 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Lock from '@material-ui/icons/Lock';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // Component
-import Footer from '../../../layouts/Footer';
+import PopupChat from '../../common/Messenger/PopupChat';
+import TabPanel from '../../common/TabPanel'
 
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        password: '',
-        showPassword: false,
-    });
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
+
+    const [curTab, setCurTab] = React.useState(0);
+
+    const handleChangeTab = (event, newTab) => {
+        setCurTab(newTab);
     };
 
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
+    function a11yProps(index) {
+        return {
+          id: `simple-tab-${index}`,
+          'aria-controls': `simple-tabpanel-${index}`,
+        };
+      }
 
     return (
         <Container className={classes.container}>
-            <Grid container component="main" component={Paper} className={classes.root}>
-                Patient Profile Page
-                
+            <PopupChat></PopupChat>
+            <Grid container>
+                <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
+                    <Grid container className={classes.headerInfo}>
+                        Do The Anh
+                    </Grid>
+                    <Grid container className={classes.detailProfileContainer}>
+                        <Grid item>
+                            <Tabs value={curTab} onChange={handleChangeTab} indicatorColor="primary" textColor="primary">
+                                    <Tab label={t(strings.treatmentPlan).toUpperCase()} {...a11yProps(0)} />
+                                    <Tab label={t(strings.history).toUpperCase()} {...a11yProps(1)} />
+                            </Tabs>
+                            <Grid item>
+                                <TabPanel value={curTab} index={0}>
+                                    {t(strings.noTreatmentsPending)}
+                                </TabPanel>
+                                <TabPanel value={curTab} index={1}>
+                                    <Button color="twitter" simple>
+                                        <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
+                                        {t(strings.addRecord)}
+                                    </Button>
+                                </TabPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={3} sm={3} md={3} className={classes.rightGrid}>
+                    <Grid container className={classes.oralHeathContainer}>
+                        <Typography component="h1" variant="h5">
+                            {t(strings.oralHealth)} <Button color="primary" simple>{t(strings.edit)}</Button>
+                        </Typography>
+                        {t(strings.plaqueIndex)}<br></br>
+                        {t(strings.bleedingIndex)}<br></br>
+                        {t(strings.halitosis)}<br></br>
+                    </Grid>
+                    <Grid container className={classes.medicalIssuesContainer}>
+                        <Typography component="h1" variant="h5">
+                            {t(strings.medicalIssues)} <Button color="primary" simple>{t(strings.edit)}</Button>
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
         </Container>
     )
