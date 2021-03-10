@@ -20,6 +20,8 @@ import Box from '@material-ui/core/Box';
 
 // Component
 import General from './General';
+import Account from './Account';
+import Password from './Password';
 import TermPrivacy from './TermPrivacy';
 import Notifications from './Notifications';
 
@@ -83,8 +85,8 @@ const Settings = () => {
     const tabs = [t(strings.general), t(strings.account), t(strings.password), t(strings.termPolicy), t(strings.notifications), t(strings.location)];
     const tablePanels = [
       <General/>,
-      <TermPrivacy/>,
-      <TermPrivacy/>,
+      <Account/>,
+      <Password/>,
       <TermPrivacy/>,
       <Notifications/>,
       <TermPrivacy/>,

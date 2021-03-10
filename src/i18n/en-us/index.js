@@ -26,9 +26,20 @@ export default {
         "Chair": "Chair",
         "Chairs": "Chairs",
         "All": "All",
+        "Update": "Update",
         // Messages
         // Success Messages
+        "Update Account Success": "Update Account Success",
         // Error Messages
+        "Update Account Fail": "Update Account Fail",
+        "Full name must contain at least 3 to 30 characters": "Full name must contain at least 3 to 30 characters",
+        "Email must follow the format abc@xyz.com/net/vn": "Email must follow the format abc@xyz.com/net/vn",
+        "Phone must contain at least 10 to 15 number": "Phone must contain at least 10 to 15 number",
+        "Address must contain at least 5 to 300 characters": "Address must contain at least 5 to 300 characters",
+        "Password must contain at least 6 to 100 characters": "Password must contain at least 6 to 100 characters",
+        "The entered password is incorrect": "The entered password is incorrect",
+        "Confirm password does not match with new password": "Confirm password does not match with new password",
+        "The new password is identical to old password": "The new password is identical to old password",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
@@ -62,6 +73,13 @@ export default {
         "Term Policy Full Text": terms,
         "Notify when a STAFF sends you a message": "Notify when a STAFF sends you a message",
         "Notify when a PATIENT sends you a message": "Notify when a PATIENT sends you a message",
-        "Notify when a you're having a MEETING": "Notify when a you're having a MEETING"
+        "Notify when a you're having a MEETING": "Notify when a you're having a MEETING",
+        "Full Name": "Full Name",
+        "Email": "Email",
+        "Phone": "Phone",
+        "Address": "Address",
+        "Old Password": "Old Password",
+        "New Password": "New Password",
+        "Confirm Password": "Confirm PWD",
     }
 }

@@ -26,9 +26,20 @@ export default {
         "Chair": "Ghế",
         "Chairs": "Ghế",
         "All": "Tất cả",
+        "Update": "Cập nhật",
         // Messages
         // Success Messages
+        "Update Account Success": "Cập nhật tài khoản thành công",
         // Error Messages
+        "Update Account Fail": "Cập nhật tài khoản thất bại",
+        "Full name must contain at least 3 to 30 characters": "Họ tên phải có từ 3 - 30 ký tự",
+        "Email must follow the format abc@xyz.com/net/vn": "Email phải theo định dạng abc@xyz.com/net/vn",
+        "Phone must contain at least 10 to 15 number": "Số điện thoại phải có từ 10 - 15 số",
+        "Address must contain at least 5 to 300 characters": "Địa chỉ phải có từ 5 - 300 ký tự",
+        "Password must contain at least 6 to 100 characters": "Mật khẩu phải có từ 6 đến 100 ký tự",
+        "The entered password is incorrect": "Mật khẩu nhập vào không hợp lệ",
+        "Confirm password does not match with new password": "Xác nhận mật khẩu không trùng khớp với mật khẩu mới",
+        "The new password is identical to old password": "Mật khẩu mới trùng với mật khẩu cũ",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
@@ -62,6 +73,13 @@ export default {
         "Term Policy Full Text": terms,
         "Notify when a STAFF sends you a message": "Thông báo khi có tin nhắn từ NHÂN VIÊN",
         "Notify when a PATIENT sends you a message": "Thông báo khi có tin nhắn từ KHÁCH HÀNG",
-        "Notify when a you're having a MEETING": "Thông báo khi sắp có CUỘC HẸN"
+        "Notify when a you're having a MEETING": "Thông báo khi sắp có CUỘC HẸN",
+        "Full Name": "Họ tên",
+        "Email": "Email",
+        "Phone": "Số điện thoại",
+        "Address": "Địa chỉ",
+        "Old Password": "Mật khẩu cũ",
+        "New Password": "Mật khẩu mới",
+        "Confirm Password": "Xác nhận MK",
     }
 }

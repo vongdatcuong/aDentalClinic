@@ -38,12 +38,18 @@ const SimpleCombobox = ({list, value, onChange, classes}) => {
       inClasses = Object.assign(inClasses, classes);
   }
 
+  const handleOnChange = (val) => {
+    if (value != val){
+      onChange(val);
+    }
+  }
+
   return (
     <List className={inClasses.list} component="nav" aria-label="simple-combobox">
       {list.map((el, index) => {
         return (
           <React.Fragment key={index}>
-            <ListItem button className={inClasses.listItem} onClick={() => onChange(el.value)}>
+            <ListItem button className={inClasses.listItem} onClick={() => handleOnChange(el.value)}>
               <ListItemText primary={el.text} secondary={el.secondary || ""} />
               {(value == el.value)? <ListItemSecondaryAction className={inClasses.listItemSecondaryAction}>
                                       <CheckIcon className={inClasses.checkIcon} />

@@ -50,13 +50,22 @@ const logout = "Log out";
 const login = "Log in";
 const chair = "Chair";
 const all = "All";
+const update = "Update";
 
 // Messages
 
     // Success Messages
-
+const updateAccountSuccess = "Update Account Success";
     // Error Messages
-
+const updateAccountFail = "Update Account Fail";
+const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
+const emailErrMsg = "Email must follow the format abc@xyz.com/net/vn";
+const phoneErrMsg = "Phone must contain at least 10 to 15 number";
+const addressErrMsg = "Address must contain at least 5 to 300 characters";
+const passwordErrMsg = "Password must contain at least 6 to 100 characters";
+const oldPwdNotMatchErrMsg = "The entered password is incorrect";
+const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
+const newPwdMatchOldPwd = "The new password is identical to old password";
     // Confirm Messages
 
 // Context Actions
@@ -98,6 +107,12 @@ const termPolicyFullText = "Term Policy Full Text";
 const notifyStaffMessage = "Notify when a STAFF sends you a message";
 const notifyPatientMessage = "Notify when a PATIENT sends you a message";
 const notifyHavingMeeting = "Notify when a you're having a MEETING";
+const fullName = "Full Name";
+const email =  "Email";
+const phone = "Phone";
+const oldPassword = "Old Password";
+const newPassword = "New Password";
+const confirmPassword = "Confirm Password"
 
 // Date
 const defaultTimeFormat = "HH:mm";
@@ -127,9 +142,20 @@ export default {
     logout,
     chair,
     all,
+    update,
     // Messages
     // Success Messages
+    updateAccountSuccess,
     // Error Messages
+    updateAccountFail,
+    fullNameErrMsg,
+    emailErrMsg,
+    phoneErrMsg,
+    addressErrMsg,
+    passwordErrMsg,
+    oldPwdNotMatchErrMsg,
+    confirmPwdNotMatchErrMsg,
+    newPwdMatchOldPwd,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -191,6 +217,12 @@ export default {
     notifyStaffMessage,
     notifyPatientMessage,
     notifyHavingMeeting,
+    fullName,
+    email,
+    phone,
+    oldPassword,
+    newPassword,
+    confirmPassword,
     // Date
     defaultTimeFormat
 };
