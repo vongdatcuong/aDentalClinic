@@ -48,6 +48,8 @@ export default {
         "Plaque index": "Plaque index",
         "Bleeding index": "Bleeding index",
         "Halitosis": "Halitosis",
+        "Overview": "Overview",
+        "Quickselect": "Quickselect",
         // Settings
         "General" : "General",
         "Account": "Account",

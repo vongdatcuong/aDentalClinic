@@ -82,6 +82,9 @@ const addRecord = "Add record";
 const plaqueIndex = "Plaque index";
 const bleedingIndex = "Bleeding index";
 const halitosis = "Halitosis";
+// Tooth chart page
+const overView = "Overview";
+const quickSelect = "Quickselect";
 
 // Settings
 const general = "General";
@@ -152,6 +155,9 @@ export default {
     plaqueIndex,
     bleedingIndex,
     halitosis,
+    // Tooth chart page
+    overView,
+    quickSelect,
     // Management
     providers,
     staffs,

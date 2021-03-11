@@ -48,6 +48,8 @@ export default {
         "Plaque index": "Chỉ số mảng bám",
         "Bleeding index": "Chỉ số chảy máu",
         "Halitosis": "Mức độ hôi miệng",
+        "Overview": "Tổng quan",
+        "Quickselect": "Chọn nhanh",
         // Settings
         "General" : "Chung",
         "Account": "Tài khoản",
