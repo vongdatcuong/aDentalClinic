@@ -7,7 +7,13 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Routes from '../../routes';
-import lightTheme from "../../themes/lightTheme";
+
+// Configs
+import figures from '../../configs/figures';
+
+// Toast
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Material UI Core
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -27,6 +33,13 @@ const App = () => {
         <LoadingStateProvider>
           <CssBaseline />
           <Loading />
+          <ToastContainer
+            autoClose={figures.toastTimeout}
+            hideProgressBar={true}
+            newestOnTop={true}
+            limit={figures.toastLimit}
+            position={toast.POSITION.BOTTOM_RIGHT}
+          />
           <Router>
             <Routes/>
           </Router>

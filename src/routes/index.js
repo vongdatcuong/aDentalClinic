@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import path from './path';
 
 // @material-ui/core Component
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Components
 import PageContainer from '../layouts/PageContainer';

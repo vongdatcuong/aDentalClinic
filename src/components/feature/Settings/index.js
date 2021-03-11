@@ -24,6 +24,7 @@ import Account from './Account';
 import Password from './Password';
 import TermPrivacy from './TermPrivacy';
 import Notifications from './Notifications';
+import Location from './Location';
 
 const useStyles = makeStyles(styles);
 
@@ -39,7 +40,7 @@ function TabPanel(props) {
         {...other}
       >
         {value === index && (
-          <Box px={4}>
+          <Box px={4} style={{height: '100%'}}>
             {children}
           </Box>
         )}
@@ -89,7 +90,7 @@ const Settings = () => {
       <Password/>,
       <TermPrivacy/>,
       <Notifications/>,
-      <TermPrivacy/>,
+      <Location/>,
     ]
 
     return (
