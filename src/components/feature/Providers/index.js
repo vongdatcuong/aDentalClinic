@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//translation
+import { useTranslation, Trans } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -40,13 +42,13 @@ import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
-import MenuBar from "../MenuBar";
+import MenuBar from "../../../layouts/MenuBar";
 const useStyles = makeStyles(styles);
 const createData=(id,fullname,birth,gender,address)=>{
     return {id,fullname,birth,gender,address};
 };
 const rows = [
-    createData('1712320', "Dat", "01/01/1999", "Male", "HCM"),
+    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
     createData('1712321', "Doan", "02/01/1999", "Male", "HCM"),
     createData('1712322', "Thai", "03/01/1999", "Male", "HCM"),
     createData('1712323', "Dan", "04/01/1999", "Male", "HCM"),
@@ -124,6 +126,8 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
   };
 const Providers = () => {
+    const {t, i18n } = useTranslation();
+
     const classes = useStyles(darkTheme);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -144,35 +148,36 @@ const Providers = () => {
         <div className={classes.container}>
             <MenuBar/>
             
-            <div style={{background:darkTheme.whiteColor,marginTop:"30px"}}>
+            <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
-                        <Typography style={{marginLeft:"30px"}}variant="h4">
-                            {strings.providers}
+                        <Typography className={classes.title} variant="h4">
+                            {t(strings.providers)}
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <FormControl style={{width:"200px",height:"50px"}}variant="filled">
+                    <Grid item xs={4} className={classes.serviceControl}>
+                        <FormControl variant="filled">
 
                             <OutlinedInput
+                                className={classes.searchControl}
                                 id="outlined-adornment-password"
                                 type={'text'}
                                 value={searchText}
-                                defaultValue={strings.search}
+                                defaultValue={t(strings.search)}
                                 onChange={handleChangeSearchText}
                                 endAdornment={
                                 <InputAdornment position="end">
-                                    <SearchIcon style={{cursor:"pointer"}} />
+                                    <SearchIcon className={classes.iconButton} />
 
                                 </InputAdornment>
                                 }
                             />
                         </FormControl>
-                        <IconButton style={{margin:"10px"}} >
+                        <IconButton  >
                             <FilterList />
 
                         </IconButton>
-                        <IconButton style={{margin:"10px"}}>
+                        <IconButton >
                             <AddBox />            
 
                         </IconButton>
@@ -189,23 +194,23 @@ const Providers = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.itemIndex} align="left">
-                                {strings.index}
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.itemID} align="left">
-                                {strings.id}
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.id)}
                             </TableCell>
-                            <TableCell className={classes.itemFullname} align="left">
-                                {strings.fullname}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.fullname)}
                             </TableCell>
-                            <TableCell className={classes.itemBirth} align="left">
-                                {strings.birth}
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.birth)}
                             </TableCell>
-                            <TableCell className={classes.itemGender} align="left">
-                                {strings.gender}
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.gender)}
                             </TableCell>
-                            <TableCell className={classes.itemAddress} align="left">
-                                {strings.address}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.address)}
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -216,22 +221,22 @@ const Providers = () => {
                         ).map((row,index) => (
                             <TableRow key={row.id}>
                                 
-                                <TableCell className={classes.itemIndexContent} align="left">
+                                <TableCell >
                                     {index+1}
                                 </TableCell>
-                                <TableCell className={classes.itemIDContent} align="left">
+                                <TableCell >
                                     {row.id}
                                 </TableCell>
-                                <TableCell className={classes.itemFullnameContent} align="left">
+                                <TableCell >
                                     {row.fullname}
                                 </TableCell>
-                                <TableCell className={classes.itemBirthContent} align="left">
+                                <TableCell >
                                     {row.birth}
                                 </TableCell>
-                                <TableCell className={classes.itemGenderContent} align="left">
+                                <TableCell >
                                     {row.gender}
                                 </TableCell>
-                                <TableCell className={classes.itemAddressContent} align="left">
+                                <TableCell >
                                     {row.address}
                             </TableCell>
                             </TableRow>

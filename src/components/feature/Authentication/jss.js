@@ -1,4 +1,4 @@
-const procedureStyle = (theme) => ({
+const authenticationStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px"
@@ -25,57 +25,43 @@ const procedureStyle = (theme) => ({
         width: 50,
         fontWeight:"bold"
     },
-    itemCode:{
+    itemID:{
         width: 100,
         fontWeight:"bold"
     },
-    itemFee:{
+    itemFullname:{
+        width: 400,
+        fontWeight:"bold"
+    },
+    itemGender:{
+        width: 80,
+        fontWeight:"bold"
+    },
+    itemBirth:{
         width: 100,
         fontWeight:"bold"
     },
-    itemINS:{
-        width: 100,
-        fontWeight:"bold"
-    },
-    itemDuration:{
-        width: 90,
-        fontWeight:"bold"
-    },
-    itemType:{
-        width: 70,
-        fontWeight:"bold"
-    },
-    itemABBR:{
-        width: 70,
-        fontWeight:"bold"
-    },
-    itemDescription:{
-        width: 200,
+    itemAddress:{
+        width: 500,
         fontWeight:"bold"
     },
     itemIndexContent:{
         width: 50,
     },
-    itemCodeContent:{
+    itemIDContent:{
         width: 100,
     },
-    itemFeeContent:{
+    itemFullnameContent:{
+        width: 400,
+    },
+    itemGenderContent:{
+        width: 80,
+    },
+    itemBirthContent:{
         width: 100,
     },
-    itemINSContent:{
-        width: 100,
-    },
-    itemDurationContent:{
-        width: 90,
-    },
-    itemTypeContent:{
-        width: 70,
-    },
-    itemABBRContent:{
-        width: 70,
-    },
-    itemDescriptionContent:{
-        width: 200,
+    itemAddressContent:{
+        width: 500,
     },
     searchControl:{
         height:40,
@@ -92,7 +78,7 @@ const procedureStyle = (theme) => ({
     },
     iconButton:{
         cursor:'pointer',
-
+        
     },
     title:{
         marginLeft:"30px",
@@ -100,11 +86,13 @@ const procedureStyle = (theme) => ({
     },
     titleColumn:{
         fontWeight:'bold',
+        
     },
     content:{
         background:theme.whiteColor,
         marginTop:'30px',
     },
 });
+
   
-export default procedureStyle;  
+export default authenticationStyle;  
