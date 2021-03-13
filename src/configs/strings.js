@@ -3,6 +3,7 @@ const appointment = "Appointment";
 const patient = "Patient";
 const report = "Report";
 const documents = "Documents";
+const management = "Management";
 const settings = "Settings";
 const notifications = "Notifications";
 const removeNotification = "Remove Notification";
@@ -122,6 +123,7 @@ export default {
     patient,
     report,
     documents,
+    management,
     settings,
     notifications,
     removeNotification,
