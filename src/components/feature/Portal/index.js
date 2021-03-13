@@ -48,7 +48,7 @@ const createData=(id,fullname,birth,gender,address)=>{
     return {id,fullname,birth,gender,address};
 };
 const rows = [
-    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sdfasdf sadf asdf asdf asd fsdaf sadf sad adasdasdas"),
+    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
     createData('1712321', "Doan", "02/01/1999", "Male", "HCM"),
     createData('1712322', "Thai", "03/01/1999", "Male", "HCM"),
     createData('1712323', "Dan", "04/01/1999", "Male", "HCM"),
@@ -125,7 +125,7 @@ TablePaginationActions.propTypes = {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
-const Staffs = () => {
+const Portal = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles(darkTheme);
@@ -145,18 +145,18 @@ const Staffs = () => {
         setSearchText(event.target.value);
     };
     return (
-        <div className={classes.container} >
+        <div className={classes.container}>
             <MenuBar/>
             
             <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
-                            {t(strings.staffs)}
+                            {t(strings.portal)}
                         </Typography>
                     </Grid>
                     <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl  variant="filled">
+                        <FormControl variant="filled">
 
                             <OutlinedInput
                                 className={classes.searchControl}
@@ -194,19 +194,19 @@ const Staffs = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.id)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
                                 {t(strings.fullname)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.birth)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.gender)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
@@ -269,7 +269,6 @@ const Staffs = () => {
                 </TableRow>
                 
             </TableFooter>
-            
                 </Table>
             </TableContainer>
         
@@ -282,4 +281,4 @@ const Staffs = () => {
     )
 }
 
-export default Staffs;
+export default Portal;

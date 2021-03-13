@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//translation
+import { useTranslation, Trans } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -40,13 +42,13 @@ import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
-import MenuBar from "../MenuBar";
+import MenuBar from "../../../layouts/MenuBar";
 const useStyles = makeStyles(styles);
 const createData=(code,fee,ins,duration,type,abbr,description)=>{
     return {code,fee,ins,duration,type,abbr,description};
 };
 const rows = [
-    createData('1712320', "1000", "ins", "30", "1","ABBR","Description"),
+    createData('1712320', "1000", "ins asdasd asd asdas dsa das dasd asdsa", "30", "1","ABBR","Description Description"),
     createData('1712321', "2000", "ins", "40", "1","ABBR","Description"),
     createData('1712322', "3000", "ins", "50", "1","ABBR","Description"),
     createData('1712323', "4000", "ins", "60", "1","ABBR","Description"),
@@ -125,6 +127,8 @@ TablePaginationActions.propTypes = {
   };
 const Procedure = () => {
     const classes = useStyles(darkTheme);
+    const {t, i18n } = useTranslation();
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
@@ -144,35 +148,36 @@ const Procedure = () => {
         <div className={classes.container}>
             <MenuBar/>
             
-            <div style={{background:darkTheme.whiteColor,marginTop:"30px"}}>
+            <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
-                        <Typography style={{marginLeft:"30px"}}variant="h4">
-                            {strings.procedure}
+                        <Typography className={classes.title} variant="h4">
+                            {t(strings.procedure)}
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <FormControl style={{width:"200px",height:"50px"}}variant="filled">
+                    <Grid item xs={4} className={classes.serviceControl}>
+                        <FormControl variant="filled">
 
                             <OutlinedInput
+                                className={classes.searchControl}
                                 id="outlined-adornment-password"
                                 type={'text'}
                                 value={searchText}
-                                defaultValue={strings.search}
+                                defaultValue={t(strings.search)}
                                 onChange={handleChangeSearchText}
                                 endAdornment={
                                 <InputAdornment position="end">
-                                    <SearchIcon style={{cursor:"pointer"}} />
+                                    <SearchIcon className={classes.iconButton} />
 
                                 </InputAdornment>
                                 }
                             />
                         </FormControl>
-                        <IconButton style={{margin:"10px"}} >
+                        <IconButton  >
                             <FilterList />
 
                         </IconButton>
-                        <IconButton style={{margin:"10px"}}>
+                        <IconButton >
                             <AddBox />            
 
                         </IconButton>
@@ -181,7 +186,7 @@ const Procedure = () => {
                     
                 </Grid>
                 
-                <Container style={{marginLeft:"10px"}}>
+                <Container >
                 
                
                 <TableContainer component={Paper}>
@@ -189,29 +194,29 @@ const Procedure = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.itemIndex} align="left">
-                                {strings.index}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.itemCode} align="left">
-                                {strings.code}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.code)}
                             </TableCell>
-                            <TableCell className={classes.itemFee} align="left">
-                                {strings.fee}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.fee)}
                             </TableCell>
-                            <TableCell className={classes.itemINS} align="left">
-                                {strings.ins}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.ins)}
                             </TableCell>
-                            <TableCell className={classes.itemDuration} align="left">
-                                {strings.duration}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.duration)}
                             </TableCell>
-                            <TableCell className={classes.itemType} align="left">
-                                {strings.type}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.type)}
                             </TableCell>
-                            <TableCell className={classes.itemABBR} align="left">
-                                {strings.abbr}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.abbr)}
                             </TableCell>
-                            <TableCell className={classes.itemDescription} align="left">
-                                {strings.description}
+                            <TableCell className={classes.titleColumn}>
+                                {t(strings.description)}
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -222,28 +227,28 @@ const Procedure = () => {
                         ).map((row,index) => (
                             <TableRow key={row.id}>
                                 
-                                <TableCell className={classes.itemIndexContent} align="left">
+                                <TableCell >
                                     {index+1}
                                 </TableCell>
-                                <TableCell className={classes.itemCodeContent} align="left">
+                                <TableCell>
                                     {row.code}
                                 </TableCell>
-                                <TableCell className={classes.itemFeeContent} align="left">
+                                <TableCell >
                                     {row.fee}
                                 </TableCell>
-                                <TableCell className={classes.itemINSContent} align="left">
+                                <TableCell>
                                     {row.ins}
                                 </TableCell>
-                                <TableCell className={classes.itemDurationContent} align="left">
+                                <TableCell >
                                     {row.duration}
                                 </TableCell>
-                                <TableCell className={classes.itemTypeContent} align="left">
+                                <TableCell >
                                     {row.type}
                                 </TableCell>
-                                <TableCell className={classes.itemABBRContent} align="left">
+                                <TableCell >
                                     {row.abbr}
                                 </TableCell>
-                                <TableCell className={classes.itemDescriptionContent} align="left">
+                                <TableCell >
                                     {row.description}
                                 </TableCell>
                             </TableRow>
@@ -255,7 +260,7 @@ const Procedure = () => {
                             </TableRow>
           )}
                     </TableBody>
-            <TableFooter style={{marginLeft:"300px"}}>
+                    <TableFooter style={{marginLeft:"300px"}}>
                 <TableRow>
               
                     <TablePagination
@@ -276,6 +281,7 @@ const Procedure = () => {
                 </TableRow>
                 
             </TableFooter>
+            
                 </Table>
             </TableContainer>
         
