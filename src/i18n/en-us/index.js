@@ -81,5 +81,50 @@ export default {
         "Old Password": "Old Password",
         "New Password": "New Password",
         "Confirm Password": "Confirm PWD",
+        //Menu bar
+        "Providers":"Providers",
+        "Practices":"Practices",
+        "Staffs":"Staffs",
+        "Procedure":"Procedure",
+        "Referral":"Referral",
+        "Schedule":"Schedule",
+        "Authentication":"Authentication",
+        "Document":"Document",
+        "Templates":"Templates",
+        "Drug":"Drug",
+        //provider
+        "#":"#",
+        "ID":"ID",
+        "Fullname":"Fullname",
+        "Birth":"Birth",
+        "Gender":"Gender",
+        "Address":"Address",
+        //procedure
+        "Code":"Code",
+        "Fee":"Fee",
+        "INS":"INS",
+        "Duration":"Duration",
+        "Type":"Type",
+        "ABBR":"ABBR",
+        "Description":"Description",
+        //authentication
+        "Role":"Role",
+        //practices
+        "About us":"About us",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+        "Save":"Save",
+        //chair
+        "Number":"Number",
+        "Room":"Room",
+        "Provider":"Provider",
+        //schedule
+        "Note":"Note",
+        "Date":"Date",
+        "Work time":"Work time",
+        //portal
+        "Portal":"Portal",
+        //drug
+        "Quantity":"Quantity",
+        
     }
 }
