@@ -16,15 +16,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
 // Links Icons
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import PeopleIcon from "@material-ui/icons/People";
-import AssessmentIcon from "@material-ui/icons/Assessment";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import SettingsIcon from "@material-ui/icons/Settings";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PermMedia from "@material-ui/icons/PermMedia";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
-import { FaTeeth } from "react-icons/fa";
+import { FaTeeth, FaXRay } from "react-icons/fa";
 
 // Components
 import CustomAvatar from "../../components/common/CustomAvatar";
@@ -55,9 +51,19 @@ const TreatmentMenu = (props) => {
       icon: <FaTeeth />,
     },
     {
-      link: path.patientReportPath,
-      text: t(strings.report),
+      link: path.patientNotePath,
+      text: t(strings.note),
       icon: <InsertDriveFileIcon />,
+    },
+    {
+      link: path.patientXRayImagesPath,
+      text: t(strings.xRayImages),
+      icon: <FaXRay />,
+    },
+    {
+      link: path.patientImagesPath,
+      text: t(strings.images),
+      icon: <PermMedia />,
     },
   ];
   const links = <LinkList links={pathList} />;

@@ -13,8 +13,11 @@ export default {
         "Appointment holder": "Người hẹn",
         "Today's Appoinment": "Cuộc hẹn hôm nay",
         "Go back": "Trở về",
+        //treatment menu
         "Tooth chart": "Biểu đồ nha chu",
         "Patient profile": "Hồ sơ bệnh nhân",
+        "X-Ray Images": "Hình chụp X quang",
+        "Images": "Hình ảnh",
         // Common
         "Yes" : "Có",
         "No": "Không",

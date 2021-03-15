@@ -11,8 +11,11 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
+//treatment menu
 const toothChart = "Tooth chart";
 const patientProfile = "Patient profile";
+const xRayImages = "X-Ray Images";
+const images = "Images";
 
 const search="Search";
 //menu bar
@@ -154,9 +157,11 @@ export default {
     appointmentHolder,
     todayAppointment,
     goBack,
+    //treatment menu
     toothChart,
     patientProfile,
-    report,
+    xRayImages,
+    images,
     // Common
     yes,
     no,

@@ -13,8 +13,11 @@ export default {
         "Appointment holder": "Appointment holder",
         "Today's Appoinment": "Today's Appoinment",
         "Go back": "Go back",
+        //treatment menu
         "Tooth chart": "Tooth chart",
         "Patient profile": "Patient profile",
+        "X-Ray Images": "X-Ray Images",
+        "Images": "Images",
         // Common
         "Yes" : "Yes",
         "No": "No",
