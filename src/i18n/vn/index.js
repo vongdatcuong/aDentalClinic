@@ -13,8 +13,11 @@ export default {
         "Appointment holder": "Người hẹn",
         "Today's Appoinment": "Cuộc hẹn hôm nay",
         "Go back": "Trở về",
+        //treatment menu
         "Tooth chart": "Biểu đồ nha chu",
         "Patient profile": "Hồ sơ bệnh nhân",
+        "X-Ray Images": "Hình chụp X quang",
+        "Images": "Hình ảnh",
         // Common
         "Yes" : "Có",
         "No": "Không",
@@ -69,6 +72,8 @@ export default {
         "Plaque index": "Chỉ số mảng bám",
         "Bleeding index": "Chỉ số chảy máu",
         "Halitosis": "Mức độ hôi miệng",
+        "Overview": "Tổng quan",
+        "Quickselect": "Chọn nhanh",
         // Settings
         "General" : "Chung",
         "Account": "Tài khoản",
@@ -87,7 +92,6 @@ export default {
         "Full Name": "Họ tên",
         "Email": "Email",
         "Phone": "Số điện thoại",
-        "Address": "Địa chỉ",
         "Old Password": "Mật khẩu cũ",
         "New Password": "Mật khẩu mới",
         "Confirm Password": "Xác nhận MK",
@@ -108,6 +112,50 @@ export default {
         "Patients": "Bệnh nhân",
         // Currency
         "CURRENCY": "VND",
-        "CURRENCY CHART": "Triệu VND"
+        "CURRENCY CHART": "Triệu VND",
+        //Menu bar
+        "Providers":"Các nhà cung cấp",
+        "Practices":"Thực hành",
+        "Staffs":"Nhân viên",
+        "Procedure":"Thủ tục",
+        "Referral":"Giới thiệu",
+        "Schedule":"Lịch trình",
+        "Authentication":"Xác thực",
+        "Document":"Tài liệu",
+        "Templates":"Mẫu",
+        "Drug":"Thước",
+        //provider
+        "#":"#",
+        "ID":"ID",
+        "Fullname":"Họ tên",
+        "Birth":"Ngày sinh",
+        "Gender":"Giới tính",
+        "Address":"Địa chỉ",
+        //procedure
+        "Code":"Code",
+        "Fee":"Tiền công",
+        "INS":"INS",
+        "Duration":"Thời lượng",
+        "Type":"Loại",
+        "ABBR":"ABBR",
+        "Description":"Mô tả",
+        //authentication
+        "Role":"Quyền hạn",
+        //practices
+        "About us":"Giới thiệu",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+        "Save":"Lưu",
+        //chair
+        "Number":"Số",
+        "Room":"Phòng",
+        "Provider":"Nhà cung cấp",
+        //schedule
+        "Note":"Ghi chú",
+        "Date":"Ngày",
+        "Work time":"Giờ làm việc",
+        //portal
+        "Portal":"Cổng thông tin",
+        //drug
+        "Quantity":"Định lượng",
     }
 }

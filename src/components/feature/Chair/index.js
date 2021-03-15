@@ -44,22 +44,22 @@ import AddBox from '@material-ui/icons/AddBox';
 //import component
 import MenuBar from "../../../layouts/MenuBar";
 const useStyles = makeStyles(styles);
-const createData=(id,fullname,birth,gender,address)=>{
-    return {id,fullname,birth,gender,address};
+const createData=(id,provider,number,room,description)=>{
+    return {id,provider,number,room,description};
 };
 const rows = [
-    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sdfasdf sadf asdf asdf asd fsdaf sadf sad adasdasdas"),
-    createData('1712321', "Doan", "02/01/1999", "Male", "HCM"),
-    createData('1712322', "Thai", "03/01/1999", "Male", "HCM"),
-    createData('1712323', "Dan", "04/01/1999", "Male", "HCM"),
-    createData('1712324', "Cuong", "05/01/1999", "Male", "HCM"),
-    createData('1712325', "Vong", "06/01/1999", "Male", "HCM"),
-    createData('1712326', "Hung", "07/01/1999", "Male", "HCM"),
-    createData('1712327', "The", "08/01/1999", "Male", "HCM"),
-    createData('1712328', "Anh", "09/01/1999", "Male", "HCM"),
-    createData('1712329', "Nguyen", "10/01/1999", "Female", "HCM"),
-    createData('1712330', "Tang", "11/01/1999", "Female", "HCM"),
-    createData('1712331', "Vu", "12/01/1999", "Female", "HCM"),
+    createData('1712320', "Dat", "3", "1", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
+    createData('1712321', "Doan", "4", "1", "HCM"),
+    createData('1712322', "Thai", "5", "1", "HCM"),
+    createData('1712323', "Dan", "6", "1", "HCM"),
+    createData('1712324', "Cuong", "11", "1", "HCM"),
+    createData('1712325', "Vong", "13", "1", "HCM"),
+    createData('1712326', "Hung", "22", "1", "HCM"),
+    createData('1712327', "The", "333", "1", "HCM"),
+    createData('1712328', "Anh", "11", "2", "HCM"),
+    createData('1712329', "Nguyen", "222", "3", "HCM"),
+    createData('1712330', "Tang", "333", "33", "HCM"),
+    createData('1712331', "Vu", "11", "44", "HCM"),
 
 
 ];
@@ -125,7 +125,7 @@ TablePaginationActions.propTypes = {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
-const Staffs = () => {
+const Chairs = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles(darkTheme);
@@ -145,18 +145,18 @@ const Staffs = () => {
         setSearchText(event.target.value);
     };
     return (
-        <div className={classes.container} >
+        <div className={classes.container}>
             <MenuBar/>
             
             <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
-                            {t(strings.staffs)}
+                            {t(strings.chair)}
                         </Typography>
                     </Grid>
                     <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl  variant="filled">
+                        <FormControl variant="filled">
 
                             <OutlinedInput
                                 className={classes.searchControl}
@@ -194,23 +194,23 @@ const Staffs = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.id)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
-                                {t(strings.fullname)}
+                                {t(strings.provider)}
+                            </TableCell>
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.number)}
+                            </TableCell>
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.room)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
-                                {t(strings.birth)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.gender)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.address)}
+                                {t(strings.description)}
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -228,16 +228,16 @@ const Staffs = () => {
                                     {row.id}
                                 </TableCell>
                                 <TableCell >
-                                    {row.fullname}
+                                    {row.provider}
                                 </TableCell>
                                 <TableCell >
-                                    {row.birth}
+                                    {row.number}
                                 </TableCell>
                                 <TableCell >
-                                    {row.gender}
+                                    {row.room}
                                 </TableCell>
                                 <TableCell >
-                                    {row.address}
+                                    {row.description}
                             </TableCell>
                             </TableRow>
                         ))}
@@ -269,7 +269,6 @@ const Staffs = () => {
                 </TableRow>
                 
             </TableFooter>
-            
                 </Table>
             </TableContainer>
         
@@ -282,4 +281,4 @@ const Staffs = () => {
     )
 }
 
-export default Staffs;
+export default Chairs;

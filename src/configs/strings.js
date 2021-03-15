@@ -11,8 +11,11 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
+//treatment menu
 const toothChart = "Tooth chart";
 const patientProfile = "Patient profile";
+const xRayImages = "X-Ray Images";
+const images = "Images";
 
 const search="Search";
 //menu bar
@@ -25,7 +28,8 @@ const referral="Referral";
 const schedule="Schedule";
 const authentication="Authentication";
 const document="Document";
-
+const templates="Templates";
+const drug="Drug";
 //provider
 const index="#";
 const id="ID";
@@ -41,6 +45,25 @@ const duration="Duration";
 const type="Type";
 const abbr="ABBR";
 const description="Description";
+//authentication
+const role="Role";
+//practices
+const aboutUs="About us";
+const aboutUsContent="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
+const save="Save";
+//chair
+const number="Number";
+const room="Room";
+const provider="Provider";
+//schedule
+const note="Note";
+const date="Date";
+const workTime="Work time";
+//portal
+const portal="Portal";
+//drug
+const quantity="Quantity";
+
 // Common
 const yes = "Yes";
 const no = "No";
@@ -102,6 +125,9 @@ const addRecord = "Add record";
 const plaqueIndex = "Plaque index";
 const bleedingIndex = "Bleeding index";
 const halitosis = "Halitosis";
+// Tooth chart page
+const overView = "Overview";
+const quickSelect = "Quickselect";
 
 // Report
 const payment = "Payment";
@@ -163,9 +189,11 @@ export default {
     appointmentHolder,
     todayAppointment,
     goBack,
+    //treatment menu
     toothChart,
     patientProfile,
-    report,
+    xRayImages,
+    images,
     // Common
     yes,
     no,
@@ -222,6 +250,9 @@ export default {
     plaqueIndex,
     bleedingIndex,
     halitosis,
+    // Tooth chart page
+    overView,
+    quickSelect,
     // Management
     providers,
     staffs,
@@ -288,4 +319,19 @@ export default {
     // Currency
     CURRENCY,
     CURRENCY_CHART,
+    // ???? 
+    templates,
+    drug,
+    role,
+    number,
+    room,
+    provider,
+    portal,
+    date,
+    workTime,
+    note,
+    quantity,
+    aboutUs,
+    aboutUsContent,
+    save,
 };

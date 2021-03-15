@@ -7,14 +7,6 @@ const loginStyle = (theme) => ({
     height: "100vh",
     color: theme.primaryColor[0],
   },
-  navPillsContainer: {
-    '& .MuiTabs-root': {
-      '& .MuiTabs-flexContainer': {
-          justifyContent: "center",
-      }
-    }
-  }
-
 });
 
 export default loginStyle;
