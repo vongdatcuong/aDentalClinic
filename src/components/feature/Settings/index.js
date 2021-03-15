@@ -20,8 +20,11 @@ import Box from '@material-ui/core/Box';
 
 // Component
 import General from './General';
+import Account from './Account';
+import Password from './Password';
 import TermPrivacy from './TermPrivacy';
 import Notifications from './Notifications';
+import Location from './Location';
 
 const useStyles = makeStyles(styles);
 
@@ -37,7 +40,7 @@ function TabPanel(props) {
         {...other}
       >
         {value === index && (
-          <Box px={4}>
+          <Box px={4} style={{height: '100%'}}>
             {children}
           </Box>
         )}
@@ -83,11 +86,11 @@ const Settings = () => {
     const tabs = [t(strings.general), t(strings.account), t(strings.password), t(strings.termPolicy), t(strings.notifications), t(strings.location)];
     const tablePanels = [
       <General/>,
-      <TermPrivacy/>,
-      <TermPrivacy/>,
+      <Account/>,
+      <Password/>,
       <TermPrivacy/>,
       <Notifications/>,
-      <TermPrivacy/>,
+      <Location/>,
     ]
 
     return (

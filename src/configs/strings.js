@@ -3,6 +3,7 @@ const appointment = "Appointment";
 const patient = "Patient";
 const report = "Report";
 const documents = "Documents";
+const management = "Management";
 const settings = "Settings";
 const notifications = "Notifications";
 const removeNotification = "Remove Notification";
@@ -24,7 +25,8 @@ const referral="Referral";
 const schedule="Schedule";
 const authentication="Authentication";
 const document="Document";
-
+const templates="Templates";
+const drug="Drug";
 //provider
 const index="#";
 const id="ID";
@@ -40,6 +42,25 @@ const duration="Duration";
 const type="Type";
 const abbr="ABBR";
 const description="Description";
+//authentication
+const role="Role";
+//practices
+const aboutUs="About us";
+const aboutUsContent="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
+const save="Save";
+//chair
+const number="Number";
+const room="Room";
+const provider="Provider";
+//schedule
+const note="Note";
+const date="Date";
+const workTime="Work time";
+//portal
+const portal="Portal";
+//drug
+const quantity="Quantity";
+
 // Common
 const yes = "Yes";
 const no = "No";
@@ -50,13 +71,22 @@ const logout = "Log out";
 const login = "Log in";
 const chair = "Chair";
 const all = "All";
+const update = "Update";
 
 // Messages
 
     // Success Messages
-
+const updateAccountSuccess = "Update Account Success";
     // Error Messages
-
+const updateAccountFail = "Update Account Fail";
+const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
+const emailErrMsg = "Email must follow the format abc@xyz.com/net/vn";
+const phoneErrMsg = "Phone must contain at least 10 to 15 number";
+const addressErrMsg = "Address must contain at least 5 to 300 characters";
+const passwordErrMsg = "Password must contain at least 6 to 100 characters";
+const oldPwdNotMatchErrMsg = "The entered password is incorrect";
+const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
+const newPwdMatchOldPwd = "The new password is identical to old password";
     // Confirm Messages
 
 // Context Actions
@@ -101,6 +131,12 @@ const termPolicyFullText = "Term Policy Full Text";
 const notifyStaffMessage = "Notify when a STAFF sends you a message";
 const notifyPatientMessage = "Notify when a PATIENT sends you a message";
 const notifyHavingMeeting = "Notify when a you're having a MEETING";
+const fullName = "Full Name";
+const email =  "Email";
+const phone = "Phone";
+const oldPassword = "Old Password";
+const newPassword = "New Password";
+const confirmPassword = "Confirm Password"
 
 // Date
 const defaultTimeFormat = "HH:mm";
@@ -110,6 +146,7 @@ export default {
     patient,
     report,
     documents,
+    management,
     settings,
     notifications,
     removeNotification,
@@ -130,9 +167,20 @@ export default {
     logout,
     chair,
     all,
+    update,
     // Messages
     // Success Messages
+    updateAccountSuccess,
     // Error Messages
+    updateAccountFail,
+    fullNameErrMsg,
+    emailErrMsg,
+    phoneErrMsg,
+    addressErrMsg,
+    passwordErrMsg,
+    oldPwdNotMatchErrMsg,
+    confirmPwdNotMatchErrMsg,
+    newPwdMatchOldPwd,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -197,6 +245,26 @@ export default {
     notifyStaffMessage,
     notifyPatientMessage,
     notifyHavingMeeting,
+    fullName,
+    email,
+    phone,
+    oldPassword,
+    newPassword,
+    confirmPassword,
+    templates,
+    drug,
     // Date
-    defaultTimeFormat
+    defaultTimeFormat,
+    role,
+    number,
+    room,
+    provider,
+    portal,
+    date,
+    workTime,
+    note,
+    quantity,
+    aboutUs,
+    aboutUsContent,
+    save,
 };

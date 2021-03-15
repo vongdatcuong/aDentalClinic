@@ -44,22 +44,22 @@ import AddBox from '@material-ui/icons/AddBox';
 //import component
 import MenuBar from "../../../layouts/MenuBar";
 const useStyles = makeStyles(styles);
-const createData=(id,fullname,birth,gender,address)=>{
-    return {id,fullname,birth,gender,address};
+const createData=(id,fullname,role,gender,address)=>{
+    return {id,fullname,role,gender,address};
 };
 const rows = [
-    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sdfasdf sadf asdf asdf asd fsdaf sadf sad adasdasdas"),
-    createData('1712321', "Doan", "02/01/1999", "Male", "HCM"),
-    createData('1712322', "Thai", "03/01/1999", "Male", "HCM"),
-    createData('1712323', "Dan", "04/01/1999", "Male", "HCM"),
-    createData('1712324', "Cuong", "05/01/1999", "Male", "HCM"),
-    createData('1712325', "Vong", "06/01/1999", "Male", "HCM"),
-    createData('1712326', "Hung", "07/01/1999", "Male", "HCM"),
-    createData('1712327', "The", "08/01/1999", "Male", "HCM"),
-    createData('1712328', "Anh", "09/01/1999", "Male", "HCM"),
-    createData('1712329', "Nguyen", "10/01/1999", "Female", "HCM"),
-    createData('1712330', "Tang", "11/01/1999", "Female", "HCM"),
-    createData('1712331', "Vu", "12/01/1999", "Female", "HCM"),
+    createData('1712320', "Dat", "Admin", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
+    createData('1712321', "Doan", "Customer", "Male", "HCM"),
+    createData('1712322', "Thai", "Customer", "Male", "HCM"),
+    createData('1712323', "Dan", "Customer", "Male", "HCM"),
+    createData('1712324', "Cuong", "Customer", "Male", "HCM"),
+    createData('1712325', "Vong", "Customer", "Male", "HCM"),
+    createData('1712326', "Hung", "Customer", "Male", "HCM"),
+    createData('1712327', "The", "Customer", "Male", "HCM"),
+    createData('1712328', "Anh", "Customer", "Male", "HCM"),
+    createData('1712329', "Nguyen", "Customer", "Female", "HCM"),
+    createData('1712330', "Tang", "Customer", "Female", "HCM"),
+    createData('1712331', "Vu", "Customer", "Female", "HCM"),
 
 
 ];
@@ -125,7 +125,7 @@ TablePaginationActions.propTypes = {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
-const Staffs = () => {
+const Authentication = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles(darkTheme);
@@ -145,18 +145,18 @@ const Staffs = () => {
         setSearchText(event.target.value);
     };
     return (
-        <div className={classes.container} >
+        <div className={classes.container}>
             <MenuBar/>
             
             <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
-                            {t(strings.staffs)}
+                            {t(strings.authentication)}
                         </Typography>
                     </Grid>
                     <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl  variant="filled">
+                        <FormControl variant="filled">
 
                             <OutlinedInput
                                 className={classes.searchControl}
@@ -194,19 +194,19 @@ const Staffs = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.id)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
                                 {t(strings.fullname)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.birth)}
+                            <TableCell className={classes.titleColumn} >
+                                {t(strings.role)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} >
                                 {t(strings.gender)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
@@ -231,7 +231,7 @@ const Staffs = () => {
                                     {row.fullname}
                                 </TableCell>
                                 <TableCell >
-                                    {row.birth}
+                                    {row.role}
                                 </TableCell>
                                 <TableCell >
                                     {row.gender}
@@ -269,7 +269,6 @@ const Staffs = () => {
                 </TableRow>
                 
             </TableFooter>
-            
                 </Table>
             </TableContainer>
         
@@ -282,4 +281,4 @@ const Staffs = () => {
     )
 }
 
-export default Staffs;
+export default Authentication;

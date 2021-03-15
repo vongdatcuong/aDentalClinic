@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import path from './path';
 
 // @material-ui/core Component
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Components
 import PageContainer from '../layouts/PageContainer';
@@ -13,6 +12,12 @@ import Providers from "../components/feature/Providers";
 import Staffs from "../components/feature/Staffs";
 import Procedure from "../components/feature/Procedure";
 import Referral from "../components/feature/Referral";
+import Authentication from "../components/feature/Authentication";
+import Chairs from "../components/feature/Chair";
+import Schedule from "../components/feature/Schedule";
+import Portal from "../components/feature/Portal";
+import Drug from "../components/feature/Drug";
+import Practice from "../components/feature/Practice";
 import TreatmentMenu from '../layouts/TreatmentMenu';
 import Dashboard from '../components/feature/Dashboard';
 import LoginPage from '../components/feature/LoginPage';
@@ -38,19 +43,37 @@ function Routes() {
             <RightSidebar/>
           </PageContainer>
         </Route>
-
         <Route path={path.providersPath}>
           <PageContainer>
             <LeftSidebar/>
             <Providers />
           </PageContainer>
         </Route>
-        {/* <Route path={path.practicesPath}>
-            <div>
-              Practices
-            </div>
+        <Route path={path.practicesPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Practice />
+
+          </PageContainer>
             
-        </Route> */}
+        </Route>
+        <Route path={path.portalPath}>
+          <PageContainer>
+              <LeftSidebar/>
+              <Portal/>
+          </PageContainer>
+            
+            
+        </Route>
+        <Route path={path.schedulePath}>
+          <PageContainer>
+              <LeftSidebar/>
+              <Schedule/>
+          </PageContainer>
+            
+            
+            
+        </Route>
         <Route path={path.staffsPath}>
           <PageContainer>
             <LeftSidebar/>
@@ -64,6 +87,14 @@ function Routes() {
           </PageContainer>
             
         </Route>
+        <Route path={path.chairsPath}>
+          <PageContainer>
+              <LeftSidebar/>
+              <Chairs/>
+          </PageContainer>
+            
+            
+        </Route>
         <Route path={path.referralPath}>
           <PageContainer>
             <LeftSidebar/>
@@ -71,34 +102,29 @@ function Routes() {
           </PageContainer>
             
         </Route>
-        {/* <Route path={path.chairPath}>
-            <div>
-              Chair
-            </div>
+        
+        <Route path={path.authenticationPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Authentication/>
+          </PageContainer>
+           
             
             
-        </Route> */}
-        {/* <Route path={path.schedulePath}>
-            <div>
-              Schedule
-            </div>
+        </Route>
+        <Route path={path.drugPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Drug/>
+          </PageContainer>
+           
             
             
-        </Route> */}
-        {/* <Route path={path.authenticationPath}>
-            <div>
-              Authentication
-            </div>
-            
-            
-        </Route> */}
-        {/* <Route path={path.documentPath}>
-            <div>
-              Document
-            </div>
-            
-            
-        </Route> */}
+        </Route>
+        
+        
+        
+       
         
         <Route path={path.toothChartPath}>
           <PageContainer>

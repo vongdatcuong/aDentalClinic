@@ -92,10 +92,8 @@ const General = () => {
   };
 
   const handleChangeLanguage = (value) => {
-        dispatchLoading({type: strings.setLoading, isLoading: true});
-      handleCloseLanguagePopover();
-      i18n.changeLanguage(value);
-      dispatchLoading({type: strings.setLoading, isLoading: false});
+    handleCloseLanguagePopover();
+    i18n.changeLanguage(value);
   }
 
   const handleOpenThemePopover = (event) => {
@@ -109,10 +107,8 @@ const General = () => {
   };
 
   const handleChangeTheme = (value) => {
-    dispatchLoading({type: strings.setLoading, isLoading: true});
     handleCloseThemePopover();
     dispatchTheme({type: strings.setTheme, theme: parseInt(value)});
-    dispatchLoading({type: strings.setLoading, isLoading: false});
   }
   
   return (

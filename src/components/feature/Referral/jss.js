@@ -63,6 +63,30 @@ const referralStyle = (theme) => ({
     itemAddressContent:{
         width: 500,
     },
+    searchControl:{
+        height:40,
+        width:200,
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        }
+    },
+    serviceControl:{
+        display:'flex',
+        flexDirection:'row',
+
+    },
+    iconButton:{
+        cursor:'pointer',
+        
+    },
+    title:{
+        marginLeft:"30px",
+
+    },
+    titleColumn:{
+        fontWeight:'bold',
+    },
 });
   
 export default referralStyle;  

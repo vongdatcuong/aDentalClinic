@@ -1,7 +1,8 @@
 const staffStyle = (theme) => ({
     container: {
         flexGrow: 1,
-        margin:"0px"
+        margin:"0px",
+        
     },
     menuBar:{
         background: theme.primaryColor[2],
@@ -63,12 +64,28 @@ const staffStyle = (theme) => ({
         width: 500,
     },
     searchControl:{
-        height:20,
-        width:150,
+        height:40,
+        width:200,
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
         }
+    },
+    serviceControl:{
+        display:'flex',
+        flexDirection:'row',
+
+    },
+    iconButton:{
+        cursor:'pointer',
+        
+    },
+    title:{
+        marginLeft:"30px",
+
+    },
+    titleColumn:{
+        fontWeight:'bold',
     },
 });
   

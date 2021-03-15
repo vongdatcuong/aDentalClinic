@@ -15,9 +15,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import MenuIcon from '@material-ui/icons/Menu';
   // Links Icons
   import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-  import PeopleIcon from '@material-ui/icons/People';
+  import { FaUserInjured } from "react-icons/fa";
   import AssessmentIcon from '@material-ui/icons/Assessment';
-  import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+  import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
   import SettingsIcon from '@material-ui/icons/Settings';
   import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -76,7 +76,7 @@ const LeftSidebar = (props) => {
       {
         link: path.patientPath,
         text: t(strings.patient),
-        icon: <PeopleIcon/>
+        icon: <FaUserInjured/>
       },
       {
         link: path.reportPath,
@@ -84,9 +84,9 @@ const LeftSidebar = (props) => {
         icon: <AssessmentIcon/>
       },
       {
-        link: path.documentPath,
-        text: t(strings.documents),
-        icon: <InsertDriveFileIcon/>
+        link: path.managementPath,
+        text: t(strings.management),
+        icon: <BusinessCenterIcon/>
       },
       {
         link: path.settingsPath,
