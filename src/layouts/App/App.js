@@ -27,7 +27,6 @@ import { ThemeStateProvider } from '../../contexts/theme-context';
 import Loading from '../Loading';
 
 const App = () => {
-  
   return (
     <ThemeStateProvider> {/* ==> Theme Context Provider */}
         <LoadingStateProvider>

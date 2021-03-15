@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 const General = () => {
   const classes = useStyles();
   const {t, i18next} = useTranslation();
-  const {loadingState, dispatchLoading} = useContext(loadingStore);
   const {themeState, dispatchTheme} = useContext(themeStore);
 
   // States

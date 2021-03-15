@@ -27,6 +27,15 @@ export default {
         "Chairs": "Ghế",
         "All": "Tất cả",
         "Update": "Cập nhật",
+        "Total": "Tổng cộng",
+        "Busy": "Bận",
+        "Completed": "Hoàn thành",
+        "Rejected": "Từ chối",
+        "Accept": "Chấp nhận",
+        "Reject": "Từ chối",
+        "From": "Từ",
+        "To": "Tới",
+        "Apply": "Áp dụng",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -40,6 +49,7 @@ export default {
         "The entered password is incorrect": "Mật khẩu nhập vào không hợp lệ",
         "Confirm password does not match with new password": "Xác nhận mật khẩu không trùng khớp với mật khẩu mới",
         "The new password is identical to old password": "Mật khẩu mới trùng với mật khẩu cũ",
+        "Range of date is invalid": "Khoảng thời gian nhập không hợp lệ",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
@@ -81,5 +91,23 @@ export default {
         "Old Password": "Mật khẩu cũ",
         "New Password": "Mật khẩu mới",
         "Confirm Password": "Xác nhận MK",
+        // Report
+        "Payment": "Thanh toán",
+        "Appointments": "Cuộc hẹn",
+        "Procedures": "Thủ tục",
+        "Tasks": "Công việc",
+        "Invoices": "Hóa đơn",
+        "Bookings": "Đặt chỗ",
+        "Finances": "Tài chính",
+        "Work hour": "Thời gian làm việc",
+        "New patient": "Bệnh nhân mới",
+        // Unit
+        "hours": "giờ",
+        "percent": "%",
+        "Hour Short": "H",
+        "Patients": "Bệnh nhân",
+        // Currency
+        "CURRENCY": "VND",
+        "CURRENCY CHART": "Triệu VND"
     }
 }

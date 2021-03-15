@@ -13,7 +13,6 @@ import Copyright from './Copyright';
 const useStyles = makeStyles((theme) => ({
     footer: {
         display: "flex",
-        height: "20vh",
     },
     copyrightBox : {
       alignSelf: "flex-end",

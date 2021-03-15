@@ -81,14 +81,15 @@ const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNoti
 
   const [openNotiFuncPopover, setOpenNotiFuncPopover] = useState(false);
   const [notiFuncPopAnchorEl, setNotiFuncopAnchorEl] = useState(null);
+  const notiFuncRefs = [];
   const popOverId = openNotiFuncPopover? "notification-function-popover" : undefined;
 
   // Notification to display Popover
   const [chosenNotiFunc, setChosenNotiFunc] = useState(-1);
 
   // Notifications Function Popover
-  const handleOpenNotiFuncPopover = (evt, notiId) => {
-    setNotiFuncopAnchorEl(evt.currentTarget);
+  const handleOpenNotiFuncPopover = (index, notiId) => {
+    setNotiFuncopAnchorEl(notiFuncRefs[index]);
     setChosenNotiFunc(notiId);
     setOpenNotiFuncPopover(true);
   }
@@ -150,8 +151,8 @@ const NotificationPopover = ({id, open, onClose, anchorEl, notifications, onNoti
                         </Typography>
                       } 
                       secondary={ConvertDateTimeUtils.formatDate(notification.date, "MMMM DD, YYYY") || '...'} />
-                      <Typography className={classes.listItemFunction} variant="div" component="div">
-                        <IconButton onClick={(evt) => handleOpenNotiFuncPopover(evt, notification.id)}>
+                      <Typography className={classes.listItemFunction}>
+                        <IconButton ref={(el) => notiFuncRefs.push(el)} onClick={(evt) => handleOpenNotiFuncPopover(index, notification.id)}>
                           <MoreVertIcon/>
                         </IconButton>
                       </Typography>

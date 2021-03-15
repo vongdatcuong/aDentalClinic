@@ -21,8 +21,13 @@ const formatDateStr = (dateStr, dateFormatStr, outFormatStr) => {
     return d.format(outFormatStr);
 }
 
+const isDateValid = (date) => {
+    return moment(date)._isValid;
+}
+
 export default {
     parseDate,
     formatDate,
-    formatDateStr
+    formatDateStr,
+    isDateValid
 }

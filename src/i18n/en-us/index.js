@@ -27,6 +27,15 @@ export default {
         "Chairs": "Chairs",
         "All": "All",
         "Update": "Update",
+        "Total": "Total",
+        "Busy": "Busy",
+        "Completed": "Completed",
+        "Rejected": "Rejected",
+        "Accept": "Accept",
+        "Reject": "Reject",
+        "From": "From",
+        "To": "To",
+        "Apply": "Apply",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -40,6 +49,7 @@ export default {
         "The entered password is incorrect": "The entered password is incorrect",
         "Confirm password does not match with new password": "Confirm password does not match with new password",
         "The new password is identical to old password": "The new password is identical to old password",
+        "Range of date is invalid": "Range of date is invalid",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
@@ -77,9 +87,26 @@ export default {
         "Full Name": "Full Name",
         "Email": "Email",
         "Phone": "Phone",
-        "Address": "Address",
         "Old Password": "Old Password",
         "New Password": "New Password",
         "Confirm Password": "Confirm PWD",
+        // Report
+        "Payment": "Payment",
+        "Appointments": "Aappointments",
+        "Procedures": "Procedures",
+        "Tasks": "Tasks",
+        "Invoices": "Invoices",
+        "Bookings": "Bookings",
+        "Finances": "Finances",
+        "Work hour": "Work hour",
+        "New patient": "New patient",
+        // Unit
+        "hours": "hours",
+        "percent": "%",
+        "Hour Short": "H",
+        "Patients": "Patients",
+        // Currency
+        "CURRENCY": "VND",
+        "CURRENCY CHART": "Million VND",
     }
 }

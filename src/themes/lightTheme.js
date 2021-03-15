@@ -57,6 +57,7 @@ import {hexToRgb} from '../utils/colors';
   const hoverDarkColor = ["#551796", "#5e19a7", "#681cb8", "#711ec9"];
   const blackColor = "#000000";
   const whiteColor = "#ffffff";
+  const circularProgressChart = '#8529e6';
 
   // Google map
   const mapMinWidth = 500;
@@ -208,6 +209,7 @@ export default {
   grayColor,
   blackColor,
   whiteColor,
+  circularProgressChart,
   hoverBrightColor,
   hoverDarkColor,
   // Google Map

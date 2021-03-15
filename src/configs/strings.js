@@ -52,6 +52,15 @@ const login = "Log in";
 const chair = "Chair";
 const all = "All";
 const update = "Update";
+const total = "Total";
+const busy = "Busy";
+const completed = "Completed";
+const rejected = "Rejected";
+const accept = "Accept";
+const reject = "Reject";
+const from = "From";
+const to = "To";
+const apply = "Apply";
 
 // Messages
 
@@ -67,6 +76,7 @@ const passwordErrMsg = "Password must contain at least 6 to 100 characters";
 const oldPwdNotMatchErrMsg = "The entered password is incorrect";
 const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
 const newPwdMatchOldPwd = "The new password is identical to old password";
+const dateRangeInvalid = "Range of date is invalid";
     // Confirm Messages
 
 // Context Actions
@@ -93,6 +103,17 @@ const plaqueIndex = "Plaque index";
 const bleedingIndex = "Bleeding index";
 const halitosis = "Halitosis";
 
+// Report
+const payment = "Payment";
+const appointments = "Appointments";
+const procedures = "Procedures";
+const tasks = "Tasks";
+const invoices = "Invoices";
+const bookings = "Bookings";
+const finances = "Finances";
+const workHour = "Work hour";
+const newPatient = "New patient";
+
 // Settings
 const general = "General";
 const account = "Account";
@@ -113,10 +134,21 @@ const email =  "Email";
 const phone = "Phone";
 const oldPassword = "Old Password";
 const newPassword = "New Password";
-const confirmPassword = "Confirm Password"
+const confirmPassword = "Confirm Password";
 
 // Date
 const defaultTimeFormat = "HH:mm";
+const chartDateFormat = "DD/MM";
+
+// Unit
+const hours = "hours"
+const percent = "percent";
+const hourShort = "Hour Short";
+const patients = "Patients";
+
+// Currency
+const CURRENCY = "CURRENCY";
+const CURRENCY_CHART = "CURRENCY CHART";
 
 export default {
     appointment,
@@ -145,6 +177,15 @@ export default {
     chair,
     all,
     update,
+    total,
+    busy,
+    completed,
+    rejected,
+    accept,
+    reject,
+    from,
+    to,
+    apply,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -158,6 +199,7 @@ export default {
     oldPwdNotMatchErrMsg,
     confirmPwdNotMatchErrMsg,
     newPwdMatchOldPwd,
+    dateRangeInvalid,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -225,6 +267,25 @@ export default {
     oldPassword,
     newPassword,
     confirmPassword,
+    // Report
+    payment,
+    appointments,
+    procedures,
+    tasks,
+    invoices,
+    bookings,
+    finances,
+    workHour,
+    newPatient,
     // Date
-    defaultTimeFormat
+    defaultTimeFormat,
+    chartDateFormat,
+    // Unit
+    hours,
+    percent,
+    hourShort,
+    patients,
+    // Currency
+    CURRENCY,
+    CURRENCY_CHART,
 };

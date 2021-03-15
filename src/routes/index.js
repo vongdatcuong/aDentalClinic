@@ -15,6 +15,7 @@ import Referral from "../components/feature/Referral";
 import TreatmentMenu from '../layouts/TreatmentMenu';
 import Dashboard from '../components/feature/Dashboard';
 import LoginPage from '../components/feature/LoginPage';
+import Report from '../components/feature/Report';
 import Settings from '../components/feature/Settings';
 import ToothChartPage from '../components/feature/ToothChartPage';
 import PatientProfilePage from '../components/feature/PatientProfilePage';
@@ -115,6 +116,13 @@ function Routes() {
           <PageContainer>
             <TreatmentMenu/>
             <PatientReportPage/>
+          </PageContainer>
+        </Route>
+        {/*Report*/}
+        <Route path={path.reportPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Report/>
           </PageContainer>
         </Route>
         {/*Setting With Section*/}
