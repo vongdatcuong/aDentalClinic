@@ -28,6 +28,7 @@ import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import Report from '../components/feature/Report';
+import Patient from '../components/feature/Patient';
 
 function Routes() {
   return (
@@ -118,6 +119,12 @@ function Routes() {
         </PageContainer>
       </Route>
       {/*Patient Pages*/}
+      <Route path={path.patientPath}>
+        <PageContainer>
+          <LeftSidebar />
+          <Patient />
+        </PageContainer>
+      </Route>
       <Route path={path.toothChartPath}>
         <PageContainer>
           <TreatmentMenu />

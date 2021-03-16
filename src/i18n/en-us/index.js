@@ -39,6 +39,9 @@ export default {
         "From": "From",
         "To": "To",
         "Apply": "Apply",
+        "Search": "Search",
+        "Filter": "Filter",
+        "Add": "Add",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -157,6 +160,7 @@ export default {
         "Portal":"Portal",
         //drug
         "Quantity":"Quantity",
+        "Rows per page": "Rows per page"
         
     }
 }

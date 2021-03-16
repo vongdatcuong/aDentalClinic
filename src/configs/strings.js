@@ -63,6 +63,7 @@ const workTime="Work time";
 const portal="Portal";
 //drug
 const quantity="Quantity";
+const rowsPerPage  = "Rows per page";
 
 // Common
 const yes = "Yes";
@@ -84,6 +85,8 @@ const reject = "Reject";
 const from = "From";
 const to = "To";
 const apply = "Apply";
+const filter = "Filter";
+const add = "Add";
 
 // Messages
 
@@ -214,6 +217,8 @@ export default {
     from,
     to,
     apply,
+    filter,
+    add,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -331,6 +336,7 @@ export default {
     workTime,
     note,
     quantity,
+    rowsPerPage,
     aboutUs,
     aboutUsContent,
     save,

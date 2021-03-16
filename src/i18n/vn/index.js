@@ -39,6 +39,9 @@ export default {
         "From": "Từ",
         "To": "Tới",
         "Apply": "Áp dụng",
+        "Search": "Tìm kiếm",
+        "Filter": "Lọc",
+        "Add": "Thêm",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -157,5 +160,6 @@ export default {
         "Portal":"Cổng thông tin",
         //drug
         "Quantity":"Định lượng",
+        "Rows per page": "Số hàng mỗi cột",
     }
 }

@@ -10,6 +10,10 @@ const toastLimit = 10;
 // Statistics
 const statisDayRangeDefault = 7;
 
+// Table
+const defaultRowsPerPage = 10;
+const rowsPerPageOption = [5, 10, 25];
+
 export default {
     // Appointment
     defaultCellDuration,
@@ -20,4 +24,7 @@ export default {
     toastLimit,
     // Statistics
     statisDayRangeDefault,
+    // Table
+    defaultRowsPerPage,
+    rowsPerPageOption
 }
