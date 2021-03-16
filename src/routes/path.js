@@ -2,7 +2,7 @@ const defaultPath = '/';
 
 // Main Path
 const dashboardPath = '/dashboard';
-const patientPath = '/patientPath';
+const patientPath = '/patients';
 const reportPath = '/report';
 const documentPath = '/document';
 const managementPath = '/management';

@@ -28,6 +28,7 @@ import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import Report from '../components/feature/Report';
+import Patients from '../components/feature/Patients';
 
 function Routes() {
   return (
@@ -96,6 +97,13 @@ function Routes() {
         <PageContainer>
           <LeftSidebar />
           <Referral />
+        </PageContainer>
+      </Route>
+      {/*Patients*/}
+      <Route path={path.patientPath}>
+        <PageContainer>
+          <LeftSidebar/>
+          <Patients/>
         </PageContainer>
       </Route>
       {/*Report*/}
