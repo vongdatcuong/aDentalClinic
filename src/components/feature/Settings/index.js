@@ -102,7 +102,7 @@ const Settings = () => {
                     orientation="vertical"
                     variant="scrollable"
                     value={tabValue}
-                    onChange={(evt) => handleChangeTab}
+                    onChange={handleChangeTab}
                     aria-label="Vertical tabs settings"
                     className={classes.tabs}
                 >
