@@ -34,39 +34,22 @@ import Tab from "@material-ui/core/Tab";
 import PopupChat from "../../common/Messenger/PopupChat";
 import TabPanel from "../../common/TabPanel";
 import NavPills from "../../common/NavPills/NavPills.js";
+import AdultToothChart from "../../common/ToothChart/AdultToothChart.js"
 
 const useStyles = makeStyles(styles);
 
 const ToothChartPage = () => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false,
-  });
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
+  
   const [curTab, setCurTab] = React.useState(0);
 
   const handleChangeTab = (event, newTab) => {
     setCurTab(newTab);
   };
 
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
+  const selectTooth = (toothID) => {
+    alert(toothID);
   }
 
   return (
@@ -80,20 +63,6 @@ const ToothChartPage = () => {
         className={classes.detailProfileContainer}
       >
         <Grid item className={classes.navPillsContainer}>
-          {/* <Tabs value={curTab} onChange={handleChangeTab} indicatorColor="primary" textColor="primary">
-                            <Tab label={t(strings.treatmentPlan).toUpperCase()} {...a11yProps(0)} />
-                            <Tab label={t(strings.history).toUpperCase()} {...a11yProps(1)} />
-                    </Tabs>
-                    <Grid item>
-                        <TabPanel value={curTab} index={0}>
-                            {t(strings.noTreatmentsPending)}
-                        </TabPanel>
-                        <TabPanel value={curTab} index={1}>
-                            <Button color="twitter" simple>
-                                {t(strings.addRecord)}
-                            </Button>
-                        </TabPanel>
-                    </Grid> */}
           <NavPills
             color="primary"
             tabs={[
@@ -123,15 +92,9 @@ const ToothChartPage = () => {
                 tabContent: (
                   <span>
                     <p>
-                      Efficiently unleash cross-media information without
-                      cross-media value. Quickly maximize timely deliverables
-                      for real-time schemas.
+                      Adult Tooth Chart
                     </p>
-                    <br />
-                    <p>
-                      Dramatically maintain clicks-and-mortar solutions without
-                      functional solutions.
-                    </p>
+                    <AdultToothChart callback={selectTooth}></AdultToothChart>
                   </span>
                 ),
               }
