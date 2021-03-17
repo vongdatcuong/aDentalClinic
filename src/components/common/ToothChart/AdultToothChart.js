@@ -10,7 +10,7 @@ const AdultToothChart = function (props) {
     <span id="Adult-Tooth-Chart">
       <div className="toothChartContainer">
         <div className="adultToothChart--upperJaw">
-          {AdultToothData.adultToothList.upperJaw.map((tooth, index) => {
+          {AdultToothData.adultToothList.upperJaw.slice().map((tooth, index) => {
             return (
               <ToothAside
                 key={index}
@@ -22,7 +22,7 @@ const AdultToothChart = function (props) {
           })}
         </div>
         <div className="adultToothChart--lowerJaw"></div>
-        {AdultToothData.adultToothList.lowerJaw.reverse().map((tooth, index) => {
+        {AdultToothData.adultToothList.lowerJaw.slice().reverse().map((tooth, index) => {
           return (
             <ToothAside
               key={index}
