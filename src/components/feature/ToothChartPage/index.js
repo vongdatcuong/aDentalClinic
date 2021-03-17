@@ -70,7 +70,7 @@ const ToothChartPage = () => {
                 tabButton: (<b>{t(strings.overView)}</b>),
                 tabContent: (
                   <span>
-                    <p>
+                    {/* <p>
                       Collaboratively administrate empowered markets via
                       plug-and-play networks. Dynamically procrastinate B2C
                       users after installed base benefits.
@@ -83,7 +83,11 @@ const ToothChartPage = () => {
                       procrastinate B2C users after installed base benefits.
                     </p>
                     <br />
-                    <p>This is very nice.</p>
+                    <p>This is very nice.</p> */}
+                    <p>
+                      Adult Tooth Chart
+                    </p>
+                    <AdultToothChart callback={selectTooth}></AdultToothChart>
                   </span>
                 ),
               },

@@ -10,25 +10,25 @@ const AdultToothChart = function (props) {
     <span id="Adult-Tooth-Chart">
       <div className="toothChartContainer">
         <div className="adultToothChart--upperJaw">
-          {AdultToothData.toothAsideList.upperJaw.map((tooth, index) => {
+          {AdultToothData.adultToothList.upperJaw.map((tooth, index) => {
             return (
               <ToothAside
                 key={index}
-                id={tooth.id}
+                id={tooth.fullTooth.id}
                 callback={props.callback}
-                svgString={tooth.svgString}
+                svgString={tooth.fullTooth.svgString}
               ></ToothAside>
             );
           })}
         </div>
         <div className="adultToothChart--lowerJaw"></div>
-        {AdultToothData.toothAsideList.lowerJaw.reverse().map((tooth, index) => {
+        {AdultToothData.adultToothList.lowerJaw.reverse().map((tooth, index) => {
           return (
             <ToothAside
               key={index}
-              id={tooth.id}
+              id={tooth.fullTooth.id}
               callback={props.callback}
-              svgString={tooth.svgString}
+              svgString={tooth.fullTooth.svgString}
             ></ToothAside>
           );
         })}
