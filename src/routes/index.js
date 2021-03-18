@@ -25,7 +25,8 @@ import Settings from '../components/feature/Settings';
 import ToothChartPage from '../components/feature/ToothChartPage';
 import PatientProfilePage from '../components/feature/PatientProfilePage';
 import PatientReportPage from '../components/feature/PatientReportPage';
-
+import MenuBar from "../layouts/MenuBar";
+import Management from "../components/feature/Management";
 function Routes() {
   return (
     <Switch>
@@ -42,89 +43,7 @@ function Routes() {
             <Dashboard/>
             <RightSidebar/>
           </PageContainer>
-        </Route>
-        <Route path={path.providersPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Providers />
-          </PageContainer>
-        </Route>
-        <Route path={path.practicesPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Practice />
-
-          </PageContainer>
-            
-        </Route>
-        <Route path={path.portalPath}>
-          <PageContainer>
-              <LeftSidebar/>
-              <Portal/>
-          </PageContainer>
-            
-            
-        </Route>
-        <Route path={path.schedulePath}>
-          <PageContainer>
-              <LeftSidebar/>
-              <Schedule/>
-          </PageContainer>
-            
-            
-            
-        </Route>
-        <Route path={path.staffsPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Staffs/>
-          </PageContainer>
-        </Route>
-        <Route path={path.procedurePath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Procedure/>
-          </PageContainer>
-            
-        </Route>
-        <Route path={path.chairsPath}>
-          <PageContainer>
-              <LeftSidebar/>
-              <Chairs/>
-          </PageContainer>
-            
-            
-        </Route>
-        <Route path={path.referralPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Referral/>
-          </PageContainer>
-            
-        </Route>
-        
-        <Route path={path.authenticationPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Authentication/>
-          </PageContainer>
-           
-            
-            
-        </Route>
-        <Route path={path.drugPath}>
-          <PageContainer>
-            <LeftSidebar/>
-            <Drug/>
-          </PageContainer>
-           
-            
-            
-        </Route>
-        
-        
-        
-       
+        </Route>      
         
         <Route path={path.toothChartPath}>
           <PageContainer>
@@ -142,6 +61,20 @@ function Routes() {
           <PageContainer>
             <TreatmentMenu/>
             <PatientReportPage/>
+          </PageContainer>
+        </Route>
+         {/*Managements With management*/}
+         <Route path={path.managementsWithManagementPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Management/>
+          </PageContainer>
+        </Route>
+        {/*Managements*/}
+        <Route path={path.managementsPath} exact>
+          <PageContainer>
+            <LeftSidebar/>
+            <Management/>
           </PageContainer>
         </Route>
         {/*Setting With Section*/}

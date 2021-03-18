@@ -55,7 +55,7 @@ const Practice = () => {
     }
     return (
         <div className={classes.container}>
-            <MenuBar/>
+            {/* <MenuBar/> */}
             <div className={classes.content}>
                 <Grid container>
                     <Grid item>

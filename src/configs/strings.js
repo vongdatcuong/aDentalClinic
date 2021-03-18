@@ -59,7 +59,8 @@ const workTime="Work time";
 const portal="Portal";
 //drug
 const quantity="Quantity";
-
+//table
+const rowsPerPage="Rows per page";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -245,6 +246,8 @@ export default {
     confirmPassword,
     templates,
     drug,
+    //table
+    rowsPerPage,
     // Date
     defaultTimeFormat,
     role,

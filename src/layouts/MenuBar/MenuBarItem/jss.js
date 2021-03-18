@@ -14,6 +14,8 @@ const menuBarItemStyle = (theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection:'column',
+
     },
     menuItemFirst:{
         background: theme.whiteColor,
@@ -27,6 +29,7 @@ const menuBarItemStyle = (theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection:'column',
     },
     menuItemImage:{
         marginTop:"5px",

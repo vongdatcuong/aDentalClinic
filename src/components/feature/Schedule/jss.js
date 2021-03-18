@@ -87,7 +87,10 @@ const scheduleStyle = (theme) => ({
         fontWeight:'bold',
         
     },
-
+    content:{
+        background:theme.whiteColor,
+        marginTop:'30px',
+    },
 });
 
   

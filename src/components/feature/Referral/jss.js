@@ -87,6 +87,10 @@ const referralStyle = (theme) => ({
     titleColumn:{
         fontWeight:'bold',
     },
+    content:{
+        background:theme.whiteColor,
+        marginTop:'30px',
+    },
 });
   
 export default referralStyle;  

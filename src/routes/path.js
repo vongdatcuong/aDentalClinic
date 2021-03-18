@@ -8,6 +8,9 @@ const documentPath = '/document';
 const settingsPath = '/settings';
 const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
+const managementsPath='/managements';
+const managementsWithManagementPath='/managements/:management';
+
 const providersPath='/providers';
 const staffsPath='/staffs';
 const practicesPath='/practices';
@@ -15,7 +18,7 @@ const referralPath='/referral';
 const procedurePath='/procedure';
 const chairsPath="/chairs";
 const schedulePath="/schedule";
-const authentication="/authentication";
+const authenticationPath="/authentication";
 const document="/document";
 const drugPath="/drug";
 const portalPath="/portal";
@@ -39,14 +42,15 @@ const path = {
     procedurePath,
     chairsPath,
     schedulePath,
-    authentication,
+    authenticationPath,
     document,
     toothChartPath,
     patientProfilePath,
     patientReportPath,
     drugPath,
     portalPath,
-    
+    managementsPath,
+    managementsWithManagementPath,
 }
 
 export default path;

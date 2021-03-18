@@ -87,6 +87,10 @@ const staffStyle = (theme) => ({
     titleColumn:{
         fontWeight:'bold',
     },
+    content:{
+        background:theme.whiteColor,
+        marginTop:'30px',
+    },
 });
   
 export default staffStyle;  
