@@ -39,8 +39,6 @@ const reportStyle = (theme) => ({
         '& input': {
             border: `2px solid ${theme.hoverDarkColor[1]}`,
             borderRadius: '5px',
-            backgroundColor: theme.primaryColor[0],
-            color: theme.fontColor,
             padding: theme.spacing(1),
             '&::placeholder': {
                 color: theme.fontColor,
