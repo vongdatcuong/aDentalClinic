@@ -236,8 +236,8 @@ const Report = () => {
         });
 
         // Disabled Date type
-        fromRef.current.input.disabled = true;
-        toRef.current.input.disabled = true;
+        //fromRef.current.input.disabled = true;
+        //toRef.current.input.disabled = true;
     }, [applyFromDate, applyToDate]);
 
     // Card Report
