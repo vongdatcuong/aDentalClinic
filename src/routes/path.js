@@ -2,13 +2,15 @@ const defaultPath = '/';
 
 // Main Path
 const dashboardPath = '/dashboard';
-const patientPath = '/patient';
+const patientPath = '/patients';
 const reportPath = '/report';
 const documentPath = '/document';
-const managementPath = '/management';
 const settingsPath = '/settings';
 const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
+const managementsPath='/managements';
+const managementsWithManagementPath='/managements/:management';
+
 const providersPath='/providers';
 const staffsPath='/staffs';
 const practicesPath='/practices';
@@ -32,7 +34,6 @@ const path = {
     patientPath,
     reportPath, 
     documentPath,
-    managementPath,
     settingsPath,
     settingsWithSectionPath,
     loginPath,
@@ -52,7 +53,8 @@ const path = {
     patientImagesPath,
     drugPath,
     portalPath,
-    
+    managementsPath,
+    managementsWithManagementPath,
 }
 
 export default path;

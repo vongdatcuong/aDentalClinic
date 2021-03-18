@@ -9,7 +9,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import {Typography,
     Container,
     Grid,
-
+    Tab,
 }
 from '@material-ui/core';
 import styles from "./jss";
@@ -19,41 +19,22 @@ const useStyles = makeStyles(styles);
 const MenuBarItem=(props)=>{
     const {t, i18n } = useTranslation();
     const classes = useStyles();
-    if(props.index===0)
-    {
-        return(
-            <Container className={classes.menuItemFirst} 
-
-                    >
-                    <NavLink
+    
+    return(
+        <NavLink
                         to={props.path}
                         className={classes.link}
                         activeClassName={classes.activeLink}
-
                     >
-                        <img className={classes.menuItemImage} src={props.src}></img>
-                        <Typography variant="body2"  >
-                            {props.name}
-                        </Typography>
-                    </NavLink>
-                </Container>
-        )
-        
-    }
-    return(
-        <Container className={classes.menuItem} >
-                <NavLink
-                    to={props.path}
-                    className={classes.link}
-                    activeClassName={classes.activeLink}
-
-                    >
-                        <img className={classes.menuItemImage} src={props.src}></img>
-                        <Typography variant="subtitle2" >
-                            {props.name}
+                        <Container className={props.index===0 ? classes.menuItemFirst: classes.menuItem}>
+                            <img className={classes.menuItemImage} src={props.src}></img>
+                            <Typography variant="body2"  >
+                                {props.name}
                             </Typography>
-                        </NavLink>
-            </Container>
+                        </Container>
+                        
+        </NavLink>
+        
 
     )
 }

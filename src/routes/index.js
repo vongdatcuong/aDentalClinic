@@ -18,17 +18,19 @@ import Schedule from "../components/feature/Schedule";
 import Portal from "../components/feature/Portal";
 import Drug from "../components/feature/Drug";
 import Practice from "../components/feature/Practice";
-import TreatmentMenu from "../layouts/TreatmentMenu";
-import Dashboard from "../components/feature/Dashboard";
-import LoginPage from "../components/feature/LoginPage";
-import Settings from "../components/feature/Settings";
-import ToothChartPage from "../components/feature/ToothChartPage";
-import PatientProfilePage from "../components/feature/PatientProfilePage";
+import TreatmentMenu from '../layouts/TreatmentMenu';
+import Dashboard from '../components/feature/Dashboard';
+import LoginPage from '../components/feature/LoginPage';
+import Settings from '../components/feature/Settings';
+import ToothChartPage from '../components/feature/ToothChartPage';
+import PatientProfilePage from '../components/feature/PatientProfilePage';
+import MenuBar from "../layouts/MenuBar";
+import Management from "../components/feature/Management";
 import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import Report from '../components/feature/Report';
-import Patient from '../components/feature/Patient';
+import Patients from '../components/feature/Patients';
 
 function Routes() {
   return (
@@ -46,10 +48,6 @@ function Routes() {
           <Dashboard />
           <RightSidebar />
         </PageContainer>
-      </Route>
-      {/*Management*/}
-      <Route path={path.managementPath}>
-        <Redirect to={path.providersPath}/>
       </Route>
       <Route path={path.providersPath}>
         <PageContainer>
@@ -99,6 +97,13 @@ function Routes() {
           <Referral />
         </PageContainer>
       </Route>
+      {/*Patients*/}
+      <Route path={path.patientPath}>
+        <PageContainer>
+          <LeftSidebar/>
+          <Patients/>
+        </PageContainer>
+      </Route>
       {/*Report*/}
       <Route path={path.reportPath}>
         <PageContainer>
@@ -116,13 +121,6 @@ function Routes() {
         <PageContainer>
           <LeftSidebar />
           <Drug />
-        </PageContainer>
-      </Route>
-      {/*Patient Pages*/}
-      <Route path={path.patientPath}>
-        <PageContainer>
-          <LeftSidebar />
-          <Patient />
         </PageContainer>
       </Route>
       <Route path={path.toothChartPath}>
@@ -155,24 +153,38 @@ function Routes() {
           <PatientImagesPage />
         </PageContainer>
       </Route>
-      {/*Setting With Section*/}
-      <Route path={path.settingsWithSectionPath}>
-        <PageContainer>
-          <LeftSidebar />
-          <Settings />
-        </PageContainer>
-      </Route>
-      {/*Setting*/}
-      <Route path={path.settingsPath} exact>
-        <PageContainer>
-          <LeftSidebar />
-          <Settings />
-        </PageContainer>
-      </Route>
-      {/*Default*/}
-      <Route path={path.defaultPath} exact>
-        <Redirect to={path.dashboardPath} />
-      </Route>
+        {/*Setting With Section*/}
+        <Route path={path.settingsWithSectionPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Settings/>
+          </PageContainer>
+        </Route>
+        {/*Setting*/}
+        <Route path={path.settingsPath} exact>
+          <PageContainer>
+            <LeftSidebar/>
+            <Settings/>
+          </PageContainer>
+        </Route>
+        {/*Default*/}
+        <Route path={path.defaultPath} exact>
+          <Redirect to={path.dashboardPath}/>
+        </Route>
+         {/*Managements With management*/}
+         <Route path={path.managementsWithManagementPath}>
+          <PageContainer>
+            <LeftSidebar/>
+            <Management/>
+          </PageContainer>
+        </Route>
+        {/*Managements*/}
+        <Route path={path.managementsPath} exact>
+          <PageContainer>
+            <LeftSidebar/>
+            <Management/>
+          </PageContainer>
+        </Route>
     </Switch>
   );
 }

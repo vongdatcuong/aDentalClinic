@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import strings from "../../configs/strings";
 // Routes
+import {useParams, useHistory} from "react-router-dom";
 import path from "../../routes/path";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +36,7 @@ const useStyles = makeStyles(styles);
 const TreatmentMenu = (props) => {
   const classes = useStyles();
   const { t, i18n } = useTranslation();
+  const history = useHistory();
 
   // States
   const [openLeftSidebarGhost, setOpenLeftSidebarGhost] = useState(false);
@@ -69,7 +71,7 @@ const TreatmentMenu = (props) => {
   const links = <LinkList links={pathList} />;
 
   const goBack = (
-    <NavLink to="/patient" className={classes.listItemLink}>
+    <NavLink to={path.patientPath} className={classes.listItemLink}>
       <Tooltip title={t(strings.goBack)} aria-label={t(strings.goBack)}>
         <IconButton className={classes.goBackBtn} size="medium">
           <ArrowBack />

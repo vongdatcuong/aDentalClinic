@@ -63,8 +63,8 @@ const workTime="Work time";
 const portal="Portal";
 //drug
 const quantity="Quantity";
-const rowsPerPage  = "Rows per page";
-
+//table
+const rowsPerPage="Rows per page";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -131,6 +131,12 @@ const halitosis = "Halitosis";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
+const missing = "Missing";
+const veneer = "Veneer";
+const pontics = "Pontics";
+const crown = "Crown";
+const endoTests = "Endo tests";
+
 
 // Report
 const payment = "Payment";
@@ -258,6 +264,11 @@ export default {
     // Tooth chart page
     overView,
     quickSelect,
+    missing,
+    veneer,
+    pontics,
+    crown,
+    endoTests,
     // Management
     providers,
     staffs,

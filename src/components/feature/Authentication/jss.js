@@ -30,8 +30,9 @@ const authenticationStyle = (theme) => ({
         fontWeight:"bold"
     },
     itemFullname:{
-        width: 400,
-        fontWeight:"bold"
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
+
     },
     itemGender:{
         width: 80,

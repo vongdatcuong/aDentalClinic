@@ -43,6 +43,8 @@ import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import MenuBar from "../../../layouts/MenuBar";
+import TablePaginationActions from "../../../layouts/TablePaginationActions";
+
 const useStyles = makeStyles(styles);
 const createData=(id,fullname,birth,gender,address)=>{
     return {id,fullname,birth,gender,address};
@@ -63,68 +65,7 @@ const rows = [
 
 
 ];
-const useStyles1 = makeStyles((theme) => ({
-    root: {
-      flexShrink: 0,
-      marginLeft: theme.spacing(2.5),
-    },
-}));
-const TablePaginationActions=(props)=> {
-    const classes = useStyles1();
-    const theme = useTheme();
-    const { count, page, rowsPerPage, onChangePage } = props;
-  
-    const handleFirstPageButtonClick = (event) => {
-      onChangePage(event, 0);
-    };
-  
-    const handleBackButtonClick = (event) => {
-      onChangePage(event, page - 1);
-    };
-  
-    const handleNextButtonClick = (event) => {
-      onChangePage(event, page + 1);
-    };
-  
-    const handleLastPageButtonClick = (event) => {
-      onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-    };
-  
-    return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="first page"
-        >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-        </IconButton>
-        <IconButton
-          onClick={handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="next page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </IconButton>
-        <IconButton
-          onClick={handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="last page"
-        >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-        </IconButton>
-      </div>
-    );
-}
-TablePaginationActions.propTypes = {
-    count: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-  };
+
 const Staffs = () => {
     const {t, i18n } = useTranslation();
 
@@ -146,7 +87,7 @@ const Staffs = () => {
     };
     return (
         <div className={classes.container} >
-            <MenuBar/>
+            {/* <MenuBar/> */}
             
             <div className={classes.content}>
                 <Grid container>
@@ -194,10 +135,10 @@ const Staffs = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} align="center">
                                 {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn}>
+                            <TableCell className={classes.titleColumn} align="center">
                                 {t(strings.id)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
@@ -221,10 +162,10 @@ const Staffs = () => {
                         ).map((row,index) => (
                             <TableRow key={row.id}>
                                 
-                                <TableCell >
-                                    {index+1}
+                                <TableCell align="center">
+                                    {index+1 +page * rowsPerPage}
                                 </TableCell>
-                                <TableCell >
+                                <TableCell align="center">
                                     {row.id}
                                 </TableCell>
                                 <TableCell >
@@ -264,7 +205,7 @@ const Staffs = () => {
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     ActionsComponent={TablePaginationActions}
-                    
+                    labelRowsPerPage={t(strings.rowsPerPage)}
                     />
                 </TableRow>
                 
