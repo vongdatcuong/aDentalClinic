@@ -128,6 +128,12 @@ const halitosis = "Halitosis";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
+const missing = "Missing";
+const veneer = "Veneer";
+const pontics = "Pontics";
+const crown = "Crown";
+const endoTests = "Endo tests";
+
 
 // Report
 const payment = "Payment";
@@ -253,6 +259,11 @@ export default {
     // Tooth chart page
     overView,
     quickSelect,
+    missing,
+    veneer,
+    pontics,
+    crown,
+    endoTests,
     // Management
     providers,
     staffs,

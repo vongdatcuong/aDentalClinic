@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useState } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import styles from "./jss";
+
+const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
-    
-    function pickTooth(e) {
-        console.log(e.target.id);
-        props.callback(e.target.id);
-    }
+  const classes = useStyles();
+  const { id, svgString, ...other } = props;
+  const [isSelected, setIsSelected] = useState(false);
 
-    return (
-        <React.Fragment>
-            {props.tag==="polygon" ? 
-                (<polygon onClick={(e) => pickTooth(e)} tag={props.tag} className={props.className} id={props.id} fill={props.fill} data-key={props.dataKey} points={props.points} />)
-                :
-                (<path onClick={(e) => pickTooth(e)} tag={props.tag} className={props.className} id={props.id} fill={props.fill} data-key={props.dataKey} d={props.d} />)
-            }
-        </React.Fragment>
-    );
+  function handlePickToothOverview() {
+  }
+
+  function handlePickToothQuickselect() {
+    setIsSelected(!isSelected);
+  }
+
+  function pickTooth() {
+    if (props.viewType === "overview") {
+      handlePickToothOverview();
+    } 
+    else if (props.viewType === "quickselect") {
+      handlePickToothQuickselect();
+    }
+    props.onClickTooth(id);
+  }
+
+  return (
+    <React.Fragment>
+      <span
+        id={id}
+        onClick={() => pickTooth()}
+        className={isSelected ? classes.selectedTooth : classes.unSelectedTooth}
+      >
+        {svgString}
+      </span>
+    </React.Fragment>
+  );
+};
+Tooth.propTypes = {
+  svgString: PropTypes.node,
+  id: PropTypes.string,
 };
 
 export default Tooth;

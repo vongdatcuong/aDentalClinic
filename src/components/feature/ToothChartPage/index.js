@@ -29,27 +29,39 @@ import AccountBox from "@material-ui/icons/AccountBox";
 import Lock from "@material-ui/icons/Lock";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { MdSettingsBackupRestore } from "react-icons/md";
 
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
+import Fab from "@material-ui/core/Fab";
+import Grow from '@material-ui/core/Grow';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TabPanel from "../../common/TabPanel";
+import Slide from '@material-ui/core/Slide';
 import NavPills from "../../common/NavPills/NavPills.js";
-import AdultToothChart from "../../common/ToothChart/AdultToothChart.js"
+import AdultToothChart from "../../common/ToothChart/AdultToothChart.js";
 
 const useStyles = makeStyles(styles);
 
 const ToothChartPage = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const classes = useStyles();
-  
-  const [curTab, setCurTab] = React.useState(0);
+  const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
+  const [disabledOverviewUndoBtn, setDisabledOverviewUndoBtn] = React.useState(true);
 
-  const handleChangeTab = (event, newTab) => {
-    setCurTab(newTab);
-  };
+//   const [curTab, setCurTab] = React.useState(0);
 
-  const selectTooth = (toothID) => {
+//   const handleChangeTab = (event, newTab) => {
+//     setCurTab(newTab);
+//   };
+
+  const handleClickToothOverview = (toothID) => {
     alert(toothID);
+    setDisabledOverviewUndoBtn(false);
+  }
+
+  const handleClickToothQuickselect = (toothID) => {
+    setShowQuickselectMenu(!showQuickselectMenu);
   }
 
   return (
@@ -67,43 +79,41 @@ const ToothChartPage = () => {
             color="primary"
             tabs={[
               {
-                tabButton: (<b>{t(strings.overView)}</b>),
+                tabButton: <b>{t(strings.overView)}</b>,
                 tabContent: (
-                  <span>
-                    {/* <p>
-                      Collaboratively administrate empowered markets via
-                      plug-and-play networks. Dynamically procrastinate B2C
-                      users after installed base benefits.
-                    </p>
-                    <br />
-                    <p>
-                      Dramatically visualize customer directed convergence
-                      without revolutionary ROI. Collaboratively administrate
-                      empowered markets via plug-and-play networks. Dynamically
-                      procrastinate B2C users after installed base benefits.
-                    </p>
-                    <br />
-                    <p>This is very nice.</p> */}
-                    <p>
-                      Adult Tooth Chart
-                    </p>
-                    <AdultToothChart callback={selectTooth}></AdultToothChart>
-                  </span>
+                  <React.Fragment>
+                    <span className={classes.toothChartContainer}>
+                      <AdultToothChart onClickTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
+                    </span>
+                    <Fab aria-label="Undo" className={classes.fabUndo} disabled={disabledOverviewUndoBtn}>
+                      <MdSettingsBackupRestore />
+                    </Fab>
+                  </React.Fragment>
                 ),
               },
               {
-                tabButton: (<b>{t(strings.quickSelect)}</b>),
+                tabButton: <b>{t(strings.quickSelect)}</b>,
                 tabContent: (
-                  <span>
-                    <p>
-                      Adult Tooth Chart
-                    </p>
-                    <AdultToothChart callback={selectTooth}></AdultToothChart>
-                  </span>
+                  <React.Fragment>
+                    <span className={classes.toothChartContainer}>
+                      <AdultToothChart onClickTooth={handleClickToothQuickselect} viewType="quickselect"></AdultToothChart>
+                    </span>
+                    <span className={classes.quickselectMenuContainer}>
+                        <Grow in={showQuickselectMenu}>
+                            <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group" className={classes.quickselectMenu}>
+                                <Button><b>{t(strings.missing)}</b></Button>
+                                <Button><b>{t(strings.veneer)}</b></Button>
+                                <Button><b>{t(strings.pontics)}</b></Button>
+                                <Button><b>{t(strings.crown)}</b></Button>
+                                <Button><b>{t(strings.endoTests)}</b></Button>
+                            </ButtonGroup>
+                        </Grow>
+                    </span>
+                  </React.Fragment>
                 ),
-              }
+              },
             ]}
-            />
+          />
         </Grid>
       </Grid>
     </Container>

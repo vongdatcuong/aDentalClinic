@@ -2,6 +2,7 @@ import AdultToothData from "./AdultToothData.js"
 
 import ToothAside from "./Tooth/ToothAside.js";
 import ToothAbove from "./Tooth/ToothAbove.js";
+import Tooth from "./Tooth/Tooth.js";
 
 const AdultToothChart = function (props) {
 
@@ -12,24 +13,27 @@ const AdultToothChart = function (props) {
         <div className="adultToothChart--upperJaw">
           {AdultToothData.adultToothList.upperJaw.slice().map((tooth, index) => {
             return (
-              <ToothAside
+              <Tooth
+                viewType={props.viewType}
                 key={index}
                 id={tooth.fullTooth.id}
-                callback={props.callback}
+                onClickTooth={props.onClickTooth}
                 svgString={tooth.fullTooth.svgString}
-              ></ToothAside>
+              ></Tooth>
             );
           })}
         </div>
+        <br></br>
         <div className="adultToothChart--lowerJaw"></div>
         {AdultToothData.adultToothList.lowerJaw.slice().reverse().map((tooth, index) => {
           return (
-            <ToothAside
+            <Tooth
+              viewType={props.viewType}
               key={index}
               id={tooth.fullTooth.id}
-              callback={props.callback}
+              onClickTooth={props.onClickTooth}
               svgString={tooth.fullTooth.svgString}
-            ></ToothAside>
+            ></Tooth>
           );
         })}
       </div>
