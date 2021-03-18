@@ -75,8 +75,15 @@ export default {
         "Plaque index": "Plaque index",
         "Bleeding index": "Bleeding index",
         "Halitosis": "Halitosis",
+        // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",
+        "Missing": "Missing",
+        "Veneer": "Veneer",
+        "Pontics": "Pontics",
+        "Crown": "Crown",
+        "Endo tests": "Endo tests",
+
         // Settings
         "General" : "General",
         "Account": "Account",

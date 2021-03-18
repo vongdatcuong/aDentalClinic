@@ -24,15 +24,13 @@ import LoginPage from '../components/feature/LoginPage';
 import Settings from '../components/feature/Settings';
 import ToothChartPage from '../components/feature/ToothChartPage';
 import PatientProfilePage from '../components/feature/PatientProfilePage';
-import PatientReportPage from '../components/feature/PatientReportPage';
 import MenuBar from "../layouts/MenuBar";
 import Management from "../components/feature/Management";
 import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import Report from '../components/feature/Report';
-import Patient from '../components/feature/Patient';
-
+import Patients from '../components/feature/Patients';
 
 function Routes() {
   return (
@@ -50,10 +48,6 @@ function Routes() {
           <Dashboard />
           <RightSidebar />
         </PageContainer>
-      </Route>
-      {/*Management*/}
-      <Route path={path.managementPath}>
-        <Redirect to={path.providersPath}/>
       </Route>
       <Route path={path.providersPath}>
         <PageContainer>
@@ -103,6 +97,13 @@ function Routes() {
           <Referral />
         </PageContainer>
       </Route>
+      {/*Patients*/}
+      <Route path={path.patientPath}>
+        <PageContainer>
+          <LeftSidebar/>
+          <Patients/>
+        </PageContainer>
+      </Route>
       {/*Report*/}
       <Route path={path.reportPath}>
         <PageContainer>
@@ -120,13 +121,6 @@ function Routes() {
         <PageContainer>
           <LeftSidebar />
           <Drug />
-        </PageContainer>
-      </Route>
-      {/*Patient Pages*/}
-      <Route path={path.patientPath}>
-        <PageContainer>
-          <LeftSidebar />
-          <Patient />
         </PageContainer>
       </Route>
       <Route path={path.toothChartPath}>

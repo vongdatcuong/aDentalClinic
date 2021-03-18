@@ -2,10 +2,9 @@ const defaultPath = '/';
 
 // Main Path
 const dashboardPath = '/dashboard';
-const patientPath = '/patient';
+const patientPath = '/patients';
 const reportPath = '/report';
 const documentPath = '/document';
-const managementPath = '/management';
 const settingsPath = '/settings';
 const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
@@ -35,7 +34,6 @@ const path = {
     patientPath,
     reportPath, 
     documentPath,
-    managementPath,
     settingsPath,
     settingsWithSectionPath,
     loginPath,

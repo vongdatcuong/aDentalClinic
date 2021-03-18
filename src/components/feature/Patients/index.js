@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { useParams, useHistory } from "react-router-dom";
+import path from '../../../routes/path';
 import clsx from 'clsx';
 //import configs
 import strings from '../../../configs/strings';
@@ -129,7 +131,8 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-const Providers = () => {
+const Patients = () => {
+    const history = useHistory();
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
@@ -193,7 +196,7 @@ const Providers = () => {
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="custom pagination table">
                             <TableHead>
-                                <TableRow>
+                                <TableRow onClick={() => history.push(path.patientProfilePath)}>
                                     <TableCell align="center" className={clsx(classes.titleColumn, classes.tableCell)} width="5%">
                                         {t(strings.index)}
                                     </TableCell>
@@ -219,7 +222,7 @@ const Providers = () => {
                                     ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     : rows
                                 ).map((row,index) => (
-                                    <TableRow key={row.id}>
+                                    <TableRow key={row.id} onClick={() => history.push(path.patientProfilePath)}>
                                         <TableCell align="center" width="5%" className={classes.tableCell}>
                                             {page * rowsPerPage + index + 1}
                                         </TableCell>
@@ -269,4 +272,4 @@ const Providers = () => {
     )
 }
 
-export default Providers;
+export default Patients;

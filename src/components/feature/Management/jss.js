@@ -3,7 +3,7 @@ const managementStyle = (theme) => ({
         flexGrow: 1,
         margin:"0px",
         '& .MuiTabs-root':{
-            width:'1230px',
+            width:'92vw',
             background:theme.primaryColor[1],
             color:theme.whiteColor,
             position:'fixed',

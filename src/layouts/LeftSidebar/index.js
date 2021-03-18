@@ -84,7 +84,7 @@ const LeftSidebar = (props) => {
         icon: <AssessmentIcon/>
       },
       {
-        link: path.managementPath,
+        link: path.managementsPath,
         text: t(strings.management),
         icon: <BusinessCenterIcon/>
       },

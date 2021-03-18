@@ -75,8 +75,14 @@ export default {
         "Plaque index": "Chỉ số mảng bám",
         "Bleeding index": "Chỉ số chảy máu",
         "Halitosis": "Mức độ hôi miệng",
+        // Tooth chart page
         "Overview": "Tổng quan",
         "Quickselect": "Chọn nhanh",
+        "Missing": "Bị thiếu",
+        "Veneer": "Răng dán sứ",
+        "Pontics": "Cầu răng",
+        "Crown": "Mão răng",
+        "Endo tests": "Kiểm tra răng",
         // Settings
         "General" : "Chung",
         "Account": "Tài khoản",
