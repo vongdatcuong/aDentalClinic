@@ -160,7 +160,8 @@ export default {
         "Portal":"Portal",
         //drug
         "Quantity":"Quantity",
-        "Rows per page": "Rows per page"
+        //table
+        "Rows per page":"Rows per page",
         
     }
 }

@@ -24,11 +24,7 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
@@ -43,88 +39,28 @@ import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import MenuBar from "../../../layouts/MenuBar";
+import TablePaginationActions from "../../../layouts/TablePaginationActions";
 const useStyles = makeStyles(styles);
-const createData=(id,fullname,role,gender,address)=>{
-    return {id,fullname,role,gender,address};
+const createData=(index,id,fullname,role,gender,address)=>{
+    return {index,id,fullname,role,gender,address};
 };
 const rows = [
-    createData('1712320', "Dat", "Admin", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
-    createData('1712321', "Doan", "Customer", "Male", "HCM"),
-    createData('1712322', "Thai", "Customer", "Male", "HCM"),
-    createData('1712323', "Dan", "Customer", "Male", "HCM"),
-    createData('1712324', "Cuong", "Customer", "Male", "HCM"),
-    createData('1712325', "Vong", "Customer", "Male", "HCM"),
-    createData('1712326', "Hung", "Customer", "Male", "HCM"),
-    createData('1712327', "The", "Customer", "Male", "HCM"),
-    createData('1712328', "Anh", "Customer", "Male", "HCM"),
-    createData('1712329', "Nguyen", "Customer", "Female", "HCM"),
-    createData('1712330', "Tang", "Customer", "Female", "HCM"),
-    createData('1712331', "Vu", "Customer", "Female", "HCM"),
+    createData(1,'1712320', "Dat", "Admin", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
+    createData(2,'1712321', "Doan", "Customer", "Male", "HCM"),
+    createData(3,'1712322', "Thai", "Customer", "Male", "HCM"),
+    createData(4,'1712323', "Dan", "Customer", "Male", "HCM"),
+    createData(5,'1712324', "Cuong", "Customer", "Male", "HCM"),
+    createData(6,'1712325', "Vong", "Customer", "Male", "HCM"),
+    createData(7,'1712326', "Hung", "Customer", "Male", "HCM"),
+    createData(8,'1712327', "The", "Customer", "Male", "HCM"),
+    createData(9,'1712328', "Anh", "Customer", "Male", "HCM"),
+    createData(10,'1712329', "Nguyen", "Customer", "Female", "HCM"),
+    createData(11,'1712330', "TangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasj", "Customer", "Female", "HCM"),
+    createData(12,'1712331', "Vu asdsa das dasd sad sad sad asd asd asd asdsadas das  asd asdsa dasd as", "Customer", "Female", "HCM"),
 
 
 ];
-const useStyles1 = makeStyles((theme) => ({
-    root: {
-      flexShrink: 0,
-      marginLeft: theme.spacing(2.5),
-    },
-}));
-const TablePaginationActions=(props)=> {
-    const classes = useStyles1();
-    const theme = useTheme();
-    const { count, page, rowsPerPage, onChangePage } = props;
-  
-    const handleFirstPageButtonClick = (event) => {
-      onChangePage(event, 0);
-    };
-  
-    const handleBackButtonClick = (event) => {
-      onChangePage(event, page - 1);
-    };
-  
-    const handleNextButtonClick = (event) => {
-      onChangePage(event, page + 1);
-    };
-  
-    const handleLastPageButtonClick = (event) => {
-      onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-    };
-  
-    return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="first page"
-        >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-        </IconButton>
-        <IconButton
-          onClick={handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="next page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </IconButton>
-        <IconButton
-          onClick={handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="last page"
-        >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-        </IconButton>
-      </div>
-    );
-}
-TablePaginationActions.propTypes = {
-    count: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-  };
+
 const Authentication = () => {
     const {t, i18n } = useTranslation();
 
@@ -146,7 +82,7 @@ const Authentication = () => {
     };
     return (
         <div className={classes.container}>
-            <MenuBar/>
+            {/* <MenuBar/> */}
             
             <div className={classes.content}>
                 <Grid container>
@@ -194,10 +130,10 @@ const Authentication = () => {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.titleColumn} >
+                            <TableCell className={classes.titleColumn} align="center">
                                 {t(strings.index)}
                             </TableCell>
-                            <TableCell className={classes.titleColumn} >
+                            <TableCell className={classes.titleColumn} align="center">
                                 {t(strings.id)}
                             </TableCell>
                             <TableCell className={classes.titleColumn}>
@@ -221,13 +157,13 @@ const Authentication = () => {
                         ).map((row,index) => (
                             <TableRow key={row.id}>
                                 
-                                <TableCell >
-                                    {index+1}
+                                <TableCell align="center">
+                                    {index+1+page*rowsPerPage}
                                 </TableCell>
-                                <TableCell >
+                                <TableCell align="center">
                                     {row.id}
                                 </TableCell>
-                                <TableCell >
+                                <TableCell className={classes.itemFullname}>
                                     {row.fullname}
                                 </TableCell>
                                 <TableCell >
@@ -264,7 +200,7 @@ const Authentication = () => {
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     ActionsComponent={TablePaginationActions}
-                    
+                    labelRowsPerPage={t(strings.rowsPerPage)}
                     />
                 </TableRow>
                 

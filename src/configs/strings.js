@@ -63,8 +63,8 @@ const workTime="Work time";
 const portal="Portal";
 //drug
 const quantity="Quantity";
-const rowsPerPage  = "Rows per page";
-
+//table
+const rowsPerPage="Rows per page";
 // Common
 const yes = "Yes";
 const no = "No";

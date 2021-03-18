@@ -4,16 +4,22 @@ const menuBarStyle = (theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        width:'100%',
         background: theme.primaryColor[2],
         margin:'0px',
         '& .horizontal-menu': {
             width:'1200px',
         },
+        '& .MuiTabs-root':{
+            width:'1200px',
+
+        },
         '& .menu-wrapper--inner': {
-            transform:'none !important',
+            transform:'translate3d(15px, 0px, 0px) !important',
         },
         '& .menu-item-wrapper': {
-            paddingLeft:'20px',
+            paddingLeft:'10px',
+            paddingRight:'10px',
         },
         '& .scroll-menu-arrow':{
             padding: '20px',

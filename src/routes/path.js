@@ -9,6 +9,9 @@ const managementPath = '/management';
 const settingsPath = '/settings';
 const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
+const managementsPath='/managements';
+const managementsWithManagementPath='/managements/:management';
+
 const providersPath='/providers';
 const staffsPath='/staffs';
 const practicesPath='/practices';
@@ -52,7 +55,8 @@ const path = {
     patientImagesPath,
     drugPath,
     portalPath,
-    
+    managementsPath,
+    managementsWithManagementPath,
 }
 
 export default path;
