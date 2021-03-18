@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from "prop-types";
 import styles from "./jss";
 
@@ -29,13 +30,15 @@ const Tooth = function (props) {
 
   return (
     <React.Fragment>
-      <span
-        id={id}
-        onClick={() => pickTooth()}
-        className={isSelected ? classes.selectedTooth : classes.unSelectedTooth}
-      >
-        {svgString}
-      </span>
+      <Tooltip title={id} aria-label={id}>
+        <span
+            id={id}
+            onClick={() => pickTooth()}
+            className={isSelected ? classes.selectedTooth : classes.unSelectedTooth}
+        >
+            {svgString}
+        </span>
+      </Tooltip>
     </React.Fragment>
   );
 };
