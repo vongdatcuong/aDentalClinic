@@ -14,6 +14,7 @@ const AdultToothChart = function (props) {
           {AdultToothData.adultToothList.upperJaw.slice().map((tooth, index) => {
             return (
               <Tooth
+                jaw="upperJaw"
                 viewType={props.viewType}
                 key={index}
                 id={tooth.fullTooth.id}
@@ -28,6 +29,7 @@ const AdultToothChart = function (props) {
         {AdultToothData.adultToothList.lowerJaw.slice().reverse().map((tooth, index) => {
           return (
             <Tooth
+              jaw="lowerJaw"
               viewType={props.viewType}
               key={index}
               id={tooth.fullTooth.id}
