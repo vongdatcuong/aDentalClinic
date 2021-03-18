@@ -35,7 +35,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image

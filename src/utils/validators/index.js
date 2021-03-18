@@ -6,7 +6,8 @@ const properties = {
     email: "Email",
     phone: "phone",
     address: "address",
-    password: "password"
+    password: "password",
+    firstName: "firstName",
 }
 
 // Schemas
@@ -32,6 +33,9 @@ const passwordSchema = Joi.string()
     .min(6)
     .max(100)
     .required();
+const firstNameSchema = Joi.string()
+    .max(30)
+    .required();
 
 const isPropValid = (type, value) => {
     let schema = Joi.string();
@@ -51,6 +55,8 @@ const isPropValid = (type, value) => {
         case properties.password:
             schema = passwordSchema;
             break;
+        case properties.firstName:
+            schema = firstNameSchema;
         default:
             break;
     }

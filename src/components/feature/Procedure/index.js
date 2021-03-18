@@ -67,7 +67,7 @@ const rows = [
 ];
 
 const Procedure = () => {
-    const classes = useStyles(darkTheme);
+    const classes = useStyles();
     const {t, i18n } = useTranslation();
 
     const [page, setPage] = useState(0);

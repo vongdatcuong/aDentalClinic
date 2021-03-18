@@ -64,7 +64,7 @@ const rows = [
 const Authentication = () => {
     const {t, i18n } = useTranslation();
 
-    const classes = useStyles(darkTheme);
+    const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);

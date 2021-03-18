@@ -31,7 +31,7 @@ const useStyles = makeStyles(styles);
 const Practice = () => {
     const {t, i18n } = useTranslation();
 
-    const classes = useStyles(darkTheme);
+    const classes = useStyles();
     const [name,setName]=useState("Name");
     const [organization,setOrganization]=useState("Organization");
     const [location,setLocation]=useState("Location");

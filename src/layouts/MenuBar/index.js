@@ -71,7 +71,7 @@ function a11yProps(index) {
 
 const MenuBar=()=>{
     const {t, i18n } = useTranslation();
-    const classes = useStyles(darkTheme);
+    const classes = useStyles();
     
     const ArrowLeft = Arrow({ text: '<', className: classes.arrowLeft });
     const ArrowRight = Arrow({ text: '>', className: classes.arrowRight });

@@ -124,7 +124,7 @@ export default {
         "CURRENCY CHART": "Triệu VND",
         //Menu bar
         "Providers":"Bác sĩ",
-        "Practices":"Thực hành",
+        "Practices":"Văn phòng",
         "Staffs":"Nhân viên",
         "Procedure":"Thủ tục",
         "Referral":"Giới thiệu",

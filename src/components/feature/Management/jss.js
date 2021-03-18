@@ -7,7 +7,10 @@ const managementStyle = (theme) => ({
             background:theme.primaryColor[1],
             color:theme.whiteColor,
             position:'fixed',
-            
+            zIndex: theme.menuBarZIndex,
+            [theme.breakpoints.down('sm')]: {
+                width: '100%'
+            },
 
         },
         '& .MuiBox-root':{
