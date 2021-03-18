@@ -27,6 +27,7 @@ import {hexToRgb} from '../utils/colors';
   const miniLeftSidebarZIndex = 999;
   const loadingZIndex = 9999;
   const menuBarZIndex = 998;
+  const selectedToothZIndex = 900;
 
   const transition = {
     transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
@@ -198,6 +199,7 @@ export default {
   miniLeftSidebarZIndex,
   loadingZIndex,
   menuBarZIndex,
+  selectedToothZIndex,
   // ???
   transition,
   boxShadow,
