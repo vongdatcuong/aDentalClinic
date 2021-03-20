@@ -166,7 +166,24 @@ const ToothOverviewInfoTab = (props) => {
             <Grid item xs={6} sm={6} md={6} className={classes.testContainer}>
               <TabPanel value={value} index={0}>
                 <div className={classes.testTitle}>
-                  {t(strings.cold)} {t(strings.test)}
+                    <div>{t(strings.cold)} {t(strings.test)}</div>
+                    <div>
+                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        {t(strings.positive)}
+                        </Button></div>
+                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        {t(strings.uncertain)}
+                        </Button></div>
+                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        {t(strings.negative)}
+                        </Button></div>
+                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        {t(strings.notApplicable)}
+                        </Button></div>
+                        <div><Button size="large" className={classes.clearBtn}>
+                        {t(strings.clear)}
+                        </Button></div>
+                    </div>
                 </div>
               </TabPanel>
               <TabPanel value={value} index={1}>

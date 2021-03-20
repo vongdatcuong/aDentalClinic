@@ -59,8 +59,16 @@ const style = (theme) => ({
   endodonticContainer: {
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
+    color: theme.blackColor,
     "& .Mui-selected": {
-        color: theme.primaryColor[0],
+      color: theme.primaryColor[0],
+    },
+    "& .MuiTabs-indicator": {
+      display: "none",
+    },
+    "& .MuiTab-root": {
+      maxWidth: "100%",
     },
   },
   endodonticTitle: {
@@ -83,10 +91,12 @@ const style = (theme) => ({
     width: "100%",
   },
   endodonticTestIcon: {
+    float: "left",
     fontSize: "1rem",
     fontWeight: "bold",
   },
   endodonticTestName: {
+    float: "left",
     fontSize: "1rem",
     fontWeight: "bold",
     marginLeft: theme.spacing(2),
@@ -95,6 +105,20 @@ const style = (theme) => ({
     fontSize: "0.7rem",
     float: "right",
     display: "flex",
+  },
+  testBtns: {
+    marginTop: theme.spacing(3),
+    color: theme.primaryColor[0],
+    background: theme.whiteColor,
+    fontWeight: "bold",
+    width: "90%",
+    textTransform: "none",
+  },
+  clearBtn: {
+    marginTop: theme.spacing(3),
+    color: theme.primaryColor[0],
+    fontWeight: "bold",
+    width: "90%",
   },
 });
 
