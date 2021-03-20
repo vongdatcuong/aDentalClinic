@@ -42,6 +42,7 @@ export default {
         "Search": "Tìm kiếm",
         "Filter": "Lọc",
         "Add": "Thêm",
+        "Loading": "Đang tải",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -56,6 +57,12 @@ export default {
         "Confirm password does not match with new password": "Xác nhận mật khẩu không trùng khớp với mật khẩu mới",
         "The new password is identical to old password": "Mật khẩu mới trùng với mật khẩu cũ",
         "Range of date is invalid": "Khoảng thời gian nhập không hợp lệ",
+        // Error Messages Login
+        "Username must contain at least 1 to 30 characters": "Username phải có từ 1 đến 30 ký tự",
+        "Sign in successfully": "Đăng nhập thành công",
+        "Sign in fail": "Đăng nhập thất bại",
+        "The username that you've entered doesn't match any staff account.": "Không tồn tại nhân viên có username vừa nhập",
+        "Email or password is not correct": "Username hoặc password không đúng",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",

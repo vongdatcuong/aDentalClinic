@@ -1,8 +1,14 @@
-// Main Path
-const home = "/home";
-
-const path = {
-    home: home
+// Authorization
+const authorization = {
+    authorization: '/authorization',
+    logIn: "/signin",
+    refreshToken: "/refresh-token"
 }
 
-export default path;
+export {
+    authorization,
+}
+
+export default {
+    authorization,
+};

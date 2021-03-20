@@ -1,4 +1,7 @@
 import React, {useState} from "react";
+import {
+  useHistory
+} from "react-router-dom";
 import clsx from "clsx";
 import { useTranslation } from 'react-i18next';
 import strings from '../../configs/strings';
@@ -29,10 +32,16 @@ import Notification from './Notification';
 import NotificationPopover from './Notification/NotificationPopover';
 import styles from "./jss";
 
+// API
+import AuthService from '../../api/authentication/auth.service';
+
 const useStyles = makeStyles(styles);
 const LeftSidebar = (props) => {
     const classes = useStyles();
     const {t, i18n } = useTranslation();
+    const history = useHistory();
+
+    const user = AuthService.getCurrentUser();
 
     // States
     const [openLeftSidebarGhost, setOpenLeftSidebarGhost] = useState(false);
@@ -123,6 +132,11 @@ const LeftSidebar = (props) => {
       setNotifications(notifications.filter((notification) => notification.id != notiId));
     }
 
+    const handleLogout = () => {
+      AuthService.logOut();
+      history.push(path.loginPath);
+    }
+
     const notification = 
       <Notification
         onOpen={handleOpenNotiPopover}
@@ -132,7 +146,9 @@ const LeftSidebar = (props) => {
 
     const logout = 
         <Tooltip title={t(strings.logout)} aria-label={t(strings.logout)}>
-          <IconButton className={classes.listItemBtn} size="medium"><ExitToAppIcon/></IconButton>
+          <IconButton className={classes.listItemBtn} size="medium" onClick={handleLogout}>
+            <ExitToAppIcon/>
+          </IconButton>
         </Tooltip>
 
     const funcList = <FunctionList
@@ -166,7 +182,7 @@ const LeftSidebar = (props) => {
                 <CustomAvatar
                     link="https://www.creative-tim.com?ref=mdr-sidebar"
                     src="https://www.w3schools.com/w3images/avatar2.png"
-                    text="Jiwon"
+                    user={user}
                   />
                   {/*<Divider className={classes.divider}/>*/}
                   <div className={classes.sidebarWrapper}>
@@ -187,7 +203,7 @@ const LeftSidebar = (props) => {
                   <CustomAvatar
                     link="https://www.creative-tim.com?ref=mdr-sidebar"
                     src="https://www.w3schools.com/w3images/avatar2.png"
-                    text="Jiwon"
+                    user={user}
                   />
                   {/*<Divider className={classes.divider}/>*/}
                   <div className={classes.sidebarWrapper}>

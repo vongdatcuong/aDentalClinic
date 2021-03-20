@@ -99,7 +99,19 @@ const loginStyle = (theme) => ({
   },
   loginTitle: {
     minWidth: "20rem"
-  }
+  },
+  formMessageSuccess: {
+    textAlign: "center",
+    fontSize: "1.1em",
+    color: theme.successColor[0],
+    marginBottom: theme.spacing(1)
+  },
+  formMessageFail: {
+    textAlign: "center",
+    fontSize: "1.1em",
+    color: theme.dangerColor[0],
+    marginBottom: theme.spacing(1)
+  },
 });
 
 export default loginStyle;

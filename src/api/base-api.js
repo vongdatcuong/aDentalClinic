@@ -1,5 +1,7 @@
+import AuthService from './authentication/auth.service';
 const BASE_URL_API = "http://localhost:4000/api";
-let token = "";
+const secretKey = "The way of Reactjs";
+
 
 /** REQUEST MODEL
  *  url: string
@@ -9,20 +11,23 @@ let token = "";
 
 //INITIALIZE
 const initializeAPIService = () => {
-  token = localStorage.getItem("token");
+  /*const res = AuthService.getToken();
+  token = res.token;
+  refreshToken = res.refreshToken;*/
 };
 
 //GET METHOD
 const httpGet = async (requestModel) => {
+  const tokens = AuthService.getToken();
   try {
     const response = await fetch(BASE_URL_API + requestModel.url, {
       method: "GET",
       ...requestModel.option,
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + tokens.token,
       },
-      body: requestModel.body,
+      body: JSON.stringify(requestModel.body),
     });
     const json = await response.json();
     return json;
@@ -33,14 +38,16 @@ const httpGet = async (requestModel) => {
 
 //POST METHOD
 const httpPost = async (requestModel) => {
+  const tokens = AuthService.getToken();
   try {
     const response = await fetch(BASE_URL_API + requestModel.url, {
       ...requestModel.option,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + tokens.token,
       },
+      body: JSON.stringify(requestModel.body),
     });
     const json = await response.json();
     return json;
@@ -51,13 +58,14 @@ const httpPost = async (requestModel) => {
 
 //PUT METHOD
 const httpPut = async (requestModel) => {
+  const tokens = AuthService.getToken();
   try {
     const response = await fetch(BASE_URL_API + requestModel.url, {
       ...requestModel.option,
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + tokens.token,
       },
     });
     const json = await response.json();
@@ -67,4 +75,11 @@ const httpPut = async (requestModel) => {
   }
 };
 
-export { initializeAPIService, httpGet, httpPost, httpPut };
+export { secretKey, initializeAPIService, httpGet, httpPost, httpPut };
+export default {
+  secretKey,
+  initializeAPIService,
+  httpGet,
+  httpPost,
+  httpPut
+}
