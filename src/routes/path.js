@@ -22,11 +22,12 @@ const authenticationPath="/authentication";
 //const document="/document";
 const drugPath="/drug";
 const portalPath="/portal";
-const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường dẫn động với param là patient ID (/patient?id=0/toothChart)
+const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường dẫn động với param là patient ID (/patient?patientID=0/toothChart)
 const patientProfilePath = '/patient/profile';
 const patientNotePath = '/patient/note';
 const patientXRayImagesPath = '/patient/xRayImages';
 const patientImagesPath = '/patient/images';
+const toothOverviewInfoPath = '/patient/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
 
 const path = {
     defaultPath,
@@ -51,6 +52,7 @@ const path = {
     patientNotePath,
     patientXRayImagesPath,
     patientImagesPath,
+    toothOverviewInfoPath,
     drugPath,
     portalPath,
     managementsPath,

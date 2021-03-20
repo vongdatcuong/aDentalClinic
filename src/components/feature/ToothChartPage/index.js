@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import {useParams, useHistory} from "react-router-dom";
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
 import styles from "./jss";
@@ -40,12 +40,14 @@ import TabPanel from "../../common/TabPanel";
 import Slide from '@material-ui/core/Slide';
 import NavPills from "../../common/NavPills/NavPills.js";
 import AdultToothChart from "../../common/ToothChart/AdultToothChart.js";
+import path from "../../../routes/path";
 
 const useStyles = makeStyles(styles);
 
 const ToothChartPage = () => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
   const [disabledOverviewUndoBtn, setDisabledOverviewUndoBtn] = React.useState(true);
 
@@ -57,6 +59,7 @@ const ToothChartPage = () => {
 
   const handleClickToothOverview = (toothID) => {
     alert(toothID);
+    history.push(path.toothOverviewInfoPath + "?toothID=1");
     setDisabledOverviewUndoBtn(false);
   }
 

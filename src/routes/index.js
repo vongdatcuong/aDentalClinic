@@ -29,6 +29,7 @@ import Management from "../components/feature/Management";
 import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
+import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 
@@ -123,7 +124,7 @@ function Routes() {
           <Drug />
         </PageContainer>
       </Route>
-      <Route path={path.toothChartPath}>
+      <Route path={path.toothChartPath} exact>
         <PageContainer>
           <TreatmentMenu />
           <ToothChartPage />
@@ -151,6 +152,12 @@ function Routes() {
         <PageContainer>
           <TreatmentMenu />
           <PatientImagesPage />
+        </PageContainer>
+      </Route>
+      <Route path={path.toothOverviewInfoPath}>
+        <PageContainer>
+          <TreatmentMenu />
+          <ToothOverviewInfoPage />
         </PageContainer>
       </Route>
         {/*Setting With Section*/}
