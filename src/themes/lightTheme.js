@@ -60,6 +60,11 @@ import {hexToRgb} from '../utils/colors';
   const blackColor = "#000000";
   const whiteColor = "#ffffff";
   const circularProgressChart = '#8529e6';
+  const coldColor = "#dde9ef";
+  const percussionColor = "#dde9df";
+  const palpationColor = "#dde9df";
+  const heatColor = "red";
+  const electricityColor = "yellow";
 
   // Google map
   const mapMinWidth = 500;
@@ -215,6 +220,7 @@ export default {
   blackColor,
   whiteColor,
   circularProgressChart,
+  coldColor,percussionColor,palpationColor,heatColor,electricityColor, //Endodontic test color
   hoverBrightColor,
   hoverDarkColor,
   // Google Map

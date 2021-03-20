@@ -8,35 +8,38 @@ const style = (theme) => ({
   },
   tabsContainer: {
     height: "100vh",
-    width: "4vw",
+    width: "3vw",
   },
   tabs: {
     height: "100vh",
     "& .MuiTabs-scrollButtons": {
-        background: theme.blackColor,
-        color: theme.whiteColor,
-        opacity: "1",
+      background: theme.blackColor,
+      color: theme.whiteColor,
+      opacity: "1",
     },
-    "& .MuiTabScrollButton-root.Mui-disabled":{
-        color: theme.blackColor,
+    "& .MuiTabScrollButton-root.Mui-disabled": {
+      color: theme.blackColor,
     },
     "& .MuiTab-root": {
-        minWidth: "0.1rem",
-        minHeight: "0.1rem",
-        padding: 0,
-        opacity: "0.8",
-        background: theme.blackColor,
-        color: theme.whiteColor,
+      minWidth: "0.1rem",
+      minHeight: "0.1rem",
+      padding: 0,
+      opacity: "0.8",
+      background: theme.blackColor,
+      color: theme.whiteColor,
     },
     "& .Mui-selected": {
-        borderRight: 0,
-        background: theme.whiteColor,
-        color: theme.blackColor,
-    }
+      borderRight: 0,
+      background: theme.whiteColor,
+      color: theme.blackColor,
+    },
   },
   toothInfoContainer: {
     height: "100vh",
-    width: "80vw",
+    width: "84vw",
+    // "@media (min-width: 2304px)": {
+    //   width: "80vw",
+    // },
   },
 });
 

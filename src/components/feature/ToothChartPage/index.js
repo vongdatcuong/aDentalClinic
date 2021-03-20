@@ -58,8 +58,7 @@ const ToothChartPage = () => {
 //   };
 
   const handleClickToothOverview = (toothID) => {
-    alert(toothID);
-    history.push(path.toothOverviewInfoPath + "?toothID=1");
+    history.push(path.toothOverviewInfoPath + `?toothID=${toothID}`);
     setDisabledOverviewUndoBtn(false);
   }
 

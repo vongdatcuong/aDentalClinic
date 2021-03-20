@@ -70,8 +70,18 @@ const TreatmentMenu = (props) => {
   ];
   const links = <LinkList links={pathList} />;
 
+    const getGoBackURL = () => {    // nếu đang ở trang toothOverviewInfo thì quay về tooth chart, còn lại thì quay về ds patients
+        let curUrl = window.location.pathname;
+        if (curUrl.includes("toothOverviewInfo")){
+            return curUrl.substring(0,curUrl.lastIndexOf("/"));
+        }
+        else {
+            return path.patientPath;
+        }
+    }
+
   const goBack = (
-    <NavLink to={path.patientPath} className={classes.listItemLink}>
+    <NavLink to={getGoBackURL()} className={classes.listItemLink}>
       <Tooltip title={t(strings.goBack)} aria-label={t(strings.goBack)}>
         <IconButton className={classes.goBackBtn} size="medium">
           <ArrowBack />

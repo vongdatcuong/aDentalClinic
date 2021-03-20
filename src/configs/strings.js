@@ -136,6 +136,23 @@ const veneer = "Veneer";
 const pontics = "Pontics";
 const crown = "Crown";
 const endoTests = "Endo tests";
+const dental = "Dental";
+const reset = "Reset";
+const pathology = "Pathology";
+const restoration = "Restoration";
+const endodontic = "Endodontic";
+const cold = "Cold";
+const percussion = "Percussion";
+const palpation = "Palpation";
+const heat = "Heat";
+const electricity = "Electricity";
+const test = "Test";
+const existRootCanalTreatment = "Not applicable, Existing Root canal Treatment";
+const positive = "Positive";
+const uncertain = "Uncertain";
+const negative = "Negative";
+const notApplicable = "Not applicable";
+const clear = "Clear";
 
 
 // Report
@@ -269,6 +286,23 @@ export default {
     pontics,
     crown,
     endoTests,
+    dental,
+    reset,
+    pathology,
+    restoration,
+    endodontic,
+    cold,
+    percussion,
+    palpation,
+    heat,
+    electricity,
+    test,
+    existRootCanalTreatment,
+    positive,
+    uncertain,
+    negative,
+    notApplicable,
+    clear,
     // Management
     providers,
     staffs,
