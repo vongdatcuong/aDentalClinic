@@ -4,6 +4,9 @@ import CryptoENC from 'crypto-js/enc-utf8';
 import apiPath from '../path';
 import strings from '../../configs/strings';
 
+// Toast
+import {toast} from 'react-toastify';
+
 let user = null;
 
 class AuthService {
@@ -18,7 +21,7 @@ class AuthService {
         option: {},
         body: data
       });
-      if (result.success){ console.log(result);
+      if (result.success){
         user = result.user;
         localStorage.setItem("user", aes.encrypt(JSON.stringify(result.user), secretKey));
         localStorage.setItem("token", aes.encrypt(result.token, secretKey));
@@ -41,6 +44,7 @@ class AuthService {
     const now = new Date();
     let expirationTime = aes.decrypt(localStorage.getItem("expirationTime") || "", secretKey).toString(CryptoENC);
     if (!expirationTime){
+      this.logOut();
       return false;
     }
     expirationTime = new Date(expirationTime);
@@ -48,22 +52,32 @@ class AuthService {
       return true;
     } else {
       // Check refresh expiration
-      let expirationRefreshTime = aes.decrypt(localStorage.getItem("expirationRefreshTime") || "", secretKey).toString(CryptoENC);
-      if (!expirationRefreshTime){
+      if (await this.refreshToken(now)){
+        return true;
+      } else {
         this.logOut();
         return false;
       }
-      expirationRefreshTime = new Date(expirationRefreshTime);
-      if (expirationRefreshTime > now){
-        let refreshToken = aes.decrypt(localStorage.getItem("refreshToken") || "", secretKey).toString(CryptoENC);
-        if (!refreshToken){
-          this.logOut();
-          return false;
-        }
-        // Get new token
-        const data = {
-          refreshToken: refreshToken          
-        };
+    }
+  }
+
+  async refreshToken(now){
+    now = now || new Date();
+    let expirationRefreshTime = aes.decrypt(localStorage.getItem("expirationRefreshTime") || "", secretKey).toString(CryptoENC);
+    if (!expirationRefreshTime){
+      return false;
+    }
+    expirationRefreshTime = new Date(expirationRefreshTime);
+    if (expirationRefreshTime > now){
+      let refreshToken = aes.decrypt(localStorage.getItem("refreshToken") || "", secretKey).toString(CryptoENC);
+      if (!refreshToken){
+        return false;
+      }
+      // Get new token
+      const data = {
+        refreshToken: refreshToken          
+      };
+      try {
         const result = await httpPost({
           url: apiPath.authorization.authorization + apiPath.authorization.refreshToken,
           option: {},
@@ -74,14 +88,14 @@ class AuthService {
           localStorage.setItem("expirationTime", aes.encrypt(result.expirationTime, secretKey));
           return true;
         }
-        this.logOut();
+        toast.error(result.message)
         return false;
-
-      } else {
-        this.logOut();
+      } catch(err){
+        toast.error(strings.refreshTokenFailMsg);
         return false;
       }
-
+    } else {
+      return false;
     }
   }
 

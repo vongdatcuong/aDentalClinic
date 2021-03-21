@@ -53,6 +53,10 @@ import MakeAppointmentDialog from './Appointment/MakeAppointmentDialog';
 // Utils
 import {disableClick} from '../../../../utils/general';
 
+// API
+import api from '../../../../api/base-api';
+import apiPath from '../../../../api/path';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     '& div div:last-child div div:last-child div div:first-child div table:': {
@@ -141,6 +145,16 @@ const Schedulerr = (props) => {
       resourceName: 'chairId',
   }];
 
+  // Use Effect
+  useEffect(async () => {
+    let res = await api.httpGet({
+      url: apiPath.appointment.appointment,
+      option: {},
+      body: {},
+    });
+    console.log(res);
+  })
+
   const handleTimeTableCellClick = (info, startDate, endDate) => {
     try {
       setAppointmentData({
@@ -170,10 +184,6 @@ const Schedulerr = (props) => {
   const handleCloseAppointmentDialog = () => {
     setOpenAppointmentDialog(false);
   };
-
-  useEffect(() => {
-
-  })
 
   const renderTimeTableCell = (props) => {
     const endDay = new Date(props.endDate.toString());

@@ -109,6 +109,7 @@ const dateRangeInvalid = "Range of date is invalid";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
+const refreshTokenFailMsg = "Refresh token fail";
     // Confirm Messages
 
 // Context Actions
@@ -251,6 +252,7 @@ export default {
     // Error Messages Login
     usernameErrMsg,
     logInFailMsg,
+    refreshTokenFailMsg,
     // Confirm Messages
     // Context Actions
     setTheme,

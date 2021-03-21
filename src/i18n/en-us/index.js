@@ -63,6 +63,7 @@ export default {
         "Sign in fail": "Sign in fail",
         "The username that you've entered doesn't match any staff account.": "The username that you've entered doesn't match any staff account.",
         "Email or password is not correct": "Email or password is not correct",
+        "Refresh token fail": "Refresh token fail",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",

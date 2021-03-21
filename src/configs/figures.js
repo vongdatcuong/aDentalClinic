@@ -14,6 +14,15 @@ const statisDayRangeDefault = 7;
 const defaultRowsPerPage = 10;
 const rowsPerPageOption = [5, 10, 25];
 
+// API Status code
+const apiStatus = {
+    success: 200,
+    invalid: 400,
+    unauthorized: 401,
+    notFound: 404,
+    exception: 500,
+}
+
 export default {
     // Appointment
     defaultCellDuration,
@@ -26,5 +35,7 @@ export default {
     statisDayRangeDefault,
     // Table
     defaultRowsPerPage,
-    rowsPerPageOption
+    rowsPerPageOption,
+    // API Status code
+    apiStatus,
 }

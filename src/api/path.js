@@ -5,10 +5,16 @@ const authorization = {
     refreshToken: "/refresh-token"
 }
 
+// Appointment
+const appointment = {
+    appointment: '/appointment'
+}
+
 export {
     authorization,
 }
 
 export default {
     authorization,
+    appointment
 };

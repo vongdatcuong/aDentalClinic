@@ -20,23 +20,20 @@ import { useTranslation, Trans } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import CustomInput from "../../common/CustomInput/CustomInput.js";
-import People from "@material-ui/icons/People";
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Lock from '@material-ui/icons/Lock';
 import FormHelperText from '@material-ui/core/FormHelperText';
+
+// icons
+import LoadingPageIcon from '../../../assets/images/loading-page-icon.gif';
 
 // Component
 import Footer from '../../../layouts/Footer';
@@ -129,7 +126,11 @@ const LoginPage = () => {
 
     return (
         <Container className={classes.container}>
-            {(isLoadingPage)? "":
+            {(isLoadingPage)? 
+                <div className={classes.loadingPageWrapper}>
+                    <img src={LoadingPageIcon}/>
+                </div>
+                :
                 <Grid container component="main" component={Paper} className={classes.root}>
                     <CssBaseline />
                     <Grid container className={classes.loginHeader}>
