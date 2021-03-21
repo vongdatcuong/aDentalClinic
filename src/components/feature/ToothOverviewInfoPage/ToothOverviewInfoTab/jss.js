@@ -76,9 +76,23 @@ const style = (theme) => ({
     paddingBottom: theme.spacing(4),
   },
   testContainer: {
-    background: theme.coldColor,
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(5),
+  },
+  coldTestContainer: {
+    background: theme.coldColor,
+  },
+  percussionTestContainer: {
+    background: theme.percussionColor,
+  },
+  palpationTestContainer: {
+    background: theme.palpationColor,
+  },
+  heatTestContainer: {
+    background: theme.heatColor,
+  },
+  electricityTestContainer: {
+    background: theme.electricityColor,
   },
   testTitle: {
     fontSize: "1rem",
