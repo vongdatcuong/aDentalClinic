@@ -31,10 +31,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 // Component
 import PopupChat from '../../common/Messenger/PopupChat';
-import TabPanel from '../../common/TabPanel'
+import TabPanel from '../../common/TabPanel';
+import TreatmentHistory from './TreatmentHistory.js';
 
 const useStyles = makeStyles(styles);
 
@@ -61,7 +63,12 @@ const PatientProfilePage = () => {
             <Grid container>
                 <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
                     <Grid container className={classes.headerInfo}>
-                        Do The Anh
+                        <Typography component="h1" variant="h5" className={classes.patientName}>
+                            Do The Anh
+                        </Typography>
+                        <div className={classes.patientAgeGender}>
+                            Male, 22y
+                        </div>
                     </Grid>
                     <Grid container className={classes.detailProfileContainer}>
                         <Grid item>
@@ -74,10 +81,7 @@ const PatientProfilePage = () => {
                                     {t(strings.noTreatmentsPending)}
                                 </TabPanel>
                                 <TabPanel value={curTab} index={1}>
-                                    <Button color="twitter" simple>
-                                        <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
-                                        {t(strings.addRecord)}
-                                    </Button>
+                                    <TreatmentHistory></TreatmentHistory>
                                 </TabPanel>
                             </Grid>
                         </Grid>
@@ -85,16 +89,30 @@ const PatientProfilePage = () => {
                 </Grid>
                 <Grid item xs={3} sm={3} md={3} className={classes.rightGrid}>
                     <Grid container className={classes.oralHeathContainer}>
-                        <Typography component="h1" variant="h5">
-                            {t(strings.oralHealth)} <Button color="primary" simple>{t(strings.edit)}</Button>
+                        <Typography component="h1" variant="h6" className={classes.oralHeathHeader}>
+                            {t(strings.oralHealth)} <Button color="primary" className={classes.btnEdit} simple>{t(strings.edit)}</Button>
                         </Typography>
-                        {t(strings.plaqueIndex)}<br></br>
-                        {t(strings.bleedingIndex)}<br></br>
-                        {t(strings.halitosis)}<br></br>
+                        <span>{t(strings.plaqueIndex).toUpperCase()}: {"18%"}</span>
+                        <br></br>
+                        <span className={classes.linearProgressBarContainer}>
+                            <LinearProgress variant="determinate" value={15} className={classes.linearProgressBar}></LinearProgress>
+                        </span>
+                        
+                        <span>{t(strings.bleedingIndex).toUpperCase()}: {"18%"}</span>
+                        <br></br>
+                        <span className={classes.linearProgressBarContainer}>
+                            <LinearProgress variant="determinate" value={15} className={classes.linearProgressBar}></LinearProgress>
+                        </span>
+                        
+                        <span>{t(strings.halitosis).toUpperCase()}: {"3/5"}</span>
+                        <br></br>
+                        <span className={classes.linearProgressBarContainer}>
+                            <LinearProgress variant="determinate" value={60} className={classes.linearProgressBar}></LinearProgress>
+                        </span>
                     </Grid>
                     <Grid container className={classes.medicalIssuesContainer}>
-                        <Typography component="h1" variant="h5">
-                            {t(strings.medicalIssues)} <Button color="primary" simple>{t(strings.edit)}</Button>
+                        <Typography component="h1" variant="h6" className={classes.medicalIssuesHeader}>
+                            {t(strings.medicalIssues)} <Button color="primary" className={classes.btnEdit} simple>{t(strings.edit)}</Button>
                         </Typography>
                     </Grid>
                 </Grid>
