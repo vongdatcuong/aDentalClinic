@@ -112,7 +112,7 @@ class AuthService {
     if (user){
       return user;
     }
-    let userS = localStorage.getItem("user");
+    let userS = localStorage.getItem("user") || "";
     if (!userS){
       return {};
     }
@@ -134,7 +134,7 @@ class AuthService {
   updateCurrentUser(newUser) {
     const userS = Object.assign(
       {},
-      JSON.parse(localStorage.getItem("user")),
+      this.getCurrentUser(),
       newUser
     );
     user = userS;
