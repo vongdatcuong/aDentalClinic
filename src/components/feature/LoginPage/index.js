@@ -32,11 +32,9 @@ import AccountBox from '@material-ui/icons/AccountBox';
 import Lock from '@material-ui/icons/Lock';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-// icons
-import LoadingPageIcon from '../../../assets/images/loading-page-icon.gif';
-
 // Component
 import Footer from '../../../layouts/Footer';
+import LoadingPage from '../../../layouts/LoadingPage';
 
 // Context
 import {loadingStore} from '../../../contexts/loading-context';
@@ -127,9 +125,7 @@ const LoginPage = () => {
     return (
         <Container className={classes.container}>
             {(isLoadingPage)? 
-                <div className={classes.loadingPageWrapper}>
-                    <img src={LoadingPageIcon}/>
-                </div>
+                <LoadingPage/>
                 :
                 <Grid container component="main" component={Paper} className={classes.root}>
                     <CssBaseline />

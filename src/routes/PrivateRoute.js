@@ -11,13 +11,11 @@ import LoadingPageIcon from '../assets/images/loading-page-icon.gif';
 // API
 import AuthService from '../api/authentication/auth.service';
 
+// Components
+import LoadingPage from '../layouts/LoadingPage';
+
 const useStyles = makeStyles((theme) => ({
-  iconWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    height: '100vh',
-    alignItems: 'center'
-  }
+
 }));
 
 const PrivateRoute = ({children, rest}) => {
@@ -37,9 +35,7 @@ const PrivateRoute = ({children, rest}) => {
   return (
     <Route {...rest}>
       {(isLoading)? 
-        <div className={classes.iconWrapper}>
-          <img src={LoadingPageIcon}/>
-        </div> 
+        <LoadingPage/>
         :
         ((isAuthenticated)? children : <Redirect to={path.loginPath}/>)
       }

@@ -112,12 +112,6 @@ const loginStyle = (theme) => ({
     color: theme.dangerColor[0],
     marginBottom: theme.spacing(1)
   },
-  loadingPageWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    height: '100vh',
-    alignItems: 'center'
-  },
 });
 
 export default loginStyle;
