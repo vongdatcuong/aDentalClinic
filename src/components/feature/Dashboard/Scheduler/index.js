@@ -152,7 +152,6 @@ const Schedulerr = (props) => {
       option: {},
       body: {},
     });
-    console.log(res);
   })
 
   const handleTimeTableCellClick = (info, startDate, endDate) => {

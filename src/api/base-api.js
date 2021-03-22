@@ -1,5 +1,12 @@
 import figures from '../configs/figures';
+import strings from '../configs/strings';
 import AuthService from './authentication/auth.service';
+
+// i18next
+import { getI18n } from 'react-i18next';
+
+// Toast
+import { toast } from 'react-toastify';
 
 
 const BASE_URL_API = "http://localhost:4000/api";
@@ -9,6 +16,7 @@ const secretKey = "The way of Reactjs";
 /** REQUEST MODEL
  *  url: string
  *  option (Optional): Object
+ *  query: Object
  *  body: Object
  */
 
@@ -19,15 +27,25 @@ const initializeAPIService = () => {
   refreshToken = res.refreshToken;*/
 };
 
+const parseQueryObject = (queryObj) => {
+  let ans = "";
+  Object.keys(queryObj).forEach((key, index) => {
+    ans+= ((index === 0)? "?" : "&") + key + "=" + queryObj[key];
+  });
+  return ans;
+}
+
 //GET METHOD
 const httpGet = async (requestModel) => {
   requestModel = requestModel || {};
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
+  requestModel.query = requestModel.query || {};
+  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url, {
+    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
       method: "GET",
       ...requestModel.option,
       headers: {
@@ -39,7 +57,7 @@ const httpGet = async (requestModel) => {
       if (await AuthService.refreshToken()){
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url, {
+          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
             method: "GET",
             ...requestModel.option,
             headers: {
@@ -51,11 +69,13 @@ const httpGet = async (requestModel) => {
           throw err;
         }
       } else {
+        toast.error(strings.refreshTokenFailMsg);
         AuthService.logOut();
         window.location.reload();
       }
     }
     const json = await response.json();
+    json.status = response.status;
     return json;
   } catch (e) {
     throw e;
@@ -67,10 +87,12 @@ const httpPost = async (requestModel) => {
   requestModel = requestModel || {};
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
+  requestModel.query = requestModel.query || {};
+  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url, {
+    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
       ...requestModel.option,
       method: "POST",
       headers: {
@@ -83,7 +105,7 @@ const httpPost = async (requestModel) => {
       if (await AuthService.refreshToken()){
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url, {
+          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
             ...requestModel.option,
             method: "POST",
             headers: {
@@ -96,11 +118,13 @@ const httpPost = async (requestModel) => {
           throw err;
         }
       } else {
+        toast.error(strings.refreshTokenFailMsg);
         AuthService.logOut();
         window.location.reload();
       }
     }
     const json = await response.json();
+    json.status = response.status;
     return json;
   } catch (e) {
     throw e;
@@ -112,10 +136,12 @@ const httpPut = async (requestModel) => {
   requestModel = requestModel || {};
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
+  requestModel.query = requestModel.query || {};
+  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url, {
+    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
       ...requestModel.option,
       method: "PUT",
       headers: {
@@ -127,7 +153,7 @@ const httpPut = async (requestModel) => {
       if (await AuthService.refreshToken()){
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url, {
+          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
             ...requestModel.option,
             method: "PUT",
             headers: {
@@ -139,11 +165,13 @@ const httpPut = async (requestModel) => {
           throw err;
         }
       } else {
+        toast.error(strings.refreshTokenFailMsg);
         AuthService.logOut();
         window.location.reload();
       }
     }
     const json = await response.json();
+    json.status = response.status;
     return json;
   } catch (e) {
     throw e;
