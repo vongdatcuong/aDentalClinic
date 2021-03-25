@@ -1,9 +1,6 @@
 const customAvatarStyle = (theme) => ({
     avatarWrapper: {
-      marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(3),
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
+      margin: '0 auto',
       textAlign: 'center',
       '& a': {
         display: 'block',
@@ -12,14 +9,20 @@ const customAvatarStyle = (theme) => ({
       }
     },
     avatarLarge: {
-      width: theme.spacing(9),
-      height: theme.spacing(9),
-      margin: '0 auto'
+      width: theme.spacing(8),
+      height: theme.spacing(8),
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
     avatarText: {
       color: theme.fontColor,
       fontSize: '1.2em',
-      marginTop: theme.spacing(1),
+      maxWidth: theme.drawerLeftWidth - 10,
+      display: 'inline-block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   });
   

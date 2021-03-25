@@ -7,7 +7,7 @@ import styles from "./jss";
 
 const useStyles = makeStyles(styles);
 
-const CustomAvatar = ({link, src, text, classes}) => {
+const CustomAvatar = ({link, src, user, classes}) => {
     let inClasses = useStyles();
     if (classes){
         inClasses = Object.assign(inClasses, classes);
@@ -18,8 +18,8 @@ const CustomAvatar = ({link, src, text, classes}) => {
             <a
                 href={link}
                 target="_blank">
-                <Avatar alt="Jiwon" src={src} className={inClasses.avatarLarge}></Avatar>
-                <div className={inClasses.avatarText}>{text}</div>
+                <Avatar alt={user.first_name + " " + user.last_name} src={src} className={inClasses.avatarLarge}></Avatar>
+                <div className={inClasses.avatarText}>{user.first_name}</div>
             </a>
         </div>
     );

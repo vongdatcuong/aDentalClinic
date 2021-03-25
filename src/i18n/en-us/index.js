@@ -42,6 +42,7 @@ export default {
         "Search": "Search",
         "Filter": "Filter",
         "Add": "Add",
+        "Loading": "Loading",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -56,6 +57,13 @@ export default {
         "Confirm password does not match with new password": "Confirm password does not match with new password",
         "The new password is identical to old password": "The new password is identical to old password",
         "Range of date is invalid": "Range of date is invalid",
+        // Error Messages Login
+        "Username must contain at least 1 to 30 characters": "Username must contain at least 1 to 30 characters",
+        "Sign in successfully": "Sign in successfully",
+        "Sign in fail": "Sign in fail",
+        "The username that you've entered doesn't match any staff account.": "The username that you've entered doesn't match any staff account.",
+        "Email or password is not correct": "Email or password is not correct",
+        "Refresh token fail": "Refresh token fail",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",

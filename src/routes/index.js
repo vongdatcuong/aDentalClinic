@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import path from "./path";
+import PrivateRoute from './PrivateRoute';
 
 // @material-ui/core Component
 
@@ -43,13 +44,13 @@ function Routes() {
         </PageContainer>
       </Route>
       {/*Dashboard*/}
-      <Route path={path.dashboardPath}>
+      <PrivateRoute path={path.dashboardPath}>
         <PageContainer>
           <LeftSidebar />
           <Dashboard />
           <RightSidebar />
         </PageContainer>
-      </Route>
+      </PrivateRoute>
       <Route path={path.providersPath}>
         <PageContainer>
           <LeftSidebar />
@@ -106,12 +107,12 @@ function Routes() {
         </PageContainer>
       </Route>
       {/*Report*/}
-      <Route path={path.reportPath}>
+      <PrivateRoute path={path.reportPath}>
         <PageContainer>
           <LeftSidebar/>
           <Report/>
         </PageContainer>
-      </Route>
+      </PrivateRoute>
       <Route path={path.authenticationPath}>
         <PageContainer>
           <LeftSidebar />

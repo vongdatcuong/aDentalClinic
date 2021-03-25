@@ -87,11 +87,14 @@ const to = "To";
 const apply = "Apply";
 const filter = "Filter";
 const add = "Add";
+const loading = "Loading";
 
 // Messages
 
     // Success Messages
 const updateAccountSuccess = "Update Account Success";
+    // Success Messages Log in
+const logInSuccessMsg = "Sign in successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
 const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
@@ -103,6 +106,10 @@ const oldPwdNotMatchErrMsg = "The entered password is incorrect";
 const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
 const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
+    // Error Messages Login
+const usernameErrMsg = "Username must contain at least 1 to 30 characters";
+const logInFailMsg = "Sign in fail";
+const refreshTokenFailMsg = "Refresh token fail";
     // Confirm Messages
 
 // Context Actions
@@ -242,9 +249,12 @@ export default {
     apply,
     filter,
     add,
+    loading,
     // Messages
     // Success Messages
     updateAccountSuccess,
+    // Success Messages Log in
+    logInSuccessMsg,
     // Error Messages
     updateAccountFail,
     fullNameErrMsg,
@@ -256,6 +266,10 @@ export default {
     confirmPwdNotMatchErrMsg,
     newPwdMatchOldPwd,
     dateRangeInvalid,
+    // Error Messages Login
+    usernameErrMsg,
+    logInFailMsg,
+    refreshTokenFailMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
