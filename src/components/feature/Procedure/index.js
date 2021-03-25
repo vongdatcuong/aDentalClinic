@@ -6,15 +6,7 @@ import { useTranslation, Trans } from 'react-i18next';
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    TableHead,
-    Paper,
+    Divider,
     TextField,
     InputLabel ,
     InputAdornment,
@@ -42,13 +34,14 @@ import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
-import MenuBar from "../../../layouts/MenuBar";
-import TablePaginationActions from "../../../layouts/TablePaginationActions";
+import TableCustom from "../../common/TableCustom";
+import InsertProcedure from "../InsertProcedure";
 
 const useStyles = makeStyles(styles);
 const createData=(code,fee,ins,duration,type,abbr,description)=>{
     return {code,fee,ins,duration,type,abbr,description};
 };
+const dataColumnsName=["index","code","fee","ins","duration","type","abbr","description"];
 const rows = [
     createData('1712320', "1000", "ins asdasd asd asdas dsa das dasd asdsa", "30", "1","ABBR","Description Description"),
     createData('1712321', "2000", "ins", "40", "1","ABBR","Description"),
@@ -70,6 +63,8 @@ const Procedure = () => {
     const classes = useStyles();
     const {t, i18n } = useTranslation();
 
+    //state
+    const [insertProcedure,setInsertProcedure]=useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
@@ -85,10 +80,22 @@ const Procedure = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
+    
+    const handleChangeInsertProcedure=(e)=>{
+        setInsertProcedure(!insertProcedure);
+    }
+    const titles=[
+        t(strings.index),
+        t(strings.code),
+        t(strings.fee),
+        t(strings.ins),
+        t(strings.duration),
+        t(strings.type),
+        t(strings.abbr),
+        t(strings.description),
+    ];
     return (
-        <div className={classes.container}>
-            {/* <MenuBar/> */}
-            
+        <div className={classes.container}>            
             <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
@@ -96,137 +103,51 @@ const Procedure = () => {
                             {t(strings.procedure)}
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl variant="filled">
+                    {insertProcedure===false ?
+                        <Grid item xs={4} className={classes.serviceControl}>
+                            <FormControl variant="filled">
 
-                            <OutlinedInput
-                                className={classes.searchControl}
-                                id="outlined-adornment-password"
-                                type={'text'}
-                                value={searchText}
-                                defaultValue={t(strings.search)}
-                                onChange={handleChangeSearchText}
-                                endAdornment={
-                                <InputAdornment position="end">
-                                    <SearchIcon className={classes.iconButton} />
+                                <OutlinedInput
+                                    className={classes.searchControl}
+                                    id="outlined-adornment-password"
+                                    type={'text'}
+                                    value={searchText}
+                                    placeholder={t(strings.search)}
+                                    onChange={handleChangeSearchText}
+                                    endAdornment={
+                                    <InputAdornment position="end">
+                                        <SearchIcon className={classes.iconButton} />
 
-                                </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <IconButton  >
-                            <FilterList />
+                                    </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <IconButton  >
+                                <FilterList />
 
-                        </IconButton>
-                        <IconButton >
-                            <AddBox />            
+                            </IconButton>
+                            <IconButton onClick={handleChangeInsertProcedure}>
+                                <AddBox />            
 
-                        </IconButton>
-                    </Grid>
-                    
+                            </IconButton>
+                        </Grid>
+                
+                        :
+                        <Grid item xs={4} className={classes.serviceControl}>
+                            <Typography variant="h6" onClick={handleChangeInsertProcedure} className={classes.goBack}>
+                                {t(strings.goBack)}
+                            </Typography>
+                        </Grid>
+                    }
                     
                 </Grid>
-                
+                <Divider className={classes.titleDivider}/>
                 <Container >
-                
-               
-                <TableContainer component={Paper}>
-                
-                <Table className={classes.table} aria-label="custom pagination table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.index)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.code)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.fee)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.ins)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.duration)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.type)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.abbr)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.description)}
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : rows
-                        ).map((row,index) => (
-                            <TableRow key={row.id}>
-                                
-                                <TableCell align="center">
-                                    {index+1+page*rowsPerPage}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {row.code}
-                                </TableCell>
-                                <TableCell >
-                                    {row.fee}
-                                </TableCell>
-                                <TableCell>
-                                    {row.ins}
-                                </TableCell>
-                                <TableCell >
-                                    {row.duration}
-                                </TableCell>
-                                <TableCell >
-                                    {row.type}
-                                </TableCell>
-                                <TableCell >
-                                    {row.abbr}
-                                </TableCell>
-                                <TableCell >
-                                    {row.description}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={6} />
-                            </TableRow>
-          )}
-                    </TableBody>
-                    <TableFooter style={{marginLeft:"300px"}}>
-                <TableRow>
-              
-                    <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                        inputProps: { 'aria-label': 'rows per page' },
-                        native: true,
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                    labelRowsPerPage={t(strings.rowsPerPage)}
-
-                    />
-                </TableRow>
-                
-            </TableFooter>
-            
-                </Table>
-            </TableContainer>
-        
+                    {insertProcedure===false ?
+                        <TableCustom titles={titles} dataColumnsName={dataColumnsName} data={rows}/>
+                        :
+                        <InsertProcedure />
+                    }
                 </Container>
                 
                 

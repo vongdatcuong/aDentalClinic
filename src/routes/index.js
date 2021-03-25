@@ -33,7 +33,7 @@ import PatientImagesPage from "../components/feature/PatientImagesPage";
 import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
-
+import InsertPerson from "../components/feature/InsertPerson";
 function Routes() {
   return (
     <Switch>
@@ -178,6 +178,14 @@ function Routes() {
         {/*Default*/}
         <Route path={path.defaultPath} exact>
           <Redirect to={path.dashboardPath}/>
+        </Route>
+
+        {/*Insert person*/}
+        <Route path={path.insertPersonPath} exact>
+          <PageContainer>
+            <LeftSidebar/>
+            <InsertPerson/>
+          </PageContainer>
         </Route>
          {/*Managements With management*/}
          <Route path={path.managementsWithManagementPath}>

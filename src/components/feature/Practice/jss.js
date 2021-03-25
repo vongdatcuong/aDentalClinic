@@ -1,7 +1,8 @@
 const practiceStyle = (theme) => ({
     container: {
         flexGrow: 1,
-        margin:"0px"
+        margin:"0px",
+
     },
     menuBar:{
         background: theme.primaryColor[2],
@@ -125,7 +126,7 @@ const practiceStyle = (theme) => ({
     },
     inputControl:{
         height:'35px',
-        width:'150%',
+        width:'36vw',
         marginLeft:'30px',
         marginTop:'10px',
         display:'flex',
@@ -145,17 +146,18 @@ const practiceStyle = (theme) => ({
 
     },
     saveButton:{
-        // color:theme.whiteColor,
-        // background:theme.primaryColor[0],
-        // border:`1px solid ${theme.primaryColor[0]}`,
-        // borderRadius:'3px',
+       
         height:'35px',
-        width:'72.5%',
+        width:'36vw',
         marginLeft:"30px",
         marginTop:'20px',
 
     },
-    
+    titleDivider: {
+        marginLeft: theme.spacing(4),
+        marginRight: theme.spacing(2),
+        marginBottom: theme.spacing(1.5)
+    },
 });
 
   

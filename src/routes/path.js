@@ -19,6 +19,8 @@ const procedurePath='/procedure';
 const chairsPath="/chairs";
 const schedulePath="/schedule";
 const authenticationPath="/authentication";
+//insert
+const insertPersonPath="/insertPerson";
 //const document="/document";
 const drugPath="/drug";
 const portalPath="/portal";
@@ -57,6 +59,9 @@ const path = {
     portalPath,
     managementsPath,
     managementsWithManagementPath,
+    //insert
+    insertPersonPath,
+    
 }
 
 export default path;

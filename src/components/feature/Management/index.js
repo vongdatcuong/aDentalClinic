@@ -72,6 +72,8 @@ import Practice from "../Practice";
 import Template from "../Template"; 
 import TabPanel from "../../../layouts/TabPanel";
 import Footer from "../../../layouts/Footer";
+import InsertPerson from "../InsertPerson";
+
 const useStyles = makeStyles(styles);
 function a11yProps(index) {
   return {
@@ -97,6 +99,7 @@ const Management = () => {
     //states
     const [value, setValue] = useState(curManagement);
     const handleChange = (event, newValue) => {
+        
         history.push(routePaths.managementsPath + "/" + managements[newValue]);
 
         setValue(newValue);
@@ -119,7 +122,8 @@ const Management = () => {
         t(strings.authentication),
         t(strings.templates),
         t(strings.drug),
-        t(strings.portal)];
+        t(strings.portal),
+      ];
     const srcs=[
         DentalProvider,
         DentalStaff,
