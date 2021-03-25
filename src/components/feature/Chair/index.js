@@ -6,21 +6,12 @@ import { useTranslation, Trans } from 'react-i18next';
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    TableHead,
-    Paper,
-    TextField,
-    InputLabel ,
+   
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
+    Divider,
+
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -42,13 +33,13 @@ import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
-import MenuBar from "../../../layouts/MenuBar";
-import TablePaginationActions from "../../../layouts/TablePaginationActions";
-
+import TableCustom from "../../common/TableCustom";
 const useStyles = makeStyles(styles);
 const createData=(id,provider,number,room,description)=>{
     return {id,provider,number,room,description};
 };
+const dataColumnsName=["index","id","provider","number","room","description"];
+
 const rows = [
     createData('1712320', "Dat", "3", "1", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
     createData('1712321', "Doan", "4", "1", "HCM"),
@@ -85,11 +76,19 @@ const Chairs = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
+
+    const titles=[
+        t(strings.index),
+        t(strings.id),
+        t(strings.provider),
+        t(strings.number),
+        t(strings.room),
+        t(strings.description),
+    ]
     return (
         <div className={classes.container}>
-            {/* <MenuBar/> */}
             
-            <div className={classes.content}>
+            <div >
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
@@ -103,8 +102,8 @@ const Chairs = () => {
                                 className={classes.searchControl}
                                 id="outlined-adornment-password"
                                 type={'text'}
+                                placeholder={t(strings.search)}
                                 value={searchText}
-                                defaultValue={t(strings.search)}
                                 onChange={handleChangeSearchText}
                                 endAdornment={
                                 <InputAdornment position="end">
@@ -126,94 +125,11 @@ const Chairs = () => {
                     
                     
                 </Grid>
-                
+                <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
-                
+                    
+                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
                
-                <TableContainer component={Paper}>
-                
-                <Table className={classes.table} aria-label="custom pagination table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.index)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.id)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.provider)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} >
-                                {t(strings.number)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} >
-                                {t(strings.room)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.description)}
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : rows
-                        ).map((row,index) => (
-                            <TableRow key={row.id}>
-                                
-                                <TableCell align="center">
-                                    {index+1+page*rowsPerPage}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {row.id}
-                                </TableCell>
-                                <TableCell >
-                                    {row.provider}
-                                </TableCell>
-                                <TableCell >
-                                    {row.number}
-                                </TableCell>
-                                <TableCell >
-                                    {row.room}
-                                </TableCell>
-                                <TableCell >
-                                    {row.description}
-                            </TableCell>
-                            </TableRow>
-                        ))}
-
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={6} />
-                            </TableRow>
-          )}
-                    </TableBody>
-            <TableFooter style={{marginLeft:"300px"}}>
-                <TableRow>
-              
-                    <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                        inputProps: { 'aria-label': 'rows per page' },
-                        native: true,
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                    labelRowsPerPage={t(strings.rowsPerPage)}
-
-                    />
-                </TableRow>
-                
-            </TableFooter>
-                </Table>
-            </TableContainer>
-        
                 </Container>
                 
                 

@@ -7,7 +7,7 @@ import {AccountBox,
         LocationCity,
         LocationOn,
         Assignment,
-        
+        ContactPhone,
 } from "@material-ui/icons";
 //import image
 import Logo from "../../../assets/images/logo_iDental.png";
@@ -17,6 +17,7 @@ import {Grid,
     OutlinedInput,
     InputAdornment,
     Button,
+    Divider
 } from '@material-ui/core';
 
 import styles from "./jss";
@@ -24,7 +25,7 @@ import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import component
-import MenuBar from "../../../layouts/MenuBar";
+import TableCustom from "../../common/TableCustom";
 
 const useStyles = makeStyles(styles);
 
@@ -32,11 +33,11 @@ const Practice = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
-    const [name,setName]=useState("Name");
-    const [organization,setOrganization]=useState("Organization");
-    const [location,setLocation]=useState("Location");
-    const [hotline,setHotline]=useState("Hotline");
-    const [description,setDescription]=useState("Description");
+    const [name,setName]=useState(null);
+    const [organization,setOrganization]=useState(null);
+    const [location,setLocation]=useState(null);
+    const [hotline,setHotline]=useState(null);
+    const [description,setDescription]=useState(null);
 
     const handleChangeLocation=(e)=>{
         setLocation(e.target.value);
@@ -55,7 +56,6 @@ const Practice = () => {
     }
     return (
         <div className={classes.container}>
-            {/* <MenuBar/> */}
             <div className={classes.content}>
                 <Grid container>
                     <Grid item>
@@ -75,103 +75,112 @@ const Practice = () => {
                         </Typography>
                         <div>
                             <FormControl variant="filled">
-                                
-                                <OutlinedInput
-                                    className={classes.inputControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={name}
-                                    onChange={handleChangeName}
-                                    startAdornment={
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        id="outlined-adornment-password"
+                                        type={'text'}
+                                        value={name}
+                                        placeholder={t(strings.name)}
+                                        onChange={handleChangeName}
+                                        startAdornment={
                                         <InputAdornment position="start">
-                                        <AccountBox className={classes.iconButton} />
+                                            <AccountBox className={classes.iconButton} />
 
-                                    </InputAdornment>
-                                }
-                                />
-                            </FormControl>
-                        
+                                        </InputAdornment>
+                                        }
+                                    />
+                                    
+                            </FormControl>   
                         </div>
 
                         <div>
                             <FormControl variant="filled">
-                                
                                 <OutlinedInput
                                     className={classes.inputControl}
                                     id="outlined-adornment-password"
                                     type={'text'}
                                     value={organization}
+                                    placeholder={t(strings.organization)}
                                     onChange={handleChangeOrganization}
                                     startAdornment={
-                                        <InputAdornment position="start">
+                                    <InputAdornment position="start">
                                         <LocationCity className={classes.iconButton} />
 
                                     </InputAdornment>
-                                }
+                                    }
                                 />
+                                
                             </FormControl>
+                            
                     
                         </div>
                         <div>
                             <FormControl variant="filled">
-                                
-                                <OutlinedInput
-                                    className={classes.inputControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={location}
-                                    onChange={handleChangeLocation}
-                                    startAdornment={
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        id="outlined-adornment-password"
+                                        type={'text'}
+                                        value={location}
+                                        placeholder={t(strings.location)}
+                                        onChange={handleChangeLocation}
+                                        startAdornment={
                                         <InputAdornment position="start">
-                                        <LocationOn className={classes.iconButton} />
+                                            <LocationOn className={classes.iconButton} />
 
-                                    </InputAdornment>
-                                }
-                                />
+                                        </InputAdornment>
+                                        }
+                                    />
+                                
                             </FormControl>
+                            
                             
                         </div>
                         <div>
                             <FormControl variant="filled">
-                                
                                 <OutlinedInput
                                     className={classes.inputControl}
                                     id="outlined-adornment-password"
                                     type={'text'}
                                     value={hotline}
+                                    placeholder={t(strings.hotline)}
                                     onChange={handleChangeHotline}
                                     startAdornment={
-                                        <InputAdornment position="start">
-                                        <AccountBox className={classes.iconButton} />
+                                    <InputAdornment position="start">
+                                        <ContactPhone className={classes.iconButton} />
 
                                     </InputAdornment>
-                                }
+                                    }
                                 />
+                                
                             </FormControl>
                         
                         </div>
                         <div>
                             <FormControl variant="filled">
-                                
                                 <OutlinedInput
                                     className={classes.inputControl}
                                     id="outlined-adornment-password"
                                     type={'text'}
                                     value={description}
+                                    placeholder={t(strings.description)}
                                     onChange={handleChangeDescription}
                                     startAdornment={
-                                        <InputAdornment position="start">
+                                    <InputAdornment position="start">
                                         <Assignment className={classes.iconButton} />
 
                                     </InputAdornment>
-                                }
+                                    }
                                 />
+                                
                             </FormControl>
-                    
+                            
                         </div>
-                        <Button variant="contained" color="primary" className={classes.saveButton}>
-                                {t(strings.save)}
-                        </Button>
+                        <div>
+                            <Button variant="contained" color="primary" className={classes.saveButton}>
+                                    {t(strings.save)}
+                            </Button>
+                        </div>
+                        
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>

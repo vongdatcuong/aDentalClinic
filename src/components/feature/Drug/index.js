@@ -6,17 +6,7 @@ import { useTranslation, Trans } from 'react-i18next';
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    TableHead,
-    Paper,
-    TextField,
-    InputLabel ,
+    Divider,
     InputAdornment,
     FormControl,
     FilledInput,
@@ -42,13 +32,14 @@ import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
-import MenuBar from "../../../layouts/MenuBar";
-import TablePaginationActions from "../../../layouts/TablePaginationActions";
+import TableCustom from "../../common/TableCustom";
+
 
 const useStyles = makeStyles(styles);
 const createData=(id,name,quantity,date,patient)=>{
     return {id,name,quantity,date,patient};
 };
+const dataColumnsName=["index","id","name","quantity","date","patient"]
 const rows = [
     createData('1712320', "Drug 01", "Good", "02/01/2020", "Dat"),
     createData('1712321', "Drug 02", "Good", "03/01/2020", "Doan"),
@@ -87,11 +78,19 @@ const Drug = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
+
+    const titles=[
+        t(strings.index),
+        t(strings.id),
+        t(strings.fullname),
+        t(strings.quantity),
+        t(strings.date),
+        t(strings.patient),
+    ];
     return (
         <div className={classes.container}>
-            {/* <MenuBar/> */}
             
-            <div className={classes.content}>
+            <div >
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
@@ -106,7 +105,7 @@ const Drug = () => {
                                 id="outlined-adornment-password"
                                 type={'text'}
                                 value={searchText}
-                                defaultValue={t(strings.search)}
+                                placeholder={t(strings.search)}
                                 onChange={handleChangeSearchText}
                                 endAdornment={
                                 <InputAdornment position="end">
@@ -128,95 +127,9 @@ const Drug = () => {
                     
                     
                 </Grid>
-                
+                <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
-                
-               
-                <TableContainer component={Paper}>
-                
-                <Table className={classes.table} aria-label="custom pagination table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.index)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} align="center">
-                                {t(strings.id)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.name)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} >
-                                {t(strings.quantity)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn} >
-                                {t(strings.date)}
-                            </TableCell>
-                            <TableCell className={classes.titleColumn}>
-                                {t(strings.patient)}
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : rows
-                        ).map((row,index) => (
-                            <TableRow key={row.id}>
-                                
-                                <TableCell align="center">
-                                    {index+1+page*rowsPerPage}
-
-                                </TableCell>
-                                <TableCell align="center">
-                                    {row.id}
-                                </TableCell>
-                                <TableCell >
-                                    {row.name}
-                                </TableCell>
-                                <TableCell >
-                                    {row.quantity}
-                                </TableCell>
-                                <TableCell >
-                                    {row.date}
-                                </TableCell>
-                                <TableCell >
-                                    {row.patient}
-                            </TableCell>
-                            </TableRow>
-                        ))}
-
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                            <TableCell colSpan={6} />
-                            </TableRow>
-          )}
-                    </TableBody>
-            <TableFooter style={{marginLeft:"300px"}}>
-                <TableRow>
-              
-                    <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                        inputProps: { 'aria-label': 'rows per page' },
-                        native: true,
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                    labelRowsPerPage={t(strings.rowsPerPage)}
-
-                    />
-                </TableRow>
-                
-            </TableFooter>
-                </Table>
-            </TableContainer>
-        
+                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
                 </Container>
                 
                 

@@ -37,6 +37,15 @@ const fullname="Fullname";
 const birth="Birth";
 const gender="Gender";
 const address="Address";
+const idCard="ID Card";
+const publisher="Publisher";
+const country="Country";
+const city="City";
+const postalCode="Postal Code";
+const male="Male";
+const female="Female";
+const insert="Insert";
+const insertPerson="Insert Person";
 //procedure
 const code="Code";
 const fee="Fee";
@@ -51,6 +60,9 @@ const role="Role";
 const aboutUs="About us";
 const aboutUsContent="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
 const save="Save";
+const organization="Organization";
+const hotline="Hotline";
+
 //chair
 const number="Number";
 const room="Room";
@@ -63,6 +75,7 @@ const workTime="Work time";
 const portal="Portal";
 //drug
 const quantity="Quantity";
+const name="Name";
 //table
 const rowsPerPage="Rows per page";
 // Common
@@ -293,6 +306,18 @@ export default {
     type,
     abbr,
     description,
+    name,
+    organization,
+    hotline,
+    idCard,
+    publisher,
+    country,
+    city,
+    postalCode,
+    male,
+    female,
+    insert,
+    insertPerson,
     // Settings
     general,
     account,
