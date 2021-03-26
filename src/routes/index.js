@@ -51,61 +51,61 @@ function Routes() {
           <RightSidebar />
         </PageContainer>
       </PrivateRoute>
-      <Route path={path.providersPath}>
+      <PrivateRoute path={path.providersPath}>
         <PageContainer>
           <LeftSidebar />
           <Providers />
         </PageContainer>
-      </Route>
-      <Route path={path.practicesPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.practicesPath}>
         <PageContainer>
           <LeftSidebar />
           <Practice />
         </PageContainer>
-      </Route>
-      <Route path={path.portalPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.portalPath}>
         <PageContainer>
           <LeftSidebar />
           <Portal />
         </PageContainer>
-      </Route>
-      <Route path={path.schedulePath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.schedulePath}>
         <PageContainer>
           <LeftSidebar />
           <Schedule />
         </PageContainer>
-      </Route>
-      <Route path={path.staffsPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.staffsPath}>
         <PageContainer>
           <LeftSidebar />
           <Staffs />
         </PageContainer>
-      </Route>
-      <Route path={path.procedurePath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.procedurePath}>
         <PageContainer>
           <LeftSidebar />
           <Procedure />
         </PageContainer>
-      </Route>
-      <Route path={path.chairsPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.chairsPath}>
         <PageContainer>
           <LeftSidebar />
           <Chairs />
         </PageContainer>
-      </Route>
-      <Route path={path.referralPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.referralPath}>
         <PageContainer>
           <LeftSidebar />
           <Referral />
         </PageContainer>
-      </Route>
+      </PrivateRoute>
       {/*Patients*/}
-      <Route path={path.patientPath}>
+      <PrivateRoute path={path.patientPath}>
         <PageContainer>
           <LeftSidebar/>
           <Patients/>
         </PageContainer>
-      </Route>
+      </PrivateRoute>
       {/*Report*/}
       <PrivateRoute path={path.reportPath}>
         <PageContainer>
@@ -113,94 +113,94 @@ function Routes() {
           <Report/>
         </PageContainer>
       </PrivateRoute>
-      <Route path={path.authenticationPath}>
+      <PrivateRoute path={path.authenticationPath}>
         <PageContainer>
           <LeftSidebar />
           <Authentication />
         </PageContainer>
-      </Route>
-      <Route path={path.drugPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.drugPath}>
         <PageContainer>
           <LeftSidebar />
           <Drug />
         </PageContainer>
-      </Route>
-      <Route path={path.toothChartPath} exact>
+      </PrivateRoute>
+      <PrivateRoute path={path.toothChartPath} exact>
         <PageContainer>
           <TreatmentMenu />
           <ToothChartPage />
         </PageContainer>
-      </Route>
-      <Route path={path.patientProfilePath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientProfilePath}>
         <PageContainer>
           <TreatmentMenu />
           <PatientProfilePage />
         </PageContainer>
-      </Route>
-      <Route path={path.patientNotePath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientNotePath}>
         <PageContainer>
           <TreatmentMenu />
           <PatientNotePage />
         </PageContainer>
-      </Route>
-      <Route path={path.patientXRayImagesPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientXRayImagesPath}>
         <PageContainer>
           <TreatmentMenu />
           <PatientXRayImagesPage />
         </PageContainer>
-      </Route>
-      <Route path={path.patientImagesPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientImagesPath}>
         <PageContainer>
           <TreatmentMenu />
           <PatientImagesPage />
         </PageContainer>
-      </Route>
-      <Route path={path.toothOverviewInfoPath}>
+      </PrivateRoute>
+      <PrivateRoute path={path.toothOverviewInfoPath}>
         <PageContainer>
           <TreatmentMenu />
           <ToothOverviewInfoPage />
         </PageContainer>
-      </Route>
+      </PrivateRoute>
         {/*Setting With Section*/}
-        <Route path={path.settingsWithSectionPath}>
+        <PrivateRoute path={path.settingsWithSectionPath}>
           <PageContainer>
             <LeftSidebar/>
             <Settings/>
           </PageContainer>
-        </Route>
+        </PrivateRoute>
         {/*Setting*/}
-        <Route path={path.settingsPath} exact>
+        <PrivateRoute path={path.settingsPath} exact>
           <PageContainer>
             <LeftSidebar/>
             <Settings/>
           </PageContainer>
-        </Route>
+        </PrivateRoute>
         {/*Default*/}
-        <Route path={path.defaultPath} exact>
+        <PrivateRoute path={path.defaultPath} exact>
           <Redirect to={path.dashboardPath}/>
-        </Route>
+        </PrivateRoute>
 
         {/*Insert person*/}
-        <Route path={path.insertPersonPath} exact>
+        <PrivateRoute path={path.insertPersonPath} exact>
           <PageContainer>
             <LeftSidebar/>
             <InsertPerson/>
           </PageContainer>
-        </Route>
+        </PrivateRoute>
          {/*Managements With management*/}
-         <Route path={path.managementsWithManagementPath}>
+         <PrivateRoute path={path.managementsWithManagementPath}>
           <PageContainer>
             <LeftSidebar/>
             <Management/>
           </PageContainer>
-        </Route>
+        </PrivateRoute>
         {/*Managements*/}
-        <Route path={path.managementsPath} exact>
+        <PrivateRoute path={path.managementsPath} exact>
           <PageContainer>
             <LeftSidebar/>
             <Management/>
           </PageContainer>
-        </Route>
+        </PrivateRoute>
     </Switch>
   );
 }
