@@ -20,8 +20,12 @@ const styles = (theme) => ({
       },
       "& .styles_kPaginationListPage__2_6Ph": {
         position: "absolute",
-        right: "15vw",
-        top: "14vh",
+        right: "12vw",
+        top: "13vh",
+        "@media (max-width: 1024px)": {
+            right: "25vw",
+            top: "7vh",
+        },
       },
       "& .MuiGridListTile-root": {
         margin: theme.spacing(0.2),

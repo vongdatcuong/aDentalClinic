@@ -134,6 +134,7 @@ const PatientImagesPage = () => {
             <option value={5}>5</option>
             <option value={8}>8</option>
             <option value={10}>10</option>
+            <option value={1000}>{t(strings.all)}</option>
           </Select></div>
 
         <GridList className={classes.gridList}>
