@@ -45,3 +45,15 @@ input:-webkit-autofill:active
   ::-webkit-scrollbar-thumb:hover {
     background: #4042E2; 
   }
+
+
+  /* react-viewer for images view */
+.react-viewer .react-viewer-list li {
+    width: auto;
+    height: auto;
+}
+.react-viewer .react-viewer-list li img {
+    width: auto;
+    max-height: 3rem;
+    margin-left: 0;
+}

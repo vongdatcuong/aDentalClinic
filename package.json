@@ -31,6 +31,7 @@
     "react-spinners": "^0.10.6",
     "react-swipeable-views": "^0.13.9",
     "react-toastify": "^7.0.3",
+    "react-viewer": "^3.2.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
