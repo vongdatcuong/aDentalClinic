@@ -86,6 +86,7 @@ export default {
         "Halitosis": "Halitosis",
         "Add more image": "Add more image",
         "Layer": "Layer",
+        "Images per page": "Images per page",
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",

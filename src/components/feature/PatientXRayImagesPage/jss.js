@@ -11,6 +11,7 @@ const styles = (theme) => ({
   },
   bodyContainer: {
     padding: theme.spacing(10),
+    paddingTop: theme.spacing(5),
   },
   btnAddRecord: {
     color: theme.primaryColor[0],

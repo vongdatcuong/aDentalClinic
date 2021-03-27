@@ -151,6 +151,7 @@ const bleedingIndex = "Bleeding index";
 const halitosis = "Halitosis";
 const addMoreImage = "Add more image";
 const layer = "Layer";
+const imagesPerPage = "Images per page";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -311,6 +312,7 @@ export default {
     halitosis,
     addMoreImage,
     layer,
+    imagesPerPage,
     // Tooth chart page
     overView,
     quickSelect,

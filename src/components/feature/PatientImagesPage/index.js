@@ -17,7 +17,8 @@ import { FaExpand } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-
+import Select from "@material-ui/core/Select";
+import Pagination from "react-pagination-list";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 
@@ -77,11 +78,22 @@ const images = [
     title: "Tooth 5",
     date: "32/03/2021",
   },
+  {
+    src: toothImg,
+    title: "Tooth 4",
+    date: "31/03/2021",
+  },
+  {
+    src: toothImg,
+    title: "Tooth 5",
+    date: "32/03/2021",
+  },
 ];
 
 const useStyles = makeStyles(styles);
 
 const PatientImagesPage = () => {
+  const [imagesPerPage, setImagesPerPage] = React.useState(8);
   const [visible, setVisible] = React.useState(false);
   const [viewingImageIndex, setViewingImageIndex] = React.useState("0");
   const { t, i18n } = useTranslation();
@@ -91,6 +103,10 @@ const PatientImagesPage = () => {
     setViewingImageIndex(clickedImageIndex);
     setVisible(true);
   }
+
+  const handleChangeImgPerPage = (event) => {
+    setImagesPerPage(event.target.value);
+  };
 
   return (
     <Container className={classes.container}>
@@ -105,38 +121,59 @@ const PatientImagesPage = () => {
         </Button>
       </div>
       <div className={classes.bodyContainer}>
+          <div className={classes.selectImgPerPage}>      
+          {t(strings.imagesPerPage)}: <Select
+            native
+            value={imagesPerPage}
+            onChange={handleChangeImgPerPage}
+            inputProps={{
+              name: "Images per page",
+              id: "images-per-page",
+            }}
+          >
+            <option value={5}>5</option>
+            <option value={8}>8</option>
+            <option value={10}>10</option>
+          </Select></div>
+
         <GridList className={classes.gridList}>
           {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">December</ListSubheader>
         </GridListTile> */}
-          {images.map((image, index) => (
-            <GridListTile
-              key={image.img}
-              onClick={() => {
-                handleViewImage(index);
-              }}
-            >
-              <img
-                src={image.src}
-                alt={image.title}
-                className={classes.thumbnail}
-              />
-              <GridListTileBar
-                title={image.title}
-                subtitle={<span>Date: {image.date}</span>}
-                actionIcon={
-                  <IconButton
-                    aria-label={`info about ${image.title}`}
-                    className={classes.icon}
-                  >
-                    <FaExpand />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))}
+          <Pagination
+            data={images}
+            pageSize={imagesPerPage}
+            renderItem={(image, index) => (
+              <GridListTile
+                key={image.img}
+                onClick={() => {
+                  handleViewImage(index);
+                }}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className={classes.thumbnail}
+                />
+                <GridListTileBar
+                  title={image.title}
+                  subtitle={<span>Date: {image.date}</span>}
+                  actionIcon={
+                    <IconButton
+                      aria-label={`info about ${image.title}`}
+                      className={classes.icon}
+                    >
+                      <FaExpand />
+                    </IconButton>
+                  }
+                />
+              </GridListTile>
+            )}
+          />
+          {/* {images.map((image, index) => (
+            
+          ))} */}
         </GridList>
-
         <Viewer
           noImgDetails="true"
           visible={visible}

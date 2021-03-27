@@ -86,6 +86,7 @@ export default {
         "Halitosis": "Mức độ hôi miệng",
         "Add more image": "Thêm hình ảnh",
         "Layer": "Lớp",
+        "Images per page": "Số hình trên mỗi trang",
         // Tooth chart page
         "Overview": "Tổng quan",
         "Quickselect": "Chọn nhanh",
