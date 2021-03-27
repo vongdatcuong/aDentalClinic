@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const PrivateRoute = ({children, rest}) => {
+const PrivateRoute = ({children, ...rest}) => {
   const classes = useStyles();
 
   // States
