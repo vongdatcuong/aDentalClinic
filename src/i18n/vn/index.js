@@ -23,6 +23,7 @@ export default {
         "No": "Không",
         "OK": "Đồng ý",
         "Cancel": "Hủy",
+        "Delete": "Xóa",
         "Edit": "Sửa",
         "Log in": "Đăng nhập",
         "Log out": "Đăng xuất",
@@ -83,6 +84,8 @@ export default {
         "Plaque index": "Chỉ số mảng bám",
         "Bleeding index": "Chỉ số chảy máu",
         "Halitosis": "Mức độ hôi miệng",
+        "Add more image": "Thêm hình ảnh",
+        "Layer": "Lớp",
         // Tooth chart page
         "Overview": "Tổng quan",
         "Quickselect": "Chọn nhanh",

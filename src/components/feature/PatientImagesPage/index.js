@@ -1,25 +1,18 @@
-import React from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
+import Container from "@material-ui/core/Container";
 import styles from "./jss";
-import strings from '../../../configs/strings';
-import logoADC from '../../../assets/images/logoADC.png'
+import strings from "../../../configs/strings";
+import Typography from "@material-ui/core/Typography";
 // use i18next
-import { useTranslation, Trans } from 'react-i18next';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import { useTranslation, Trans } from "react-i18next";
+import Button from "@material-ui/core/Button";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 // Component
-import PopupChat from '../../common/Messenger/PopupChat';
+import PopupChat from "../../common/Messenger/PopupChat";
 
 const useStyles = makeStyles(styles);
 
@@ -29,11 +22,19 @@ const PatientImagesPage = () => {
 
     return (
         <Container className={classes.container}>
-            <Grid container component="main" component={Paper} className={classes.root}>
-                Patient Images Page
-                <PopupChat></PopupChat>
-            </Grid>
-        </Container>
+        <PopupChat></PopupChat>
+        <div className={classes.headerContainer}>
+          <Typography component="h1" variant="h5" className={classes.loginTitle}>
+            {t(strings.images)}
+          </Typography>
+          <Button simple className={classes.btnAddRecord}>
+            <AddCircleOutlineIcon></AddCircleOutlineIcon> {t(strings.addMoreImage)}
+          </Button>
+        </div>
+        <div className={classes.bodyContainer}>
+
+        </div>
+      </Container>
     )
 }
 
