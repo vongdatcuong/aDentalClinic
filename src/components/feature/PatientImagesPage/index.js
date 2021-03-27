@@ -123,7 +123,7 @@ const PatientImagesPage = () => {
               />
               <GridListTileBar
                 title={image.title}
-                subtitle={<span>date: {image.date}</span>}
+                subtitle={<span>Date: {image.date}</span>}
                 actionIcon={
                   <IconButton
                     aria-label={`info about ${image.title}`}
@@ -138,6 +138,7 @@ const PatientImagesPage = () => {
         </GridList>
 
         <Viewer
+          noImgDetails="true"
           visible={visible}
           activeIndex={viewingImageIndex}
           zoomSpeed="0.3"

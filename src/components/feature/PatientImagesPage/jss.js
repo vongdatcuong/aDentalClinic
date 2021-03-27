@@ -17,6 +17,9 @@ const styles = (theme) => ({
       "& .MuiGridListTile-root": {
         width: "17vw!important",
         height: "17vw!important",
+        "& .MuiGridListTileBar-root": {
+            height: "auto",
+        },
       },
     },
   },
@@ -28,8 +31,8 @@ const styles = (theme) => ({
     color: "rgba(255, 255, 255, 0.54)",
   },
   thumbnail: {
-    width: theme.spacing(40),
-    height: theme.spacing(40),
+    maxWidth: theme.spacing(40),
+    height: "auto",//theme.spacing(40)
     cursor: "pointer",
   },
 
