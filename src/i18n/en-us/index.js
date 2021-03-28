@@ -64,6 +64,8 @@ export default {
         "The username that you've entered doesn't match any staff account.": "The username that you've entered doesn't match any staff account.",
         "Email or password is not correct": "Email or password is not correct",
         "Refresh token fail": "Refresh token fail",
+        // Error Messages Appointment
+        "Loading appointments fail !!!": "Loading appointments fail !!!",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",

@@ -7,8 +7,12 @@ const dashboardStyle = (theme) => ({
         marginRight: theme.spacing(1),
         marginTop: theme.spacing(0.5),
         marginBottom: theme.spacing(0.5),
-        maxWidth: 'none'
-    }    
+        maxWidth: 'none',
+        overflow: 'hidden'
+    },
+    appointmentTabBox: {
+        position: 'fixed'
+    },
 });
   
 export default dashboardStyle;  

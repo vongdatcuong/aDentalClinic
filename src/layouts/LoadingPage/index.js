@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     loadingPageWrapper: {
         display: 'flex',
         justifyContent: 'center',
-        height: '100vh',
+        height: '95vh',
         alignItems: 'center'
     },
 }));

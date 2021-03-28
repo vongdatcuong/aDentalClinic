@@ -64,6 +64,8 @@ export default {
         "The username that you've entered doesn't match any staff account.": "Không tồn tại nhân viên có username vừa nhập",
         "Email or password is not correct": "Username hoặc password không đúng",
         "Refresh token fail": "Làm mới token thất bại",
+        // Error Messages Appointment
+        "Loading appointments fail !!!": "Tải các cuộc hẹn thất bại",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",

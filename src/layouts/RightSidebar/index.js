@@ -29,7 +29,7 @@ import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
-const RightSidebar = (props) => {
+const RightSidebar = ({ handleSelectDate }) => {
     const classes = useStyles();
     const {t, i18n } = useTranslation();
 
@@ -39,10 +39,6 @@ const RightSidebar = (props) => {
 
     const toggleDrawer = () => {
       setRightSidebarOpen(!rightSidebarOpen);
-    }
-
-    const handleSelectDate = (date) => {
-      alert(date);
     }
 
     return (

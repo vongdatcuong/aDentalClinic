@@ -62,7 +62,7 @@ const Settings = () => {
     const history = useHistory();
     const { section } = useParams();
 
-    useEffect(() => {
+    useEffect(() => {//alert(section)
       if (!section){
         history.push(routePaths.settingsPath + "/general");
       }

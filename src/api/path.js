@@ -7,7 +7,9 @@ const authorization = {
 
 // Appointment
 const appointment = {
-    appointment: '/appointment'
+    appointment: '/appointment',
+    block: '/block',
+    chair: '/chair'
 }
 
 export {

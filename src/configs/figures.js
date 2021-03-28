@@ -1,5 +1,5 @@
 // Appointment
-const defaultCellDuration = 15;
+const defaultCellDuration = 30;
 const defaultStartDayHour = 7;
 const defaultEndDayHour = 18;
 

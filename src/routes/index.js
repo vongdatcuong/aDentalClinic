@@ -47,7 +47,6 @@ function Routes() {
         <PageContainer>
           <LeftSidebar />
           <Dashboard />
-          <RightSidebar />
         </PageContainer>
       </PrivateRoute>
       <Route path={path.providersPath}>
