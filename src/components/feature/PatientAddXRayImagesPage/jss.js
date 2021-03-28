@@ -33,10 +33,9 @@ const styles = (theme) => ({
     },
   },
   xRayThumbnail: {
-    marginLeft: theme.spacing(3),
+      marginLeft:  theme.spacing(3),
     width: theme.spacing(8),
     height: theme.spacing(8),
-    cursor: "pointer",
   },
 });
 

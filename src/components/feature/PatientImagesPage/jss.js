@@ -40,6 +40,7 @@ const styles = (theme) => ({
   btnAddRecord: {
     color: theme.primaryColor[0],
     fontWeight: "bold",
+    textTransform: "none",
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",

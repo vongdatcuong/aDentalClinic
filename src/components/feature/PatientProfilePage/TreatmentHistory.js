@@ -23,6 +23,7 @@ const styles = (theme) => ({
   btnAddRecord: {
     color: theme.primaryColor[0],
     fontWeight: "bold",
+    textTransform: "none",
   },
   historyItemContainer: {
     padding: "0.7rem",
