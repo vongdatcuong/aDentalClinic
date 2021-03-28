@@ -22,6 +22,8 @@ import {hexToRgb} from '../utils/colors';
   const notificationPopoverWidth = 420;
   const notificationPopoverMinHeight = 300;
   const notificationPopoverMaxHeight = 600;
+  const filterChairPopoverWidth = 200;
+  const filterChairPopoverMaxWidth = 300;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -200,6 +202,8 @@ export default {
   notificationPopoverWidth,
   notificationPopoverMinHeight,
   notificationPopoverMaxHeight,
+  filterChairPopoverWidth,
+  filterChairPopoverMaxWidth,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,

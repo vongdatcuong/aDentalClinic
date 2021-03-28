@@ -18,17 +18,17 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         overflow: 'visible',
         '& span': {
-          fontSize: '0.8em',
+          fontSize: '0.9em',
           position: 'absolute',
-          top: '3px',
-          right: '5px'
+          top: '12px',
+          right: '5px',
         }
     }
 }));
 
 const CustomTimeScaleLabel = memo(({ cellHeight, time, formatDate, ...restProps }) => {
   const classes = useStyles();
-  let displayTime = "";
+  let displayTime = null;
   if (time){
     const timeMinute = time.getMinutes();
     if (timeMinute == 0 || timeMinute == 30){

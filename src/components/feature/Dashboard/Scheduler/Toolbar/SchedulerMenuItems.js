@@ -1,5 +1,5 @@
 
-import React, {memo}  from 'react';
+import React, {memo, useState, useRef}  from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from "@material-ui/core/styles";
 import strings from '../../../../../configs/strings';
@@ -15,6 +15,9 @@ import {
 import FilterListIcon from '@material-ui/icons/FilterList';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
+// Component
+import FilterChairPopover from './FilterChairPopover';
+
 const useStyles = makeStyles((theme) => ({
   toolBarItem: {
     borderLeft: `2px solid ${theme.whiteColor}`,
@@ -29,19 +32,49 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SchedulerMenuItems = ({ numOfChair, onClick }) => {
+const SchedulerMenuItems = ({ chairs, onSelectChair }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
+
+  // States
+  const [openFilterChairPopover, setOpenFilterChairPopover] = useState(false);
+  const [filterChairAnchorEl, setFilterChairAnchorEl] = useState(null);
+  const filterChairPopOverId = openFilterChairPopover? "filter-chair-popover" : undefined;
+
+  // Filter chair
+  const handleOpenFilterChair = (evt) => {
+    setFilterChairAnchorEl(evt.currentTarget);
+    setOpenFilterChairPopover(true);
+  }
+
+  const handleCloseFilterChair = (evt) => {
+    setOpenFilterChairPopover(false);
+  }
+
+  const handleSelectChair = () => {
+    setOpenFilterChairPopover(false);
+    onSelectChair();
+  }
+
   return (
     <Box display="flex" justifyContent="flex-start" pt={0} pb={0}>
-        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={onClick}>
+        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={handleOpenFilterChair} ref={(el) => setFilterChairAnchorEl(el)}>
           <FilterListIcon className={classes.itemIcon}/>
-           {t(strings.chairs)} ({numOfChair})
+            {t(strings.chairs)} ({chairs.length})
+           
         </Box>
-        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={onClick}>
+        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={onSelectChair}>
           <AssignmentIndIcon className={classes.itemIcon}/>
           {t(strings.all)}
         </Box>
+        <FilterChairPopover
+            id={filterChairPopOverId}
+            open={openFilterChairPopover}
+            onClose={handleCloseFilterChair}
+            anchorEl={filterChairAnchorEl}
+            chairs={chairs}
+            onApply={handleSelectChair}
+           />
     </Box>
   );
 };

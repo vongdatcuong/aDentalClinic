@@ -123,6 +123,8 @@ const dateRangeInvalid = "Range of date is invalid";
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
 const refreshTokenFailMsg = "Refresh token fail";
+    // Error Messages Appointment
+const loadAppointmentFailMsg = "Loading appointments fail !!!";
     // Confirm Messages
 
 // Context Actions
@@ -211,6 +213,7 @@ const confirmPassword = "Confirm Password";
 // Date
 const defaultTimeFormat = "HH:mm";
 const chartDateFormat = "DD/MM";
+const apiDateFormat = "YYYY-MM-DD";
 
 // Unit
 const hours = "hours"
@@ -283,6 +286,8 @@ export default {
     usernameErrMsg,
     logInFailMsg,
     refreshTokenFailMsg,
+    // Error Messages Appointment
+    loadAppointmentFailMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -400,6 +405,7 @@ export default {
     // Date
     defaultTimeFormat,
     chartDateFormat,
+    apiDateFormat,
     // Unit
     hours,
     percent,
