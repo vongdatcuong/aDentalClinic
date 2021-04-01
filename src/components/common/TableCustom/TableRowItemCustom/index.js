@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
@@ -32,12 +32,39 @@ const TableRowItemCustom=(props)=>{
     const {t, i18n } = useTranslation();
     const classes = useStyles();
 
+    // const [editable,setEditable]=useState(props.editable);
+    // const [handleChangeIsEdited,setHandleChangeIsEdited]=useState(props.handleChangeIsEdited);
+    // const [changeToEditPage,setChangeToEditPage]=useState(props.changeToEditPage);
+    const [first,setFirst]=useState(true);
+
+    const handleChangeOnClick=(e)=>{
+        if(props.editable===true && props.changeToEditPage===true)
+        {
+            console.log("Selected Row:",props.index);
+            // props.handleChangeIsEdited();
+            props.handleChangeSelectedRow(props.index);
+        }
+    }
+    
+    
     return(
-        <TableRow key={props.key}>
+        <TableRow key={props.key} 
+                    className={props.editable===true && props.changeToEditPage===true ? classes.tableRowEditChangePage : 
+                        props.editable===true && props.changeToEditPage===false ? classes.tableRowEdit : classes.tableRow}
+                    onClick={handleChangeOnClick}
+                    >
             {props.titles.map((title,index2)=>(                            
                     <TableCellCustom  key={props.row[props.dataColumnsName[1]]}
+                            title={title}
                             index={index2}
-                        value={index2===0 ? props.index+1+props.page*props.rowsPerPage  : props.row[`${props.dataColumnsName[index2]}`]}
+                            value={index2===0 ? props.index+1+props.page*props.rowsPerPage  : props.row[`${props.dataColumnsName[index2]}`]
+                                    }
+                            editable={props.editable}
+                            handleChangeIsEdited={props.handleChangeIsEdited}
+                            changeToEditPage={props.changeToEditPage}
+                            handleChangeSelectedRow={props.handleChangeSelectedRow}
+                            numberColumn={props.numberColumn}
+
                 />
             ))}
                                

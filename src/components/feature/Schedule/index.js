@@ -11,6 +11,8 @@ import { Typography,
     FormControl,
     FilledInput,
     OutlinedInput,
+    Select,
+    MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -64,6 +66,9 @@ const Schedule = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+    const [isEdited,setIsEdited]=useState(false);
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangePage = (event, newPage) => {
@@ -76,7 +81,14 @@ const Schedule = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
 
+    const handleChangeIsEdited=(e)=>{
+        console.log("Handle change edit");
+        setIsEdited(!isEdited);
+    }
     const titles=[
         t(strings.index),
         t(strings.id),
@@ -113,10 +125,18 @@ const Schedule = () => {
                                 }
                             />
                         </FormControl>
-                        <IconButton  >
-                            <FilterList />
+                        <Select
+                            
+                                value={editable}
+                                onChange={handleChangeEditable}
+                                disableUnderline 
+                                className={classes.status}
+                            >
+                            
+                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </IconButton>
+                            </Select>
                         <IconButton >
                             <AddBox />            
 

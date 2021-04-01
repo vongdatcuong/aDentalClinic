@@ -11,7 +11,8 @@ import { Typography,
     FormControl,
     OutlinedInput,
     Divider,
-
+    Select,
+    MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -38,24 +39,7 @@ const useStyles = makeStyles(styles);
 const createData=(id,provider,number,room,description)=>{
     return {id,provider,number,room,description};
 };
-const dataColumnsName=["index","id","provider","number","room","description"];
 
-const rows = [
-    createData('1712320', "Dat", "3", "1", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
-    createData('1712321', "Doan", "4", "1", "HCM"),
-    createData('1712322', "Thai", "5", "1", "HCM"),
-    createData('1712323', "Dan", "6", "1", "HCM"),
-    createData('1712324', "Cuong", "11", "1", "HCM"),
-    createData('1712325', "Vong", "13", "1", "HCM"),
-    createData('1712326', "Hung", "22", "1", "HCM"),
-    createData('1712327', "The", "333", "1", "HCM"),
-    createData('1712328', "Anh", "11", "2", "HCM"),
-    createData('1712329', "Nguyen", "222", "3", "HCM"),
-    createData('1712330', "Tang", "333", "33", "HCM"),
-    createData('1712331', "Vu", "11", "44", "HCM"),
-
-
-];
 
 const Chairs = () => {
     const {t, i18n } = useTranslation();
@@ -64,8 +48,35 @@ const Chairs = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+    const [isEdited,setIsEdited]=useState(false);
+
+    const rows = [
+        createData('1712320', "Dat", "3", "1", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
+        createData('1712321', "Doan", "4", "1", "HCM"),
+        createData('1712322', "Thai", "5", "1", "HCM"),
+        createData('1712323', "Dan", "6", "1", "HCM"),
+        createData('1712324', "Cuong", "11", "1", "HCM"),
+        createData('1712325', "Vong", "13", "1", "HCM"),
+        createData('1712326', "Hung", "22", "1", "HCM"),
+        createData('1712327', "The", "333", "1", "HCM"),
+        createData('1712328', "Anh", "11", "2", "HCM"),
+        createData('1712329', "Nguyen", "222", "3", "HCM"),
+        createData('1712330', "Tang", "333", "33", "HCM"),
+        createData('1712331', "Vu", "11", "44", "HCM"),
+
+
+    ];
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
+
+    const handleChangeIsEdited=(e)=>{
+        console.log("Handle change edit");
+        setIsEdited(!isEdited);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -77,6 +88,9 @@ const Chairs = () => {
         setSearchText(event.target.value);
     };
 
+    const dataColumnsName=["index","id","provider","number","room","description"];
+
+    
     const titles=[
         t(strings.index),
         t(strings.id),
@@ -113,10 +127,18 @@ const Chairs = () => {
                                 }
                             />
                         </FormControl>
-                        <IconButton  >
-                            <FilterList />
+                        <Select
+                            
+                                value={editable}
+                                onChange={handleChangeEditable}
+                                disableUnderline 
+                                className={classes.status}
+                            >
+                            
+                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </IconButton>
+                            </Select>
                         <IconButton >
                             <AddBox />            
 
@@ -128,7 +150,13 @@ const Chairs = () => {
                 <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
                     
-                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
+                    <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                changeToEditPage={false}
+
+                                />
                
                 </Container>
                 

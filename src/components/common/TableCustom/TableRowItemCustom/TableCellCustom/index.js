@@ -23,7 +23,7 @@ import CreateIcon from "@material-ui/icons/Create";
 
 import styles from "./jss";
 //import configs
-
+import strings from "../../../../../configs/strings";
 const useStyles = makeStyles(styles);
 
 const TableCellCustom=(props)=>{
@@ -36,14 +36,14 @@ const TableCellCustom=(props)=>{
     const handleChangeValue=(e)=>{
         setValue(e.target.value);
     }
-    const handleChangeEditbale=(e)=>{
+    const handleChangeEditable=(e)=>{
         if(props.index!==0)
         {
             setEditable(!editable);
         }
 
     }
-
+    
     const clickTick=(e)=>{
         setEditable(false);
     }
@@ -69,12 +69,11 @@ const TableCellCustom=(props)=>{
                         {value}
 
                     </Grid>
-                    <Grid item xs={2} onClick={handleChangeEditbale}>
-                        {props.index===0 ? 
-                            <div></div>
-                            :
+                    <Grid item xs={2} onClick={handleChangeEditable}>
+                        {props.changeToEditPage===false &&props.editable===true && props.index!==0? 
                             <CreateIcon className={classes.updateIcon} color="disabled"/>
-
+                            :
+                            <div></div>
                         }
                     </Grid>
 

@@ -38,6 +38,13 @@ const providerStyle = (theme) => ({
     goBack:{
         cursor:'pointer',
         color:theme.primaryColor[1],
+    },
+    status:{
+        marginLeft:'20px',
+        marginRight:'10px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
     }
 });
 

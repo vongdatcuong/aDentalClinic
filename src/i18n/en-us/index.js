@@ -161,6 +161,12 @@ export default {
         "Document":"Document",
         "Templates":"Templates",
         "Drug":"Drug",
+        //template
+        "Template":"Template",
+        "Recent":"Recent",
+        "All templates":"All templates",
+        "Invoice":"Invoice",
+        "Resignation letter":"Resignation letter",
         //provider
         "#":"#",
         "ID":"ID",
@@ -177,6 +183,11 @@ export default {
         "Female":"Female",
         "Insert":"Insert",
         "Insert Person":"Insert Person",
+        "Active":"Active",
+        "Inactive":"Inactive",
+        "Status":"Status",
+        "Read":"Read",
+        
         //procedure
         "Code":"Code",
         "Fee":"Fee",

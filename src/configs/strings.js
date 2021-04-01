@@ -30,6 +30,11 @@ const authentication="Authentication";
 const document="Document";
 const templates="Templates";
 const drug="Drug";
+const active="Active";
+const inactive="Inactive";
+const status="Status";
+const read="Read";
+
 //provider
 const index="#";
 const id="ID";
@@ -46,6 +51,7 @@ const male="Male";
 const female="Female";
 const insert="Insert";
 const insertPerson="Insert Person";
+
 //procedure
 const code="Code";
 const fee="Fee";
@@ -78,6 +84,12 @@ const quantity="Quantity";
 const name="Name";
 //table
 const rowsPerPage="Rows per page";
+//template
+const template="Template";
+const recent="Recent";
+const allTemplates="All templates";
+const invoice="Invoice";
+const resignationLetter="Resignation letter";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -371,6 +383,15 @@ export default {
     female,
     insert,
     insertPerson,
+    active,
+    inactive,
+    status,
+    read,
+    template,
+    recent,
+    allTemplates,
+    invoice,
+    resignationLetter,
     // Settings
     general,
     account,

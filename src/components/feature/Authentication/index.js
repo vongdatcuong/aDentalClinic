@@ -10,9 +10,13 @@ import { Typography,
     InputAdornment,
     FormControl,
     OutlinedInput,
+    Select,
+    MenuItem,
+
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+
 
 
 import styles from "./jss";
@@ -30,23 +34,23 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 
 const useStyles = makeStyles(styles);
-const createData=(id,fullname,role,gender,address)=>{
-    return {id,fullname,role,gender,address};
+const createData=(id,fullname,role,gender,address,status)=>{
+    return {id,fullname,role,gender,address,status};
 };
-const dataColumnsName=["index","id","fullname","role","gender","address"];
+const dataColumnsName=["index","id","fullname","role","gender","address","status"];
 const rows = [
-    createData('1712320', "Dat", "Admin", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
-    createData('1712321', "Doan", "Customer", "Male", "HCM"),
-    createData('1712322', "Thai", "Customer", "Male", "HCM"),
-    createData('1712323', "Dan", "Customer", "Male", "HCM"),
-    createData('1712324', "Cuong", "Customer", "Male", "HCM"),
-    createData('1712325', "Vong", "Customer", "Male", "HCM"),
-    createData('1712326', "Hung", "Customer", "Male", "HCM"),
-    createData('1712327', "The", "Customer", "Male", "HCM"),
-    createData('1712328', "Anh", "Customer", "Male", "HCM"),
-    createData('1712329', "Nguyen", "Customer", "Female", "HCM"),
-    createData('1712330', "TangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasj", "Customer", "Female", "HCM"),
-    createData('1712331', "Vu asdsa das dasd sad sad sad asd asd asd asdsadas das  asd asdsa dasd as", "Customer", "Female", "HCM"),
+    createData('1712320', "Dat", "Admin", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas","Active"),
+    createData('1712321', "Doan", "Customer", "Male", "HCM","Active"),
+    createData('1712322', "Thai", "Customer", "Male", "HCM","Inactive"),
+    createData('1712323', "Dan", "Customer", "Male", "HCM","Active"),
+    createData('1712324', "Cuong", "Customer", "Male", "HCM","Active"),
+    createData('1712325', "Vong", "Customer", "Male", "HCM","Active"),
+    createData('1712326', "Hung", "Customer", "Male", "HCM","Active"),
+    createData('1712327', "The", "Customer", "Male", "HCM","Active"),
+    createData('1712328', "Anh", "Customer", "Male", "HCM","Active"),
+    createData('1712329', "Nguyen", "Customer", "Female", "HCM","Active"),
+    createData('1712330', "TangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasjTangsadasdsadlsakdlaskjdlkasjlkdjaskldjaskljdlkasjdlksajkdlasj", "Customer", "Female", "HCM","Active"),
+    createData('1712331', "Vu asdsa das dasd sad sad sad asd asd asd asdsadas das  asd asdsa dasd as", "Customer", "Female", "HCM","Active"),
 
 
 ];
@@ -54,14 +58,20 @@ const rows = [
 
 const Authentication = () => {
     const {t, i18n } = useTranslation();
-    const row0=rows[0];
-    console.log("Row[0][0]:",row0[2])
+    
     const classes = useStyles();
+
+    
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    const handleChangeEditable=(e)=>{
+        setEditable(e.target.value);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -73,6 +83,7 @@ const Authentication = () => {
         setSearchText(event.target.value);
     };
 
+    
     const titles=[
         t(strings.index),
         t(strings.id),
@@ -80,7 +91,9 @@ const Authentication = () => {
         t(strings.role),
         t(strings.gender),
         t(strings.address),
+        t(strings.status),
     ]
+
     return (
         <div className={classes.container}>
             
@@ -109,10 +122,19 @@ const Authentication = () => {
                                 }
                             />
                         </FormControl>
-                        <IconButton  >
-                            <FilterList />
+                        <Select
+                            
+                            value={editable}
+                            onChange={handleChangeEditable}
+                            disableUnderline 
+                            className={classes.status}
+                            >
+                            
+                                <MenuItem value={true}>{t(strings.read)}</MenuItem>
+                                <MenuItem value={false}>{t(strings.edit)}</MenuItem>
 
-                        </IconButton>
+                            </Select>
+                        
                         <IconButton >
                             <AddBox />            
 
@@ -126,7 +148,7 @@ const Authentication = () => {
                 <Container style={{marginLeft:"10px"}}>
                 
                 
-                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
+                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName} editable={editable}/>
         
                 </Container>
                 
