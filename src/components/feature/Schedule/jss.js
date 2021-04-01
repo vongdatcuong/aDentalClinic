@@ -34,6 +34,13 @@ const scheduleStyle = (theme) => ({
         marginRight: theme.spacing(2),
         marginBottom: theme.spacing(1.5)
     },
+    status:{
+        marginLeft:'20px',
+        marginRight:'10px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+    }
 });
 
   

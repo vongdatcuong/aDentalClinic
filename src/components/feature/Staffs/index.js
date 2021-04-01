@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
@@ -11,6 +11,8 @@ import { Typography,
     FormControl,
     FilledInput,
     OutlinedInput,
+    Select,
+    MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -34,6 +36,7 @@ import AddBox from '@material-ui/icons/AddBox';
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertPerson from "../InsertPerson";
+import UpdatePerson from "../UpdatePerson";
 
 
 const useStyles = makeStyles(styles);
@@ -70,8 +73,24 @@ const Staffs = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+    const [isEdited,setIsEdited]=useState(false);
+    const [selectedRow,setSelectedRow]=useState(-1);
+    const [selectedRowData,setSelectedRowData]=useState(null);
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    const handleChangeSelectedRow=(value)=>{
+        setSelectedRow(value);
+    }
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
+
+    const handleChangeIsEdited=(e)=>{
+        console.log("Handle change edit");
+        setIsEdited(!isEdited);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -85,6 +104,12 @@ const Staffs = () => {
     const handleChangeInsertPerson=(e)=>{
         setInsertPerson(!insertPerson);
     }
+    const handleGoBack=(e)=>{
+        setInsertPerson(false);
+        setIsEdited(false);
+        setSelectedRow(-1);
+        setSelectedRowData(null);
+    }
     const titles=[
         t(strings.index),
         t(strings.id),
@@ -93,6 +118,19 @@ const Staffs = () => {
         t(strings.gender),
         t(strings.address),
     ];
+
+    useEffect(()=>{
+        if(selectedRow!==-1)
+        {
+            if(selectedRowData!==rows[selectedRow] && isEdited===false)
+            {
+                handleChangeIsEdited();
+
+                setSelectedRowData(rows[selectedRow])
+            }
+
+        }
+    })
     return (
         <div className={classes.container} >
             
@@ -103,9 +141,17 @@ const Staffs = () => {
                             {t(strings.staffs)}
                         </Typography>
                     </Grid>
-                    {insertPerson===false ?
+                    {insertPerson===true || isEdited===true ?
+
                         <Grid item xs={4} className={classes.serviceControl}>
-                            <FormControl  variant="filled">
+                            <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
+                                {t(strings.goBack)}
+                            </Typography>
+                        </Grid>
+                        :
+                        <Grid item xs={4} className={classes.serviceControl}>
+
+                            <FormControl variant="filled">
 
                                 <OutlinedInput
                                     className={classes.searchControl}
@@ -122,33 +168,62 @@ const Staffs = () => {
                                     }
                                 />
                             </FormControl>
-                            <IconButton  >
-                                <FilterList />
+                            <Select
+                            
+                                value={editable}
+                                onChange={handleChangeEditable}
+                                disableUnderline 
+                                className={classes.status}
+                            >
+                            
+                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </IconButton>
+                            </Select>
                             <IconButton onClick={handleChangeInsertPerson}>
                                 <AddBox />            
 
                             </IconButton>
                         </Grid>
-                        :
-                        <Grid item xs={4} className={classes.serviceControl}>
-                            <Typography variant="h6" onClick={handleChangeInsertPerson} className={classes.goBack}>
-                                {t(strings.goBack)}
-                            </Typography>
-                        </Grid>
-                    }
+
+                        }
                     
                     
-                </Grid>
+                    </Grid>
                 <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
-                    {insertPerson===false ?
-                        <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
-                        :
+                    {insertPerson===true && isEdited=== false ?
                         <InsertPerson />
+                        : isEdited===true &&selectedRowData!==null ?
+                        <UpdatePerson fullname={selectedRowData.fullname}
+                                        idCard={selectedRowData.idCard}
+                                        date={selectedRowData.date}
+                                        publisher={selectedRowData.publisher}
+                                        email={selectedRowData.email}
+                                        address={selectedRowData.address}
+                                        city={selectedRowData.city}
+                                        country={selectedRowData.country}
+                                        postalCode={selectedRowData.postalCode}
+                                        phone={selectedRowData.phone}
+                                        birth={selectedRowData.birth}
+                                        gender={selectedRowData.gender}
+                                        status={selectedRowData.status}
+                        />
+                        :
+                            <TableCustom titles={titles}
+                                    data={rows}
+                                    dataColumnsName={dataColumnsName}
+                                    editable={editable}
+                                    handleChangeIsEdited={handleChangeIsEdited}
+                                    changeToEditPage={true}
+                                    handleChangeSelectedRow={handleChangeSelectedRow}
+                                    numberColumn={dataColumnsName.length}
+                                    />
                     }
+                   
+                   
                 </Container>
+                
                 
                 
             </div>

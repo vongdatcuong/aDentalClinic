@@ -158,6 +158,12 @@ export default {
         "Document":"Tài liệu",
         "Templates":"Mẫu",
         "Drug":"Thuốc",
+        //template
+        "Template":"Mẫu",
+        "Recent":"Gần đây",
+        "All templates":"Tất cả mẫu",
+        "Invoice":"Hóa đơn",
+        "Resignation letter":"Đơn thôi việc",
         //provider
         "#":"#",
         "ID":"ID",
@@ -174,6 +180,11 @@ export default {
         "Female":"Nữ",
         "Insert":"Thêm",
         "Insert Person":"Thêm người",
+        "Active":"Hoạt động",
+        "Inactive":"Không hoạt động",
+        "Status":"Trạng thái",
+        "Read":"Đọc",
+
         //procedure
         "Code":"Code",
         "Fee":"Tiền công",

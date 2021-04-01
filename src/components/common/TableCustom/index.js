@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
@@ -34,13 +34,17 @@ const TableCustom=(props)=>{
     const rows=props.data;
     const titles=props.titles;
     const dataColumnsName=props.dataColumnsName;
-    const row=rows[0];
-    console.log("Data column :",row[`${dataColumnsName[1]}`]);
-    console.log("column name:",dataColumnsName[0]);
+    
 
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    // const [editable,setEditable]=useState(props.editable);
+    // const [handleChangeIsEdited,setHandleChangeIsEdited]=useState(props.handleChangeIsEdited);
+    // const [changeToEditPage,setChangeToEditPage]=useState(props.changeToEditPage);
+    // let editable=props.editable;
+    // let handleChangeIsEdited=props.handleChangeIsEdited;
+    // let changeToEditPage=props.changeToEditPage;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangePage = (event, newPage) => {
@@ -50,12 +54,8 @@ const TableCustom=(props)=>{
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    const check=()=>{
-        
-        return titles.map((title,index)=>{
-            <div key={index}>{title}</div>
-        })
-    }
+    
+    
     return(
         <TableContainer component={Paper}>
            
@@ -84,6 +84,11 @@ const TableCustom=(props)=>{
                                                 dataColumnsName={dataColumnsName}
                                                 page={page}
                                                 rowsPerPage={rowsPerPage}
+                                                editable={props.editable}
+                                                handleChangeIsEdited={props.handleChangeIsEdited}
+                                                changeToEditPage={props.changeToEditPage}
+                                                handleChangeSelectedRow={props.handleChangeSelectedRow}
+                                                numberColumn={props.numberColumn}
                                                 />
                         ))}
 
