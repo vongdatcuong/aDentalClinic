@@ -44,6 +44,8 @@ export default {
         "Filter": "Filter",
         "Add": "Add",
         "Loading": "Loading",
+        "No options": "No options",
+        "select": "Select",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -67,6 +69,7 @@ export default {
         "Refresh token fail": "Refresh token fail",
         // Error Messages Appointment
         "Loading appointments fail !!!": "Loading appointments fail !!!",
+        "Invalid Chair Filter": "Invalid Chair Filter",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",

@@ -114,6 +114,7 @@ const apply = "Apply";
 const filter = "Filter";
 const add = "Add";
 const loading = "Loading";
+const noOptions = "No options";
 
 // Messages
 
@@ -138,6 +139,7 @@ const logInFailMsg = "Sign in fail";
 const refreshTokenFailMsg = "Refresh token fail";
     // Error Messages Appointment
 const loadAppointmentFailMsg = "Loading appointments fail !!!";
+const invalidFilterChairMsg = "Invalid Chair Filter";
     // Confirm Messages
 
 // Context Actions
@@ -230,6 +232,9 @@ const confirmPassword = "Confirm Password";
 const defaultTimeFormat = "HH:mm";
 const chartDateFormat = "DD/MM";
 const apiDateFormat = "YYYY-MM-DD";
+const forward = "forward";
+const back = "back";
+const select = "select";
 
 // Unit
 const hours = "hours"
@@ -283,6 +288,7 @@ export default {
     filter,
     add,
     loading,
+    noOptions,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -305,6 +311,7 @@ export default {
     refreshTokenFailMsg,
     // Error Messages Appointment
     loadAppointmentFailMsg,
+    invalidFilterChairMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -435,6 +442,9 @@ export default {
     defaultTimeFormat,
     chartDateFormat,
     apiDateFormat,
+    forward,
+    back,
+    select,
     // Unit
     hours,
     percent,

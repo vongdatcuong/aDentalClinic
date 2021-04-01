@@ -1,10 +1,7 @@
 
 import React, {memo}  from 'react';
 import { makeStyles } from "@material-ui/core/styles";
-import { 
-  TableRow, 
-  Typography
-} from '@material-ui/core';
+import strings from '../../../../../configs/strings';
 import {
     DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
@@ -18,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomDateNavigatorOpenButton = memo(({ ...restProps }) => {
+const CustomDateNavigatorOpenButton = memo(({ onClick, ...restProps }) => {
   const classes = useStyles();
   return (
     <DateNavigator.OpenButton

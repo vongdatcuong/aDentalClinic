@@ -1,5 +1,5 @@
 
-import React, {memo, useState, useRef}  from 'react';
+import React, {memo, useState, useEffect}  from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from "@material-ui/core/styles";
 import strings from '../../../../../configs/strings';
@@ -17,6 +17,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 // Component
 import FilterChairPopover from './FilterChairPopover';
+import FilterPatientPopover from './FilterPatientPopover';
 
 const useStyles = makeStyles((theme) => ({
   toolBarItem: {
@@ -32,14 +33,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SchedulerMenuItems = ({ chairs, onSelectChair }) => {
+const SchedulerMenuItems = ({ chairs, appointments, patientDisplayObj, onSelectChair, onSelectPatient }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
 
   // States
+  // Filter Chair
   const [openFilterChairPopover, setOpenFilterChairPopover] = useState(false);
   const [filterChairAnchorEl, setFilterChairAnchorEl] = useState(null);
   const filterChairPopOverId = openFilterChairPopover? "filter-chair-popover" : undefined;
+
+  // Filter Patient
+  const [openFilterPatientPopover, setOpenFilterPatientPopover] = useState(false);
+  const [filterPatientAnchorEl, setFilterPatientAnchorEl] = useState(null);
+  const filterPatientPopOverId = openFilterPatientPopover? "filter-patient-popover" : undefined;
+
+  // Use effect
+  useEffect(() => {
+
+  }, []);
 
   // Filter chair
   const handleOpenFilterChair = (evt) => {
@@ -51,9 +63,24 @@ const SchedulerMenuItems = ({ chairs, onSelectChair }) => {
     setOpenFilterChairPopover(false);
   }
 
-  const handleSelectChair = () => {
+  const handleSelectChair = (chairsDisplay) => {
     setOpenFilterChairPopover(false);
-    onSelectChair();
+    onSelectChair(chairsDisplay);
+  }
+
+  // Filter patient
+  const handleOpenFilterPatient = (evt) => {
+    setFilterPatientAnchorEl(evt.currentTarget);
+    setOpenFilterPatientPopover(true);
+  }
+
+  const handleCloseFilterPatient = (evt) => {
+    setOpenFilterPatientPopover(false);
+  }
+
+  const handleSelectPatient = (patientDisplayObj) => {
+    setOpenFilterPatientPopover(false);
+    onSelectPatient(patientDisplayObj);
   }
 
   return (
@@ -63,9 +90,9 @@ const SchedulerMenuItems = ({ chairs, onSelectChair }) => {
             {t(strings.chairs)} ({chairs.length})
            
         </Box>
-        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={onSelectChair}>
+        <Box p={1} pl={4} pr={4} className={classes.toolBarItem} onClick={handleOpenFilterPatient} ref={(el) => setFilterPatientAnchorEl(el)}>
           <AssignmentIndIcon className={classes.itemIcon}/>
-          {t(strings.all)}
+          {t(strings.patient)}
         </Box>
         <FilterChairPopover
             id={filterChairPopOverId}
@@ -75,6 +102,15 @@ const SchedulerMenuItems = ({ chairs, onSelectChair }) => {
             chairs={chairs}
             onApply={handleSelectChair}
            />
+        <FilterPatientPopover
+          id={filterPatientPopOverId}
+          open={openFilterPatientPopover}
+          onClose={handleCloseFilterPatient}
+          anchorEl={filterPatientAnchorEl}
+          appointments={appointments}
+          patientDisplayObj={patientDisplayObj}
+          onApply={handleSelectPatient}
+        />
     </Box>
   );
 };

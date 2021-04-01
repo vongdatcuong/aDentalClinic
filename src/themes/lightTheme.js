@@ -15,7 +15,7 @@
 
 import {hexToRgb} from '../utils/colors';
   
-  // Width
+  // Width Height
   const drawerLeftWidth = 120;
   const drawerRightWidth = 240;
   const drawerRightCloseWidth = 50;
@@ -24,6 +24,10 @@ import {hexToRgb} from '../utils/colors';
   const notificationPopoverMaxHeight = 600;
   const filterChairPopoverWidth = 200;
   const filterChairPopoverMaxWidth = 300;
+  const filterPatientPopoverWidth = 500;
+  const filterPatientPopoverMaxWidth = 700;
+  const filterPatientPopoverHeight = 300;
+  const filterPatientPopoverMaxHeight = 800;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -195,7 +199,7 @@ import {hexToRgb} from '../utils/colors';
   
 export default {
   hexToRgb,
-  // Width
+  // Width Height
   drawerLeftWidth,
   drawerRightWidth,
   drawerRightCloseWidth,
@@ -204,6 +208,10 @@ export default {
   notificationPopoverMaxHeight,
   filterChairPopoverWidth,
   filterChairPopoverMaxWidth,
+  filterPatientPopoverWidth,
+  filterPatientPopoverHeight,
+  filterPatientPopoverMaxWidth,
+  filterPatientPopoverMaxHeight,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,
