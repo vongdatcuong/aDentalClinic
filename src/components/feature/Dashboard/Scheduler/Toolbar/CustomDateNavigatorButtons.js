@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { 
 
 } from '@material-ui/core';
+import strings from '../../../../../configs/strings';
 import {
     DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
@@ -18,13 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomDateNavigatorButtons = memo(({ ...restProps }) => {
+const CustomDateNavigatorButtons = memo(({...restProps }) => {
   const classes = useStyles();
   return (
     <DateNavigator.NavigationButton
       className={classes.buttons}
       {...restProps}
-    >
+      //onClick={() => onClick(restProps.type)}
+    > 
     </DateNavigator.NavigationButton>
   );
 });

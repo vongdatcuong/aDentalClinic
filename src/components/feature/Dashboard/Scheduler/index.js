@@ -45,9 +45,6 @@ import CustomDateNavigatorOpenButton from './Toolbar/CustomDateNavigatorOpenButt
 
 import Empty from '../../../common/Empty';
 
-// Dialogs
-import MakeAppointmentDialog from './Appointment/MakeAppointmentDialog';
-
 // Utils
 import {disableClick} from '../../../../utils/general';
 
@@ -65,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
     // Container
     '& div div:last-child': {
-      paddingRight: '0.1px'
+      paddingRight: '0.1px',
     }
   }
 }));
@@ -75,19 +72,45 @@ const calcTimeTableCellHeight = (containerHeight, startDayHour, endDayHour, dura
   return Math.round(containerHeight * 100000 / numOfPeriods) / 100000;
 }
 
-const Schedulerr = ({ appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, tableCellClick, onSelectChair}) => {
+const Schedulerr = (
+  { 
+    appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj,
+    tableCellClick, onSelectChair, onSelectDate, onSelectPatient
+  }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
   
   // States
-  const [timeTableCellHeight, setTimeTableCellHeight] = useState(calcTimeTableCellHeight(window.innerHeight - 130, startDayHour, endDayHour, cellDuration));
+  const [timeTableCellHeight, setTimeTableCellHeight] = useState(calcTimeTableCellHeight(window.innerHeight - 135, startDayHour, endDayHour, cellDuration));
 
-  const data = appointments;
+  // Filter instance
+  const instances = [];
+  const chairMap = {};
+  chairs.forEach((chair) => {
+    if (chair.isDisplay){
+      instances.push(chair);
+      chairMap[chair._id] = true;
+    }
+  })
+  let data = [];
+  let filterBlocks = [];
+  if (patientDisplayObj && Object.keys(patientDisplayObj).length > 0){
+    appointments.forEach((appoint) => {
+      if (chairMap[appoint.chairId] && patientDisplayObj[appoint.title]){
+        data.push(appoint);
+      } else {
+        filterBlocks.push({...appoint, filter: true});
+      }
+    })
+  } else {
+    data = appointments.filter((appoint) => chairMap[appoint.chairId]);
+  }
+
   const resources = [
     {
       fieldName: 'chairId',
       title: 'Chair',
-      instances: chairs,
+      instances: instances,
     }];
   const grouping = [{
       resourceName: 'chairId',
@@ -98,6 +121,7 @@ const Schedulerr = ({ appointments, blocks, chairs, selectedDate, cellDuration, 
     
   })
 
+  // Tooltip
   const handleAppointmentTooltipEdit = (info, startDate, endDate) => {
     info.text = chairs[info.chairId - 1].text;
     tableCellClick(info, startDate, endDate);
@@ -119,81 +143,89 @@ const Schedulerr = ({ appointments, blocks, chairs, selectedDate, cellDuration, 
 
   return (
     <React.Fragment>
-      <Paper className={classes.paper}>
-        <Scheduler
-          data={[...data, ...blocks]}
-        >
-          <ViewState
-            defaultCurrentDate={selectedDate}
-          />
-          <Toolbar
-            className={classes.Toolbar}
-            rootComponent={CustomToolbarRow}
-            flexibleSpaceComponent={
-              (props) => <SchedulerMenuItems {...props} chairs={chairs} onSelectChair={onSelectChair}/>
-            }
-          />
-          <DateNavigator 
-            openButtonComponent={CustomDateNavigatorOpenButton}
-            navigationButtonComponent={CustomDateNavigatorButtons}
-          />
-          
-          <GroupingState
-            grouping={grouping}
-          />
-
-          <DayView
-            startDayHour={startDayHour}
-            endDayHour={endDayHour}
-            cellDuration={cellDuration}
-            intervalCount={1}
-            height={0}
-            dayScaleRowComponent={Empty}
-            timeScaleLabelComponent={
-              (props) => <CustomTimeScaleLabel cellHeight={timeTableCellHeight} {...props}/>
-            }
-            timeTableCellComponent={renderTimeTableCell}
-            timeScaleTickCellComponent={
-              (props) => <CustomTimeScaleTicket cellHeight={timeTableCellHeight} {...props} />
-            }
+      {(instances.length > 0)?
+        <Paper className={classes.paper}>
+          <Scheduler
+            data={[...data, ...blocks, ...filterBlocks]}
+          >
+            <ViewState
+              defaultCurrentDate={selectedDate}
+              onCurrentDateChange={onSelectDate}
+            />
+            <Toolbar
+              className={classes.Toolbar}
+              rootComponent={CustomToolbarRow}
+              flexibleSpaceComponent={
+                (props) => <SchedulerMenuItems {...props} 
+                  chairs={chairs} appointments={appointments} patientDisplayObj={patientDisplayObj} 
+                  onSelectChair={onSelectChair} onSelectPatient={onSelectPatient}/>
+              }
+            />
+            <DateNavigator 
+              openButtonComponent={CustomDateNavigatorOpenButton}
+              navigationButtonComponent={
+                (props) => <CustomDateNavigatorButtons {...props}/>
+              }
+            />
             
-          />
-          <Appointments 
-            containerComponent={
-              (props) => <CustomAppointmentContainer width={100 / chairs.length} {...props}/>
-            }
-            appointmentComponent={
-              (props) => <CustomAppointment {...props}/>
-            }
-          />
+            <GroupingState
+              grouping={grouping}
+            />
 
-          <Resources
-            data={resources}
-            mainResourceName="chairId"
-          />
+            <DayView
+              startDayHour={startDayHour}
+              endDayHour={endDayHour}
+              cellDuration={cellDuration}
+              intervalCount={1}
+              height={0}
+              dayScaleRowComponent={Empty}
+              timeScaleLabelComponent={
+                (props) => <CustomTimeScaleLabel cellHeight={timeTableCellHeight} {...props}/>
+              }
+              timeTableCellComponent={renderTimeTableCell}
+              timeScaleTickCellComponent={
+                (props) => <CustomTimeScaleTicket cellHeight={timeTableCellHeight} {...props} />
+              }
+              
+            />
+            <Appointments 
+              containerComponent={
+                (props) => <CustomAppointmentContainer width={99.92 / instances.length} {...props}/>
+              }
+              appointmentComponent={
+                (props) => <CustomAppointment {...props}/>
+              }
+            />
 
-          <IntegratedGrouping />
+            <Resources
+              data={resources}
+              mainResourceName="chairId"
+            />
 
-          <AppointmentTooltip 
-            showOpenButton
-            showDeleteButton
-            showCloseButton
-            headerComponent={
-              (props) => <CustomAppointmentTooltipHeader {...props} 
-              onEdit={handleAppointmentTooltipEdit} 
-              onDelete={handleAppointmentTooltipDelete}/>
-            }
-            contentComponent={
-              (props) => <CustomAppointmentTooltipContent {...props}/>
-            }
-          />
-          <AppointmentForm />
-          <GroupingPanel 
-            cellComponent={GroupingPanelCell}
-          />
-          {/*<DragDropProvider />*/}
-        </Scheduler>
-      </Paper>
+            <IntegratedGrouping />
+
+            <AppointmentTooltip 
+              showOpenButton
+              showDeleteButton
+              showCloseButton
+              headerComponent={
+                (props) => <CustomAppointmentTooltipHeader {...props} 
+                onEdit={handleAppointmentTooltipEdit} 
+                onDelete={handleAppointmentTooltipDelete}/>
+              }
+              contentComponent={
+                (props) => <CustomAppointmentTooltipContent {...props}/>
+              }
+            />
+            <AppointmentForm />
+            <GroupingPanel 
+              cellComponent={GroupingPanelCell}
+            />
+            {/*<DragDropProvider />*/}
+          </Scheduler>
+        </Paper>
+      : ""
+    }
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import figures from '../../../configs/figures';
@@ -31,11 +31,17 @@ import apiPath from '../../../api/path';
 // Utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 
+// Context
+import { loadingStore } from '../../../contexts/loading-context';
+
 const useStyles = makeStyles(styles);
 
 const DashBoard = () => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
+
+    // Context
+    const {loadingState, dispatchLoading} = useContext(loadingStore);
 
     // States
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -44,11 +50,11 @@ const DashBoard = () => {
 
     const [chairs, setChairs] = useState(
         [
-            { text: `${t(strings.chair)} 1`, id: 1 },
+            { text: `${t(strings.chair)} 1`, _id: 1, isDisplay: false },
         ]
     );
 
-    const [selectedDate, setSelectedDate] = useState(new Date("2021-03-07"));
+    const [selectedDate, setSelectedDate] = useState(new Date(2021, 2, 7, 0, 0, 0));
     const [cellDuration, setCellDuration] = useState(figures.defaultCellDuration);
     const [startDayHour, setStartDayHour] = useState(figures.defaultStartDayHour);
     const [endDayHour, setEndDayHour] = useState(figures.defaultEndDayHour);
@@ -56,7 +62,12 @@ const DashBoard = () => {
     // Slide
     const [checkedScheduler, setCheckedScheduler] = useState(true);
 
-    useEffect(async () => {
+    // Filter Patient
+    const [patientDisplayObj, setPatientDisplayObj] = useState({});
+
+    const [isWillMount, setIsWillMount] = useState(true);
+    // Will mount
+    const handleWillMount = async () => {
         try {
             const promiseAll = [
                 api.httpGet({
@@ -69,22 +80,31 @@ const DashBoard = () => {
                     url: apiPath.appointment.appointment,
                     query: {
                         date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
+                        active_chair_only: true
                     },
                 }),
                 api.httpGet({
                     url: apiPath.appointment.appointment + apiPath.appointment.block,
                     query: {
-                        date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat)
+                        date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
+                        active_chair_only: true
                     },
                 }),
+                api.httpGet({
+                    url: apiPath.practice.practice,
+                    query: {
+
+                    }
+                })
             ];
             const result = await Promise.all(promiseAll);
-            if (result[0].success && result[1].success && result[2].success || 1){
+            if (result[0].success && result[1].success && result[2].success && result[3].success){
                 setIsLoadingPage(false);
                 // Chairs
                 const chairss = result[0].payload.map((chair, index) => Object.assign({}, chair, {
                     id: chair._id,
-                    text: `${t(strings.chair)} ${chair.order} (${chair.name})`,
+                    text: `${t(strings.chair)} (${chair.name})`,
+                    isDisplay: true,
                 }));
                 setChairs(chairss);
                 // Appointments
@@ -93,38 +113,130 @@ const DashBoard = () => {
                     const aTime = appointment.appointment_time;
                     aDate.setHours(aTime.slice(0, 2));
                     aDate.setMinutes(aTime.slice(2));
-                    const endDate = moment(aDate).add(Number(appointment.duration), "minutes")
+                    const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
                     return {
                         id: appointment._id,
-                        title: appointment.note,
+                        title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
                         chairId: appointment.chair._id,
                         startDate: aDate,
-                        endDate: endDate
+                        endDate: (endDate.isValid())? endDate : aDate,
+                        patient: appointment.patient || {},
+                        chair: appointment.chair
                     }
                 });
                 setAppointments(appointmentss);
                 // Blocks
-                setBlocks(
-                    [{
-                        block: true,
-                        chairId: 1,
-                        startDate: new Date(2017, 4, 29, 11, 30),
-                        endDate: new Date(2017, 4, 29, 12, 30),
-                      }, {
-                        block: true,
-                        chairId: 2,
-                        startDate: new Date(2017, 4, 29, 15, 30),
-                        endDate: new Date(2017, 4, 29, 16, 30),
-                      },
-                    ]  
-                );
+                const blockss = result[2].payload.map((block) => {
+                    const aDate = new Date(block.block_date);
+                    const aTime = block.block_time;
+                    aDate.setHours(aTime.slice(0, 2));
+                    aDate.setMinutes(aTime.slice(2));
+                    const endDate = moment(aDate).add(Number(block.duration), "minutes");
+                    return {
+                        id: block._id,
+                        chairId: block.chair,
+                        startDate: aDate,
+                        endDate: (endDate.isValid())? endDate : aDate,
+                        block: true
+                    }
+                });
+                setBlocks(blockss);
+                // Practice
+                const practice = result[3].payload;
+                const startTime = Number(practice.start_time.slice(0, 2)) + Number(practice.start_time.slice(2)) / 60;
+                const endTime = Number(practice.end_time.slice(0, 2)) + Number(practice.end_time.slice(2)) / 60;
+                if (startTime >= 0 && startTime <= 24 && endTime >= 0 && endTime <= 24){
+                    setStartDayHour(startTime);
+                    setEndDayHour(endTime);
+                }
             } else {
                 toast.error(t(strings.loadAppointmentFailMsg));    
             }
         } catch(err){
             toast.error(t(strings.loadAppointmentFailMsg));
         }
-    }, []);
+    }
+
+    const handleDidUpdate = async () => {
+        try {
+            dispatchLoading({type: strings.setLoading, isLoading: true});
+            const promiseAll = [
+                api.httpGet({
+                    url: apiPath.appointment.appointment,
+                    query: {
+                        date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
+                        active_chair_only: true
+                    },
+                }),
+                api.httpGet({
+                    url: apiPath.appointment.appointment + apiPath.appointment.block,
+                    query: {
+                        date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
+                        active_chair_only: true
+                    },
+                }),
+            ];
+            const result = await Promise.all(promiseAll);
+            if (result[0].success && result[1].success){
+                // Appointments
+                const appointmentss = result[0].payload.map((appointment) => {
+                    const aDate = new Date(appointment.appointment_date);
+                    const aTime = appointment.appointment_time;
+                    aDate.setHours(aTime.slice(0, 2));
+                    aDate.setMinutes(aTime.slice(2));
+                    const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+                    return {
+                        id: appointment._id,
+                        title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
+                        chairId: appointment.chair._id,
+                        startDate: aDate,
+                        endDate: (endDate.isValid())? endDate : aDate,
+                        patient: appointment.patient || {},
+                        chair: appointment.chair
+                    }
+                });
+                setAppointments(appointmentss);
+                // Blocks
+                const blockss = result[1].payload.map((block) => {
+                    const aDate = new Date(block.block_date);
+                    const aTime = block.block_time;
+                    aDate.setHours(aTime.slice(0, 2));
+                    aDate.setMinutes(aTime.slice(2));
+                    const endDate = moment(aDate).add(Number(block.duration), "minutes");
+                    return {
+                        id: block._id,
+                        chairId: block.chair,
+                        startDate: aDate,
+                        endDate: (endDate.isValid())? endDate : aDate,
+                        block: true
+                    }
+                })
+                setBlocks(blockss);
+                dispatchLoading({type: strings.setLoading, isLoading: false});
+            } else {
+                dispatchLoading({type: strings.setLoading, isLoading: false});
+                toast.error(t(strings.loadAppointmentFailMsg));    
+            }
+            resetFilter();
+        } catch(err){
+            dispatchLoading({type: strings.setLoading, isLoading: false});
+            toast.error(t(strings.loadAppointmentFailMsg));
+            resetFilter();
+        }
+    }
+
+    useEffect(async () => {
+        try {
+            if (isWillMount){
+                handleWillMount();
+                setIsWillMount(false);
+            } else {
+                handleDidUpdate();
+            }   
+        } catch (err){
+
+        }
+    }, [selectedDate]);
 
     // Time Table Cell
     const handleTimeTableCellClick = (info, startDate, endDate) => {
@@ -135,10 +247,52 @@ const DashBoard = () => {
         setCheckedScheduler(true);
     }
 
+    const handleSelectDate = (date) => {
+        /*let newDate = null, temp = null;
+        switch (type){
+            case strings.forward: 
+                temp = moment(selectedDate).add(1, "days");
+                if (temp.isValid()){
+                    newDate = temp._d;
+                }
+                break;
+            case strings.back: 
+                temp = moment(selectedDate).add(-1, "days");
+                if (temp.isValid()){
+                    newDate = temp._d;
+                }
+                break;
+            case strings.select:
+                newDate = new Date(date);
+                newDate.setHours(0);
+                break;
+
+        }*/
+        const newDate = new Date(date);
+        newDate.setHours(0);
+        if (newDate){
+            setSelectedDate(newDate);
+        } else {
+            toast.error(t(strings.dateRangeInvalid));
+        }
+    }
+
     // Toolbar
     // Filter chair
-    const handleSelectChair = () => {
-        alert('qwe');
+    const handleSelectChair = (chairsDisplay) => {
+        const newChairs = [...chairs];
+        chairsDisplay.forEach((display, index) => {
+            newChairs[index].isDisplay = display;
+        });
+        setChairs(newChairs);
+    }
+
+    const handleSelectPatient = (patientDisplayObj) => {
+        setPatientDisplayObj(patientDisplayObj);
+    }
+
+    const resetFilter = () => {
+        setPatientDisplayObj({});
     }
 
     // Right sidebar
@@ -157,7 +311,7 @@ const DashBoard = () => {
                             <Box p={0} m={0} className={classes.appointmentTabBox}>
                                 <AppoinmentTab 
                                     onClose={handleCloseAppointmentTab}
-                                />qweqweqweqwe
+                                />
                             </Box>
                         </Slide>
                         <Slide direction="right" in={checkedScheduler} mountOnEnter unmountOnExit>
@@ -170,8 +324,11 @@ const DashBoard = () => {
                                     cellDuration={cellDuration}
                                     startDayHour={startDayHour}
                                     endDayHour={endDayHour}
+                                    patientDisplayObj={patientDisplayObj}
                                     tableCellClick={handleTimeTableCellClick}
                                     onSelectChair={handleSelectChair}
+                                    onSelectPatient={handleSelectPatient}
+                                    onSelectDate={handleSelectDate}
                                 />
                             </Box>
                         </Slide>

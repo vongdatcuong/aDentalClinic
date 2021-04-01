@@ -43,6 +43,8 @@ export default {
         "Filter": "Lọc",
         "Add": "Thêm",
         "Loading": "Đang tải",
+        "No options": "Không có lựa chọn",
+        "select": "Chọn",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -66,6 +68,7 @@ export default {
         "Refresh token fail": "Làm mới token thất bại",
         // Error Messages Appointment
         "Loading appointments fail !!!": "Tải các cuộc hẹn thất bại",
+        "Invalid Chair Filter": "Chọn ghế không hợp lệ",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",

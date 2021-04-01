@@ -12,11 +12,17 @@ const appointment = {
     chair: '/chair'
 }
 
+// Practice 
+const practice = {
+    practice: '/practice',
+}
+
 export {
     authorization,
 }
 
 export default {
     authorization,
-    appointment
+    appointment,
+    practice
 };

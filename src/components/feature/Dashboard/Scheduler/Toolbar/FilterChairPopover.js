@@ -3,6 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import strings from '../../../../../configs/strings';
+
+// Toast
+import { toast } from 'react-toastify';
+
 // @material-ui/core 
 import Popover from '@material-ui/core/Popover';
 import List from '@material-ui/core/List';
@@ -37,11 +41,35 @@ const FilterChairPopover = ({id, open, onClose, anchorEl, chairs, onApply}) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
 
+  const originalChairsDisplay = chairs.map((chair) => chair.isDisplay);
+
+  // States
+  const [chairsDisplay, setChairsDisplay] = useState(originalChairsDisplay);
+  
+  const handleOnChangeCbx = (evt, index) => {
+    const newChairsDisplay = [...chairsDisplay];
+    newChairsDisplay[index] = evt.target.checked;
+    setChairsDisplay(newChairsDisplay);
+  }
+
+  const handleOnClose = () => {
+    onClose();
+    setChairsDisplay(originalChairsDisplay);
+  }
+
+  const handleOnApply = () => {
+    if (chairsDisplay.filter((display) => display).length > 0){
+      onApply(chairsDisplay);
+    } else {
+      toast.error(t(strings.invalidFilterChairMsg));
+    }
+  }
+
   return (
     <Popover
         id={id}
         open={open}
-        onClose={onClose}
+        onClose={handleOnClose}
         anchorEl={anchorEl}
         anchorOrigin={{
             vertical: 'bottom',
@@ -61,8 +89,10 @@ const FilterChairPopover = ({id, open, onClose, anchorEl, chairs, onApply}) => {
                       <ListItemText id={labelId} primary={chair.text} />
                       <ListItemSecondaryAction>
                           <Checkbox
+                              checked={chairsDisplay[index]}
                               edge="end"
                               inputProps={{ 'aria-labelledby': labelId }}
+                              onChange={(evt) => handleOnChangeCbx(evt, index)}
                           />
                       </ListItemSecondaryAction>
                   </ListItem>
@@ -74,7 +104,7 @@ const FilterChairPopover = ({id, open, onClose, anchorEl, chairs, onApply}) => {
           color="secondary"
           size="small"
           className={classes.applyBtn}
-          onClick={() => onApply()}
+          onClick={handleOnApply}
         >
           {t(strings.apply)}
         </Button>
