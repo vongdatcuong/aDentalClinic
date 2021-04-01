@@ -28,6 +28,8 @@ const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường d
 const patientProfilePath = '/patient/profile';
 const patientNotePath = '/patient/note';
 const patientXRayImagesPath = '/patient/xRayImages';
+const patientAddXRayImagesPath = '/patient/xRayImages/add'; // param: xray layer
+const patientViewXRayImagesPath = '/patient/xRayImages/view'; // param: xray layer, image id
 const patientImagesPath = '/patient/images';
 const toothOverviewInfoPath = '/patient/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
 
@@ -53,6 +55,8 @@ const path = {
     patientProfilePath,
     patientNotePath,
     patientXRayImagesPath,
+    patientAddXRayImagesPath,
+    patientViewXRayImagesPath,
     patientImagesPath,
     toothOverviewInfoPath,
     drugPath,

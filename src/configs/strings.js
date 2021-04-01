@@ -95,6 +95,7 @@ const yes = "Yes";
 const no = "No";
 const ok = "OK";
 const cancel = "Cancel";
+const btnDelete = "Delete";
 const edit = "Edit";
 const logout = "Log out";
 const login = "Log in";
@@ -162,6 +163,9 @@ const addRecord = "Add record";
 const plaqueIndex = "Plaque index";
 const bleedingIndex = "Bleeding index";
 const halitosis = "Halitosis";
+const addMoreImage = "Add more image";
+const layer = "Layer";
+const imagesPerPage = "Images per page";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -260,6 +264,7 @@ export default {
     no,
     ok,
     cancel,
+    btnDelete,
     edit,
     login,
     logout,
@@ -322,6 +327,9 @@ export default {
     plaqueIndex,
     bleedingIndex,
     halitosis,
+    addMoreImage,
+    layer,
+    imagesPerPage,
     // Tooth chart page
     overView,
     quickSelect,

@@ -29,6 +29,8 @@ import MenuBar from "../layouts/MenuBar";
 import Management from "../components/feature/Management";
 import PatientNotePage from "../components/feature/PatientNotePage";
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
+import PatientAddXRayImagesPage from "../components/feature/PatientAddXRayImagesPage";
+import PatientViewXRayImagesPage from "../components/feature/PatientViewXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import Report from '../components/feature/Report';
@@ -142,10 +144,22 @@ function Routes() {
           <PatientNotePage />
         </PageContainer>
       </PrivateRoute>
-      <PrivateRoute path={path.patientXRayImagesPath}>
+      <PrivateRoute path={path.patientXRayImagesPath} exact>
         <PageContainer>
           <TreatmentMenu />
           <PatientXRayImagesPage />
+        </PageContainer>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientAddXRayImagesPath}>
+        <PageContainer>
+          <TreatmentMenu />
+          <PatientAddXRayImagesPage />
+        </PageContainer>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientViewXRayImagesPath}>
+        <PageContainer>
+          <TreatmentMenu />
+          <PatientViewXRayImagesPage />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientImagesPath}>

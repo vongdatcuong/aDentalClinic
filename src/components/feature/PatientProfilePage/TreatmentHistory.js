@@ -23,6 +23,7 @@ const styles = (theme) => ({
   btnAddRecord: {
     color: theme.primaryColor[0],
     fontWeight: "bold",
+    textTransform: "none",
   },
   historyItemContainer: {
     padding: "0.7rem",
@@ -38,7 +39,7 @@ const styles = (theme) => ({
   btnDelete: {
     float: "right",
     "& $button" : {
-        color: theme.dangerColor[0] + " !important",
+        color: theme.dangerColor[2] + " !important",
     },
     marginTop: theme.spacing(-1),
   },
@@ -50,9 +51,9 @@ const TreatmentHistory = () => {
   const classes = useStyles();
   return (
     <span>
-      <Button simple className={classes.btnAddRecord}>
+      {/* <Button simple className={classes.btnAddRecord}>
         <AddCircleOutlineIcon></AddCircleOutlineIcon> {t(strings.addRecord)}
-      </Button>
+      </Button> */}
       {historyData.map((historyItem, index) => {
         return (
           <div key={index} className={classes.historyItemContainer}>

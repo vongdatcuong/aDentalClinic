@@ -23,6 +23,7 @@ export default {
         "No": "No",
         "OK": "OK",
         "Cancel": "Cancel",
+        "Delete": "Delete",
         "Edit": "Edit",
         "Log in": "Log in",
         "Log out": "Log out",
@@ -85,6 +86,9 @@ export default {
         "Plaque index": "Plaque index",
         "Bleeding index": "Bleeding index",
         "Halitosis": "Halitosis",
+        "Add more image": "Add more image",
+        "Layer": "Layer",
+        "Images per page": "Images per page",
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",

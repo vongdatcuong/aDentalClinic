@@ -11,6 +11,11 @@ const toothStyle = (theme) => ({
     },
     toothContainer: {
         cursor: "pointer",
+        "& .svgTooth": {
+            "@media (max-width: 1280px)": {
+                maxWidth: "6%",
+            },
+        }
     },
     selectedTooth: {
         position: "relative",

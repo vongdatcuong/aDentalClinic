@@ -25,3 +25,35 @@ input:-webkit-autofill:active
 {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
+/* Custom for crollbar */
+::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5658e5; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4042E2; 
+  }
+
+
+  /* react-viewer for images view */
+.react-viewer .react-viewer-list li {
+    width: auto;
+    height: auto;
+}
+.react-viewer .react-viewer-list li img {
+    width: auto;
+    max-height: 3rem;
+    margin-left: 0;
+}

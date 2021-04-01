@@ -72,7 +72,7 @@ const TreatmentMenu = (props) => {
 
     const getGoBackURL = () => {    // nếu đang ở trang toothOverviewInfo thì quay về tooth chart, còn lại thì quay về ds patients
         let curUrl = window.location.pathname;
-        if (curUrl.includes("toothOverviewInfo")){
+        if (curUrl.includes("toothOverviewInfo") || curUrl.includes("xRayImages/add") || curUrl.includes("xRayImages/view")){
             return curUrl.substring(0,curUrl.lastIndexOf("/"));
         }
         else {

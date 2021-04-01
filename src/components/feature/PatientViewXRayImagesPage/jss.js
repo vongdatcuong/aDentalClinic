@@ -18,25 +18,13 @@ const styles = (theme) => ({
     fontWeight: "bold",
     textTransform: "none",
   },
-  xRayImagesContainer: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    display: "flex",
-    overflowX: "auto",
-  },
-  addXRayImage: {
-    color: theme.whiteColor,
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-    "& .MuiSvgIcon-root": {
-      fontSize: "2.5rem",
+  xRayImageContainer: {
+    "& img": {
+      maxHeight: "70vh",
+      marginLeft: "auto",
+      marginRight: "auto",
+      display: "block",
     },
-  },
-  xRayThumbnail: {
-    marginLeft: theme.spacing(3),
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-    cursor: "pointer",
   },
 });
 
