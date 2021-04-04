@@ -46,6 +46,8 @@ export default {
         "Loading": "Đang tải",
         "No options": "Không có lựa chọn",
         "select": "Chọn",
+        "MALE": "NAM",
+        "FEMALE": "NỮ",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -225,6 +227,8 @@ export default {
         "Name":"Tên",
         //table
         "Rows per page":"Số dòng mỗi trang",
-        
+        // Appointment
+        "Time": "Thời gian",
+        "Assistant": "Hỗ trợ"
     }
 }

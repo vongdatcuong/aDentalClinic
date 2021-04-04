@@ -46,6 +46,8 @@ export default {
         "Loading": "Loading",
         "No options": "No options",
         "select": "Select",
+        "MALE": "MALE",
+        "FEMALE": "FEMALE",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -226,6 +228,8 @@ export default {
         "Name":"Name",
         //table
         "Rows per page":"Rows per page",
-        
+        // Appointment
+        "Time": "Time",
+        "Assistant": "Assistant"
     }
 }

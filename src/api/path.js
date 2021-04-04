@@ -17,6 +17,11 @@ const practice = {
     practice: '/practice',
 }
 
+// Holiday
+const holiday = {
+    holiday: '/holiday'
+}
+
 export {
     authorization,
 }
@@ -24,5 +29,6 @@ export {
 export default {
     authorization,
     appointment,
-    practice
+    practice,
+    holiday
 };

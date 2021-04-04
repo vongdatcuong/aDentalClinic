@@ -11,7 +11,8 @@ const dashboardStyle = (theme) => ({
         overflow: 'hidden'
     },
     appointmentTabBox: {
-        position: 'fixed'
+        width: '100%',
+        height: '100%',
     },
 });
   

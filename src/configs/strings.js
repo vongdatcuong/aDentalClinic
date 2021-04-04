@@ -115,6 +115,8 @@ const filter = "Filter";
 const add = "Add";
 const loading = "Loading";
 const noOptions = "No options";
+const MALE="MALE";
+const FEMALE="FEMALE";
 
 // Messages
 
@@ -228,6 +230,10 @@ const oldPassword = "Old Password";
 const newPassword = "New Password";
 const confirmPassword = "Confirm Password";
 
+// Appointment
+const time = "Time";
+const assistant = "Assistant";
+
 // Date
 const defaultTimeFormat = "HH:mm";
 const chartDateFormat = "DD/MM";
@@ -289,6 +295,8 @@ export default {
     add,
     loading,
     noOptions,
+    MALE,
+    FEMALE,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -438,6 +446,9 @@ export default {
     finances,
     workHour,
     newPatient,
+    // Appointment
+    time,
+    assistant,
     // Date
     defaultTimeFormat,
     chartDateFormat,
