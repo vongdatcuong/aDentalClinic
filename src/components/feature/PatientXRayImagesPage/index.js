@@ -20,6 +20,7 @@ import FourLayer from "../../../assets/images/4-Layer.png";
 import path from '../../../routes/path';
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const xRayImages = {
   TwoLayer: [
@@ -69,19 +70,20 @@ const xRayImages = {
 
 const useStyles = makeStyles(styles);
 
-const PatientXRayImagesPage = () => {
+const PatientXRayImagesPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
 
   const history = useHistory();
   const handleAddXRayImage = () => {
-      history.push(path.patientAddXRayImagesPath);
+      history.push(path.patientAddXRayImagesPath.replace(':patientID', patientID));
   }
   const handleViewXRayImage = () => {
-      history.push(path.patientViewXRayImagesPath);
+      history.push(path.patientViewXRayImagesPath.replace(':patientID', patientID));
   }
 
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <div className={classes.headerContainer}>
@@ -149,7 +151,7 @@ const PatientXRayImagesPage = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </Container></React.Fragment>
   );
 };
 

@@ -37,10 +37,11 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import PopupChat from '../../common/Messenger/PopupChat';
 import TabPanel from '../../common/TabPanel';
 import TreatmentHistory from './TreatmentHistory.js';
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const useStyles = makeStyles(styles);
 
-const PatientProfilePage = () => {
+const PatientProfilePage = ({ patientID }) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
 
@@ -57,7 +58,8 @@ const PatientProfilePage = () => {
         };
       }
 
-    return (
+    return (  <React.Fragment>
+        <TreatmentMenu patientID = { patientID }/>
         <Container className={classes.container}>
             <PopupChat></PopupChat>
             <Grid container>
@@ -117,7 +119,7 @@ const PatientProfilePage = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Container>
+        </Container></React.Fragment>
     )
 }
 

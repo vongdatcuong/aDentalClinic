@@ -16,6 +16,7 @@ import BackspaceIcon from "@material-ui/icons/Backspace";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 import NoteItem from "./NoteItem.js";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const noteData = [
   {
@@ -82,10 +83,11 @@ const noteData = [
 
 const useStyles = makeStyles(styles);
 
-const PatientNotePage = () => {
+const PatientNotePage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <div className={classes.headerContainer}>
@@ -108,7 +110,7 @@ const PatientNotePage = () => {
           );
         })}
       </div>
-    </Container>
+    </Container></React.Fragment>
   );
 };
 

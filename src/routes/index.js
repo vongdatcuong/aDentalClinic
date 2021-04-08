@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect , useParams} from "react-router-dom";
 import path from "./path";
 import PrivateRoute from './PrivateRoute';
 
@@ -19,7 +19,6 @@ import Schedule from "../components/feature/Schedule";
 import Portal from "../components/feature/Portal";
 import Drug from "../components/feature/Drug";
 import Practice from "../components/feature/Practice";
-import TreatmentMenu from '../layouts/TreatmentMenu';
 import Dashboard from '../components/feature/Dashboard';
 import LoginPage from '../components/feature/LoginPage';
 import Settings from '../components/feature/Settings';
@@ -36,6 +35,47 @@ import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
+
+function PatientProfile() {
+    let { patientID } = useParams();
+    return <PatientProfilePage patientID={patientID}/>;
+}
+function PatientNote() {
+    let { patientID } = useParams();
+    return <PatientNotePage patientID={patientID}/>;
+}
+
+function PatientXRayImages() {
+    let { patientID } = useParams();
+    return <PatientXRayImagesPage patientID={patientID}/>;
+}
+
+function PatientAddXRayImages() {
+    let { patientID } = useParams();
+    return <PatientAddXRayImagesPage patientID={patientID}/>;
+}
+
+function PatientViewXRayImages() {
+    let { patientID } = useParams();
+    return <PatientViewXRayImagesPage patientID={patientID}/>;
+}
+
+function PatientImages() {
+    let { patientID } = useParams();
+    return <PatientImagesPage patientID={patientID}/>;
+}
+
+function ToothOverviewInfo() {
+    let { patientID } = useParams();
+    return <ToothOverviewInfoPage patientID={patientID}/>;
+}
+
+function ToothChart() {
+    let { patientID } = useParams();
+    return <ToothChartPage patientID={patientID}/>;
+}
+
+
 function Routes() {
   return (
     <Switch>
@@ -128,50 +168,42 @@ function Routes() {
       </PrivateRoute>
       <PrivateRoute path={path.toothChartPath} exact>
         <PageContainer>
-          <TreatmentMenu />
-          <ToothChartPage />
+          <ToothChart />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientProfilePath}>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientProfilePage />
+          <PatientProfile />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientNotePath}>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientNotePage />
+          <PatientNote />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientXRayImagesPath} exact>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientXRayImagesPage />
+          <PatientXRayImages />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientAddXRayImagesPath}>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientAddXRayImagesPage />
+          <PatientAddXRayImages />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientViewXRayImagesPath}>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientViewXRayImagesPage />
+          <PatientViewXRayImages />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientImagesPath}>
         <PageContainer>
-          <TreatmentMenu />
-          <PatientImagesPage />
+          <PatientImages />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.toothOverviewInfoPath}>
         <PageContainer>
-          <TreatmentMenu />
-          <ToothOverviewInfoPage />
+          <ToothOverviewInfo />
         </PageContainer>
       </PrivateRoute>
         {/*Setting With Section*/}

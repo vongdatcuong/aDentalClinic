@@ -41,10 +41,11 @@ import Slide from '@material-ui/core/Slide';
 import NavPills from "../../common/NavPills/NavPills.js";
 import AdultToothChart from "../../common/ToothChart/AdultToothChart.js";
 import path from "../../../routes/path";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const useStyles = makeStyles(styles);
 
-const ToothChartPage = () => {
+const ToothChartPage = ({ patientID }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
@@ -58,7 +59,7 @@ const ToothChartPage = () => {
 //   };
 
   const handleClickToothOverview = (toothID) => {
-    history.push(path.toothOverviewInfoPath + `?toothID=${toothID}`);
+    history.push(path.toothOverviewInfoPath.replace(':patientID', patientID) + `?toothID=${toothID}`);
     setDisabledOverviewUndoBtn(false);
   }
 
@@ -67,6 +68,8 @@ const ToothChartPage = () => {
   }
 
   return (
+  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <Grid
@@ -119,6 +122,8 @@ const ToothChartPage = () => {
         </Grid>
       </Grid>
     </Container>
+    
+  </React.Fragment>
   );
 };
 

@@ -15,6 +15,7 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import Grid from "@material-ui/core/Grid";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 // Import React FilePond
 import { FilePond, File, registerPlugin } from "react-filepond";
@@ -34,7 +35,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const useStyles = makeStyles(styles);
 
-const PatientAddXRayImagesPage = () => {
+const PatientAddXRayImagesPage = ({ patientID }) => {
   const [files1, setFiles1] = useState([]);
   const [files2, setFiles2] = useState([]);
   const [files3, setFiles3] = useState([]);
@@ -42,7 +43,8 @@ const PatientAddXRayImagesPage = () => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
 
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <div className={classes.headerContainer}>
@@ -98,7 +100,7 @@ const PatientAddXRayImagesPage = () => {
           </Grid>
         </Grid>
       </div>
-    </Container>
+    </Container></React.Fragment>
   );
 };
 

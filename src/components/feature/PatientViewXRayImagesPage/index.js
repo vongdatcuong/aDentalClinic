@@ -13,14 +13,16 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const useStyles = makeStyles(styles);
 
-const PatientViewXRayImagesPage = () => {
+const PatientViewXRayImagesPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
 
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <div className={classes.headerContainer}>
@@ -37,7 +39,7 @@ const PatientViewXRayImagesPage = () => {
           <img src={FourLayerImg} alt=""></img>
         </div>
       </div>
-    </Container>
+    </Container></React.Fragment>
   );
 };
 

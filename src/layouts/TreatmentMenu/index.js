@@ -33,7 +33,7 @@ import styles from "./jss";
 import { disableClick } from "../../utils/general";
 
 const useStyles = makeStyles(styles);
-const TreatmentMenu = (props) => {
+const TreatmentMenu = ({ patientID }) => {
   const classes = useStyles();
   const { t, i18n } = useTranslation();
   const history = useHistory();
@@ -43,27 +43,27 @@ const TreatmentMenu = (props) => {
 
   const pathList = [
     {
-      link: path.patientProfilePath,
+      link: path.patientProfilePath.replace(':patientID', patientID),
       text: t(strings.patientProfile),
       icon: <AssignmentInd />,
     },
     {
-      link: path.toothChartPath,
+      link: path.toothChartPath.replace(':patientID', patientID),
       text: t(strings.toothChart),
       icon: <FaTeeth />,
     },
     {
-      link: path.patientNotePath,
+      link: path.patientNotePath.replace(':patientID', patientID),
       text: t(strings.note),
       icon: <InsertDriveFileIcon />,
     },
     {
-      link: path.patientXRayImagesPath,
+      link: path.patientXRayImagesPath.replace(':patientID', patientID),
       text: t(strings.xRayImages),
       icon: <FaXRay />,
     },
     {
-      link: path.patientImagesPath,
+      link: path.patientImagesPath.replace(':patientID', patientID),
       text: t(strings.images),
       icon: <PermMedia />,
     },

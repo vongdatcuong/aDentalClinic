@@ -17,7 +17,8 @@ import TabPanel from "../../common/TabPanel";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 import ToothOverviewInfoTab from "./ToothOverviewInfoTab/ToothOverviewInfoTab";
-import AdultToothData from "../../common/ToothChart/AdultToothData"
+import AdultToothData from "../../common/ToothChart/AdultToothData";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 function a11yProps(index) {
   return {
@@ -27,7 +28,7 @@ function a11yProps(index) {
 }
 const useStyles = makeStyles(styles);
 
-const ToothOverviewInfoPage = () => {
+const ToothOverviewInfoPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -36,7 +37,8 @@ const ToothOverviewInfoPage = () => {
     setValue(newValue);
   };
 
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <div className={classes.container}>
       <PopupChat></PopupChat>
       <Grid container>
@@ -100,7 +102,7 @@ const ToothOverviewInfoPage = () => {
           })}
         </Grid>
       </Grid>
-    </div>
+    </div></React.Fragment>
   );
 };
 

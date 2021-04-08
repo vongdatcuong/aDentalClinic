@@ -196,7 +196,7 @@ const Patients = () => {
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="custom pagination table">
                             <TableHead>
-                                <TableRow onClick={() => history.push(path.patientProfilePath)}>
+                                <TableRow>
                                     <TableCell align="center" className={clsx(classes.titleColumn, classes.tableCell)} width="5%">
                                         {t(strings.index)}
                                     </TableCell>
@@ -222,7 +222,7 @@ const Patients = () => {
                                     ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     : rows
                                 ).map((row,index) => (
-                                    <TableRow key={row.id} onClick={() => history.push(path.patientProfilePath)}>
+                                    <TableRow key={row.id} onClick={() => history.push(path.patientProfilePath.replace(':patientID', row.id))}>
                                         <TableCell align="center" width="5%" className={classes.tableCell}>
                                             {page * rowsPerPage + index + 1}
                                         </TableCell>

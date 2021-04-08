@@ -24,14 +24,14 @@ const insertPersonPath="/insertPerson";
 //const document="/document";
 const drugPath="/drug";
 const portalPath="/portal";
-const toothChartPath = '/patient/toothChart';  // TODO: sửa thành đường dẫn động với param là patient ID (/patient?patientID=0/toothChart)
-const patientProfilePath = '/patient/profile';
-const patientNotePath = '/patient/note';
-const patientXRayImagesPath = '/patient/xRayImages';
-const patientAddXRayImagesPath = '/patient/xRayImages/add'; // param: xray layer
-const patientViewXRayImagesPath = '/patient/xRayImages/view'; // param: xray layer, image id
-const patientImagesPath = '/patient/images';
-const toothOverviewInfoPath = '/patient/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
+const toothChartPath = '/patient/:patientID/toothChart';
+const patientProfilePath = '/patient/:patientID/profile';
+const patientNotePath = '/patient/:patientID/note';
+const patientXRayImagesPath = '/patient/:patientID/xRayImages';
+const patientAddXRayImagesPath = '/patient/:patientID/xRayImages/add'; // TODO: param: xray layer
+const patientViewXRayImagesPath = '/patient/:patientID/xRayImages/view'; // TODO: param: xray layer, image id
+const patientImagesPath = '/patient/:patientID/images';
+const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
 
 const path = {
     defaultPath,

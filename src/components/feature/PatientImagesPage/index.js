@@ -21,6 +21,7 @@ import Select from "@material-ui/core/Select";
 import Pagination from "react-pagination-list";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
 const images = [
   {
@@ -92,7 +93,7 @@ const images = [
 
 const useStyles = makeStyles(styles);
 
-const PatientImagesPage = () => {
+const PatientImagesPage = ({ patientID }) => {
   const [imagesPerPage, setImagesPerPage] = React.useState(8);
   const [visible, setVisible] = React.useState(false);
   const [viewingImageIndex, setViewingImageIndex] = React.useState("0");
@@ -108,7 +109,8 @@ const PatientImagesPage = () => {
     setImagesPerPage(event.target.value);
   };
 
-  return (
+  return (  <React.Fragment>
+    <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
       <PopupChat></PopupChat>
       <div className={classes.headerContainer}>
@@ -186,7 +188,7 @@ const PatientImagesPage = () => {
           images={images}
         />
       </div>
-    </Container>
+    </Container></React.Fragment>
   );
 };
 
