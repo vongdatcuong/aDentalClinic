@@ -62,6 +62,8 @@ const DashBoard = () => {
 
     // Slide
     const [checkedScheduler, setCheckedScheduler] = useState(true);
+    const [selectedChairId, setSelectedChairId] = useState(null);
+    const [selectedAppointStart, setSelectedAppointStart] = useState(null);
 
     // Filter Patient
     const [patientDisplayObj, setPatientDisplayObj] = useState({});
@@ -284,6 +286,7 @@ const DashBoard = () => {
         }
     }
 
+    // Use effect
     useEffect(async () => {
         try {
             if (isWillMount){
@@ -298,12 +301,35 @@ const DashBoard = () => {
     }, [selectedDate]);
 
     // Time Table Cell
-    const handleTimeTableCellClick = (info, startDate, endDate) => {
+    const handleTimeTableCellClick = (chair, startDate, endDate) => {
         setCheckedScheduler(false);
+        setSelectedChairId(chair.id);
+        setSelectedAppointStart(new Date(startDate));
     }
 
     const handleCloseAppointmentTab = () => {
         setCheckedScheduler(true);
+        setSelectedChairId(null);
+    }
+
+    // Appointment Tab
+    const handleOnAppointTabSelectChair = (evt) => {
+        setSelectedChairId(evt.target.value);
+    }
+
+    const handleOnAppointTabSelectDate = (type, value) => {
+        /*const newDate = new Date(+selectedAppointStart);
+        switch(type){
+            case "date":
+                let tempDate = new Date(value);
+                newDate.setFullYear(tempDate.getFullYear());
+                newDate.setMonth(tempDate.getMonth());
+                newDate.setDate(tempDate.getDate());
+                break;
+            case "time":
+                break;
+        }*/
+        setSelectedAppointStart(value);
     }
 
     const handleSelectDate = (date) => {
@@ -368,8 +394,17 @@ const DashBoard = () => {
                     <React.Fragment>
                         <Fade in={!checkedScheduler}>
                             <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (!checkedScheduler)? "block" : "none"}}>
-                                <AppoinmentTab 
+                                <AppoinmentTab
+                                    selectedChairId={selectedChairId}
+                                    selectedAppointStart={selectedAppointStart}
+                                    chairs={chairs}
+                                    cellDuration={cellDuration}
+                                    startDayHour={startDayHour}
+                                    endDayHour={endDayHour}
+                                    holidays={holidays}
                                     onClose={handleCloseAppointmentTab}
+                                    onSelectChair={handleOnAppointTabSelectChair}
+                                    onSelectDate={handleOnAppointTabSelectDate}
                                 />
                             </Box>
                         </Fade>

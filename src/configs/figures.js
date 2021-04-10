@@ -2,6 +2,7 @@
 const defaultCellDuration = 30;
 const defaultStartDayHour = 7;
 const defaultEndDayHour = 18;
+const maxAppointmentDuration = 240;
 
 // Toast
 const toastTimeout = 5000;
@@ -23,11 +24,17 @@ const apiStatus = {
     exception: 500,
 }
 
+// Autocomplete
+const autocomplete = {
+    limit: 10
+}
+
 export default {
     // Appointment
     defaultCellDuration,
     defaultStartDayHour,
     defaultEndDayHour,
+    maxAppointmentDuration,
     // Toast
     toastTimeout,
     toastLimit,
@@ -38,4 +45,6 @@ export default {
     rowsPerPageOption,
     // API Status code
     apiStatus,
+    // Autocomplete
+    autocomplete,
 }

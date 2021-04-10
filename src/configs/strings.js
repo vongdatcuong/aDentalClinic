@@ -117,6 +117,7 @@ const loading = "Loading";
 const noOptions = "No options";
 const MALE="MALE";
 const FEMALE="FEMALE";
+const none = "None";
 
 // Messages
 
@@ -142,6 +143,16 @@ const refreshTokenFailMsg = "Refresh token fail";
     // Error Messages Appointment
 const loadAppointmentFailMsg = "Loading appointments fail !!!";
 const invalidFilterChairMsg = "Invalid Chair Filter";
+const firstNameErrMsg = "First name must contain at least 1 to 30 characters";
+const lastNameErrMsg = "First name must contain at least 1 to 30 characters";
+const firstNameErrMsgShort = "First name validate (Short)";
+const lastNameErrMsgShort = "Last name validate (Short)";
+const phoneErrMsgShort = "Phone validate (Short)";
+const appointProviderErrMsg = "Provider is required";
+const appointHolidayErrMsg = "Invalid Date (Holiday)";
+const appointTimeErrMsg = "Invalid Time";
+const appointDurationErrMsg = "Appointment duration must be between 30 - 240 minutes and multiple of 30";
+const loadPatientErrMsg = "Load Patient fail";
     // Confirm Messages
 
 // Context Actions
@@ -233,6 +244,29 @@ const confirmPassword = "Confirm Password";
 // Appointment
 const time = "Time";
 const assistant = "Assistant";
+const selectPatient = "Select Patient";
+const enterNewPatient = "Enter new Patient";
+const patientInformation = "Patient information";
+const patientID = "Patient ID";
+const chart = "Chart";
+const firstName = "First name";
+const lastName = "Last name";
+const mi = "MI";
+const patientContact = "Patient Contact";
+const homePhone = "Home Phone";
+const mobile = "Mobile";
+const scheduleAppoint = "Schedule Appointment";
+const staging = "Staging";
+const reminderNote = "Reminder Note";
+const recall = "Recall";
+const treatments = "Treatments";
+const category = "Category";
+const tooth = "Tooth";
+const surface = "Surface";
+const noRecall = "No Recall";
+const noTreatment = "No Treatment"
+const nextAvailable = "Next Available";
+
 
 // Date
 const defaultTimeFormat = "HH:mm";
@@ -241,12 +275,15 @@ const apiDateFormat = "YYYY-MM-DD";
 const forward = "forward";
 const back = "back";
 const select = "select";
+const defaultDateFormat = "DD-MM-YYYY";
+const holidayDormat = "DD/MM";
 
 // Unit
 const hours = "hours"
 const percent = "percent";
 const hourShort = "Hour Short";
 const patients = "Patients";
+const appointDurationUnit = "AppointDurationU";
 
 // Currency
 const CURRENCY = "CURRENCY";
@@ -297,6 +334,7 @@ export default {
     noOptions,
     MALE,
     FEMALE,
+    none,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -320,6 +358,16 @@ export default {
     // Error Messages Appointment
     loadAppointmentFailMsg,
     invalidFilterChairMsg,
+    firstNameErrMsg,
+    lastNameErrMsg,
+    firstNameErrMsgShort,
+    lastNameErrMsgShort,
+    phoneErrMsgShort,
+    appointProviderErrMsg,
+    appointHolidayErrMsg,
+    appointTimeErrMsg,
+    appointDurationErrMsg,
+    loadPatientErrMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -449,6 +497,28 @@ export default {
     // Appointment
     time,
     assistant,
+    selectPatient,
+    enterNewPatient,
+    patientInformation,
+    patientID,
+    chart,
+    firstName,
+    lastName,
+    mi,
+    patientContact,
+    homePhone,
+    mobile,
+    scheduleAppoint,
+    staging,
+    reminderNote,
+    recall,
+    treatments,
+    category,
+    tooth,
+    surface,
+    noRecall,
+    noTreatment,
+    nextAvailable,
     // Date
     defaultTimeFormat,
     chartDateFormat,
@@ -456,11 +526,14 @@ export default {
     forward,
     back,
     select,
+    defaultDateFormat,
+    holidayDormat,
     // Unit
     hours,
     percent,
     hourShort,
     patients,
+    appointDurationUnit,
     // Currency
     CURRENCY,
     CURRENCY_CHART,

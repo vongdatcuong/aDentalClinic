@@ -22,6 +22,20 @@ const holiday = {
     holiday: '/holiday'
 }
 
+// Patient
+const patient = {
+    patient: '/patient',
+}
+
+// Staff
+const staff = {
+    staff: '/staff'
+}
+
+// Common
+const common = {
+    autocomplete: '/auto-complete'
+}
 export {
     authorization,
 }
@@ -30,5 +44,8 @@ export default {
     authorization,
     appointment,
     practice,
-    holiday
+    holiday,
+    patient,
+    staff,
+    common
 };

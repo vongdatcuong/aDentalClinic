@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import { useTranslation } from 'react-i18next';
 import strings from '../../../../configs/strings';
 import figures from '../../../../configs/figures';
@@ -244,4 +244,6 @@ const Schedulerr = (
   );
 }
 
-export default Schedulerr;
+const MemorizedSchedulerr = memo(Schedulerr);
+
+export default MemorizedSchedulerr;
