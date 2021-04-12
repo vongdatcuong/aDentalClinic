@@ -1,4 +1,4 @@
-const updatePersonStyle = (theme) => ({
+const updatePatientStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -54,7 +54,7 @@ const updatePersonStyle = (theme) => ({
 
     },
     leftContent:{
-        color:theme.primaryColor[0],
+        //color:theme.primaryColor[0],
         // borderRight:'1px solid blue',
 
     },
@@ -206,4 +206,4 @@ const updatePersonStyle = (theme) => ({
 });
 
   
-export default updatePersonStyle;  
+export default updatePatientStyle;  

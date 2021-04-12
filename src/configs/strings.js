@@ -51,7 +51,15 @@ const male="Male";
 const female="Female";
 const insert="Insert";
 const insertPerson="Insert Person";
-
+const firstName="First name";
+const lastName="Last name";
+const facebook="Facebook";
+const fax="Fax";
+const mobilePhone="Mobile phone";
+const homePhone="Home phone";
+const staffTypeStaff="STAFF";
+const staffTypeProvider="PROVIDER";
+const userTypePatient="PATIENT";
 //procedure
 const code="Code";
 const fee="Fee";
@@ -120,10 +128,15 @@ const noOptions = "No options";
 
     // Success Messages
 const updateAccountSuccess = "Update Account Success";
+const updateSuccess = "Update Success";
+const insertSuccess = "Insert Success";
     // Success Messages Log in
 const logInSuccessMsg = "Sign in successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
+const updateFail = "Update Fail";
+const insertFail = "Insert Fail";
+
 const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
 const emailErrMsg = "Email must follow the format abc@xyz.com/net/vn";
 const phoneErrMsg = "Phone must contain at least 10 to 15 number";
@@ -133,6 +146,8 @@ const oldPwdNotMatchErrMsg = "The entered password is incorrect";
 const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
 const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
+const firstNameErrMsg="First name must contain at least 1 character";
+const lastNameErrMsg="Last name must contain at least 1 character";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
@@ -292,9 +307,13 @@ export default {
     // Messages
     // Success Messages
     updateAccountSuccess,
+    updateSuccess,
+    insertSuccess,
     // Success Messages Log in
     logInSuccessMsg,
     // Error Messages
+    updateFail,
+    insertFail,
     updateAccountFail,
     fullNameErrMsg,
     emailErrMsg,
@@ -305,6 +324,8 @@ export default {
     confirmPwdNotMatchErrMsg,
     newPwdMatchOldPwd,
     dateRangeInvalid,
+    firstNameErrMsg,
+    lastNameErrMsg,
     // Error Messages Login
     usernameErrMsg,
     logInFailMsg,
@@ -407,6 +428,15 @@ export default {
     allTemplates,
     invoice,
     resignationLetter,
+    firstName,
+    lastName,
+    facebook,
+    fax,
+    mobilePhone,
+    homePhone,
+    staffTypeStaff,
+    staffTypeProvider,
+    userTypePatient,
     // Settings
     general,
     account,

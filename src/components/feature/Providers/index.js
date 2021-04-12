@@ -1,5 +1,9 @@
 import React,{useEffect, useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//api
+import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import ProviderService from "../../../api/provider/provider.service";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -47,47 +51,27 @@ const Providers = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     //
-    const createData=(id,fullname,birth,gender,address,status)=>{
-        return {id,
-            fullname,
-            birth,
-            gender,
-            address,
-            status};
+    const createData=(id,fullname, email, phone, status)=>{
+        return {id,fullname, email, phone, status};
     };
     
-    const dataColumnsName=["index","id","fullname","birth",
-        "gender","address","status"];
+    const dataColumnsName=["index","fullname","email",
+        "phone","status"];
     const titles=[
         t(strings.index),
-        t(strings.id),
         t(strings.fullname),
-        t(strings.birth),
-        t(strings.gender),
-        t(strings.address),
+        t(strings.email),
+        t(strings.phone),
         t(strings.status),
     ];
-    const rows = [
-        createData('1712320', "Dat", "01/01/1999", "Male", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas",t(strings.active)),
-        createData('1712321', "Doan", "02/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712322', "Thai", "03/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712323', "Dan", "04/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712324', "Cuong", "05/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712325', "Vong", "06/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712326', "Hung", "07/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712327', "The", "08/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712328', "Anh", "09/01/1999", "Male", "HCM",t(strings.active)),
-        createData('1712329', "Nguyen", "10/01/1999", "Female", "HCM",t(strings.active)),
-        createData('1712330', "Tang", "11/01/1999", "Female", "HCM",t(strings.active)),
-        createData('1712331', "Vu", "12/01/1999", "Female", "HCM",t(strings.active)),
     
-    
-    ];
     //state
     const [insertPerson,setInsertPerson]=useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [rows,setRows]=useState([]);
+    const [lengthRows,setLengthRows]=useState(0);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -128,8 +112,43 @@ const Providers = () => {
         setSelectedRowData(null);
     }
     
-    
+    const changeData=(data)=>{
+        let temp=[];
+        data.map((a,index)=>{
+            let status;
+            if(a.is_active===true)
+            {
+                status=t(strings.active);
+
+            }
+            else
+            {
+                status=t(strings.inactive);
+            }
+            let newData=createData(a._id,a.user.first_name+" "+a.user.last_name,a.user.email,a.user.mobile_phone,status);
+            temp=temp.concat(newData);
+
+        })
+        console.log("Check rows in change data:",temp);
+        setRows(temp);
+    }
     useEffect(()=>{
+        
+        if(rows.length===0)
+        {
+            const getProvider=async()=>{
+                const result=await ProviderService.getProvider();
+                console.log("Get provider in useEffect:",result.data);
+                if(result.success)
+                {
+                    changeData(result.data);
+    
+                }
+            };
+            getProvider();
+            
+        }
+
         if(selectedRow!==-1)
         {
             if(selectedRowData!==rows[selectedRow] && isEdited===false)
@@ -137,6 +156,7 @@ const Providers = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -153,7 +173,7 @@ const Providers = () => {
                     </Grid>
                     {insertPerson===true || isEdited===true ?
 
-                        <Grid item xs={4} className={classes.serviceControl}>
+                        <Grid item xs={4}>
                             <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
                                 {t(strings.goBack)}
                             </Typography>
@@ -207,21 +227,26 @@ const Providers = () => {
                 
                 <Container style={{marginLeft:"10px"}}>
                     {insertPerson===true && isEdited=== false ?
-                        <InsertPerson />
+                        <InsertPerson 
+                                        staffType={t(strings.staffTypeProvider)}
+                                        userType={t(strings.userTypePatient)}
+                        />
                         : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePerson fullname={selectedRowData.fullname}
-                                        idCard={selectedRowData.idCard}
-                                        date={selectedRowData.date}
-                                        publisher={selectedRowData.publisher}
-                                        email={selectedRowData.email}
-                                        address={selectedRowData.address}
-                                        city={selectedRowData.city}
-                                        country={selectedRowData.country}
-                                        postalCode={selectedRowData.postalCode}
-                                        phone={selectedRowData.phone}
-                                        birth={selectedRowData.birth}
-                                        gender={selectedRowData.gender}
-                                        status={selectedRowData.status}
+                        <UpdatePerson 
+                                        id={selectedRowData.id}
+                                        // last_name={selectedRowData.last_name}
+                                        // username={selectedRowData.username}
+                                        // password={selectedRowData.password}
+                                        // facebook={selectedRowData.facebook}
+                                        // fax={selectedRowData.fax}
+                                        // mobile_phone={selectedRowData.mobile_phone}
+                                        // home_phone={selectedRowData.home_phone}
+                                        // staff_photo={selectedRowData.staff_photo}
+                                        // email={selectedRowData.email}
+                                        // address={selectedRowData.address}
+                                        
+                                        // is_active={selectedRowData.is_active}
+
                         />
                         :
                             <TableCustom titles={titles}
@@ -232,6 +257,7 @@ const Providers = () => {
                                     changeToEditPage={true}
                                     handleChangeSelectedRow={handleChangeSelectedRow}
                                     numberColumn={dataColumnsName.length}
+                                    
                                     />
                     }
                    

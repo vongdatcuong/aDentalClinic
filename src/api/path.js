@@ -12,10 +12,20 @@ const appointment = {
     chair: '/chair'
 }
 
+//staffs
+const staff={
+    staff:'/staff',
+    provider:'/provider',
+}
+//patient
+const patient={
+    patient:'/patient'
+}
 // Practice 
 const practice = {
     practice: '/practice',
 }
+
 
 export {
     authorization,
@@ -24,5 +34,8 @@ export {
 export default {
     authorization,
     appointment,
-    practice
+    practice,
+    staff,
+    patient,
+    
 };

@@ -42,19 +42,21 @@ const TableRowItemCustom=(props)=>{
         {
             console.log("Selected Row:",props.index);
             // props.handleChangeIsEdited();
-            props.handleChangeSelectedRow(props.index);
+            props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
         }
     }
     
     
     return(
-        <TableRow key={props.key} 
+        <TableRow 
                     className={props.editable===true && props.changeToEditPage===true ? classes.tableRowEditChangePage : 
                         props.editable===true && props.changeToEditPage===false ? classes.tableRowEdit : classes.tableRow}
                     onClick={handleChangeOnClick}
                     >
             {props.titles.map((title,index2)=>(                            
-                    <TableCellCustom  key={props.row[props.dataColumnsName[1]]}
+                    <TableCellCustom  
+                            key={index2+props.propsKey}
+                            //key={props.row[props.dataColumnsName[1]]}
                             title={title}
                             index={index2}
                             value={index2===0 ? props.index+1+props.page*props.rowsPerPage  : props.row[`${props.dataColumnsName[index2]}`]

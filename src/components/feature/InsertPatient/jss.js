@@ -1,4 +1,4 @@
-const updatePersonStyle = (theme) => ({
+const insertPersonStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -54,7 +54,7 @@ const updatePersonStyle = (theme) => ({
 
     },
     leftContent:{
-        color:theme.primaryColor[0],
+        //color:theme.primaryColor[0],
         // borderRight:'1px solid blue',
 
     },
@@ -81,10 +81,10 @@ const updatePersonStyle = (theme) => ({
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
-        // display:'flex',
-        // flexDirection:'row',
+        display:'flex',
+        flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
-        //color:theme.primaryColor[2],
+        color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -99,22 +99,23 @@ const updatePersonStyle = (theme) => ({
             height:'35px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
-            //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
         },
-        // '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&:hover fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        // },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+            '&:hover fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+        },
+        
+    
 
     },
     inputControlSmall:{
@@ -150,7 +151,7 @@ const updatePersonStyle = (theme) => ({
         }
 
     },
-    updateButton:{
+    insertButton:{
        
         height:'35px',
         width:'30vw',
@@ -176,7 +177,7 @@ const updatePersonStyle = (theme) => ({
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'20px',
+        marginTop:'10px',
     },
     input:{
         marginTop:'10px',
@@ -206,4 +207,4 @@ const updatePersonStyle = (theme) => ({
 });
 
   
-export default updatePersonStyle;  
+export default insertPersonStyle;  

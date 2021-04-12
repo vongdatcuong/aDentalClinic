@@ -49,8 +49,12 @@ export default {
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
+        "Update Success":"Cập nhật thành công",
+        "Insert Success":"Thêm thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
+        "Update Fail":"Cập nhật thất bại",
+        "Insert Fail":"Thêm thất bại",
         "Full name must contain at least 3 to 30 characters": "Họ tên phải có từ 3 - 30 ký tự",
         "Email must follow the format abc@xyz.com/net/vn": "Email phải theo định dạng abc@xyz.com/net/vn",
         "Phone must contain at least 10 to 15 number": "Số điện thoại phải có từ 10 - 15 số",
@@ -60,6 +64,8 @@ export default {
         "Confirm password does not match with new password": "Xác nhận mật khẩu không trùng khớp với mật khẩu mới",
         "The new password is identical to old password": "Mật khẩu mới trùng với mật khẩu cũ",
         "Range of date is invalid": "Khoảng thời gian nhập không hợp lệ",
+        "First name must contain at least 1 character":"Họ phải có ít nhất 1 ký tự",
+        "Last name must contain at least 1 character":"Tên phải có ít nhất 1 ký tự",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username phải có từ 1 đến 30 ký tự",
         "Sign in successfully": "Đăng nhập thành công",
@@ -193,7 +199,14 @@ export default {
         "Inactive":"Không hoạt động",
         "Status":"Trạng thái",
         "Read":"Đọc",
-
+        "First name":"Họ",
+        "Last name":"Tên",
+        "Fax":"Fax",
+        "Mobile phone":"Di động",
+        "Home phone":"Điện thoại bàn",
+        "STAFF":"STAFF",
+        "PROVIDER":"PROVIDER",
+        "PATIENT":"PATIENT",
         //procedure
         "Code":"Code",
         "Fee":"Tiền công",
