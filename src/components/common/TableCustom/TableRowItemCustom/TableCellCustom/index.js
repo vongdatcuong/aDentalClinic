@@ -48,7 +48,7 @@ const TableCellCustom=(props)=>{
         setEditable(false);
     }
     return(
-        <TableCell key={props.key} className={classes.tableCell} align={props.index===0 ? "center":'left'} >
+        <TableCell  className={classes.tableCell} align={props.index===0 ? "center":'left'} >
             {editable===true ? 
                 <TextField
                     onChange={handleChangeValue}

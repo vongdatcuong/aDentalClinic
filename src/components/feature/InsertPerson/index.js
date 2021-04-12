@@ -1,5 +1,8 @@
 import React,{useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//api
+import ProviderService from "../../../api/provider/provider.service";
+
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -31,71 +34,65 @@ const useStyles = makeStyles(styles);
 
 
 
-const InsertPerson = () => {
+const InsertPerson = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     
     //state
-    const [fullname,setFullname]=useState(null);
-    const [idCard,setIDCard]=useState(null);
-    const [date,setDate]=useState(null);
-    const [publisher,setPublisher]=useState(null);
+    const [firstName,setFirstName]=useState(null);
+    const [lastName,setLastName]=useState(null);
+    const [username,setUsername]=useState(null);
+    const [password,setPassword]=useState(null);
     const [email,setEmail]=useState(null);
+    const [facebook,setFacebook]=useState(null);
+    const [fax,setFax]=useState(null);
+    const [mobile,setMobile]=useState(null);
+    const [homePhone,setHomePhone]=useState(null);
     const [address,setAddress]=useState(null);
-    const [country,setCountry]=useState(null);
-    const [city,setCity]=useState(null);
-    const [postalCode,setPostalCode]=useState(null);
-    const [phone,setPhone]=useState(null);
-    const [birth,setBirth]=useState(null);
-    const [male,setMale]=useState(true);
-    const [female,setFemale]=useState(false);
     const [gender,setGender]=useState(true);
+    const [active,setActive]=useState(true);
+    const [staffPhoto,setStaffPhoto]=useState(null);
+
 
     const [selectedFile,setSelectedFile]=useState(null);
 
-    const handleChangeGender=(e)=>{
-        setGender(!gender);
-    }
-    const handleChangeMale=(e)=>{
-        setMale(e.target.value);
-    };
-
-    const handleChangeFemale=(e)=>{
-        setFemale(e.target.value);
-    }
-    const handleChangeFullname=(e)=>{
-        setFullname(e.target.value);
-    }
-    const handleChangeIDCard=(e)=>{
-        setIDCard(e.target.value);
-    }
-    const handleChangeDate=(e)=>{
-        setDate(e.target.value);
-    }
-    const handleChangePublisher=(e)=>{
-        setPublisher(e.target.value);
-    }
-    const handleChangeEmail=(e)=>{
-        setEmail(e.target.value);
+    const handleChangeActive=(e)=>{
+        setActive(!active);
     }
     const handleChangeAddress=(e)=>{
         setAddress(e.target.value);
     }
-    const handleChangeCountry=(e)=>{
-        setCountry(e.target.value);
+    const handleChangeFirstName=(e)=>{
+        setFirstName(e.target.value);
+    };
+    const handleChangeLastName=(e)=>{
+        setLastName(e.target.value);
     }
-    const handleChangeCity=(e)=>{
-        setCity(e.target.value);
+    const handleChangeUsername=(e)=>{
+        setUsername(e.target.value);
     }
-    const handleChangePostalCode=(e)=>{
-        setPostalCode(e.target.value);
+    const handleChangePassword=(e)=>{
+        setPassword(e.target.value);
     }
-    const handleChangePhone=(e)=>{
-        setPhone(e.target.value);
+    const handleChangeFacebook=(e)=>{
+        setFacebook(e.target.value);
     }
-    const handleChangeBirth=(e)=>{
-        setBirth(e.target.value);
+    const handleChangeEmail=(e)=>{
+        setEmail(e.target.value);
     }
+    const handleChangeFax=(e)=>{
+        setFax(e.target.value);
+    }
+    const handleChangeMobile=(e)=>{
+        setMobile(e.target.value);
+    }
+    const handleChangeHomePhone=(e)=>{
+        setHomePhone(e.target.value);
+    }
+    const handleChangeGender=(e)=>{
+        setGender(!gender);
+    }
+
     const handleUploadClick = event => {
         console.log();
         var file = event.target.files[0];
@@ -111,7 +108,54 @@ const InsertPerson = () => {
         setSelectedFile(event.target.files[0]);
         console.log("Url:",reader); 
 
-      };
+    };
+
+    
+    const insertPerson=async(e)=>{
+        console.log("Insert person");
+        const data={
+            display_id: "",
+		    is_active:active, 
+            
+            staff_type: props.staffType,
+            drug_lic: "",
+            npi: "",
+            specialty: null, 
+            access_group: null, 
+		
+            notify_staff_msg: true, 
+            notify_patient_msg: true, 
+            notify_meeting: true,
+            user_type: props.userType,
+            theme:"",
+            language:"EN",
+
+		
+            facebook: facebook,
+            email: email,
+            fax: fax,
+            mobile_phone: mobile,
+            home_phone: homePhone,
+            staff_photo: staffPhoto,
+            address: address,
+
+		    //yeu cau
+            first_name: firstName,
+            last_name: lastName,
+            username: username,
+            password: password,
+        };
+        const result=await ProviderService.insert(data);
+        if(result.success)
+        {
+            alert("Success");
+        }
+        else
+        {
+            alert("Failed");
+        }
+
+    }
     return (
         <div className={classes.container}>
             
@@ -145,72 +189,121 @@ const InsertPerson = () => {
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        label={t(strings.fullName)}  
+                                        required 
+                                        label={t(strings.username)}  
                                         variant="outlined" 
-                                        onChange={handleChangeFullname}
-                                        value={fullname}
+                                        onChange={handleChangeUsername}
+                                        value={username}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        required 
+                                        type="password"
+                                        label={t(strings.password)}  
+                                        variant="outlined" 
+                                        onChange={handleChangePassword}
+                                        value={password}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        required 
+                                        label={t(strings.firstName)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeFirstName}
+                                        value={firstName}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        required 
+                                        label={t(strings.lastName)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeLastName}
+                                        value={lastName}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.email)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeEmail}
+                                        value={email}
+                                        /> 
+                        </div>
+                    </Grid>
+                    <Grid item xs={6} className={classes.rightContent}>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.facebook)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeFacebook}
+                                        value={facebook}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.mobilePhone)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeMobile}
+                                        value={mobile}
+                                        type="number"
+
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.homePhone)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeHomePhone}
+                                        value={homePhone}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        label={t(strings.fax)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeFax}
+                                        value={fax}
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        label={t(strings.address)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
                                         /> 
                         </div>
                         <div className={classes.itemSmall}>
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.idCard)}  
-                                        variant="outlined"
-                                        onChange={handleChangeIDCard}
-                                        value={idCard}/> 
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.active)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                                }
+                                label={t(strings.active)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.inactive)}
+                                    color="primary"
+                                    className={classes.checkbox}
 
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.date)}  
-                                        variant="outlined"
-                                        onChange={handleChangeDate}
-                                        value={date}/>
-
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.publisher)}  
-                                        variant="outlined"
-                                        onChange={handleChangePublisher}
-                                        value={publisher}/>
+                                />
+                                }
+                                label={t(strings.inactive)}
+                            />
                         </div>
-                         
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        label={t(strings.email)}  
-                                        variant="outlined"
-                                        onChange={handleChangeEmail}
-                                        value={email}/>
-                             
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        label={t(strings.address)}  
-                                        variant="outlined"
-                                        onChange={handleChangeAddress}
-                                        value={address}/>
-                             
-                        </div>
-                        <div className={classes.itemSmall}>
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.country)}  
-                                        variant="outlined"
-                                        onChange={handleChangeCountry}
-                                        value={country}/> 
-
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.city)}  
-                                        variant="outlined"
-                                        onChange={handleChangeCity}
-                                        value={city}/>
-
-                            <TextField className={classes.inputControlSmall}
-                                        label={t(strings.postalCode)}  
-                                        variant="outlined"
-                                        onChange={handleChangePostalCode}
-                                        value={postalCode}/>
-                        </div>
-                        
-                    </Grid>
-                    <Grid item xs={6} className={classes.rightContent}>
-                        
-                        <div className={classes.itemSmall}>
+                        {/* <div className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -236,34 +329,19 @@ const InsertPerson = () => {
                                 }
                                 label={t(strings.female)}
                             />
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        label={t(strings.phone)}  
-                                        variant="outlined"
-                                        onChange={handleChangePhone}
-                                        value={phone}/>
-                             
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        label={t(strings.birth)}  
-                                        variant="outlined"
-                                        onChange={handleChangeBirth}
-                                        value={birth}/>
-                             
-                        </div>
+                        </div> */}
+                        
                         
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.insertButton}>
+                    <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertPerson}>
                         {t(strings.insert)}
                     </Button>
                 </div>
         </div>
     </div>
-)
+    )
 }
 
 export default InsertPerson;

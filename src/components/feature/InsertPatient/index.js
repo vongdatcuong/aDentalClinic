@@ -1,9 +1,7 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //api
-import ProviderService from "../../../api/provider/provider.service";
-//validators
-import validators, {isPropValid} from '../../../utils/validators';
+import PatientService from "../../../api/patient/patient.service";
 
 //translation
 import { useTranslation, Trans } from 'react-i18next';
@@ -36,24 +34,16 @@ const useStyles = makeStyles(styles);
 
 
 
-const UpdatePerson = (props) => {
+const InsertPatient = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     
     //state
-   
-
-    const [userData,setUserData]=useState(null);
     const [firstName,setFirstName]=useState(null);
-    const [firstNameError,setFirstNameError]=useState(null);
     const [lastName,setLastName]=useState(null);
-    const [lastNameError,setLastNameError]=useState(null);
     const [username,setUsername]=useState(null);
-    const [usernameError,setUsernameError]=useState(null);
     const [password,setPassword]=useState(null);
-    const [passwordError,setPasswordError]=useState(null);
     const [email,setEmail]=useState(null);
-    const [emailError,setEmailError]=useState(null);
     const [facebook,setFacebook]=useState(null);
     const [fax,setFax]=useState(null);
     const [mobile,setMobile]=useState(null);
@@ -120,130 +110,68 @@ const UpdatePerson = (props) => {
 
     };
 
-    const onClickUpdate=async()=>{
-        console.log("Check data before update:")
-        console.log("facebook:",facebook);
-        console.log("email:",email);
-        console.log("password:",password);
+    
+    const insertPerson=async(e)=>{
+        console.log("Insert person");
+        let genderData;
+        if(gender===true)
+        {
+            genderData="MALE";
+        }
+        else
+        {
+            genderData="FEMALE";
+        }
         const data={
-            // display_id: userData.display_id,
-            // provider_color:userData.provider_color,
-            // staff_type: userData.staff_type,
-            // drug_lic: userData.drug_lic,
-            // npi: userData.npi,
-            // specialty: userData.specialty, 
-            // access_group: userData.access_group, 
+            display_id: "",
+		    is_active:active, 
+            
+            // staff_type: props.staffType,
+            drug_lic: "",
+            npi: "",
+            specialty: null, 
+            access_group: null, 
 		
-            // notify_staff_msg: userData.notify_staff_msg, 
-            // notify_patient_msg: userData.notify_patient_msg, 
-            // notify_meeting: userData.notify_meeting,
-            // user_type: userData.user_type,
-            // theme:userData.theme,
-            // language:userData.language,
-
-		
-            //change
+            notify_staff_msg: true, 
+            notify_patient_msg: true, 
+            notify_meeting: true,
+            user_type: props.userType,
+            theme:"",
+            language:"EN",
+            
+            gender:genderData,
             facebook: facebook,
             email: email,
             fax: fax,
             mobile_phone: mobile,
             home_phone: homePhone,
-            //staff_photo: staffPhoto,
+            staff_photo: staffPhoto,
             address: address,
-		    is_active:active, 
 
 		    //yeu cau
             first_name: firstName,
             last_name: lastName,
             username: username,
             password: password,
-
         };
-        const update=await ProviderService.update(props.id,data);
-        if(update.success)
+        const result=await PatientService.insert(data);
+        if(result.success)
         {
-            alert("Update success");
-            console.log("Check update:",update);
+            alert(t(strings.insertSuccess));
         }
         else
         {
-            alert("Update failed");
-            console.log("Check update:",update);
-
+            alert(t(strings.insertFail));
         }
+
     }
-    useEffect(()=>{
-        const searchProvider=async()=>{
-            const result=await ProviderService.search(props.id);
-            console.log("Search provider in useEffect:",result.data.payload._id);
-            if(result.success)
-            {
-                setUserData(result.data.payload);
-                setFirstName(result.data.payload.user.first_name);
-                setLastName(result.data.payload.user.last_name);
-                setUsername(result.data.payload.user.username);
-                setPassword(result.data.payload.user.password);
-                setFacebook(result.data.payload.user.facebook);
-                setEmail(result.data.payload.user.email);
-                setFax(result.data.payload.user.fax);
-                setActive(result.data.payload.is_active);
-                setAddress(result.data.payload.user.address);
-                setMobile(result.data.payload.user.mobile_phone);
-                setHomePhone(result.data.payload.user.home_phone);
-                
-            }
-        }
-        if(props.id && username===null)
-        {
-            searchProvider();
-
-        }
-        if(!isPropValid(validators.properties.username, username))
-        {
-            setUsernameError(t(strings.usernameErrMsg))
-        }
-        if(usernameError!==null && isPropValid(validators.properties.username, username))
-        {
-            setUsernameError(null)
-        }
-        if(!isPropValid(validators.properties.password, password))
-        {
-            setPasswordError(t(strings.passwordErrMsg))
-        }
-        if(passwordError!==null && isPropValid(validators.properties.password, password))
-        {
-            setPasswordError(null)
-        }
-        if(!isPropValid(validators.properties.firstName, firstName))
-        {
-            setFirstNameError(t(strings.firstNameErrMsg))
-        }
-        if(firstNameError!==null && isPropValid(validators.properties.firstName, firstName))
-        {
-            setFirstNameError(null)
-        }
-        if(!isPropValid(validators.properties.lastName, lastName))
-        {
-            setLastNameError(t(strings.lastNameErrMsg))
-        }
-        if(lastNameError!==null && isPropValid(validators.properties.lastName, lastName))
-        {
-            setLastNameError(null)
-        }
-        if(!isPropValid(validators.properties.email, email))
-        {
-            setEmailError(t(strings.emailErrMsg))
-        }
-        if(emailError!==null && isPropValid(validators.properties.email, email))
-        {
-            setEmailError(null)
-        }
-    })
-    
     return (
         <div className={classes.container}>
+            
             <div className={classes.content}>
-                    <label className={classes.inputAvatar}>
+                
+                
+                <label className={classes.inputAvatar}>
                     <input
                         accept="image/*"
                         className={classes.inputAvatarDisplay}
@@ -263,7 +191,7 @@ const UpdatePerson = (props) => {
                     }
                 
                     
-                    </label>
+                </label>
                 
 
                 <Grid container className={classes.input}>
@@ -271,80 +199,89 @@ const UpdatePerson = (props) => {
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.username)}  
-                                        
+                                        label={t(strings.username)}  
                                         variant="outlined" 
                                         onChange={handleChangeUsername}
                                         value={username}
-                                        error={usernameError !== null}
-                                        helperText={usernameError}
-
-                            />
+                                        /> 
                         </div>
-                    
-                    
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
-                                        placeholder={t(strings.password)}  
+                                        label={t(strings.password)}  
                                         variant="outlined" 
                                         onChange={handleChangePassword}
                                         value={password}
-                                        error={passwordError !== null}
-                                        helperText={passwordError}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.firstName)}  
+                                        label={t(strings.firstName)}  
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
-                                        error={firstNameError !== null}
-                                        helperText={firstNameError}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.lastName)}  
+                                        label={t(strings.lastName)}  
                                         variant="outlined" 
                                         onChange={handleChangeLastName}
                                         value={lastName}
-                                        error={lastNameError !== null}
-                                        helperText={lastNameError}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.email)}  
+                        </div>
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.email)}  
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
-                                        error={emailError !== null}
-                                        helperText={emailError}
-
-
                                         /> 
-                    </div>
+                        </div>
+                        <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.male)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                                }
+                                label={t(strings.male)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.female)}
+                                    color="primary"
+                                    className={classes.checkbox}
+
+                                />
+                                }
+                                label={t(strings.female)}
+                            />
+                        </div>
+                        
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.facebook)}  
+                                        label={t(strings.facebook)}  
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
-                                        
-
-
                                         /> 
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.mobilePhone)}  
+                                        label={t(strings.mobilePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeMobile}
                                         value={mobile}
@@ -354,31 +291,26 @@ const UpdatePerson = (props) => {
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.homePhone)}  
+                                        label={t(strings.homePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
-                                        type="number"
                                         /> 
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
+                                        label={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-
-
                                         /> 
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
+                                        label={t(strings.address)}  
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
-
-
                                         /> 
                         </div>
                         <div className={classes.itemSmall}>
@@ -409,46 +341,17 @@ const UpdatePerson = (props) => {
                             />
                         </div>
                         
-                        {/* <div className={classes.itemSmall}>
-                            <FormControlplaceholder
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                placeholder={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div> */}
-                        
                         
                     </Grid>
                 </Grid>
-
-                        <div>
-                            <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
-                                {t(strings.update)}
-                            </Button>
-                        </div>
-        </div>  
+                <div>
+                    <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertPerson}>
+                        {t(strings.insert)}
+                    </Button>
+                </div>
+        </div>
     </div>
     )
 }
 
-export default UpdatePerson;
+export default InsertPatient;

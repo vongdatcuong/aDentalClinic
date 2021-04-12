@@ -38,6 +38,9 @@ const providerStyle = (theme) => ({
     goBack:{
         cursor:'pointer',
         color:theme.primaryColor[1],
+        display:'flex',
+        justifyContent:'flex-end',
+        marginRight:'15px',
     },
     status:{
         marginLeft:'20px',

@@ -1,4 +1,4 @@
-const insertPersonStyle = (theme) => ({
+const insertPatientStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -98,11 +98,24 @@ const insertPersonStyle = (theme) => ({
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
+            //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
-        }
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+            '&:hover fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.primaryColor[0],
+            },
+        },
+        
+    
 
     },
     inputControlSmall:{
@@ -194,4 +207,4 @@ const insertPersonStyle = (theme) => ({
 });
 
   
-export default insertPersonStyle;  
+export default insertPatientStyle;  

@@ -49,8 +49,12 @@ export default {
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
+        "Update Success":"Update Success",
+        "Insert Success":"Insert Success",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
+        "Update Fail":"Update Fail",
+        "Insert Fail":"Insert Fail",
         "Full name must contain at least 3 to 30 characters": "Full name must contain at least 3 to 30 characters",
         "Email must follow the format abc@xyz.com/net/vn": "Email must follow the format abc@xyz.com/net/vn",
         "Phone must contain at least 10 to 15 number": "Phone must contain at least 10 to 15 number",
@@ -60,6 +64,8 @@ export default {
         "Confirm password does not match with new password": "Confirm password does not match with new password",
         "The new password is identical to old password": "The new password is identical to old password",
         "Range of date is invalid": "Range of date is invalid",
+        "First name must contain at least 1 character":"First name must contain at least 1 character",
+        "Last name must contain at least 1 character":"Last name must contain at least 1 character",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username must contain at least 1 to 30 characters",
         "Sign in successfully": "Sign in successfully",
@@ -194,7 +200,14 @@ export default {
         "Inactive":"Inactive",
         "Status":"Status",
         "Read":"Read",
-        
+        "First name":"First name",
+        "Last name":"Last name",
+        "Fax":"Fax",
+        "Mobile phone":"Mobile phone",
+        "Home phone":"Home phone",
+        "STAFF":"STAFF",
+        "PROVIDER":"PROVIDER",
+        "PATIENT":"PATIENT",
         //procedure
         "Code":"Code",
         "Fee":"Fee",

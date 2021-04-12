@@ -36,9 +36,8 @@ const TableCustom=(props)=>{
     const dataColumnsName=props.dataColumnsName;
     
 
-
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage || figures.defaultRowsPerPage);
     // const [editable,setEditable]=useState(props.editable);
     // const [handleChangeIsEdited,setHandleChangeIsEdited]=useState(props.handleChangeIsEdited);
     // const [changeToEditPage,setChangeToEditPage]=useState(props.changeToEditPage);
@@ -77,7 +76,9 @@ const TableCustom=(props)=>{
                             : rows
                         ).map((row,index) => (
                         
-                            <TableRowItemCustom key={row[`${dataColumnsName[1]}`]}
+                            <TableRowItemCustom 
+                                                key={index+page*rowsPerPage}
+                                                propsKey={index+page*rowsPerPage}
                                                 index={index}
                                                 titles={titles}
                                                 row={row}

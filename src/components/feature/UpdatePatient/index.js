@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //api
-import ProviderService from "../../../api/provider/provider.service";
+import PatientService from "../../../api/patient/patient.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles(styles);
 
 
 
-const UpdatePerson = (props) => {
+const UpdatePatient = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     
@@ -125,6 +125,15 @@ const UpdatePerson = (props) => {
         console.log("facebook:",facebook);
         console.log("email:",email);
         console.log("password:",password);
+        let genderData;
+        if(gender===true)
+        {
+            genderData="MALE";
+        }
+        else
+        {
+            genderData="FEMALE";
+        }
         const data={
             // display_id: userData.display_id,
             // provider_color:userData.provider_color,
@@ -143,6 +152,7 @@ const UpdatePerson = (props) => {
 
 		
             //change
+            gender:genderData,
             facebook: facebook,
             email: email,
             fax: fax,
@@ -159,23 +169,23 @@ const UpdatePerson = (props) => {
             password: password,
 
         };
-        const update=await ProviderService.update(props.id,data);
+        const update=await PatientService.update(props.id,data);
         if(update.success)
         {
-            alert("Update success");
+            alert(t(strings.updateSuccess));
             console.log("Check update:",update);
         }
         else
         {
-            alert("Update failed");
+            alert(t(strings.updateFail));
             console.log("Check update:",update);
 
         }
     }
     useEffect(()=>{
-        const searchProvider=async()=>{
-            const result=await ProviderService.search(props.id);
-            console.log("Search provider in useEffect:",result.data.payload._id);
+        const searchPatient=async()=>{
+            const result=await PatientService.search(props.id);
+            console.log("Search patient in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setUserData(result.data.payload);
@@ -190,12 +200,19 @@ const UpdatePerson = (props) => {
                 setAddress(result.data.payload.user.address);
                 setMobile(result.data.payload.user.mobile_phone);
                 setHomePhone(result.data.payload.user.home_phone);
-                
+                if(result.data.payload.gender==="FEMALE")
+                {
+                    setGender(false);
+                }
+                else
+                {
+                    setGender(true);
+                }
             }
         }
         if(props.id && username===null)
         {
-            searchProvider();
+            searchPatient();
 
         }
         if(!isPropValid(validators.properties.username, username))
@@ -329,6 +346,34 @@ const UpdatePerson = (props) => {
 
                                         /> 
                     </div>
+                    <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.male)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                                }
+                                label={t(strings.male)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.female)}
+                                    color="primary"
+                                    className={classes.checkbox}
+
+                                />
+                                }
+                                label={t(strings.female)}
+                            />
+                        </div>
+                        
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
                         <div className={classes.item}>
@@ -409,33 +454,6 @@ const UpdatePerson = (props) => {
                             />
                         </div>
                         
-                        {/* <div className={classes.itemSmall}>
-                            <FormControlplaceholder
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                placeholder={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div> */}
                         
                         
                     </Grid>
@@ -451,4 +469,4 @@ const UpdatePerson = (props) => {
     )
 }
 
-export default UpdatePerson;
+export default UpdatePatient;
