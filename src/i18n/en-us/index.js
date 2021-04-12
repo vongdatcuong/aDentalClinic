@@ -83,6 +83,8 @@ export default {
         "Invalid Time": "Invalid Time",
         "Appointment duration must be between 30 - 240 minutes and multiple of 30": "Appointment duration must be between 30 - 240 minutes and multiple of 30",
         "Load Patient fail": "Load Patient fail",
+        "Load Recall fail": "Load Recall fail",
+        "Load Treatment fail": "Load Treatment fail",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
@@ -171,6 +173,7 @@ export default {
         // Currency
         "CURRENCY": "VND",
         "CURRENCY CHART": "Million VND",
+        "CURRENCY_PRE": "$",
         //Menu bar
         "Providers":"Providers",
         "Practices":"Practices",

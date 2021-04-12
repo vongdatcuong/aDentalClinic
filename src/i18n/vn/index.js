@@ -83,6 +83,8 @@ export default {
         "Invalid Time": "Thời gian không hợp lệ",
         "Appointment duration must be between 30 - 240 minutes and multiple of 30": "Thời lượng cuộc hẹn phải từ 30 - 240 phút, chia hết cho 30",
         "Load Patient fail": "Tìm bệnh nhân thất bại",
+        "Load Recall fail": "Tìm tái hẹn thất bại",
+        "Load Treatment fail": "Tìm điều trị thất bại",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
@@ -170,6 +172,7 @@ export default {
         // Currency
         "CURRENCY": "VND",
         "CURRENCY CHART": "Triệu VND",
+        "CURRENCY_PRE": "$",
         //Menu bar
         "Providers":"Bác sĩ",
         "Practices":"Văn phòng",

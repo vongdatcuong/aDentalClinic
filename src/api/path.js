@@ -36,6 +36,23 @@ const staff = {
 const common = {
     autocomplete: '/auto-complete'
 }
+
+// Recall
+const recall = {
+    recall: '/recall'
+}
+
+// Treatment
+const treatment = {
+    treatment: '/treatment'
+}
+
+// Procedure
+const procedure = {
+    procedure: '/procedure',
+    category: '/category'
+}
+
 export {
     authorization,
 }
@@ -47,5 +64,8 @@ export default {
     holiday,
     patient,
     staff,
-    common
+    common,
+    recall,
+    treatment,
+    procedure
 };

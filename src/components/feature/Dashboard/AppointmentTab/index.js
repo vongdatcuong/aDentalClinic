@@ -39,7 +39,8 @@ import AsyncSelect from 'react-select/async';
 import styles from "./jss";
 
 // Components
-
+import RecallDialog from './RecallDialog';
+import TreatmentDialog from './TreatmentDialog';
 
 // Icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -78,10 +79,14 @@ const AppointmentTab = ({
         }),
     };
 
+    // None option
+    const noneOption = {value: "", label: t(strings.none)};
+
     // States
     const [isNewPatient, setIsNewPatient] = useState(true);
 
-    const [patientID, setPatientID] = useState("");
+    const [patient, setPatient] = useState(noneOption);
+    //const [patientID, setPatientID] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [homePhone, setHomePhone] = useState("");
@@ -116,88 +121,54 @@ const AppointmentTab = ({
         durationOptions.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
     }
     // Recalls
-    const [recalls, setRecalls] = useState([
-        {
-            date: "2018-24-12",
-            code: "D2392",
-            note: "ABCDEFGH"
-        },
-        {
-            date: "2018-24-12",
-            code: "D2392",
-            note: "ABCDEFGH"
-        },
-        {
-            date: "2018-24-12",
-            code: "D2392",
-            note: "ABCDEFGH"
-        },
-    ]);
+    const [recalls, setRecalls] = useState([]);
 
     // Treatments
-    const [treatments, setTreatments] = useState([
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
-        },
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
-        },
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
-        },
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
-        },
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
-        },
-        {
-            code: "D2392",
-            tooth: 15,
-            surface: "MO",
-            description: "qweqweqweqwe",
-            fee: "$69",
-            status: "T"
+    const [procedureCates, setProcedureCates] = useState([]);
+    const [selectedProceduerCate, setSelectedProceduerCate] = useState(null);
+    const [treatments, setTreatments] = useState([]);
+
+    // Dialogs
+    const [openRecallDialog, setOpenRecallDialog] = useState(false);
+    const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
+
+    useEffect(async () => {
+        try {
+            dispatchLoading({ type: strings.setLoading, isLoading: true});
+            const promises = [
+                api.httpGet({
+                    url: apiPath.procedure.procedure + apiPath.procedure.procedure
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                const categories = result[0].payload.map((cate) => ({
+                    id: cate._id,
+                    name: cate.name
+                }));
+                setProcedureCates(categories);
+            } else {
+                toast.error(result.message);
+            }
+        } catch(err){
+            toast.error(t(strings.loadPatientErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
-    ]);
-
-    useEffect(() => {
-
     }, []);
 
     const handleOnNewPatient = () => {
         setIsNewPatient(true);
-        setPatientID("");
+        setPatient({...noneOption});
+        //setPatientID("");
         setFirstName("");
         setLastName("");
         setHomePhone("");
         setMobile("");
         setEmail("");
+
+        setRecalls([]);
+        setTreatments([]);
 
         // Ref
         patientIDRef.current.value = "";
@@ -212,7 +183,7 @@ const AppointmentTab = ({
         if (option.value == -1){
             handleOnNewPatient();
             return;
-        } else if (option.value == patientID){
+        } else if (option.value == patient.value){
             return;
         }
         try {
@@ -224,12 +195,13 @@ const AppointmentTab = ({
             ];
             const result = await Promise.all(promises);
             if (result[0].success){
-                setPatientID(option.value);
-                setIsNewPatient(false);
+                //setPatientID(option.value);
                 const patient = result[0].payload;
                 const patientUser = patient?.user;
                 if (patient && patientUser){
-                    setPatientID(patient._id || "");
+                    setPatient(option);
+                    setIsNewPatient(false);
+                    //setPatientID(patient._id || "");
                     setFirstName(patientUser.first_name || "");
                     setLastName(patientUser.last_name || "");
                     setHomePhone(patientUser.home_phone || "");
@@ -244,15 +216,16 @@ const AppointmentTab = ({
                     homePhoneRef.current.value = patientUser.home_phone || noneStr;
                     mobileRef.current.value = patientUser.mobile_phone || noneStr;
                     emailRef.current.value = patientUser.email || noneStr;
-                    dispatchLoading({ type: strings.setLoading, isLoading: false});
                 }
+                setRecalls([]);
+                setTreatments([]);
             } else {
-                dispatchLoading({ type: strings.setLoading, isLoading: false});
                 toast.error(result.message);
             }
         } catch(err){
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
             toast.error(t(strings.loadPatientErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
     }
 
@@ -365,6 +338,10 @@ const AppointmentTab = ({
         }
     }
 
+    const handleOnProcedureCateChange = (evt) => {
+        setSelectedProceduerCate(evt.target.value);
+    }
+
     // Autocomplete Patient
     const loadPatientOptions  = (inputValue) => {
         return new Promise(async (resolve) => {
@@ -410,7 +387,7 @@ const AppointmentTab = ({
                         label: `${option.first_name} ${option.last_name} (${option.display_id})`
                     }));
                 }
-                options.unshift({value: -1, label: t(strings.none)});
+                options.unshift(noneOption);
                 resolve(options);
             } catch(err){
                 toast.error(err);
@@ -450,6 +427,24 @@ const AppointmentTab = ({
         onClose();
     }
 
+    // Recall Dialog
+    const handleOpenRecalltDialog = () => {
+        setOpenRecallDialog(true);
+    }
+
+    const handleCloseRecallDialog = () => {
+        setOpenRecallDialog(false);
+    }
+
+    // Treatment Dialog
+    const handleOpenTreatmentDialog = () => {
+        setOpenTreatmentDialog(true);
+    }
+
+    const handleCloseTreatmentDialog = () => {
+        setOpenTreatmentDialog(false);
+    }
+
     return (
         <Paper p={2} className={classes.paper}>
             <IconButton aria-label="back" className={classes.backBtn} onClick={handleOnCloseTab}>
@@ -473,11 +468,12 @@ const AppointmentTab = ({
                                     cacheOptions 
                                     defaultOptions 
                                     loadOptions={loadPatientOptions}
-                                    defaultValue={{value: -1, label: t(strings.none)}}
+                                    defaultValue={noneOption}
                                     styles={selectPatientStyle}
                                     placeholder={t(strings.select) + " " + t(strings.patient)}
                                     noOptionsMessage={() => t(strings.noOptions)}
                                     onChange={handleOnSelectPatient}
+                                    value={patient}
                                 />
                             </Grid>
                             <Grid item md={4} sm={12} xs={12}>
@@ -503,7 +499,7 @@ const AppointmentTab = ({
                             {/* Patient ID */}
                             <Grid item md={4} sm={12} xs={12}>
                                 <TextField
-                                    label={t(strings.patientID)}
+                                    label={t(strings.patient.value)}
                                     id="patient-info-id"
                                     className={classes.textField}
                                     margin="dense"
@@ -841,7 +837,7 @@ const AppointmentTab = ({
                     </Grid>
                 </Grid>
                 <Grid container item md={6} sm={12} xs={12} spacing={0}>
-                    {/* Select Recall / Treatment */}
+                    {/* Select Recall */}
                     <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
@@ -849,7 +845,10 @@ const AppointmentTab = ({
                                 {t(strings.recall)}
                             </Typography>
                             <div className={classes.tableBtnGroup}>
-                                <IconButton aria-label="link-recall" className={clsx(classes.tableIconBtn, classes.insertLinkIcon)}>
+                                <IconButton aria-label="link-recall" 
+                                    className={clsx(classes.tableIconBtn, classes.insertLinkIcon)}
+                                    onClick={handleOpenRecalltDialog}
+                                >
                                     <InsertLinkIcon/>
                                 </IconButton>
                             </div>
@@ -866,7 +865,7 @@ const AppointmentTab = ({
                                     </TableHead>
                                     <TableBody>
                                     {recalls.map((recall) => (
-                                        <TableRow key={recall.code}>
+                                        <TableRow key={recall.id}>
                                             <TableCell align="center" width="25%" className={classes.tableCell}>{recall.date}</TableCell>
                                             <TableCell align="center" width="20%" className={classes.tableCell}>{recall.code}</TableCell>
                                             <TableCell align="left" width="55%" className={classes.tableCell}>{recall.note}</TableCell>
@@ -899,12 +898,12 @@ const AppointmentTab = ({
                                     variant="outlined"
                                     size="small"
                                     fullWidth
-                                    value={selectedChairId || 0}
-                                    onChange={onSelectChair}
+                                    value={selectedProceduerCate || 0}
+                                    onChange={handleOnProcedureCateChange}
                                 >
-                                {(chairs.map((chair) => {
+                                {(procedureCates.map((cate) => {
                                     return (
-                                        <MenuItem key={chair.id} value={chair.id}>{chair.text}</MenuItem>
+                                        <MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
                                     )
                                 }))}
                                 </Select>
@@ -933,7 +932,10 @@ const AppointmentTab = ({
                                 </Select>
                             </Grid>
                             <Grid item md={3} sm={12} xs={12} className={classes.tableBtnGroup}>
-                                <IconButton aria-label="link-treatment" className={clsx(classes.tableIconBtn, classes.insertLinkIcon)}>
+                                <IconButton aria-label="link-treatment" 
+                                    className={clsx(classes.tableIconBtn, classes.insertLinkIcon)}
+                                    onClick={handleOpenTreatmentDialog}
+                                >
                                     <InsertLinkIcon/>
                                 </IconButton>
                                 <IconButton aria-label="add-treatment" className={clsx(classes.tableIconBtn, classes.addIcon)}>
@@ -955,7 +957,7 @@ const AppointmentTab = ({
                                     </TableHead>
                                     <TableBody>
                                     {treatments.map((treatment) => (
-                                        <TableRow key={treatment.code}>
+                                        <TableRow key={treatment.id}>
                                             <TableCell align="center" width="13%" className={classes.tableCell}>{treatment.code}</TableCell>
                                             <TableCell align="center" width="15%" className={classes.tableCell}>{treatment.tooth}</TableCell>
                                             <TableCell align="left" width="15%" className={classes.tableCell}>{treatment.surface}</TableCell>
@@ -981,6 +983,18 @@ const AppointmentTab = ({
                     </Button>
                 </Grid>
             </Grid>
+            <RecallDialog
+                patientID={patient.value}
+                open={openRecallDialog}
+                onClose={handleCloseRecallDialog}
+                onSelect={setRecalls}
+            />
+            <TreatmentDialog
+                patientID={patient.value}
+                open={openTreatmentDialog}
+                onClose={handleCloseTreatmentDialog}
+                onSelect={setTreatments}
+            />
         </Paper>
     )
 }

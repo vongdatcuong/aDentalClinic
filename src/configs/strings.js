@@ -153,6 +153,8 @@ const appointHolidayErrMsg = "Invalid Date (Holiday)";
 const appointTimeErrMsg = "Invalid Time";
 const appointDurationErrMsg = "Appointment duration must be between 30 - 240 minutes and multiple of 30";
 const loadPatientErrMsg = "Load Patient fail";
+const loadRecallErrMsg = "Load Recall fail";
+const loadTreatmentErrMsg = "Load Treatment fail";
     // Confirm Messages
 
 // Context Actions
@@ -288,6 +290,7 @@ const appointDurationUnit = "AppointDurationU";
 // Currency
 const CURRENCY = "CURRENCY";
 const CURRENCY_CHART = "CURRENCY CHART";
+const CURRENCY_PRE = "CURRENCY_PRE";
 
 export default {
     appointment,
@@ -368,6 +371,8 @@ export default {
     appointTimeErrMsg,
     appointDurationErrMsg,
     loadPatientErrMsg,
+    loadRecallErrMsg,
+    loadTreatmentErrMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -537,6 +542,7 @@ export default {
     // Currency
     CURRENCY,
     CURRENCY_CHART,
+    CURRENCY_PRE,
     // ???? 
     templates,
     drug,
