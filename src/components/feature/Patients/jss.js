@@ -121,7 +121,12 @@ const patientStyle = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
-    }
+    },
+    actionButton: {
+        "& .MuiButton-label": {
+            textTransform: 'none',
+        },
+    },
 });
 
   

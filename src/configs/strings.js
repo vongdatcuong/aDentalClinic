@@ -92,6 +92,8 @@ const quantity="Quantity";
 const name="Name";
 //table
 const rowsPerPage="Rows per page";
+const action="Action";
+const profile="Profile";
 //template
 const template="Template";
 const recent="Recent";
@@ -422,6 +424,8 @@ export default {
     active,
     inactive,
     status,
+    action,
+    profile,
     read,
     template,
     recent,

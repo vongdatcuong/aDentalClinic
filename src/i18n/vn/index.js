@@ -198,6 +198,8 @@ export default {
         "Active":"Hoạt động",
         "Inactive":"Không hoạt động",
         "Status":"Trạng thái",
+        "Action":"Hành động",
+        "Profile":"Hồ sơ",
         "Read":"Đọc",
         "First name":"Họ",
         "Last name":"Tên",

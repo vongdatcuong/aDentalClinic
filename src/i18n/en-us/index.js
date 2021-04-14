@@ -199,6 +199,8 @@ export default {
         "Active":"Active",
         "Inactive":"Inactive",
         "Status":"Status",
+        "Action":"Action",
+        "Profile":"Profile",
         "Read":"Read",
         "First name":"First name",
         "Last name":"Last name",

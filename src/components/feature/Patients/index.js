@@ -29,6 +29,7 @@ import { Typography,
     Tooltip,
     Select,
     MenuItem,
+    Button,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -58,8 +59,8 @@ import InsertPatient from "../InsertPatient";
 import UpdatePatient from "../UpdatePatient";
 
 const useStyles = makeStyles(styles);
-const createData=(id,fullname, email, phone,gender, status)=>{
-    return {id,fullname, email, phone,gender, status};
+const createData=(id,fullname, email, phone,gender, status, action)=>{
+    return {id,fullname, email, phone,gender, status, action};
 };
 
 const useStyles1 = makeStyles((theme) => ({
@@ -176,7 +177,7 @@ const Patients = () => {
         setSelectedRowData(null);
     };
     const dataColumnsName=["index","fullname","email",
-    "phone","gender","status"];
+    "phone","gender","status","action"];
     const titles=[
         t(strings.index),
         t(strings.fullname),
@@ -184,6 +185,7 @@ const Patients = () => {
         t(strings.phone),
         t(strings.gender),
         t(strings.status),
+        t(strings.action),
     ];
     const changeData=(data)=>{
         let temp=[];
@@ -207,7 +209,9 @@ const Patients = () => {
             {
                 gender=t(strings.male);
             }
-            let newData=createData(a._id,a.user.first_name+" "+a.user.last_name,a.user.email,a.user.mobile_phone,gender,status);
+            let newData=createData(a._id,a.user.first_name+" "+a.user.last_name,a.user.email,a.user.mobile_phone,gender,status,
+            <Button size="small" variant="outlined" color="primary" className={classes.actionButton}
+            onClick={() => history.push(path.patientProfilePath.replace(':patientID', a._id))}>{t(strings.profile)}</Button>);
             temp=temp.concat(newData);
 
         })
