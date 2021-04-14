@@ -85,6 +85,13 @@ export default {
         "Load Patient fail": "Load Patient fail",
         "Load Recall fail": "Load Recall fail",
         "Load Treatment fail": "Load Treatment fail",
+        "Load Procedure Category fail": "Load Procedure Category fail",
+        "Load Procedure Code fail": "Load Procedure Code fail",
+        "Load Teeth of Patient fail": "Load Teeth of Patient fail",
+        "Load Surface of Tooth fail": "Load Surface of Tooth fail",
+        "Procedure is required": "Procedure is required",
+        "Tooth is required": "Tooth is required",
+        "Surface is required": "Surface is required",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",

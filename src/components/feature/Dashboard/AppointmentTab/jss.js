@@ -59,7 +59,7 @@ const appointmentTabStyle = (theme) => ({
         paddingRight: 0
     },
     tableBtnGroup: {
-        float: 'right'
+        textAlign: 'right'
     },
     tableIconBtn: {
         '& .MuiSvgIcon-root': {

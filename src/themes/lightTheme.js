@@ -32,6 +32,7 @@ import {hexToRgb} from '../utils/colors';
   const appointmentTreatmentTableHeight = 300;
   const appointRecallDialogWidth = '70%';
   const appointTreatmentDialogWidth = '80%';
+  const appointAddTreatmentDialogWidth = '50%';
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -226,6 +227,7 @@ export default {
   appointmentTreatmentTableHeight,
   appointRecallDialogWidth,
   appointTreatmentDialogWidth,
+  appointAddTreatmentDialogWidth,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,

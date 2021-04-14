@@ -53,6 +53,12 @@ const procedure = {
     category: '/category'
 }
 
+// Tooth
+const tooth = {
+    tooth: '/tooth',
+    patient: '/patient',
+}
+
 export {
     authorization,
 }
@@ -67,5 +73,6 @@ export default {
     common,
     recall,
     treatment,
-    procedure
+    procedure,
+    tooth
 };

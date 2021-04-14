@@ -155,6 +155,13 @@ const appointDurationErrMsg = "Appointment duration must be between 30 - 240 min
 const loadPatientErrMsg = "Load Patient fail";
 const loadRecallErrMsg = "Load Recall fail";
 const loadTreatmentErrMsg = "Load Treatment fail";
+const loadProcedureCateErrMsg = "Load Procedure Category fail";
+const loadProcedureCodeErrMsg = "Load Procedure Code fail";
+const loadToothErrMsg = "Load Teeth of Patient fail";
+const loadToothSurfaceErrMsg = "Load Surface of Tooth fail";
+const appointProcedureErrMsg = "Procedure is required";
+const appointToothErrMsg = "Tooth is required";
+const appointSurfaceErrMsg = "Surface is required";
     // Confirm Messages
 
 // Context Actions
@@ -269,6 +276,10 @@ const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
 
+// Tooth
+const selectOneTooth = "S";
+const selectMultiTooth = "M";
+const selectNoneTooth = "N";
 
 // Date
 const defaultTimeFormat = "HH:mm";
@@ -373,6 +384,13 @@ export default {
     loadPatientErrMsg,
     loadRecallErrMsg,
     loadTreatmentErrMsg,
+    loadProcedureCateErrMsg,
+    loadProcedureCodeErrMsg,
+    loadToothErrMsg,
+    loadToothSurfaceErrMsg,
+    appointProcedureErrMsg,
+    appointToothErrMsg,
+    appointSurfaceErrMsg,
     // Confirm Messages
     // Context Actions
     setTheme,
@@ -533,6 +551,10 @@ export default {
     select,
     defaultDateFormat,
     holidayDormat,
+    // Tooth
+    selectOneTooth,
+    selectMultiTooth,
+    selectNoneTooth,
     // Unit
     hours,
     percent,

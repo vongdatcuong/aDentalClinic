@@ -15,6 +15,9 @@ const statisDayRangeDefault = 7;
 const defaultRowsPerPage = 10;
 const rowsPerPageOption = [5, 10, 25];
 
+// Tooth
+const patientMaxTooth = 32;
+
 // API Status code
 const apiStatus = {
     success: 200,
@@ -43,6 +46,8 @@ export default {
     // Table
     defaultRowsPerPage,
     rowsPerPageOption,
+    // Tooth
+    patientMaxTooth,
     // API Status code
     apiStatus,
     // Autocomplete

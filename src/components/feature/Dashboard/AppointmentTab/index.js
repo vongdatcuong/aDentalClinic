@@ -41,6 +41,7 @@ import styles from "./jss";
 // Components
 import RecallDialog from './RecallDialog';
 import TreatmentDialog from './TreatmentDialog';
+import AddTreatmentDialog from './AddTreatmentDialog';
 
 // Icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -115,6 +116,8 @@ const AppointmentTab = ({
     const mobileRef = useRef(null);
     const emailRef = useRef(null);
 
+    let noneStr = t(strings.none);
+
     // Duration options
     const durationOptions = [];
     for (let i = cellDuration; i <= figures.maxAppointmentDuration; i+=cellDuration){
@@ -124,38 +127,17 @@ const AppointmentTab = ({
     const [recalls, setRecalls] = useState([]);
 
     // Treatments
-    const [procedureCates, setProcedureCates] = useState([]);
-    const [selectedProceduerCate, setSelectedProceduerCate] = useState(null);
     const [treatments, setTreatments] = useState([]);
+    const [addedTreatments, setAddedTreatments] = useState([]);
 
     // Dialogs
     const [openRecallDialog, setOpenRecallDialog] = useState(false);
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
+    const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
     useEffect(async () => {
-        try {
-            dispatchLoading({ type: strings.setLoading, isLoading: true});
-            const promises = [
-                api.httpGet({
-                    url: apiPath.procedure.procedure + apiPath.procedure.procedure
-                }),
-            ];
-            const result = await Promise.all(promises);
-            if (result[0].success){
-                const categories = result[0].payload.map((cate) => ({
-                    id: cate._id,
-                    name: cate.name
-                }));
-                setProcedureCates(categories);
-            } else {
-                toast.error(result.message);
-            }
-        } catch(err){
-            toast.error(t(strings.loadPatientErrMsg));
-        } finally {
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
-        }
-    }, []);
+
+    }, [treatments, addedTreatments, patient]);
 
     const handleOnNewPatient = () => {
         setIsNewPatient(true);
@@ -169,6 +151,7 @@ const AppointmentTab = ({
 
         setRecalls([]);
         setTreatments([]);
+        setAddedTreatments([]);
 
         // Ref
         patientIDRef.current.value = "";
@@ -209,7 +192,6 @@ const AppointmentTab = ({
                     setEmail(patientUser.email || "");
 
                     // Ref
-                    let noneStr = t(strings.none);
                     patientIDRef.current.value = patient.patient_id;
                     firstNameRef.current.value = patientUser.first_name || noneStr;
                     lastNameRef.current.value = patientUser.last_name || noneStr;
@@ -219,6 +201,7 @@ const AppointmentTab = ({
                 }
                 setRecalls([]);
                 setTreatments([]);
+                setAddedTreatments([]);
             } else {
                 toast.error(result.message);
             }
@@ -338,10 +321,6 @@ const AppointmentTab = ({
         }
     }
 
-    const handleOnProcedureCateChange = (evt) => {
-        setSelectedProceduerCate(evt.target.value);
-    }
-
     // Autocomplete Patient
     const loadPatientOptions  = (inputValue) => {
         return new Promise(async (resolve) => {
@@ -444,6 +423,27 @@ const AppointmentTab = ({
     const handleCloseTreatmentDialog = () => {
         setOpenTreatmentDialog(false);
     }
+
+    // Add Treatment Dialog
+    const handleOpenAddTreatmentDialog = () => {
+        setOpenAddTreatmentDialog(true);
+    }
+
+    const handleCloseAddTreatmentDialog = () => {
+        setOpenAddTreatmentDialog(false);
+    }
+
+    const handleAddNewTreatment = (procedure, surface, tooth) => {
+        const newTreatment = {};
+        newTreatment.procedure_code = procedure.id; // ID
+        newTreatment.surface = surface || noneStr;
+        newTreatment.code = procedure.procedure_code;
+        newTreatment.tooth = tooth?.tooth_number || noneStr; 
+        newTreatment.description = procedure?.description || noneStr;
+        const addeds = [...addedTreatments];
+        addeds.push(newTreatment);
+        setAddedTreatments(addeds)
+      }
 
     return (
         <Paper p={2} className={classes.paper}>
@@ -692,13 +692,14 @@ const AppointmentTab = ({
                                         noOptionsMessage={() => t(strings.noOptions)}
                                         onChange={handleOnProviderChange}
                                     />
-                                    <FormHelperText
-                                        className={classes.formMessageFail}
-                                        error={true}
-                                        style={{display: Boolean(providerErrMsg)? 'block' : 'block'}}
-                                    >
-                                        {t(providerErrMsg)}
-                                    </FormHelperText>
+                                    {Boolean(providerErrMsg) && 
+                                        <FormHelperText
+                                            className={classes.formMessageFail}
+                                            error={true}
+                                        >
+                                            {t(providerErrMsg)}
+                                        </FormHelperText>
+                                    }
                                 </FormControl>
                             </Grid>
                             {/* Schedule Chair */}
@@ -877,68 +878,25 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Select Treatment */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container md={12} sm={12} xs={12} spacing={3} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
                                 {t(strings.treatments)}
                             </Typography>
                         </Grid>
-                        <Grid container item md={12} sm={12} xs={12} spacing={2}>
-                            {/* Select Treatment */}
-                            <Grid item md={5} sm={12} xs={12}>
-                                <InputLabel shrink id="treatment-category">
-                                    {t(strings.category)}
-                                </InputLabel>
-                                <Select
-                                    labelId="treatment-category"
-                                    id="treatment-category"
-                                    className={classes.select}
-                                    margin="dense"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    value={selectedProceduerCate || 0}
-                                    onChange={handleOnProcedureCateChange}
-                                >
-                                {(procedureCates.map((cate) => {
-                                    return (
-                                        <MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
-                                    )
-                                }))}
-                                </Select>
-                            </Grid>
-                            {/* Select Procedure */}
-                            <Grid item md={4} sm={12} xs={12}>
-                                <InputLabel shrink id="treatment-procedure">
-                                    {t(strings.procedure)}
-                                </InputLabel>
-                                <Select
-                                    labelId="treatment-procedure"
-                                    id="treatment-procedure"
-                                    className={classes.select}
-                                    margin="dense"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    value={selectedChairId || 0}
-                                    onChange={onSelectChair}
-                                >
-                                {(chairs.map((chair) => {
-                                    return (
-                                        <MenuItem key={chair.id} value={chair.id}>{chair.text}</MenuItem>
-                                    )
-                                }))}
-                                </Select>
-                            </Grid>
-                            <Grid item md={3} sm={12} xs={12} className={classes.tableBtnGroup}>
+                        <Grid container item md={12} sm={12} xs={12} spacing={1}>
+                            <Grid item md={12} sm={12} xs={12} className={classes.tableBtnGroup}>
                                 <IconButton aria-label="link-treatment" 
                                     className={clsx(classes.tableIconBtn, classes.insertLinkIcon)}
                                     onClick={handleOpenTreatmentDialog}
                                 >
                                     <InsertLinkIcon/>
                                 </IconButton>
-                                <IconButton aria-label="add-treatment" className={clsx(classes.tableIconBtn, classes.addIcon)}>
+                                <IconButton aria-label="add-treatment" 
+                                    className={clsx(classes.tableIconBtn, classes.addIcon)}
+                                    onClick={handleOpenAddTreatmentDialog}
+                                >
                                     <AddIcon/>
                                 </IconButton>
                             </Grid>
@@ -958,6 +916,15 @@ const AppointmentTab = ({
                                     <TableBody>
                                     {treatments.map((treatment) => (
                                         <TableRow key={treatment.id}>
+                                            <TableCell align="center" width="13%" className={classes.tableCell}>{treatment.code}</TableCell>
+                                            <TableCell align="center" width="15%" className={classes.tableCell}>{treatment.tooth}</TableCell>
+                                            <TableCell align="left" width="15%" className={classes.tableCell}>{treatment.surface}</TableCell>
+                                            <TableCell align="left" width="35%" className={classes.tableCell}>{treatment.description}</TableCell>
+                                            <TableCell align="center" width="17%" className={classes.tableCell}>{treatment.status}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                    {addedTreatments.map((treatment, index) => (
+                                        <TableRow key={index}>
                                             <TableCell align="center" width="13%" className={classes.tableCell}>{treatment.code}</TableCell>
                                             <TableCell align="center" width="15%" className={classes.tableCell}>{treatment.tooth}</TableCell>
                                             <TableCell align="left" width="15%" className={classes.tableCell}>{treatment.surface}</TableCell>
@@ -994,6 +961,12 @@ const AppointmentTab = ({
                 open={openTreatmentDialog}
                 onClose={handleCloseTreatmentDialog}
                 onSelect={setTreatments}
+            />
+            <AddTreatmentDialog
+                patientID={patient.value}
+                open={openAddTreatmentDialog}
+                onClose={handleCloseAddTreatmentDialog}
+                onAdd={handleAddNewTreatment}
             />
         </Paper>
     )
