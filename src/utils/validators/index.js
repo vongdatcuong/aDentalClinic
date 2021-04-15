@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import figures from '../../configs/figures';
 
 // Properties
 const properties = {
@@ -9,8 +10,10 @@ const properties = {
     password: "password",
     firstName: "firstName",
     username: "username",
-    lastName:"lastName",
-
+    lastName: "lastName",
+    assistant: "assistant",
+    provider: "provider",
+    appointDuration: "appointDuration"
 }
 
 // Schemas
@@ -23,7 +26,7 @@ const emailSchema = Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'vn'] } })
     .required();
 const phoneSchema = Joi.string()
-    .pattern(new RegExp('^[0-9]*$'))
+    .pattern(new RegExp('^[\-0-9]*$'))
     .min(10)
     .max(15)
     .required();
@@ -47,6 +50,18 @@ const userNameSchema = Joi.string()
     .min(1)
     .max(30)
     .required();
+const lastNameSchema = Joi.string()
+    .max(30)
+    .required();
+const assistantSchema = Joi.string()
+    .required();
+const providerSchema = Joi.string()
+    .required();
+const appointDurationSchema = Joi.number()
+    .positive()
+    .multiple(figures.defaultCellDuration)
+    .min(figures.defaultCellDuration)
+    .max(figures.maxAppointmentDuration);
 
 const isPropValid = (type, value) => {
     let schema = Joi.string();
@@ -74,6 +89,18 @@ const isPropValid = (type, value) => {
             break;
         case properties.username:
             schema = userNameSchema;
+            break;
+        case properties.lastName:
+            schema = lastNameSchema;
+            break;
+        case properties.assistant:
+            schema = assistantSchema;
+            break;
+        case properties.provider:
+            schema = providerSchema;
+            break;
+        case properties.appointDuration:
+            schema = appointDurationSchema;
             break;
         default:
             break;

@@ -2,6 +2,7 @@
 const defaultCellDuration = 30;
 const defaultStartDayHour = 7;
 const defaultEndDayHour = 18;
+const maxAppointmentDuration = 240;
 
 // Toast
 const toastTimeout = 5000;
@@ -14,6 +15,9 @@ const statisDayRangeDefault = 7;
 const defaultRowsPerPage = 10;
 const rowsPerPageOption = [5, 10, 25];
 
+// Tooth
+const patientMaxTooth = 32;
+
 // API Status code
 const apiStatus = {
     success: 200,
@@ -23,11 +27,17 @@ const apiStatus = {
     exception: 500,
 }
 
+// Autocomplete
+const autocomplete = {
+    limit: 10
+}
+
 export default {
     // Appointment
     defaultCellDuration,
     defaultStartDayHour,
     defaultEndDayHour,
+    maxAppointmentDuration,
     // Toast
     toastTimeout,
     toastLimit,
@@ -36,6 +46,10 @@ export default {
     // Table
     defaultRowsPerPage,
     rowsPerPageOption,
+    // Tooth
+    patientMaxTooth,
     // API Status code
     apiStatus,
+    // Autocomplete
+    autocomplete,
 }

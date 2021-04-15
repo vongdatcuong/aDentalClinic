@@ -28,6 +28,11 @@ import {hexToRgb} from '../utils/colors';
   const filterPatientPopoverMaxWidth = 700;
   const filterPatientPopoverHeight = 300;
   const filterPatientPopoverMaxHeight = 800;
+  const appointmentRecallTableHeight = 200;
+  const appointmentTreatmentTableHeight = 300;
+  const appointRecallDialogWidth = '70%';
+  const appointTreatmentDialogWidth = '80%';
+  const appointAddTreatmentDialogWidth = '50%';
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -72,9 +77,15 @@ import {hexToRgb} from '../utils/colors';
   const heatColor = "#ffc2b3";
   const electricityColor = "#ffffcc";
 
+  const tableInsertLinkIconColor = "#bb001b";
+  const tableAddIconColor = "#34a853";
+
   // Google map
   const mapMinWidth = 500;
   const mapMinHeight = 500;
+
+  // opacity
+  const secondaryOpacity = 0.54;
   
   const boxShadow = {
     boxShadow:
@@ -212,6 +223,11 @@ export default {
   filterPatientPopoverHeight,
   filterPatientPopoverMaxWidth,
   filterPatientPopoverMaxHeight,
+  appointmentRecallTableHeight,
+  appointmentTreatmentTableHeight,
+  appointRecallDialogWidth,
+  appointTreatmentDialogWidth,
+  appointAddTreatmentDialogWidth,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,
@@ -235,9 +251,13 @@ export default {
   coldColor,percussionColor,palpationColor,heatColor,electricityColor, //Endodontic test color
   hoverBrightColor,
   hoverDarkColor,
+  tableInsertLinkIconColor,
+  tableAddIconColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,
+  // Opacity
+  secondaryOpacity,
   //
   primaryBoxShadow,
   infoBoxShadow,

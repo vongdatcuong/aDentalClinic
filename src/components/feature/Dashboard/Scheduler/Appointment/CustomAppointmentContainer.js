@@ -29,7 +29,7 @@ const useStyles = (width) => makeStyles((theme) => ({
 
 const CustomAppointmentContainer = memo(({width, ...restProps }) => {
   const classes = useStyles(width)();
-  const data = restProps.children[0]?.props?.params?.data; console.log(data);
+  const data = restProps.children[0]?.props?.params?.data;
   return (
     <React.Fragment>
 

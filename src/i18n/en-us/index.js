@@ -46,6 +46,9 @@ export default {
         "Loading": "Loading",
         "No options": "No options",
         "select": "Select",
+        "MALE": "MALE",
+        "FEMALE": "FEMALE",
+        "None": "None",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -77,6 +80,25 @@ export default {
         // Error Messages Appointment
         "Loading appointments fail !!!": "Loading appointments fail !!!",
         "Invalid Chair Filter": "Invalid Chair Filter",
+        "First name must contain at least 1 to 30 characters": "First name must contain at least 1 to 30 characters",
+        "Last name must contain at least 1 to 30 characters": "Last name must contain at least 1 to 30 characters",
+        "First name validate (Short)": "1 to 30 character",
+        "Last name validate (Short)": "1 to 30 character",
+        "Phone validate (Short)": "10 to 15 number",
+        "Provider is required": "Provider is required",
+        "Invalid Date (Holiday)": "Invalid Date (Holiday)",
+        "Invalid Time": "Invalid Time",
+        "Appointment duration must be between 30 - 240 minutes and multiple of 30": "Appointment duration must be between 30 - 240 minutes and multiple of 30",
+        "Load Patient fail": "Load Patient fail",
+        "Load Recall fail": "Load Recall fail",
+        "Load Treatment fail": "Load Treatment fail",
+        "Load Procedure Category fail": "Load Procedure Category fail",
+        "Load Procedure Code fail": "Load Procedure Code fail",
+        "Load Teeth of Patient fail": "Load Teeth of Patient fail",
+        "Load Surface of Tooth fail": "Load Surface of Tooth fail",
+        "Procedure is required": "Procedure is required",
+        "Tooth is required": "Tooth is required",
+        "Surface is required": "Surface is required",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
@@ -161,9 +183,11 @@ export default {
         "percent": "%",
         "Hour Short": "H",
         "Patients": "Patients",
+        "AppointDurationU": "Minutes",
         // Currency
         "CURRENCY": "VND",
         "CURRENCY CHART": "Million VND",
+        "CURRENCY_PRE": "$",
         //Menu bar
         "Providers":"Providers",
         "Practices":"Practices",
@@ -242,6 +266,30 @@ export default {
         "Name":"Name",
         //table
         "Rows per page":"Rows per page",
-        
+        // Appointment
+        "Time": "Time",
+        "Assistant": "Assistant",
+        "Select Patient": "Select Patient",
+        "Enter new Patient": "Enter new Patient",
+        "Patient information": "Patient information",
+        "Patient ID": "Patient ID",
+        "Chart": "Chart",
+        "First name": "First name",
+        "Last name": "Last name",
+        "MI": "MI",
+        "Patient Contact": "Patient Contact",
+        "Home Phone": "Home",
+        "Mobile": "Mobile",
+        "Schedule Appointment": "Schedule",
+        "Staging": "Staging",
+        "Reminder Note": "Reminder Note",
+        "Recall": "Recall",
+        "Treatments": "Treatments",
+        "Category": "Category",
+        "Tooth": "Tooth",
+        "Surface": "Surface",
+        "No Recall": "No Recall",
+        "No Treatment": "No Treatment",
+        "Next Available": "Next Available",
     }
 }

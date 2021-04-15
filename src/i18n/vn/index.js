@@ -46,6 +46,9 @@ export default {
         "Loading": "Đang tải",
         "No options": "Không có lựa chọn",
         "select": "Chọn",
+        "MALE": "NAM",
+        "FEMALE": "NỮ",
+        "None": "Không",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -77,6 +80,25 @@ export default {
         // Error Messages Appointment
         "Loading appointments fail !!!": "Tải các cuộc hẹn thất bại",
         "Invalid Chair Filter": "Chọn ghế không hợp lệ",
+        "First name must contain at least 1 to 30 characters": "Tên phải có từ 1 - 30 ký tự",
+        "Last name must contain at least 1 to 30 characters": "Họ phải có từ 1 - 30 ký tự",
+        "First name validate (Short)": "1 - 30 ký tự",
+        "Last name validate (Short)": "1 - 30 ký tự",
+        "Phone validate (Short)": "10 to 15 số",
+        "Provider is required": "Bác sĩ không được để trống",
+        "Invalid Date (Holiday)": "Ngày không hợp lệ (Ngày nghỉ)",
+        "Invalid Time": "Thời gian không hợp lệ",
+        "Appointment duration must be between 30 - 240 minutes and multiple of 30": "Thời lượng cuộc hẹn phải từ 30 - 240 phút, chia hết cho 30",
+        "Load Patient fail": "Tải bệnh nhân thất bại",
+        "Load Recall fail": "Tải tái hẹn thất bại",
+        "Load Treatment fail": "Tải điều trị thất bại",
+        "Load Procedure Category fail": "Tải các loại thủ tục thất bại",
+        "Load Procedure Code fail": "Tải các mã thủ tục thất bại",
+        "Load Teeth of Patient fail": "Tải răng của bệnh nhân thất bại",
+        "Load Surface of Tooth fail": "Tải bề mặt răng thất bại",
+        "Procedure is required": "Thủ tục không được để trống",
+        "Tooth is required": "Răng không được để trống",
+        "Surface is required": "Bề mặt không được để trống",
         // Confirm Messages
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
@@ -160,9 +182,11 @@ export default {
         "percent": "%",
         "Hour Short": "H",
         "Patients": "Bệnh nhân",
+        "AppointDurationU": "Phút",
         // Currency
         "CURRENCY": "VND",
         "CURRENCY CHART": "Triệu VND",
+        "CURRENCY_PRE": "$",
         //Menu bar
         "Providers":"Bác sĩ",
         "Practices":"Văn phòng",
@@ -229,7 +253,7 @@ export default {
         //chair
         "Number":"Số",
         "Room":"Phòng",
-        "Provider":"Nhà cung cấp",
+        "Provider":"Bác sỹ",
         //schedule
         "Note":"Ghi chú",
         "Date":"Ngày",
@@ -241,6 +265,30 @@ export default {
         "Name":"Tên",
         //table
         "Rows per page":"Số dòng mỗi trang",
-        
+        // Appointment
+        "Time": "Thời gian",
+        "Assistant": "Trợ khám",
+        "Select Patient": "Chọn bệnh nhân",
+        "Enter new Patient": "Nhập bệnh nhân mới",
+        "Patient information": "Thông tin bệnh nhân",
+        "Patient ID": "Patient ID",
+        "Chart": "Biểu đồ",
+        "First name": "Tên",
+        "Last name": "Họ",
+        "MI": "MI",
+        "Patient Contact": "Thông tin liên lạc BN",
+        "Home Phone": "ĐT bàn",
+        "Mobile": "ĐT Di động",
+        "Schedule Appointment": "Lịch hẹn",
+        "Staging": "Trạng thái",
+        "Reminder Note": "Ghi chú nhắc nhở",
+        "Recall": "Tái hẹn",
+        "Treatments": "Điều trị",
+        "Category": "Loại",
+        "Tooth": "Răng",
+        "Surface": "Bề mặt",
+        "No Recall": "Không có lịch sử tái hẹn",
+        "No Treatment": "Không có lịch sử điều trị",
+        "Next Available": "Ngày hợp lệ tiếp theo",
     }
 }

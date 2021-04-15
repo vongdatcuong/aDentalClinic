@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import { useTranslation } from 'react-i18next';
 import strings from '../../../../configs/strings';
 import figures from '../../../../configs/figures';
@@ -33,6 +33,7 @@ import CustomAppointment from './Appointment/CustomAppointment';
 import CustomAppointmentTooltipHeader from './Appointment/CustomAppointmentTooltipHeader';
 import CustomAppointmentTooltipContent from './Appointment/CustomAppointmentTooltipContent';
 // TimeTable
+import HolidayRow from './TimeTable/HolidayRow';
 import CustomTimeTableCell from './TimeTable/CustomTimeTableCell';
 import CustomTimeScaleLabel from './TimeTable/CustomTimeScaleLabel';
 import CustomTimeScaleTicket from './TimeTable/CustomTimeScaleTicket';
@@ -74,7 +75,7 @@ const calcTimeTableCellHeight = (containerHeight, startDayHour, endDayHour, dura
 
 const Schedulerr = (
   { 
-    appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj,
+    appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays,
     tableCellClick, onSelectChair, onSelectDate, onSelectPatient
   }) => {
   const classes = useStyles();
@@ -116,6 +117,8 @@ const Schedulerr = (
       resourceName: 'chairId',
   }];
 
+  // Holidays
+  const holidayMsgs = (holidays.length > 0)? holidays[selectedDate.getMonth() + 1][selectedDate.getDate()] : "";
   // Use Effect
   useEffect(async () => {
     
@@ -171,23 +174,34 @@ const Schedulerr = (
             <GroupingState
               grouping={grouping}
             />
-
-            <DayView
-              startDayHour={startDayHour}
-              endDayHour={endDayHour}
-              cellDuration={cellDuration}
-              intervalCount={1}
-              height={0}
-              dayScaleRowComponent={Empty}
-              timeScaleLabelComponent={
-                (props) => <CustomTimeScaleLabel cellHeight={timeTableCellHeight} {...props}/>
-              }
-              timeTableCellComponent={renderTimeTableCell}
-              timeScaleTickCellComponent={
-                (props) => <CustomTimeScaleTicket cellHeight={timeTableCellHeight} {...props} />
-              }
-              
-            />
+            {/* Holidays OR Scheduler */}
+            {(!holidayMsgs)? 
+              <DayView
+                startDayHour={startDayHour}
+                endDayHour={endDayHour}
+                cellDuration={cellDuration}
+                intervalCount={1}
+                height={0}
+                dayScaleRowComponent={Empty}
+                timeScaleLabelComponent={
+                  (props) => <CustomTimeScaleLabel cellHeight={timeTableCellHeight} {...props}/>
+                }
+                timeTableCellComponent={renderTimeTableCell}
+                timeScaleTickCellComponent={
+                  (props) => <CustomTimeScaleTicket cellHeight={timeTableCellHeight} {...props} />
+                }
+              />
+              :
+              <DayView
+                startDayHour={0}
+                endDayHour={0.1}
+                cellDuration={cellDuration}
+                intervalCount={1}
+                height={0}
+                dayScaleRowComponent={Empty}
+                timeTableRowComponent={(props) => <HolidayRow {...props} message={holidayMsgs.join(" | ")}/>}
+              />
+            }
             <Appointments 
               containerComponent={
                 (props) => <CustomAppointmentContainer width={99.92 / instances.length} {...props}/>
@@ -230,4 +244,6 @@ const Schedulerr = (
   );
 }
 
-export default Schedulerr;
+const MemorizedSchedulerr = memo(Schedulerr);
+
+export default MemorizedSchedulerr;

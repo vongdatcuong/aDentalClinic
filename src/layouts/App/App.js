@@ -19,6 +19,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+// Material UI Datepicker
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+
 // Context
 import { LoadingStateProvider } from '../../contexts/loading-context';
 import { ThemeStateProvider } from '../../contexts/theme-context';
@@ -30,18 +34,20 @@ const App = () => {
   return (
     <ThemeStateProvider> {/* ==> Theme Context Provider */}
         <LoadingStateProvider>
-          <CssBaseline />
-          <Loading />
-          <ToastContainer
-            autoClose={figures.toastTimeout}
-            hideProgressBar={true}
-            newestOnTop={true}
-            limit={figures.toastLimit}
-            position={toast.POSITION.BOTTOM_RIGHT}
-          />
-          <Router>
-            <Routes/>
-          </Router>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <CssBaseline />
+            <Loading />
+            <ToastContainer
+              autoClose={figures.toastTimeout}
+              hideProgressBar={true}
+              newestOnTop={true}
+              limit={figures.toastLimit}
+              position={toast.POSITION.BOTTOM_RIGHT}
+            />
+            <Router>
+              <Routes/>
+            </Router>
+          </MuiPickersUtilsProvider>
         </LoadingStateProvider>
     </ThemeStateProvider>
   );
