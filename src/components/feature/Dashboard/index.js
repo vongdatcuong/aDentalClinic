@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import figures from '../../../configs/figures';
@@ -23,6 +23,7 @@ import Schedulerr from "./Scheduler";
 import LoadingPage from '../../../layouts/LoadingPage';
 import RightSidebar from '../../../layouts/RightSidebar';
 import AppoinmentTab from './AppointmentTab';
+import ConfirmDialog from '../../dialogs/ConfirmDialog';
 
 // API
 import api from '../../../api/base-api';
@@ -68,9 +69,13 @@ const DashBoard = () => {
     // Filter Patient
     const [patientDisplayObj, setPatientDisplayObj] = useState({});
 
+    // Dialogs
+    const [selectedAppoint, setSelectedAppoint] = useState(null);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+
     const [isWillMount, setIsWillMount] = useState(true);
     // Will mount
-    const handleWillMount = async () => {
+    const handleWillMount = useCallback(async () => {
         try {
             const promiseAll = [
                 api.httpGet({
@@ -207,9 +212,9 @@ const DashBoard = () => {
         } catch(err){
             toast.error(t(strings.loadAppointmentFailMsg));
         }
-    }
+    }, [selectedDate]);
 
-    const handleDidUpdate = async () => {
+    const handleDidUpdate = useCallback(async () => {
         try {
             dispatchLoading({type: strings.setLoading, isLoading: true});
             const promiseAll = [
@@ -284,7 +289,7 @@ const DashBoard = () => {
             toast.error(t(strings.loadAppointmentFailMsg));
             resetFilter();
         }
-    }
+    }, [selectedDate]);
 
     // Use effect
     useEffect(async () => {
@@ -301,16 +306,16 @@ const DashBoard = () => {
     }, [selectedDate]);
 
     // Time Table Cell
-    const handleTimeTableCellClick = (chair, startDate, endDate) => {
+    const handleTimeTableCellClick = useCallback((chair, startDate, endDate) => {
         setCheckedScheduler(false);
         setSelectedChairId(chair.id);
         setSelectedAppointStart(new Date(startDate));
-    }
+    }, []);
 
-    const handleCloseAppointmentTab = () => {
+    const handleCloseAppointmentTab = useCallback(() => {
         setCheckedScheduler(true);
         setSelectedChairId(null);
-    }
+    },[]);
 
     // Appointment Tab
     const handleOnAppointTabSelectChair = (evt) => {
@@ -318,41 +323,10 @@ const DashBoard = () => {
     }
 
     const handleOnAppointTabSelectDate = (type, value) => {
-        /*const newDate = new Date(+selectedAppointStart);
-        switch(type){
-            case "date":
-                let tempDate = new Date(value);
-                newDate.setFullYear(tempDate.getFullYear());
-                newDate.setMonth(tempDate.getMonth());
-                newDate.setDate(tempDate.getDate());
-                break;
-            case "time":
-                break;
-        }*/
         setSelectedAppointStart(value);
     }
 
-    const handleSelectDate = (date) => {
-        /*let newDate = null, temp = null;
-        switch (type){
-            case strings.forward: 
-                temp = moment(selectedDate).add(1, "days");
-                if (temp.isValid()){
-                    newDate = temp._d;
-                }
-                break;
-            case strings.back: 
-                temp = moment(selectedDate).add(-1, "days");
-                if (temp.isValid()){
-                    newDate = temp._d;
-                }
-                break;
-            case strings.select:
-                newDate = new Date(date);
-                newDate.setHours(0);
-                break;
-
-        }*/
+    const handleSelectDate = useCallback((date) => {
         const newDate = new Date(date);
         newDate.setHours(0);
         if (newDate){
@@ -360,17 +334,17 @@ const DashBoard = () => {
         } else {
             toast.error(t(strings.dateRangeInvalid));
         }
-    }
+    }, []);
 
     // Toolbar
     // Filter chair
-    const handleSelectChair = (chairsDisplay) => {
+    const handleSelectChair = useCallback((chairsDisplay) => {
         const newChairs = [...chairs];
         chairsDisplay.forEach((display, index) => {
             newChairs[index].isDisplay = display;
         });
         setChairs(newChairs);
-    }
+    }, [chairs]);
 
     const handleSelectPatient = (patientDisplayObj) => {
         setPatientDisplayObj(patientDisplayObj);
@@ -384,6 +358,41 @@ const DashBoard = () => {
     const handleSelectDateRightSidebar = (date) => {
         setSelectedDate(date);
     }
+
+    // DELETE
+    const handleOpenConfirmDelete = (appointID) => {
+        setSelectedAppoint(appointID);
+        setOpenConfirmDialog(true);
+    }
+
+    const handleCloseConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+    }
+    const handleDeleteAppointment = useCallback(async () => {
+        try {
+            dispatchLoading({ type: strings.setLoading, isLoading: true});
+            const promises = [
+                api.httpDelete({
+                    url: apiPath.appointment.appointment + '/' + selectedAppoint
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                //
+                const newAppointments = appointments.filter((appoint) => appoint.id != selectedAppoint);
+                setAppointments(newAppointments);
+                setSelectedAppoint(null);
+                toast.success(t(strings.deleteAppointmentSuccess));
+            } else {
+                toast.error(result.message);
+            }
+        } catch(err){
+            toast.error(t(strings.deleteAppointmentErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
+        }
+        setOpenConfirmDialog(false);
+    }, [selectedAppoint, appointments]);
 
     return (
         <React.Fragment>
@@ -424,12 +433,21 @@ const DashBoard = () => {
                                     onSelectChair={handleSelectChair}
                                     onSelectPatient={handleSelectPatient}
                                     onSelectDate={handleSelectDate}
+                                    onDeleteAppointment={handleOpenConfirmDelete}
                                 />
                             </Box>
                         </Fade>
                     </React.Fragment>
                 }
             </Container>
+            {/* Confirm Delete appointment */}
+            <ConfirmDialog
+                open={openConfirmDialog}
+                onClose={handleCloseConfirmDialog}
+                action={handleDeleteAppointment}
+            >
+                {t(strings.areYouSureWantTo) + " " + t(strings.btnDelete) + " " + t(strings.appointment)} 
+            </ConfirmDialog>
             <RightSidebar handleSelectDate={handleSelectDateRightSidebar}/>
         </React.Fragment>
     )

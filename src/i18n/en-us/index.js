@@ -49,9 +49,12 @@ export default {
         "MALE": "MALE",
         "FEMALE": "FEMALE",
         "None": "None",
+        "Confirm": "Confirm",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
+        // Success Messages Appointment
+        "Delete Appointment successfully": "Delete Appointment successfully",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "Full name must contain at least 3 to 30 characters": "Full name must contain at least 3 to 30 characters",
@@ -92,7 +95,9 @@ export default {
         "Procedure is required": "Procedure is required",
         "Tooth is required": "Tooth is required",
         "Surface is required": "Surface is required",
+        "Delete Appointment fail": "Delete Appointment fail",
         // Confirm Messages
+        "Are you sure want to": "Are you sure want to",
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
         "Username": "Username",

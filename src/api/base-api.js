@@ -178,11 +178,61 @@ const httpPut = async (requestModel) => {
   }
 };
 
-export { secretKey, initializeAPIService, httpGet, httpPost, httpPut };
+//DELETE METHOD
+const httpDelete = async (requestModel) => {
+  requestModel = requestModel || {};
+  requestModel.url = requestModel.url || "";
+  requestModel.option = requestModel.option || {};
+  requestModel.query = requestModel.query || {};
+  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.body = requestModel.body || {};
+  let tokens = AuthService.getToken();
+  try {
+    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
+      ...requestModel.option,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + tokens.token,
+      },
+      body: JSON.stringify(requestModel.body),
+    });
+    if (response.status === figures.apiStatus.unauthorized){
+      if (await AuthService.refreshToken()){
+        try {
+          tokens = AuthService.getToken();
+          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
+            ...requestModel.option,
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + tokens.token,
+            },
+            body: JSON.stringify(requestModel.body),
+          });
+        } catch(err){
+          throw err;
+        }
+      } else {
+        toast.error(strings.refreshTokenFailMsg);
+        AuthService.logOut();
+        window.location.reload();
+      }
+    }
+    const json = await response.json();
+    json.status = response.status;
+    return json;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { secretKey, initializeAPIService, httpGet, httpPost, httpPut, httpDelete };
 export default {
   secretKey,
   initializeAPIService,
   httpGet,
   httpPost,
-  httpPut
+  httpPut,
+  httpDelete
 }

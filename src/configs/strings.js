@@ -118,6 +118,7 @@ const noOptions = "No options";
 const MALE="MALE";
 const FEMALE="FEMALE";
 const none = "None";
+const confirm = "Confirm";
 
 // Messages
 
@@ -125,6 +126,8 @@ const none = "None";
 const updateAccountSuccess = "Update Account Success";
     // Success Messages Log in
 const logInSuccessMsg = "Sign in successfully";
+    // Success Messages Appointment
+const deleteAppointmentSuccess = "Delete Appointment successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
 const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
@@ -162,8 +165,9 @@ const loadToothSurfaceErrMsg = "Load Surface of Tooth fail";
 const appointProcedureErrMsg = "Procedure is required";
 const appointToothErrMsg = "Tooth is required";
 const appointSurfaceErrMsg = "Surface is required";
+const deleteAppointmentErrMsg = "Delete Appointment fail";
     // Confirm Messages
-
+const areYouSureWantTo = "Are you sure want to";
 // Context Actions
 const setTheme = "Set-Theme";
 const setLoading = "Set-Loading";
@@ -349,11 +353,15 @@ export default {
     MALE,
     FEMALE,
     none,
+    confirm,
     // Messages
     // Success Messages
     updateAccountSuccess,
     // Success Messages Log in
     logInSuccessMsg,
+    // Success Messages Appointment
+    deleteAppointmentSuccess,
+    deleteAppointmentErrMsg,
     // Error Messages
     updateAccountFail,
     fullNameErrMsg,
@@ -392,6 +400,7 @@ export default {
     appointToothErrMsg,
     appointSurfaceErrMsg,
     // Confirm Messages
+    areYouSureWantTo,
     // Context Actions
     setTheme,
     setLoading,
