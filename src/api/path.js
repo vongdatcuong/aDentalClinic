@@ -9,7 +9,8 @@ const authorization = {
 const appointment = {
     appointment: '/appointment',
     block: '/block',
-    chair: '/chair'
+    chair: '/chair',
+    delete: '/delete'
 }
 
 //staffs

@@ -125,6 +125,7 @@ const noOptions = "No options";
 const MALE="MALE";
 const FEMALE="FEMALE";
 const none = "None";
+const confirm = "Confirm";
 
 // Messages
 
@@ -134,6 +135,8 @@ const updateSuccess = "Update Success";
 const insertSuccess = "Insert Success";
     // Success Messages Log in
 const logInSuccessMsg = "Sign in successfully";
+    // Success Messages Appointment
+const deleteAppointmentSuccess = "Delete Appointment successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
@@ -175,8 +178,9 @@ const loadToothSurfaceErrMsg = "Load Surface of Tooth fail";
 const appointProcedureErrMsg = "Procedure is required";
 const appointToothErrMsg = "Tooth is required";
 const appointSurfaceErrMsg = "Surface is required";
+const deleteAppointmentErrMsg = "Delete Appointment fail";
     // Confirm Messages
-
+const areYouSureWantTo = "Are you sure want to";
 // Context Actions
 const setTheme = "Set-Theme";
 const setLoading = "Set-Loading";
@@ -362,6 +366,7 @@ export default {
     MALE,
     FEMALE,
     none,
+    confirm,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -369,6 +374,9 @@ export default {
     insertSuccess,
     // Success Messages Log in
     logInSuccessMsg,
+    // Success Messages Appointment
+    deleteAppointmentSuccess,
+    deleteAppointmentErrMsg,
     // Error Messages
     updateFail,
     insertFail,
@@ -410,6 +418,7 @@ export default {
     appointToothErrMsg,
     appointSurfaceErrMsg,
     // Confirm Messages
+    areYouSureWantTo,
     // Context Actions
     setTheme,
     setLoading,

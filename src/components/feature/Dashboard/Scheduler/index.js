@@ -76,7 +76,7 @@ const calcTimeTableCellHeight = (containerHeight, startDayHour, endDayHour, dura
 const Schedulerr = (
   { 
     appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays,
-    tableCellClick, onSelectChair, onSelectDate, onSelectPatient
+    tableCellClick, onSelectChair, onSelectDate, onSelectPatient, onDeleteAppointment
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
@@ -128,10 +128,6 @@ const Schedulerr = (
   const handleAppointmentTooltipEdit = (info, startDate, endDate) => {
     info.text = chairs[info.chairId - 1].text;
     tableCellClick(info, startDate, endDate);
-  }
-
-  const handleAppointmentTooltipDelete = () => {
-    alert("Appointment Tooltip Delete");
   }
 
   const renderTimeTableCell = (props) => {
@@ -225,7 +221,7 @@ const Schedulerr = (
               headerComponent={
                 (props) => <CustomAppointmentTooltipHeader {...props} 
                 onEdit={handleAppointmentTooltipEdit} 
-                onDelete={handleAppointmentTooltipDelete}/>
+                onDelete={onDeleteAppointment}/>
               }
               contentComponent={
                 (props) => <CustomAppointmentTooltipContent {...props}/>

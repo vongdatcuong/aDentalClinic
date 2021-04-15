@@ -29,8 +29,8 @@ const CustomAppointmentTooltipHeader = memo(({ onEdit, onDelete, appointmentData
         )
       }}
       onDeleteButtonClick={() => {
-        onDelete();
         onHide();
+        onDelete(appointmentData.id);
       }}
     >
     </AppointmentTooltip.Header>

@@ -49,11 +49,14 @@ export default {
         "MALE": "NAM",
         "FEMALE": "NỮ",
         "None": "Không",
+        "Confirm": "Xác nhận",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
         "Update Success":"Cập nhật thành công",
         "Insert Success":"Thêm thành công",
+        // Success Messages Appointment
+        "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
         "Update Fail":"Cập nhật thất bại",
@@ -99,7 +102,9 @@ export default {
         "Procedure is required": "Thủ tục không được để trống",
         "Tooth is required": "Răng không được để trống",
         "Surface is required": "Bề mặt không được để trống",
+        "Delete Appointment fail": "Xóa cuộc hẹn thất bại",
         // Confirm Messages
+        "Are you sure want to": "Bạn có chắc muốn",
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
         "Username": "Tên đăng nhập",

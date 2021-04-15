@@ -973,3 +973,5 @@ const AppointmentTab = ({
 }
 
 export default AppointmentTab;
+//validate time of chair (busy time)
+//Delete nwe added treatment
