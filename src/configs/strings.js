@@ -150,6 +150,7 @@ const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
 const firstNameErrMsg="First name must contain at least 1 character";
 const lastNameErrMsg="Last name must contain at least 1 character";
+const errorLoadData="Error when load data";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
@@ -328,6 +329,7 @@ export default {
     dateRangeInvalid,
     firstNameErrMsg,
     lastNameErrMsg,
+    errorLoadData,
     // Error Messages Login
     usernameErrMsg,
     logInFailMsg,

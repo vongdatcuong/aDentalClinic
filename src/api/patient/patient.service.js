@@ -101,6 +101,26 @@ class PatientService{
             };
         }
     }
+
+    async getPatientProfile(id)
+    {
+        try{
+            const result = await httpGet({
+                url: `${apiPath.patient.patient}/${id}`,
+            });
+            return {
+                success: true,
+                data: result,
+            };
+        }
+        catch(error){
+            console.log("Failed to fetch patient profile: ",error);
+            return {
+                success: false,
+                data: null,
+            };
+        }
+    }
 }
 
 export default new PatientService();

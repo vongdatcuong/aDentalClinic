@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 
 // @material-ui/core Component
@@ -10,7 +10,6 @@ import logoADC from '../../../assets/images/logoADC.png'
 import { useTranslation, Trans } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
@@ -19,16 +18,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import InputAdornment from "@material-ui/core/InputAdornment";
-import CustomInput from "../../common/CustomInput/CustomInput.js";
-import People from "@material-ui/icons/People";
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import AccountBox from '@material-ui/icons/AccountBox';
-import Lock from '@material-ui/icons/Lock';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { Tabs, Tab, TextareaAutosize, TextField } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -39,6 +29,10 @@ import TabPanel from '../../common/TabPanel';
 import TreatmentHistory from './TreatmentHistory.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
+// utils
+import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
+import PatientService from "../../../api/patient/patient.service";
+
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = ({ patientID }) => {
@@ -46,6 +40,11 @@ const PatientProfilePage = ({ patientID }) => {
     const classes = useStyles();
 
     const [curTab, setCurTab] = React.useState(0);
+    const [fullname, setFullname] = useState("unknown");
+    const [gender, setGender] = useState("unknown");
+    const [age, setAge] = useState("unknown");
+    const [medicalIssues, setMedicalIssues] = useState("unknown");
+    const [editMedicalIssues, setEditMedicalIssues] = useState(false);
 
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
@@ -56,7 +55,30 @@ const PatientProfilePage = ({ patientID }) => {
           id: `simple-tab-${index}`,
           'aria-controls': `simple-tabpanel-${index}`,
         };
-      }
+      };
+
+    useEffect(()=>{
+    
+        const getPatientProfile=async()=>{
+            const result=await PatientService.getPatientProfile(patientID);
+            if(result.success)
+            {
+                setFullname(result.data.payload.user.first_name + " " + result.data.payload.user.last_name);
+                setGender(result.data.payload.gender);
+                const currentYear = new Date().getFullYear();
+                setAge(currentYear - ConvertDateTimes.formatDate(result.data.payload.dob, "YYYY"));
+                setMedicalIssues(result.data.payload.medical_alert);
+            }
+            else {
+                alert(t(strings.errorLoadData));
+            }
+        };
+        getPatientProfile();
+    }, []);
+
+    const handleEditMedicalIssues=(e)=>{
+        setEditMedicalIssues(!editMedicalIssues);
+    };
 
     return (  <React.Fragment>
         <TreatmentMenu patientID = { patientID }/>
@@ -66,10 +88,10 @@ const PatientProfilePage = ({ patientID }) => {
                 <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
                     <Grid container className={classes.headerInfo}>
                         <Typography component="h1" variant="h5" className={classes.patientName}>
-                            Do The Anh
+                            {fullname}
                         </Typography>
                         <div className={classes.patientAgeGender}>
-                            Male, 22y
+                            {gender}, {age}y
                         </div>
                     </Grid>
                     <Grid container className={classes.detailProfileContainer}>
@@ -114,8 +136,17 @@ const PatientProfilePage = ({ patientID }) => {
                     </Grid>
                     <Grid container className={classes.medicalIssuesContainer}>
                         <Typography component="h1" variant="h6" className={classes.medicalIssuesHeader}>
-                            {t(strings.medicalIssues)} <Button color="primary" className={classes.btnEdit} simple>{t(strings.edit)}</Button>
+                            {t(strings.medicalIssues)} <Button color="primary" onClick={handleEditMedicalIssues} className={classes.btnEdit} simple>{editMedicalIssues ? t(strings.save) : t(strings.edit)}</Button>
                         </Typography>
+                        <TextField
+                            id="outlined-multiline-static"
+                            multiline
+                            rows={15}
+                            defaultValue={medicalIssues}
+                            value={medicalIssues}
+                            variant="outlined"
+                            disabled={!editMedicalIssues}
+                            />
                     </Grid>
                 </Grid>
             </Grid>

@@ -27,7 +27,18 @@ const loginStyle = (theme) => ({
     },
   },
   medicalIssuesContainer: {
-    height: "60vh",
+    height: "20vh",
+    "& .MuiOutlinedInput-inputMultiline": {
+        minWidth: "20vw",
+    },
+    "& .Mui-disabled": {
+        "& $textarea": {
+            color: theme.blackColor,
+        },
+        "& $fieldset": {
+            border: "0px",
+        },
+    }
   },
   medicalIssuesHeader: {
     width: "100%",

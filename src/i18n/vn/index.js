@@ -66,6 +66,7 @@ export default {
         "Range of date is invalid": "Khoảng thời gian nhập không hợp lệ",
         "First name must contain at least 1 character":"Họ phải có ít nhất 1 ký tự",
         "Last name must contain at least 1 character":"Tên phải có ít nhất 1 ký tự",
+        "Error when load data":"Lỗi khi tải dữ liệu",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username phải có từ 1 đến 30 ký tự",
         "Sign in successfully": "Đăng nhập thành công",

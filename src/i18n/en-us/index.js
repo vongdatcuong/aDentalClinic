@@ -66,6 +66,7 @@ export default {
         "Range of date is invalid": "Range of date is invalid",
         "First name must contain at least 1 character":"First name must contain at least 1 character",
         "Last name must contain at least 1 character":"Last name must contain at least 1 character",
+        "Error when load data":"Error when load data",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username must contain at least 1 to 30 characters",
         "Sign in successfully": "Sign in successfully",
