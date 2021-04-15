@@ -51,12 +51,9 @@ const male="Male";
 const female="Female";
 const insert="Insert";
 const insertPerson="Insert Person";
-const firstName="First name";
-const lastName="Last name";
 const facebook="Facebook";
 const fax="Fax";
 const mobilePhone="Mobile phone";
-const homePhone="Home phone";
 const staffTypeStaff="STAFF";
 const staffTypeProvider="PROVIDER";
 const userTypePatient="PATIENT";
@@ -151,8 +148,6 @@ const oldPwdNotMatchErrMsg = "The entered password is incorrect";
 const confirmPwdNotMatchErrMsg = "Confirm password does not match with new password";
 const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
-const firstNameErrMsg="First name must contain at least 1 character";
-const lastNameErrMsg="Last name must contain at least 1 character";
 const errorLoadData="Error when load data";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
@@ -387,8 +382,6 @@ export default {
     confirmPwdNotMatchErrMsg,
     newPwdMatchOldPwd,
     dateRangeInvalid,
-    firstNameErrMsg,
-    lastNameErrMsg,
     errorLoadData,
     // Error Messages Login
     usernameErrMsg,
@@ -513,12 +506,9 @@ export default {
     allTemplates,
     invoice,
     resignationLetter,
-    firstName,
-    lastName,
     facebook,
     fax,
     mobilePhone,
-    homePhone,
     staffTypeStaff,
     staffTypeProvider,
     userTypePatient,

@@ -50,9 +50,6 @@ const userNameSchema = Joi.string()
     .min(1)
     .max(30)
     .required();
-const lastNameSchema = Joi.string()
-    .max(30)
-    .required();
 const assistantSchema = Joi.string()
     .required();
 const providerSchema = Joi.string()
@@ -89,9 +86,6 @@ const isPropValid = (type, value) => {
             break;
         case properties.username:
             schema = userNameSchema;
-            break;
-        case properties.lastName:
-            schema = lastNameSchema;
             break;
         case properties.assistant:
             schema = assistantSchema;
