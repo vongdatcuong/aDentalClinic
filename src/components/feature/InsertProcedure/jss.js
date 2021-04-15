@@ -8,7 +8,7 @@ const insertProcedureStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            color:theme.primaryColor[2],
+            //color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -81,8 +81,8 @@ const insertProcedureStyle = (theme) => ({
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
-        display:'flex',
-        flexDirection:'row',
+        // display:'flex',
+        // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
         color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
@@ -98,40 +98,23 @@ const insertProcedureStyle = (theme) => ({
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
+            //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
-        }
-
-    },
-    inputControlBig:{
-        height:'65px',
-        width:'35vw',
-        marginLeft:'30px',
-        marginTop:'10px',
-        display:'flex',
-        flexDirection:'row',
-        // border:`1px solid ${theme.primaryColor[0]}`,
-        color:theme.primaryColor[2],
-        '& .MuiOutlinedInput-input': {
-            paddingTop: theme.spacing(1),
-            paddingBottom: theme.spacing(1),
         },
-        '& .MuiSvgIcon-root': {
-            paddingBottom: '15px',
-            width:'1.6em',
-            height:'1.6em',
-
-        },
-        '& .MuiInputBase-root':{
-            height:'75px',
-            width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
-        },
-        '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
-        }
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
 
     },
     inputControlSmall:{
@@ -190,11 +173,25 @@ const insertProcedureStyle = (theme) => ({
         marginTop:'15px',
 
     },
-    
+    inputCombobox:{
+        height:'35px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        color:theme.blackColor,
+
+    },
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'10px',
+        marginTop:'25px',
     },
     input:{
         marginTop:'10px',
@@ -219,7 +216,49 @@ const insertProcedureStyle = (theme) => ({
     inputAvatarDisplay:{
         display:'none',
 
-    }
+    },
+    inputControlBig:{
+        height:'105px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'105px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+
+    },
+    
 
 });
 

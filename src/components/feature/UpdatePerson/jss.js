@@ -1,4 +1,4 @@
-const updatePersonStyle = (theme) => ({
+const updateChairStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -206,4 +206,4 @@ const updatePersonStyle = (theme) => ({
 });
 
   
-export default updatePersonStyle;  
+export default updateChairStyle;  

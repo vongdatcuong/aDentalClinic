@@ -1,5 +1,9 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//api
+import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import ProcedureService from "../../../api/procedure/procedure.service";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -13,6 +17,8 @@ import { Typography,
     FormControl,
     FilledInput,
     OutlinedInput,
+    Select,
+    MenuItem
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -36,28 +42,14 @@ import AddBox from '@material-ui/icons/AddBox';
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertProcedure from "../InsertProcedure";
+import UpdateProcedure from "../UpdateProcedure";
 
 const useStyles = makeStyles(styles);
-const createData=(code,fee,ins,duration,type,abbr,description)=>{
-    return {code,fee,ins,duration,type,abbr,description};
+const createData=(id,abbreviation,description,toothSelect,toothType)=>{
+    return {id,abbreviation,description,toothSelect,toothType};
 };
-const dataColumnsName=["index","code","fee","ins","duration","type","abbr","description"];
-const rows = [
-    createData('1712320', "1000", "ins asdasd asd asdas dsa das dasd asdsa", "30", "1","ABBR","Description Description"),
-    createData('1712321', "2000", "ins", "40", "1","ABBR","Description"),
-    createData('1712322', "3000", "ins", "50", "1","ABBR","Description"),
-    createData('1712323', "4000", "ins", "60", "1","ABBR","Description"),
-    createData('1712324', "5000", "ins", "70", "1","ABBR","Description"),
-    createData('1712325', "6000", "ins", "80", "1","ABBR","Description"),
-    createData('1712326', "7000", "ins", "90", "1","ABBR","Description"),
-    createData('1712327', "8000", "ins", "11", "1","ABBR","Description"),
-    createData('1712328', "9000", "ins", "33", "1","ABBR","Description"),
-    createData('1712329', "10000", "ins", "22", "1","ABBR","Description"),
-    createData('1712330', "11100", "ins", "1111", "1","ABBR","Description"),
-    createData('1712331', "12200", "ins", "99", "1","ABBR","Description"),
+const dataColumnsName=["index","abbreviation","description","toothSelect","toothType"];
 
-
-];
 
 const Procedure = () => {
     const classes = useStyles();
@@ -65,9 +57,14 @@ const Procedure = () => {
 
     //state
     const [insertProcedure,setInsertProcedure]=useState(false);
+    const [rows,setRows]=useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+    const [isEdited,setIsEdited]=useState(false);
+    const [selectedRow,setSelectedRow]=useState(-1);
+    const [selectedRowData,setSelectedRowData]=useState(null);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangePage = (event, newPage) => {
@@ -84,16 +81,82 @@ const Procedure = () => {
     const handleChangeInsertProcedure=(e)=>{
         setInsertProcedure(!insertProcedure);
     }
+    const handleChangeSelectedRow=(value)=>{
+        setSelectedRow(value);
+    }
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
+
+    const handleChangeIsEdited=(e)=>{
+        console.log("Handle change edit");
+        setIsEdited(!isEdited);
+    }
+    const handleGoBack=(e)=>{
+        setInsertProcedure(false);
+        setIsEdited(false);
+        setSelectedRow(-1);
+        setSelectedRowData(null);
+    }
     const titles=[
         t(strings.index),
-        t(strings.code),
-        t(strings.fee),
-        t(strings.ins),
-        t(strings.duration),
-        t(strings.type),
-        t(strings.abbr),
+        t(strings.abbreviation),
         t(strings.description),
+        // t(strings.category),
+        t(strings.toothSelect),
+        t(strings.toothType),
     ];
+    const changeData=(data)=>{
+        let temp=[];
+        //let categoryName;
+        data.map((a,index)=>{
+            // const searchCategory=async()=>{
+            //     const res=await ProcedureService.searchCategory(a.category);
+            //     categoryName=res.data.name;
+            //     console.log("Check search procedure category:",categoryName);
+
+                
+            // }
+            // searchCategory();
+            let newData=createData(a._id,a.abbreviation,a.description,a.tooth_select,a.tooth_type);
+            temp=temp.concat(newData);
+            
+        })
+        console.log("Check rows in change data:",temp);
+        setRows(temp);
+       
+    }
+    useEffect(()=>{
+        if(rows.length===0)
+        {
+            const getProcedure=async()=>{
+                const result=await ProcedureService.getProcedure();
+                console.log("Get procedure in useEffect:",result.data);
+                if(result.success)
+                {
+                    changeData(result.data);
+    
+                }
+                
+
+            };
+            getProcedure();
+            
+        }
+        if(selectedRow!==-1)
+        {
+            if(selectedRowData!==rows[selectedRow] && isEdited===false)
+            {
+                handleChangeIsEdited();
+
+                setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
+            }
+
+        }
+
+        
+    })
     return (
         <div className={classes.container}>            
             <div className={classes.content}>
@@ -103,50 +166,74 @@ const Procedure = () => {
                             {t(strings.procedure)}
                         </Typography>
                     </Grid>
-                    {insertProcedure===false ?
-                        <Grid item xs={4} className={classes.serviceControl}>
-                            <FormControl variant="filled">
+                    {insertProcedure===true || isEdited===true ?
+                        <Grid item xs={4}>
+                        <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
+                            {t(strings.goBack)}
+                        </Typography>
+                    </Grid>
+                    :
+                    <Grid item xs={4} className={classes.serviceControl}>
+                    
+                        <FormControl variant="filled">
 
-                                <OutlinedInput
-                                    className={classes.searchControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={searchText}
-                                    placeholder={t(strings.search)}
-                                    onChange={handleChangeSearchText}
-                                    endAdornment={
-                                    <InputAdornment position="end">
-                                        <SearchIcon className={classes.iconButton} />
+                            <OutlinedInput
+                                className={classes.searchControl}
+                                id="outlined-adornment-password"
+                                type={'text'}
+                                value={searchText}
+                                placeholder={t(strings.search)}
+                                onChange={handleChangeSearchText}
+                                endAdornment={
+                                <InputAdornment position="end">
+                                    <SearchIcon className={classes.iconButton} />
 
-                                    </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                            <IconButton  >
-                                <FilterList />
+                                </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <Select
+                        
+                            value={editable}
+                            onChange={handleChangeEditable}
+                            disableUnderline 
+                            className={classes.status}
+                        >
+                        
+                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </IconButton>
-                            <IconButton onClick={handleChangeInsertProcedure}>
-                                <AddBox />            
+                        </Select>
+                        <IconButton onClick={handleChangeInsertProcedure}>
+                            <AddBox />            
 
-                            </IconButton>
-                        </Grid>
+                        </IconButton>
+                    </Grid>
                 
-                        :
-                        <Grid item xs={4} className={classes.serviceControl}>
-                            <Typography variant="h6" onClick={handleChangeInsertProcedure} className={classes.goBack}>
-                                {t(strings.goBack)}
-                            </Typography>
-                        </Grid>
                     }
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
                 <Container >
-                    {insertProcedure===false ?
-                        <TableCustom titles={titles} dataColumnsName={dataColumnsName} data={rows}/>
-                        :
+                    {insertProcedure===true  ?
                         <InsertProcedure />
+                        : isEdited===true &&selectedRowData!==null ?
+                        <UpdateProcedure 
+                            id={selectedRowData.id}
+
+                        />
+                        :
+                        
+                            <TableCustom titles={titles}
+                                    data={rows}
+                                    dataColumnsName={dataColumnsName}
+                                    editable={editable}
+                                    handleChangeIsEdited={handleChangeIsEdited}
+                                    changeToEditPage={true}
+                                    handleChangeSelectedRow={handleChangeSelectedRow}
+                                    numberColumn={dataColumnsName.length}
+                                    
+                                    />
                     }
                 </Container>
                 

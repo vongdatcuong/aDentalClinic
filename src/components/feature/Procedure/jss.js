@@ -32,13 +32,23 @@ const procedureStyle = (theme) => ({
     titleDivider: {
         marginLeft: theme.spacing(4),
         marginRight: theme.spacing(2),
-        marginBottom: theme.spacing(1.5)
+        marginBottom: theme.spacing(1.5),
+        
     },
     goBack:{
         cursor:'pointer',
         color:theme.primaryColor[1],
+        display:'flex',
+        justifyContent:'flex-end',
+        marginRight:'15px',
     },
-    
+    status:{
+        marginLeft:'20px',
+        marginRight:'10px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+    }
 });
   
 export default procedureStyle;  

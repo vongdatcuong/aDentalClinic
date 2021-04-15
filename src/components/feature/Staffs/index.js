@@ -1,5 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//api
+import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import StaffService from "../../../api/staff/staff.service";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -40,28 +44,13 @@ import UpdatePerson from "../UpdatePerson";
 
 
 const useStyles = makeStyles(styles);
-const createData=(id,fullname,birth,gender,address)=>{
-    return {id,fullname,birth,gender,address};
+const createData=(id,fullname, email, phone, status)=>{
+    return {id,fullname, email, phone, status};
 };
 
-const dataColumnsName=["index","id","fullname","birth","gender","address"];
+const dataColumnsName=["index","fullname","email",
+        "phone","status"];
 
-const rows = [
-    createData('1712320', "Dat", "01/01/1999", "Male", "HCM sdfasdf sadf asdf asdf asd fsdaf sadf sad adasdasdas"),
-    createData('1712321', "Doan", "02/01/1999", "Male", "HCM"),
-    createData('1712322', "Thai", "03/01/1999", "Male", "HCM"),
-    createData('1712323', "Dan", "04/01/1999", "Male", "HCM"),
-    createData('1712324', "Cuong", "05/01/1999", "Male", "HCM"),
-    createData('1712325', "Vong", "06/01/1999", "Male", "HCM"),
-    createData('1712326', "Hung", "07/01/1999", "Male", "HCM"),
-    createData('1712327', "The", "08/01/1999", "Male", "HCM"),
-    createData('1712328', "Anh", "09/01/1999", "Male", "HCM"),
-    createData('1712329', "Nguyen", "10/01/1999", "Female", "HCM"),
-    createData('1712330', "Tang", "11/01/1999", "Female", "HCM"),
-    createData('1712331', "Vu", "12/01/1999", "Female", "HCM"),
-
-
-];
 
 const Staffs = () => {
     const {t, i18n } = useTranslation();
@@ -69,6 +58,8 @@ const Staffs = () => {
     const classes = useStyles();
 
     //state
+    const [rows,setRows]=useState([]);
+
     const [insertPerson,setInsertPerson]=useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -110,16 +101,52 @@ const Staffs = () => {
         setSelectedRow(-1);
         setSelectedRowData(null);
     }
+    
+    const changeData=(data)=>{
+        let temp=[];
+        data.map((a,index)=>{
+            let status;
+            if(a.is_active===true)
+            {
+                status=t(strings.active);
+
+            }
+            else
+            {
+                status=t(strings.inactive);
+            }
+            let newData=createData(a._id,a.user.first_name+" "+a.user.last_name,a.user.email,a.user.mobile_phone,status);
+            temp=temp.concat(newData);
+
+        })
+        console.log("Check rows in change data:",temp);
+        setRows(temp);
+    }
     const titles=[
         t(strings.index),
-        t(strings.id),
         t(strings.fullname),
-        t(strings.birth),
-        t(strings.gender),
-        t(strings.address),
+        t(strings.email),
+        t(strings.phone),
+        t(strings.status),
     ];
 
     useEffect(()=>{
+        
+        if(rows.length===0)
+        {
+            const getStaff=async()=>{
+                const result=await StaffService.getStaff();
+                console.log("Get staff in useEffect:",result.data);
+                if(result.success)
+                {
+                    changeData(result.data);
+    
+                }
+            };
+            getStaff();
+            
+        }
+
         if(selectedRow!==-1)
         {
             if(selectedRowData!==rows[selectedRow] && isEdited===false)
@@ -127,6 +154,7 @@ const Staffs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -143,7 +171,7 @@ const Staffs = () => {
                     </Grid>
                     {insertPerson===true || isEdited===true ?
 
-                        <Grid item xs={4} className={classes.serviceControl}>
+                        <Grid item xs={4} >
                             <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
                                 {t(strings.goBack)}
                             </Typography>
@@ -193,21 +221,12 @@ const Staffs = () => {
                 <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
                     {insertPerson===true && isEdited=== false ?
-                        <InsertPerson />
+                        <InsertPerson staffType={t(strings.staffTypeStaff)}
+                                        userType={t(strings.userTypeStaff)}
+                        />
                         : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePerson fullname={selectedRowData.fullname}
-                                        idCard={selectedRowData.idCard}
-                                        date={selectedRowData.date}
-                                        publisher={selectedRowData.publisher}
-                                        email={selectedRowData.email}
-                                        address={selectedRowData.address}
-                                        city={selectedRowData.city}
-                                        country={selectedRowData.country}
-                                        postalCode={selectedRowData.postalCode}
-                                        phone={selectedRowData.phone}
-                                        birth={selectedRowData.birth}
-                                        gender={selectedRowData.gender}
-                                        status={selectedRowData.status}
+                        <UpdatePerson  id={selectedRowData.id}
+
                         />
                         :
                             <TableCustom titles={titles}

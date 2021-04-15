@@ -36,7 +36,7 @@ const useStyles = makeStyles(styles);
 
 
 
-const UpdatePerson = (props) => {
+const UpdateChair = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     
@@ -121,56 +121,57 @@ const UpdatePerson = (props) => {
     };
 
     const onClickUpdate=async()=>{
-        console.log("Check data before update:")
-        console.log("facebook:",facebook);
-        console.log("email:",email);
-        console.log("password:",password);
-        const data={
-            // display_id: userData.display_id,
-            // provider_color:userData.provider_color,
-            // staff_type: userData.staff_type,
-            // drug_lic: userData.drug_lic,
-            // npi: userData.npi,
-            // specialty: userData.specialty, 
-            // access_group: userData.access_group, 
-		
-            // notify_staff_msg: userData.notify_staff_msg, 
-            // notify_patient_msg: userData.notify_patient_msg, 
-            // notify_meeting: userData.notify_meeting,
-            // user_type: userData.user_type,
-            // theme:userData.theme,
-            // language:userData.language,
-
-		
-            //change
-            facebook: facebook,
-            email: email,
-            fax: fax,
-            mobile_phone: mobile,
-            home_phone: homePhone,
-            //staff_photo: staffPhoto,
-            address: address,
-		    is_active:active, 
-
-		    //yeu cau
-            first_name: firstName,
-            last_name: lastName,
-            username: username,
-            password: password,
-
-        };
-        const update=await ProviderService.update(props.id,data);
-        if(update.success)
+        if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
-            alert("Update success");
-            console.log("Check update:",update);
+            const data={
+                // display_id: userData.display_id,
+                // provider_color:userData.provider_color,
+                // staff_type: userData.staff_type,
+                // drug_lic: userData.drug_lic,
+                // npi: userData.npi,
+                // specialty: userData.specialty, 
+                // access_group: userData.access_group, 
+            
+                // notify_staff_msg: userData.notify_staff_msg, 
+                // notify_patient_msg: userData.notify_patient_msg, 
+                // notify_meeting: userData.notify_meeting,
+                // user_type: userData.user_type,
+                // theme:userData.theme,
+                // language:userData.language,
+    
+            
+                //change
+                facebook: facebook,
+                email: email,
+                fax: fax,
+                mobile_phone: mobile,
+                home_phone: homePhone,
+                //staff_photo: staffPhoto,
+                address: address,
+                is_active:active, 
+    
+                //yeu cau
+                first_name: firstName,
+                last_name: lastName,
+                username: username,
+                password: password,
+    
+            };
+            const update=await ProviderService.update(props.id,data);
+            if(update.success)
+            {
+                alert(t(strings.updateSuccess));
+                console.log("Check update:",update);
+            }
+            else
+            {
+                alert(t(strings.updateFail));
+                console.log("Check update:",update);
+    
+            }
         }
-        else
-        {
-            alert("Update failed");
-            console.log("Check update:",update);
-
-        }
+        
+        
     }
     useEffect(()=>{
         const searchProvider=async()=>{
@@ -451,4 +452,4 @@ const UpdatePerson = (props) => {
     )
 }
 
-export default UpdatePerson;
+export default UpdateChair;

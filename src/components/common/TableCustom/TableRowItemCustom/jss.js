@@ -14,11 +14,12 @@ const tableRowItemCustomStyle = (theme) => ({
             cursor:'pointer',
         }
     },
-    tableRowEdit:{
-        // '&:hover':{
-        //     backgroundColor:'red',
+    tableRowDelete:{
+        '&:hover':{
+            backgroundColor:theme.dangerColor[0],
+            cursor:'pointer',
 
-        // }
+        }
     },
     tableRow:{
         

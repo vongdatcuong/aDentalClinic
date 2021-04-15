@@ -277,6 +277,7 @@ const httpDelete = async (requestModel) => {
 };
 
 export { secretKey, initializeAPIService, httpGet, httpPost, httpPut, httpPatch, httpDelete };
+
 export default {
   secretKey,
   initializeAPIService,
@@ -284,5 +285,5 @@ export default {
   httpPost,
   httpPut,
   httpPatch,
-  httpDelete
+  httpDelete,
 }
