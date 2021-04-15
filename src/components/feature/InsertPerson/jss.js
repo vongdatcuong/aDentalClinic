@@ -1,4 +1,4 @@
-const insertPatientStyle = (theme) => ({
+const insertPersonStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -8,7 +8,7 @@ const insertPatientStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            color:theme.primaryColor[2],
+            //color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -81,8 +81,8 @@ const insertPatientStyle = (theme) => ({
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
-        display:'flex',
-        flexDirection:'row',
+        // display:'flex',
+        // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
         color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
@@ -99,23 +99,22 @@ const insertPatientStyle = (theme) => ({
             height:'35px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
         },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-            '&:hover fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-        },
-        
-    
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
 
     },
     inputControlSmall:{
@@ -177,7 +176,7 @@ const insertPatientStyle = (theme) => ({
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'10px',
+        marginTop:'25px',
     },
     input:{
         marginTop:'10px',
@@ -207,4 +206,4 @@ const insertPatientStyle = (theme) => ({
 });
 
   
-export default insertPatientStyle;  
+export default insertPersonStyle;  

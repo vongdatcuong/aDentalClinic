@@ -121,66 +121,67 @@ const UpdatePatient = (props) => {
     };
 
     const onClickUpdate=async()=>{
-        console.log("Check data before update:")
-        console.log("facebook:",facebook);
-        console.log("email:",email);
-        console.log("password:",password);
-        let genderData;
-        if(gender===true)
+        if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
-            genderData="MALE";
-        }
-        else
-        {
-            genderData="FEMALE";
-        }
-        const data={
-            // display_id: userData.display_id,
-            // provider_color:userData.provider_color,
-            // staff_type: userData.staff_type,
-            // drug_lic: userData.drug_lic,
-            // npi: userData.npi,
-            // specialty: userData.specialty, 
-            // access_group: userData.access_group, 
-		
-            // notify_staff_msg: userData.notify_staff_msg, 
-            // notify_patient_msg: userData.notify_patient_msg, 
-            // notify_meeting: userData.notify_meeting,
-            // user_type: userData.user_type,
-            // theme:userData.theme,
-            // language:userData.language,
+            let genderData;
+            if(gender===true)
+            {
+                genderData="MALE";
+            }
+            else
+            {
+                genderData="FEMALE";
+            }
+            const data={
+                // display_id: userData.display_id,
+                // provider_color:userData.provider_color,
+                // staff_type: userData.staff_type,
+                // drug_lic: userData.drug_lic,
+                // npi: userData.npi,
+                // specialty: userData.specialty, 
+                // access_group: userData.access_group, 
+            
+                // notify_staff_msg: userData.notify_staff_msg, 
+                // notify_patient_msg: userData.notify_patient_msg, 
+                // notify_meeting: userData.notify_meeting,
+                // user_type: userData.user_type,
+                // theme:userData.theme,
+                // language:userData.language,
 
-		
-            //change
-            gender:genderData,
-            facebook: facebook,
-            email: email,
-            fax: fax,
-            mobile_phone: mobile,
-            home_phone: homePhone,
-            //staff_photo: staffPhoto,
-            address: address,
-		    is_active:active, 
+            
+                //change
+                gender:genderData,
+                facebook: facebook,
+                email: email,
+                fax: fax,
+                mobile_phone: mobile,
+                home_phone: homePhone,
+                //staff_photo: staffPhoto,
+                address: address,
+                is_active:active, 
 
-		    //yeu cau
-            first_name: firstName,
-            last_name: lastName,
-            username: username,
-            password: password,
+                //yeu cau
+                first_name: firstName,
+                last_name: lastName,
+                username: username,
+                password: password,
 
-        };
-        const update=await PatientService.update(props.id,data);
-        if(update.success)
-        {
-            alert(t(strings.updateSuccess));
-            console.log("Check update:",update);
+            };
+            const update=await PatientService.update(props.id,data);
+            if(update.success)
+            {
+                alert(t(strings.updateSuccess));
+                console.log("Check update:",update);
+            }
+            else
+            {
+                alert(t(strings.updateFail));
+                console.log("Check update:",update);
+
+            }
         }
-        else
-        {
-            alert(t(strings.updateFail));
-            console.log("Check update:",update);
-
-        }
+        
+        
     }
     useEffect(()=>{
         const searchPatient=async()=>{

@@ -1,8 +1,11 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
-
+//api
+import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import ChairService from "../../../api/chair/chair.service";
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
@@ -35,9 +38,12 @@ import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
+import InsertChair from "../InsertChair";
+import UpdateChair from "../UpdateChair";
+
 const useStyles = makeStyles(styles);
-const createData=(id,provider,number,room,description)=>{
-    return {id,provider,number,room,description};
+const createData=(id,name,order,status)=>{
+    return {id,name,order,status};
 };
 
 
@@ -45,30 +51,21 @@ const Chairs = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
+    const [insertChair,setInsertChair]=useState(false);
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
-
-    const rows = [
-        createData('1712320', "Dat", "3", "1", "HCM sadfasdf ads fsda fasd fads fasd fa asd asdas das dasdasdasdasdsadasdsadasdasdas"),
-        createData('1712321', "Doan", "4", "1", "HCM"),
-        createData('1712322', "Thai", "5", "1", "HCM"),
-        createData('1712323', "Dan", "6", "1", "HCM"),
-        createData('1712324', "Cuong", "11", "1", "HCM"),
-        createData('1712325', "Vong", "13", "1", "HCM"),
-        createData('1712326', "Hung", "22", "1", "HCM"),
-        createData('1712327', "The", "333", "1", "HCM"),
-        createData('1712328', "Anh", "11", "2", "HCM"),
-        createData('1712329', "Nguyen", "222", "3", "HCM"),
-        createData('1712330', "Tang", "333", "33", "HCM"),
-        createData('1712331', "Vu", "11", "44", "HCM"),
-
-
-    ];
+    const [rows,setRows]=useState([]);
+    const [selectedRow,setSelectedRow]=useState(-1);
+    const [selectedRowData,setSelectedRowData]=useState(null);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    const handleChangeInsertChair=(e)=>{
+        setInsertChair(!insertChair);
+    }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
     }
@@ -87,18 +84,73 @@ const Chairs = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
-
-    const dataColumnsName=["index","id","provider","number","room","description"];
+    const handleChangeSelectedRow=(value)=>{
+        setSelectedRow(value);
+    }
+    const handleGoBack=(e)=>{
+        setInsertChair(false);
+        setIsEdited(false);
+        setSelectedRow(-1);
+        setSelectedRowData(null);
+    }
+    const dataColumnsName=["index","name","order","status"];
 
     
     const titles=[
         t(strings.index),
-        t(strings.id),
-        t(strings.provider),
-        t(strings.number),
-        t(strings.room),
-        t(strings.description),
+        t(strings.name),
+        t(strings.order),
+        t(strings.status)
+        // t(strings.color),
     ]
+    const changeData=(data)=>{
+        let temp=[];
+        data.map((a,index)=>{
+            let status;
+            if(a.is_deleted===false)
+            {
+                status=t(strings.active);
+            }
+            else
+            {
+                status=t(strings.inactive);
+            }
+            let newData=createData(a._id,a.name,a.order,status);
+            temp=temp.concat(newData);
+
+        })
+        console.log("Check rows in change data:",temp);
+        setRows(temp);
+    }
+    useEffect(()=>{
+        if(rows.length===0)
+        {
+            const getChair=async()=>{
+                const result=await ChairService.getChair();
+                console.log("Get chair in useEffect:",result.data);
+                if(result.success)
+                {
+                    changeData(result.data);
+    
+                }
+                
+
+            };
+            getChair();
+            
+        }
+        if(selectedRow!==-1)
+        {
+            if(selectedRowData!==rows[selectedRow] && isEdited===false)
+            {
+                handleChangeIsEdited();
+
+                setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
+            }
+
+        }
+    })
     return (
         <div className={classes.container}>
             
@@ -109,25 +161,34 @@ const Chairs = () => {
                             {t(strings.chair)}
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl variant="filled">
+                    {insertChair===true || isEdited===true ?
 
-                            <OutlinedInput
-                                className={classes.searchControl}
-                                id="outlined-adornment-password"
-                                type={'text'}
-                                placeholder={t(strings.search)}
-                                value={searchText}
-                                onChange={handleChangeSearchText}
-                                endAdornment={
-                                <InputAdornment position="end">
-                                    <SearchIcon className={classes.iconButton} />
+                        <Grid item xs={4}>
+                            <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
+                                {t(strings.goBack)}
+                            </Typography>
+                        </Grid>
+                        :
+                        <Grid item xs={4} className={classes.serviceControl}>
 
-                                </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <Select
+                            <FormControl variant="filled">
+
+                                <OutlinedInput
+                                    className={classes.searchControl}
+                                    id="outlined-adornment-password"
+                                    type={'text'}
+                                    value={searchText}
+                                    placeholder={t(strings.search)}
+                                    onChange={handleChangeSearchText}
+                                    endAdornment={
+                                    <InputAdornment position="end">
+                                        <SearchIcon className={classes.iconButton} />
+
+                                    </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <Select
                             
                                 value={editable}
                                 onChange={handleChangeEditable}
@@ -139,26 +200,54 @@ const Chairs = () => {
                                 <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
                             </Select>
-                        <IconButton >
-                            <AddBox />            
+                            <IconButton onClick={handleChangeInsertChair}>
+                                <AddBox />            
 
-                        </IconButton>
-                    </Grid>
-                    
+                            </IconButton>
+                        </Grid>
+
+                    }
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
-                    
-                    <TableCustom titles={titles}
-                                data={rows}
-                                dataColumnsName={dataColumnsName}
-                                editable={editable}
-                                changeToEditPage={false}
+                    {insertChair===true && isEdited=== false ?
+                        <InsertChair 
+                                     
+                        />
+                        : isEdited===true &&selectedRowData!==null ?
+                        <UpdateChair
+                                        id={selectedRowData.id}
+                                        // last_name={selectedRowData.last_name}
+                                        // username={selectedRowData.username}
+                                        // password={selectedRowData.password}
+                                        // facebook={selectedRowData.facebook}
+                                        // fax={selectedRowData.fax}
+                                        // mobile_phone={selectedRowData.mobile_phone}
+                                        // home_phone={selectedRowData.home_phone}
+                                        // staff_photo={selectedRowData.staff_photo}
+                                        // email={selectedRowData.email}
+                                        // address={selectedRowData.address}
+                                        
+                                        // is_active={selectedRowData.is_active}
 
-                                />
-               
+                        />
+                        :
+                            <TableCustom titles={titles}
+                                    data={rows}
+                                    dataColumnsName={dataColumnsName}
+                                    editable={editable}
+                                    handleChangeIsEdited={handleChangeIsEdited}
+                                    changeToEditPage={true}
+                                    handleChangeSelectedRow={handleChangeSelectedRow}
+                                    numberColumn={dataColumnsName.length}
+                                    
+                                    />
+                    }
+                   
+                   
                 </Container>
+                
                 
                 
             </div>

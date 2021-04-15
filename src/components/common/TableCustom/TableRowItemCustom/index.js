@@ -40,9 +40,16 @@ const TableRowItemCustom=(props)=>{
     const handleChangeOnClick=(e)=>{
         if(props.editable===true && props.changeToEditPage===true)
         {
-            console.log("Selected Row:",props.index);
+            console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
             // props.handleChangeIsEdited();
             props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
+        }
+        if(props.isDelete===true)
+        {
+            console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+            // props.handleChangeIsEdited();
+            props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
+            props.handleOpenDialog();
         }
     }
     
@@ -50,7 +57,9 @@ const TableRowItemCustom=(props)=>{
     return(
         <TableRow 
                     className={props.editable===true && props.changeToEditPage===true ? classes.tableRowEditChangePage : 
-                        props.editable===true && props.changeToEditPage===false ? classes.tableRowEdit : classes.tableRow}
+                        props.editable===true && props.changeToEditPage===false ? classes.tableRowEdit : 
+                        props.isDelete===true && props.editable===false? classes.tableRowDelete :
+                        classes.tableRow}
                     onClick={handleChangeOnClick}
                     >
             {props.titles.map((title,index2)=>(                            

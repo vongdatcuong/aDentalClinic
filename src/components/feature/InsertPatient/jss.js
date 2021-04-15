@@ -8,7 +8,7 @@ const insertPersonStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            color:theme.primaryColor[2],
+            //color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -66,7 +66,7 @@ const insertPersonStyle = (theme) => ({
         //marginLeft:'20px',
     },
     rightContentTitle:{
-        color:theme.primaryColor[1],
+        //color:theme.primaryColor[1],
         marginLeft:'20px',
     },
     rightContentText:{
@@ -81,10 +81,10 @@ const insertPersonStyle = (theme) => ({
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
-        display:'flex',
-        flexDirection:'row',
+        // display:'flex',
+        // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
-        color:theme.primaryColor[2],
+        //color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -103,17 +103,17 @@ const insertPersonStyle = (theme) => ({
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
         },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-            '&:hover fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: theme.primaryColor[0],
-            },
-        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
         
     
 
@@ -144,7 +144,7 @@ const insertPersonStyle = (theme) => ({
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
+            //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
@@ -177,7 +177,7 @@ const insertPersonStyle = (theme) => ({
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'10px',
+        marginTop:'25px',
     },
     input:{
         marginTop:'10px',

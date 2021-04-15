@@ -77,6 +77,7 @@ export default {
         "Loading appointments fail !!!": "Tải các cuộc hẹn thất bại",
         "Invalid Chair Filter": "Chọn ghế không hợp lệ",
         // Confirm Messages
+        "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",
         // Login Page
         "<strong>Login</strong> your account": "<strong>Đăng nhập</strong> tài khoản của bạn",
         "Username": "Tên đăng nhập",
@@ -173,12 +174,16 @@ export default {
         "Document":"Tài liệu",
         "Templates":"Mẫu",
         "Drug":"Thuốc",
+        //referral
+        "Additional information":"Thông tin thêm",
         //template
         "Template":"Mẫu",
         "Recent":"Gần đây",
         "All templates":"Tất cả mẫu",
         "Invoice":"Hóa đơn",
         "Resignation letter":"Đơn thôi việc",
+        "Content":"Nội dung",
+        "Note type":"Loại",
         //provider
         "#":"#",
         "ID":"ID",
@@ -215,6 +220,16 @@ export default {
         "Type":"Loại",
         "ABBR":"ABBR",
         "Description":"Mô tả",
+        "Filepath":"Đường dẫn",
+        "Category":"Thể loại",
+        "Abbreviation":"Viết tắt",
+        "Insured percent":"Phần trăm bảo hiểm",
+        "Procedure code":"Mã thủ tục",
+        "Procedure fee":"Phí thủ tục",
+        "Procedure time":"Thời gian thủ tục",
+        "Procedure type":"Loại thủ tục",
+        "Tooth select":"Răng được chọn",
+        "Tooth type":"Loại răng",
         //authentication
         "Role":"Quyền hạn",
         //practices
@@ -227,6 +242,8 @@ export default {
         "Number":"Số",
         "Room":"Phòng",
         "Provider":"Nhà cung cấp",
+        "Order":"Thứ tự",
+        "Color":"Màu",
         //schedule
         "Note":"Ghi chú",
         "Date":"Ngày",
@@ -236,6 +253,8 @@ export default {
         //drug
         "Quantity":"Định lượng",
         "Name":"Tên",
+        "Dispensed":"Pha chế",
+        "Refill":"Đổ đầy",
         //table
         "Rows per page":"Số dòng mỗi trang",
         

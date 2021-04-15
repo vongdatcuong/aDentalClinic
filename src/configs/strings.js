@@ -18,6 +18,7 @@ const xRayImages = "X-Ray Images";
 const images = "Images";
 
 const search="Search";
+
 //menu bar
 const providers="Providers";
 const practices="Practices";
@@ -34,6 +35,8 @@ const active="Active";
 const inactive="Inactive";
 const status="Status";
 const read="Read";
+//referral
+const additionalInfo="Additional information";
 
 //provider
 const index="#";
@@ -68,6 +71,17 @@ const duration="Duration";
 const type="Type";
 const abbr="ABBR";
 const description="Description";
+const filepath="Filepath";
+const category="Category";
+const abbreviation="Abbreviation";
+const insuredPercent="Insured percent";
+const procedureCode="Procedure code";
+const procedureFee="Procedure fee";
+const procedureType="Procedure type";
+const procedureTime="Procedure time";
+const toothSelect="Tooth select";
+const toothType="Tooth type";
+
 //authentication
 const role="Role";
 //practices
@@ -81,6 +95,8 @@ const hotline="Hotline";
 const number="Number";
 const room="Room";
 const provider="Provider";
+const order="Order";
+const color="Color";
 //schedule
 const note="Note";
 const date="Date";
@@ -90,6 +106,8 @@ const portal="Portal";
 //drug
 const quantity="Quantity";
 const name="Name";
+const refill="Refill";
+const dispensed="Dispensed";
 //table
 const rowsPerPage="Rows per page";
 //template
@@ -98,6 +116,8 @@ const recent="Recent";
 const allTemplates="All templates";
 const invoice="Invoice";
 const resignationLetter="Resignation letter";
+const content="Content";
+const noteType="Note type";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -123,20 +143,21 @@ const filter = "Filter";
 const add = "Add";
 const loading = "Loading";
 const noOptions = "No options";
-
 // Messages
 
     // Success Messages
 const updateAccountSuccess = "Update Account Success";
 const updateSuccess = "Update Success";
 const insertSuccess = "Insert Success";
+const deleteSuccess = "Delete Success";
+
     // Success Messages Log in
 const logInSuccessMsg = "Sign in successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
 const insertFail = "Insert Fail";
-
+const deleteFail = "Delete Fail";
 const fullNameErrMsg = "Full name must contain at least 3 to 30 characters";
 const emailErrMsg = "Email must follow the format abc@xyz.com/net/vn";
 const phoneErrMsg = "Phone must contain at least 10 to 15 number";
@@ -156,6 +177,7 @@ const refreshTokenFailMsg = "Refresh token fail";
 const loadAppointmentFailMsg = "Loading appointments fail !!!";
 const invalidFilterChairMsg = "Invalid Chair Filter";
     // Confirm Messages
+    const deleteConfirmMessage="Do you want to delete this?";
 
 // Context Actions
 const setTheme = "Set-Theme";
@@ -304,16 +326,19 @@ export default {
     add,
     loading,
     noOptions,
+    
     // Messages
     // Success Messages
     updateAccountSuccess,
     updateSuccess,
     insertSuccess,
+    deleteSuccess,
     // Success Messages Log in
     logInSuccessMsg,
     // Error Messages
     updateFail,
     insertFail,
+    deleteFail,
     updateAccountFail,
     fullNameErrMsg,
     emailErrMsg,
@@ -334,6 +359,7 @@ export default {
     loadAppointmentFailMsg,
     invalidFilterChairMsg,
     // Confirm Messages
+    deleteConfirmMessage,
     // Context Actions
     setTheme,
     setLoading,
@@ -437,6 +463,23 @@ export default {
     staffTypeStaff,
     staffTypeProvider,
     userTypePatient,
+    filepath,
+    category,
+    order,
+    color,
+    dispensed,
+    refill,
+    additionalInfo,
+    content,
+    noteType,
+    abbreviation,
+    insuredPercent,
+    procedureCode,
+    procedureFee,
+    procedureTime,
+    procedureType,
+    toothSelect,
+    toothType,
     // Settings
     general,
     account,

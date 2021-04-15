@@ -26,7 +26,26 @@ const practice = {
     practice: '/practice',
 }
 
+//procedure
+const procedure={
+    procedure:'/procedure',
+    category:'/category',
+}
+//drug
+const drug={
+    drug:'/drug',
 
+}
+//referral source
+const referralSource={
+    referralSource:'/referral-source',
+}
+
+//note_macro
+const noteMacro={
+    noteMacro:'/note-macro',
+
+}
 export {
     authorization,
 }
@@ -37,5 +56,8 @@ export default {
     practice,
     staff,
     patient,
-    
+    procedure,
+    drug,
+    referralSource,
+    noteMacro
 };

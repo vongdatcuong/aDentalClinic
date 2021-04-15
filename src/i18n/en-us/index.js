@@ -51,10 +51,13 @@ export default {
         "Update Account Success": "Update Account Success",
         "Update Success":"Update Success",
         "Insert Success":"Insert Success",
+        "Delete Success":"Delete Success",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
+        "Delete Fail":"Delete Fail",
+
         "Full name must contain at least 3 to 30 characters": "Full name must contain at least 3 to 30 characters",
         "Email must follow the format abc@xyz.com/net/vn": "Email must follow the format abc@xyz.com/net/vn",
         "Phone must contain at least 10 to 15 number": "Phone must contain at least 10 to 15 number",
@@ -77,6 +80,7 @@ export default {
         "Loading appointments fail !!!": "Loading appointments fail !!!",
         "Invalid Chair Filter": "Invalid Chair Filter",
         // Confirm Messages
+        "Do you want to delete this?":"Do you want to delete this?",
         // Login Page
         "<strong>Login</strong> your account": "<strong>Login</strong> your account",
         "Username": "Username",
@@ -174,12 +178,16 @@ export default {
         "Document":"Document",
         "Templates":"Templates",
         "Drug":"Drug",
+        //referral
+        "Additional information":"Additional information",
         //template
         "Template":"Template",
         "Recent":"Recent",
         "All templates":"All templates",
         "Invoice":"Invoice",
         "Resignation letter":"Resignation letter",
+        "Content":"Content",
+        "Note type":"Note type",
         //provider
         "#":"#",
         "ID":"ID",
@@ -216,6 +224,16 @@ export default {
         "Type":"Type",
         "ABBR":"ABBR",
         "Description":"Description",
+        "Filepath":"Filepath",
+        "Category":"Category",
+        "Abbreviation":"Abbreviation",
+        "Insured percent":"Insured percent",
+        "Procedure code":"Procedure code",
+        "Procedure fee":"Procedure fee",
+        "Procedure time":"Procedure time",
+        "Procedure type":"Procedure type",
+        "Tooth select":"Tooth select",
+        "Tooth type":"Tooth type",
         //authentication
         "Role":"Role",
         //practices
@@ -228,6 +246,8 @@ export default {
         "Number":"Number",
         "Room":"Room",
         "Provider":"Provider",
+        "Order":"Order",
+        "Color":"Color",
         //schedule
         "Note":"Note",
         "Date":"Date",
@@ -237,6 +257,8 @@ export default {
         //drug
         "Quantity":"Quantity",
         "Name":"Name",
+        "Dispensed":"Dispensed",
+        "Refill":"Refill",
         //table
         "Rows per page":"Rows per page",
         

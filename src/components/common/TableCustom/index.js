@@ -90,6 +90,9 @@ const TableCustom=(props)=>{
                                                 changeToEditPage={props.changeToEditPage}
                                                 handleChangeSelectedRow={props.handleChangeSelectedRow}
                                                 numberColumn={props.numberColumn}
+                                                isDelete={props.isDelete}
+                                                handleOpenDialog={props.handleOpenDialog}
+                                                handleCloseDialog={props.handleCloseDialog}
                                                 />
                         ))}
 

@@ -71,7 +71,6 @@ const Providers = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
     const [rows,setRows]=useState([]);
-    const [lengthRows,setLengthRows]=useState(0);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
