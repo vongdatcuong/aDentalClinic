@@ -55,12 +55,14 @@ export default {
         "Update Account Success": "Cập nhật tài khoản thành công",
         "Update Success":"Cập nhật thành công",
         "Insert Success":"Thêm thành công",
+        "Delete Success": "Xóa thành công",
         // Success Messages Appointment
         "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
         "Update Fail":"Cập nhật thất bại",
         "Insert Fail":"Thêm thất bại",
+        "Delete Fail":"Xóa thất bại",
         "Full name must contain at least 3 to 30 characters": "Họ tên phải có từ 3 - 30 ký tự",
         "Email must follow the format abc@xyz.com/net/vn": "Email phải theo định dạng abc@xyz.com/net/vn",
         "Phone must contain at least 10 to 15 number": "Số điện thoại phải có từ 10 - 15 số",
@@ -314,5 +316,11 @@ export default {
         "No Recall": "Không có lịch sử tái hẹn",
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
+
+
+
+        
+        //Files
+        "File Name": "Tên tệp",
     }
 }

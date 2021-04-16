@@ -74,6 +74,11 @@ const noteMacro={
     noteMacro:'/note-macro',
 
 }
+//Images
+const image = {
+    image: "/image",
+    patient: "/patient"
+}
 export {
     authorization,
 }
@@ -92,5 +97,6 @@ export default {
     tooth,
     drug,
     referralSource,
-    noteMacro
+    noteMacro,
+    image
 };

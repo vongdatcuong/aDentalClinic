@@ -343,6 +343,10 @@ const CURRENCY = "CURRENCY";
 const CURRENCY_CHART = "CURRENCY CHART";
 const CURRENCY_PRE = "CURRENCY_PRE";
 
+//images and files
+const fileName = "File Name";
+const image = "image";
+
 export default {
     appointment,
     patient,
@@ -659,4 +663,6 @@ export default {
     aboutUs,
     aboutUsContent,
     save,
+    fileName,
+    image
 };

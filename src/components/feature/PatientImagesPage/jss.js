@@ -23,8 +23,8 @@ const styles = (theme) => ({
         right: "12vw",
         top: "13vh",
         "@media (max-width: 1024px)": {
-            right: "25vw",
-            top: "7vh",
+          right: "25vw",
+          top: "7vh",
         },
       },
       "& .MuiGridListTile-root": {
@@ -44,6 +44,9 @@ const styles = (theme) => ({
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
+    height: "30px",
+    width: "30px",
+    margin: "5px",
   },
   thumbnail: {
     maxWidth: theme.spacing(40),
