@@ -8,6 +8,7 @@ import strings from '../../../configs/strings';
 import logoADC from '../../../assets/images/logoADC.png'
 // use i18next
 import { useTranslation, Trans } from 'react-i18next';
+import {toast} from 'react-toastify';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -43,8 +44,12 @@ const PatientProfilePage = ({ patientID }) => {
     const [fullname, setFullname] = useState("unknown");
     const [gender, setGender] = useState("unknown");
     const [age, setAge] = useState("unknown");
-    const [medicalIssues, setMedicalIssues] = useState("unknown");
+    const [medicalIssues, setMedicalIssues] = useState("");
+    const [plaqueIndex, setPlaqueIndex] = useState(0);
+    const [bleedingIndex, setBleedingIndex] = useState(0);
+    const [halitosis, setHalitosis] = useState(0);
     const [editMedicalIssues, setEditMedicalIssues] = useState(false);
+    const [editOralHeath, setEditOralHeath] = useState(false);
 
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
@@ -60,25 +65,86 @@ const PatientProfilePage = ({ patientID }) => {
     useEffect(()=>{
     
         const getPatientProfile=async()=>{
-            const result=await PatientService.getPatientProfile(patientID);
-            if(result.success)
-            {
-                setFullname(result.data.payload.user.first_name + " " + result.data.payload.user.last_name);
-                setGender(result.data.payload.gender);
-                const currentYear = new Date().getFullYear();
-                setAge(currentYear - ConvertDateTimes.formatDate(result.data.payload.dob, "YYYY"));
-                setMedicalIssues(result.data.payload.medical_alert);
-            }
-            else {
-                alert(t(strings.errorLoadData));
+            try {
+                const result=await PatientService.getPatientProfile(patientID);
+                if (result.success){
+                    setFullname(result.data.payload.user.first_name + " " + result.data.payload.user.last_name);
+                    setGender(result.data.payload.gender);
+                    const currentYear = new Date().getFullYear();
+                    setAge(currentYear - ConvertDateTimes.formatDate(result.data.payload.dob, "YYYY"));
+                    setMedicalIssues(result.data.payload.medical_alert);
+                    setPlaqueIndex(result.data.payload.plaque_index);
+                    setBleedingIndex(result.data.payload.bleeding_index);
+                    setHalitosis(result.data.payload.halitosis);
+                    return true;
+                }
+                toast.error(result.message);
+                return false;
+            } 
+            catch(err)  {
+                toast.error(t(strings.refreshTokenFailMsg));    
+                return false;
             }
         };
         getPatientProfile();
     }, []);
 
-    const handleEditMedicalIssues=(e)=>{
+    const handleClickEditMedicalIssues=(e)=>{
+        if (editMedicalIssues) {
+            const updatePatientProfile=async()=>{
+                try {
+                    const data = { medical_alert: medicalIssues }
+                    const result = await PatientService.update(patientID,data);
+                    if (result.success){
+                        return true;
+                    }
+                    toast.error(result.message);
+                    return false;
+                } 
+                catch(err)  {
+                    toast.error(t(strings.updateFail));    
+                    return false;
+                }
+            };
+            updatePatientProfile();
+        }
         setEditMedicalIssues(!editMedicalIssues);
     };
+    const handleClickEditOralHeath=(e)=>{
+        if (editOralHeath) {
+            const updatePatientProfile=async()=>{
+                try {
+                    const data = { plaque_index: parseInt(plaqueIndex), bleeding_index: parseInt(bleedingIndex), halitosis: parseInt(halitosis) }
+                    const result = await PatientService.update(patientID,data);
+                    if (result.success){
+                        return true;
+                    }
+                    toast.error(result.message);
+                    return false;
+                } 
+                catch(err)  {
+                    toast.error(t(strings.updateFail));    
+                    return false;
+                }
+            };
+            updatePatientProfile();
+        }
+        setEditOralHeath(!editOralHeath);
+    };
+    const handleChangeMedicalIssues = (event) => {
+        setMedicalIssues(event.target.value);
+    }
+    const handleChangePlaqueIndex = (event) => {
+        setPlaqueIndex(event.target.value);
+    }
+    const handleChangeBleedingIndex = (event) => {
+        setBleedingIndex(event.target.value);
+    }
+
+    const handleChangeHalitosis = (event) => {
+        setHalitosis(event.target.value);
+    }
+
 
     return (  <React.Fragment>
         <TreatmentMenu patientID = { patientID }/>
@@ -114,36 +180,40 @@ const PatientProfilePage = ({ patientID }) => {
                 <Grid item xs={3} sm={3} md={3} className={classes.rightGrid}>
                     <Grid container className={classes.oralHeathContainer}>
                         <Typography component="h1" variant="h6" className={classes.oralHeathHeader}>
-                            {t(strings.oralHealth)} <Button color="primary" className={classes.btnEdit} simple>{t(strings.edit)}</Button>
+                            {t(strings.oralHealth)} 
+                            <Button color="primary" onClick={handleClickEditOralHeath} className={classes.btnEdit} simple>{editOralHeath ? t(strings.save) : t(strings.edit)}</Button>
                         </Typography>
-                        <span>{t(strings.plaqueIndex).toUpperCase()}: {"18%"}</span>
+                        <span>{t(strings.plaqueIndex).toUpperCase()}: 
+                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={plaqueIndex} onChange={handleChangePlaqueIndex} disabled={!editOralHeath} /></span>
                         <br></br>
                         <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={15} className={classes.linearProgressBar}></LinearProgress>
+                            <LinearProgress variant="determinate" value={plaqueIndex*20} className={classes.linearProgressBar}></LinearProgress>
                         </span>
                         
-                        <span>{t(strings.bleedingIndex).toUpperCase()}: {"18%"}</span>
+                        <span>{t(strings.bleedingIndex).toUpperCase()}: 
+                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={bleedingIndex} onChange={handleChangeBleedingIndex} disabled={!editOralHeath} /></span>
                         <br></br>
                         <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={15} className={classes.linearProgressBar}></LinearProgress>
+                            <LinearProgress variant="determinate" value={bleedingIndex*20} className={classes.linearProgressBar}></LinearProgress>
                         </span>
                         
-                        <span>{t(strings.halitosis).toUpperCase()}: {"3/5"}</span>
+                        <span>{t(strings.halitosis).toUpperCase()}: 
+                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={halitosis} onChange={handleChangeHalitosis} disabled={!editOralHeath} /></span>
                         <br></br>
                         <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={60} className={classes.linearProgressBar}></LinearProgress>
+                            <LinearProgress variant="determinate" value={halitosis*20} className={classes.linearProgressBar}></LinearProgress>
                         </span>
                     </Grid>
                     <Grid container className={classes.medicalIssuesContainer}>
                         <Typography component="h1" variant="h6" className={classes.medicalIssuesHeader}>
-                            {t(strings.medicalIssues)} <Button color="primary" onClick={handleEditMedicalIssues} className={classes.btnEdit} simple>{editMedicalIssues ? t(strings.save) : t(strings.edit)}</Button>
+                            {t(strings.medicalIssues)} <Button color="primary" onClick={handleClickEditMedicalIssues} className={classes.btnEdit} simple>{editMedicalIssues ? t(strings.save) : t(strings.edit)}</Button>
                         </Typography>
                         <TextField
                             id="outlined-multiline-static"
                             multiline
                             rows={15}
-                            defaultValue={medicalIssues}
                             value={medicalIssues}
+                            onChange={handleChangeMedicalIssues}
                             variant="outlined"
                             disabled={!editMedicalIssues}
                             />

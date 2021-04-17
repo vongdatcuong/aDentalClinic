@@ -13,6 +13,18 @@ const loginStyle = (theme) => ({
     height: "40vh",
     borderBottom: "solid gray 0.1rem",
   },
+  inputOralHeath: {
+      marginLeft: theme.spacing(0.2),
+      maxWidth: "3rem",
+      textAlign: "center",
+      backgroundColor: "transparent",
+      borderWidth: "0.5px",
+      borderColor: theme.borderColor,
+      borderRadius: theme.spacing(0.5),
+      '&:disabled': {
+        border: "0px",
+      },
+  },
   oralHeathHeader: {
     width: "100%",
     paddingTop: theme.spacing(3),

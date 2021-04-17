@@ -83,16 +83,16 @@ const style = (theme) => ({
     background: theme.coldColor,
   },
   percussionTestContainer: {
-    background: theme.percussionColor,
+    background: theme.coldColor,
   },
   palpationTestContainer: {
-    background: theme.palpationColor,
+    background: theme.coldColor,
   },
   heatTestContainer: {
-    background: theme.heatColor,
+    background: theme.coldColor,
   },
   electricityTestContainer: {
-    background: theme.electricityColor,
+    background: theme.coldColor,
   },
   testTitle: {
     fontSize: "1rem",
