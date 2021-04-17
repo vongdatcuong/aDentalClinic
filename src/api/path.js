@@ -76,9 +76,11 @@ const noteMacro={
 }
 //Images
 const image = {
-    image: "/image",
-    patient: "/patient"
-}
+  image: "/image",
+  patient: "/patient",
+  mouth_template: "/image-mouth-template",
+  mouth: "/image-mouth",
+};
 export {
     authorization,
 }
