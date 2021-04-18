@@ -105,7 +105,7 @@ const PatientNotePage = ({ patientID }) => {
         content: content ? content : "No content.",
       });
       if (result.success) {
-        ////////////////setNotes(result.data);
+        fetchNotes();
         return true;
       }
       toast.error(result.message);
@@ -125,7 +125,7 @@ const PatientNotePage = ({ patientID }) => {
         content: content ? content : "No content.",
       });
       if (result.success) {
-        ////////////////setNotes(result.data);
+        fetchNotes();
         return true;
       }
       toast.error(result.message);
@@ -139,7 +139,7 @@ const PatientNotePage = ({ patientID }) => {
     try {
       const result = await ProgressNoteService.delete(noteID);
       if (result.success) {
-        ////////////////setNotes(result.data);
+        fetchNotes();
         return true;
       }
       toast.error(result.message);
