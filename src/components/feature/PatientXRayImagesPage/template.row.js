@@ -81,16 +81,20 @@ const MouthTemplateRow = ({ patientID, template }) => {
   const { loadingState, dispatchLoading } = useContext(loadingStore);
   const history = useHistory();
 
-  const handleAddXRayImage = () => {
+  const handleAddXRayImage = (mouth_id) => {
     if (templateData._id != null) {
       history.push(
-        path.patientAddXRayImagesPath.replace(":patientID", patientID)
+        path.patientAddXRayImagesPath
+          .replace(":patientID", patientID)
+          .replace(":MouthID", mouth_id)
       );
     }
   };
-  const handleViewXRayImage = () => {
+  const handleViewXRayImage = (mouth_id) => {
     history.push(
-      path.patientViewXRayImagesPath.replace(":patientID", patientID)
+      path.patientViewXRayImagesPath
+        .replace(":patientID", patientID)
+        .replace(":MouthID", mouth_id)
     );
   };
   const loadPatientMonth = async (patient_id, template_id) => {
@@ -132,7 +136,6 @@ const MouthTemplateRow = ({ patientID, template }) => {
             placement="left"
             title={
               <img
-                onClick={handleViewXRayImage}
                 src={
                   imageTemplateData[templateData.thumbnail]
                     ? imageTemplateData[templateData.thumbnail]
@@ -145,7 +148,7 @@ const MouthTemplateRow = ({ patientID, template }) => {
             aria-label={templateData.name}
           >
             <Button
-              onClick={handleAddXRayImage}
+              onClick={() => handleAddXRayImage(templateData._id)}
               variant="contained"
               className={classes.addXRayImage}
             >
@@ -162,7 +165,7 @@ const MouthTemplateRow = ({ patientID, template }) => {
                 style={{ flexDirection: "column" }}
               >
                 <img
-                  onClick={handleViewXRayImage}
+                  onClick={() => handleViewXRayImage(mouth._id)}
                   src={
                     imageTemplateData[mouth.thumbnail]
                       ? imageTemplateData[mouth.thumbnail]

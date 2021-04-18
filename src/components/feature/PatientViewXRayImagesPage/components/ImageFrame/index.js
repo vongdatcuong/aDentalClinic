@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
@@ -22,6 +22,7 @@ const ImageFrame = ({
   MouthHeight,
   MouthWidth,
   onView,
+  resetState,
 }) => {
   const [frameWidth] = useState(frameInfo.width_ratio * MouthWidth);
   const [imageHeight] = useState(frameInfo.height_ratio * MouthHeight);
@@ -29,18 +30,33 @@ const ImageFrame = ({
   const [frameHeight] = useState(imageHeight + 39);
   const [defaultX] = useState(frameInfo.x_ratio * MouthWidth);
   const [defaultY] = useState(frameInfo.y_ratio * MouthHeight);
+  const [position, setPosition] = useState({ x: defaultX, y: defaultY });
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const onViewImage = () => {
     onView(frameInfo.order);
-  }
-  
+  };
+  const onDrag = (e, data) => {
+    setPosition({
+      x: data.x,
+      y: data.y,
+    });
+  };
+  useEffect(() => {
+    setPosition({
+      x: defaultX,
+      y: defaultY,
+    });
+  }, [resetState]);
   return (
     <Draggable
       grid={[10, 10]}
       defaultPosition={{ x: defaultX, y: defaultY }}
       handle="strong"
       bounds="parent"
+      disabled={mode === MODE_VIEW ? true : false}
+      position={position}
+      onDrag={onDrag}
     >
       <div
         className={classes.box_no_cursor}
@@ -49,6 +65,7 @@ const ImageFrame = ({
           maxWidth: frameWidth,
           minHeight: frameHeight,
           minWidth: frameWidth,
+          position: "absolute",
         }}
       >
         <strong

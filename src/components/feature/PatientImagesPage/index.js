@@ -112,7 +112,6 @@ const PatientImagesPage = ({ patientID }) => {
       const data = await ImageService.getImageOfPatient(patientID);
       if (data.success) {
         const imagesListData = [];
-        console.log(imagesListData);
         for (const image of data.payload) {
           const imageData = {
             _id: image._id,

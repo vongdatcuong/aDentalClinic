@@ -11,10 +11,20 @@ const styles = (theme) => ({
   },
   bodyContainer: {
     padding: theme.spacing(10),
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(2),
   },
-  btnAddRecord: {
-    color: theme.primaryColor[0],
+  btnEditRecord: {
+    color: "#edaa18",
+    fontWeight: "bold",
+    textTransform: "none",
+  },
+  btnSaveRecord: {
+    color: "#24a0ed",
+    fontWeight: "bold",
+    textTransform: "none",
+  },
+  btnCancelRecord: {
+    color: "red",
     fontWeight: "bold",
     textTransform: "none",
   },
@@ -37,6 +47,12 @@ const styles = (theme) => ({
     margin: "10px",
     padding: "10px",
     float: "left",
+  },
+  input: {
+    margin: "10px",
+    padding: "10px",
+    flexDirection: "row",
+    paddingTop: "10px",
   },
   box_no_cursor: {
     background: "#fff",

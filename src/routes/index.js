@@ -51,13 +51,21 @@ function PatientXRayImages() {
 }
 
 function PatientAddXRayImages() {
-    let { patientID } = useParams();
-    return <PatientAddXRayImagesPage patientID={patientID}/>;
+    let { patientID, MouthID } = useParams();
+    return (
+      <PatientViewXRayImagesPage
+        patientID={patientID}
+        MouthID={MouthID}
+        mode="ADD"
+      />
+    );
 }
 
 function PatientViewXRayImages() {
-    let { patientID } = useParams();
-    return <PatientViewXRayImagesPage patientID={patientID}/>;
+    let { patientID, MouthID } = useParams();
+    return (
+      <PatientViewXRayImagesPage patientID={patientID} MouthID={MouthID} />
+    );
 }
 
 function PatientImages() {

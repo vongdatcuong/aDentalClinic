@@ -26,6 +26,21 @@ class MouthTemplateService {
       };
     }
   }
+  async getsMouthById(mouth_id) {
+    try {
+      const url = apiPath.image.mouth_template + "/" + mouth_id;
+      let query = { get_frames: true };
+      const result = await httpGet({
+        url: url,
+        query: query,
+      });
+      return await result;
+    } catch (error) {
+      return {
+        success: false,
+      };
+    }
+  }
 }
 
 export default new MouthTemplateService();
