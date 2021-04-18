@@ -44,7 +44,7 @@ const TableRowItemCustom=(props)=>{
             // props.handleChangeIsEdited();
             props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
         }
-        if(props.isDelete===true)
+        if(props.isDelete===true )
         {
             console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
             // props.handleChangeIsEdited();

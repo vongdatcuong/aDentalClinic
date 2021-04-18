@@ -218,6 +218,10 @@ export default {
         "Resignation letter":"Resignation letter",
         "Content":"Content",
         "Note type":"Note type",
+        "DEFAULT":"DEFAULT",
+        "MEDICAL ALERT":"MEDICAL ALERT",
+        "PROGRESS":"PROGRESS",
+        "TREATMENT":"TREATMENT",
         //provider
         "#":"#",
         "ID":"ID",

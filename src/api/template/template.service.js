@@ -1,4 +1,4 @@
-import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpPut} from '../base-api';
+import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
 import apiPath from '../path';
 import strings from '../../configs/strings';
 
@@ -95,6 +95,39 @@ class TemplateService{
         }
         catch(error){
             console.log("Failed to update note Macro:",error);
+            return {
+                success: false,
+                data:null
+            };
+        }
+    }
+    async delete(id)
+    {
+        try{
+            
+            const result = await httpDelete({
+                url: `${apiPath.noteMacro.noteMacro}/${id}`,
+            });
+            console.log("delete note Macro:",result);
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result
+                };   
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                    message:result.message,
+                };   
+            }
+                     
+        }
+        catch(error){
+            console.log("Failed to delete note Macro:",error);
             return {
                 success: false,
                 data:null

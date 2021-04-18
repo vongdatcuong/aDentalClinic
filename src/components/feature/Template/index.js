@@ -31,7 +31,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+import darkTdarkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -70,6 +70,8 @@ const Template = () => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [rowsWithType,setRowsWithType]=useState(null);
+    const [chooseType,setChooseType]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [openDialog,setOpenDialog]=useState(false);
@@ -93,7 +95,7 @@ const Template = () => {
         setIsDelete(!isDelete);
         setInsertTemplate(false);
         setIsEdited(false);
-        setEditable(false);
+        //setEditable(false);
     }
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
@@ -107,20 +109,39 @@ const Template = () => {
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
-    const handleGoBack=(e)=>{
+    // const handleGoBack=(e)=>{
+    //     setInsertTemplate(false);
+    //     setIsEdited(false);
+    //     setSelectedRow(-1);
+    //     setSelectedRowData(null);
+    //     setChooseType(false);
+    //     setRowsWithType(null);
+    // }
+    const handleGoBackToTable=(e)=>{
         setInsertTemplate(false);
         setIsEdited(false);
         setSelectedRow(-1);
         setSelectedRowData(null);
     }
+    const handleGoBackToHome=(e)=>{
+        setInsertTemplate(false);
+        setIsEdited(false);
+        setSelectedRow(-1);
+        setSelectedRowData(null);
+        setChooseType(false);
+        setRowsWithType(null);
+    }
     const handleChangeIsEdited=(e)=>{
         console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
+    const handleChangeChooseType=(e)=>{
+        setChooseType(!chooseType);
+    }
     const deleteRow=(e)=>{
         handleCloseDialog();
         console.log("Delete now:",selectedRowData);
-        const deleteDrug=async()=>{
+        const deleteTemplate=async()=>{
             const res=await TemplateService.delete(selectedRowData.id);
             console.log("Delete template:",res);
             if(res.success)
@@ -132,7 +153,7 @@ const Template = () => {
                 alert(t(strings.deleteFail));
             }
         };
-        deleteDrug();
+        deleteTemplate();
        
     }
     const changeData=(data)=>{
@@ -145,6 +166,35 @@ const Template = () => {
         })
         console.log("Check rows in change data:",temp);
         setRows(temp);
+    }
+    const chooseMedicalAlert=()=>{
+        let temp=[];
+        rows.map((a,index)=>{
+            if(a.noteType==="MEDICAL_ALERT")
+            temp=temp.concat(a);
+        })
+        setRowsWithType(temp);
+        setChooseType(true);
+    }
+    const chooseProgress=()=>{
+        let temp=[];
+        rows.map((a,index)=>{
+            if(a.noteType==="PROGRESS")
+            temp=temp.concat(a);
+        })
+        setRowsWithType(temp);
+        setChooseType(true);
+
+    }
+    const chooseTreatment=()=>{
+        let temp=[];
+        rows.map((a,index)=>{
+            if(a.noteType==="TREATMENT")
+            temp=temp.concat(a);
+        })
+        setRowsWithType(temp);
+        setChooseType(true);
+
     }
     useEffect(()=>{
         if(rows.length===0)
@@ -162,111 +212,190 @@ const Template = () => {
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rows[selectedRow] && isEdited===false)
+            if(selectedRowData!==rowsWithType[selectedRow] && isEdited===false)
             {
                 handleChangeIsEdited();
 
-                setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                setSelectedRowData(rowsWithType[selectedRow])
+                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
 
         }
         
     })
 
+    
+
+
     return (
         <div className={classes.container}>
             
-            <div >
+            <div className={classes.content}>
                 <Grid container>
-                    <Grid item xs={8}>
+                    <Grid item xs={6}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.template)}
                         </Typography>
                     </Grid>
-                    {insertTemplate===true || isEdited===true ?
+                    {insertTemplate===true || isEdited===true && isDelete===false ?
 
-                        <Grid item xs={4}>
-                            <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
-                                {t(strings.goBack)}
-                            </Typography>
-                        </Grid>
-                        :
-                        <Grid item xs={4} className={classes.serviceControl}>
+                    <Grid item xs={6}>
+                        <Typography variant="h6" onClick={handleGoBackToTable} className={classes.goBack}>
+                            {t(strings.goBack)}
+                        </Typography>
+                    </Grid>
+                    :
+                    chooseType===true && insertTemplate===false ?
+                    <Grid item xs={6} className={classes.serviceGroup}>
+                        <FormControl variant="filled">
 
-                            <FormControl variant="filled">
+                            <OutlinedInput
+                                className={classes.searchControl}
+                                id="outlined-adornment-password"
+                                type={'text'}
+                                value={searchText}
+                                placeholder={t(strings.search)}
+                                onChange={handleChangeSearchText}
+                                endAdornment={
+                                <InputAdornment position="end">
+                                    <SearchIcon className={classes.iconButton} />
 
-                                <OutlinedInput
-                                    className={classes.searchControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={searchText}
-                                    placeholder={t(strings.search)}
-                                    onChange={handleChangeSearchText}
-                                    endAdornment={
-                                    <InputAdornment position="end">
-                                        <SearchIcon className={classes.iconButton} />
+                                </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <Select
 
-                                    </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                        value={editable}
+                        onChange={handleChangeEditable}
+                        disableUnderline 
+                        className={classes.status}
+                        >
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertTemplate}>
-                                <AddBox />            
+                        <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                        <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
-                                <DeleteIcon />            
+                        </Select>
+                        <IconButton onClick={handleChangeInsertTemplate}>
+                        <AddBox />            
 
-                            </IconButton>
-                        </Grid>
+                        </IconButton>
+                        <IconButton onClick={handleChangeIsDelete}>
+                        <DeleteIcon />            
 
+                        </IconButton>
+                        
+                        
+                    </Grid>
+                       
+                    :
+                    <Grid></Grid>
                     }
                 </Grid>
+                
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
-                    {insertTemplate===true && isEdited=== false  ?
+                {
+                        insertTemplate===true && isEdited=== false  ?
+                        <div 
+                                     
+                        />
+                        :
+                        isEdited===true &&selectedRowData!==null && isDelete===false?
+                        <div
+                        />
+                        :
+                        chooseType===false && insertTemplate===false && isEdited=== false?
+                        <div>
+                            
+                        </div>
+                        :
+
+                        <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
+                            {t(strings.goBack)}
+                        </Typography>
+                       
+                }
+                {/* {chooseType===true && insertTemplate===false && isEdited===false?
+                <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
+                    {t(strings.goBack)}
+                </Typography>
+                :
+                
+                <div></div>
+                } */}
+                
+                <Container style={{marginTop:'20px'}}>
+                    {
+                        insertTemplate===true && isEdited=== false  ?
                         <InsertTemplate 
                                      
                         />
-                        : isEdited===true &&selectedRowData!==null && isDelete===false?
+                        :
+                        isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateTemplate
-                                        id={selectedRowData.id}
-                                        
-
+                            id={selectedRowData.id}
                         />
                         :
-                            <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    isDelete={isDelete}
-                                    handleOpenDialog={handleOpenDialog}
-                                    handleCloseDialog={handleCloseDialog}
-                                    />
+
+                        chooseType===false && insertTemplate===false && isEdited=== false?
+                        <div>
+                            <Grid container>
+                                <Grid item xs={8}>
+                                    <Typography className={classes.titleItem} variant="h5">
+                                        {t(strings.allTemplates)}
+                                    </Typography>
+                                </Grid>
+                        
+                             </Grid>
+                            <Grid container >
+                                <Grid item className={classes.templateProgress} onClick={chooseProgress}>
+                                    <FiberNewIcon/>
+                                    <Typography  variant="body1">
+                                        {t(strings.templateProgress)}
+                                    </Typography>
+                                </Grid>
+                                <div className={classes.spaceLeft}></div>
+                                <Grid item className={classes.templateMedicalAlert} onClick={chooseMedicalAlert}>
+                                    <ReceiptIcon/>
+                                    <Typography  variant="body1">
+                                        {t(strings.templateMedicalAlert)}
+                                    </Typography>
+                                </Grid>
+                                <div className={classes.spaceLeft}></div>
+                                <Grid item className={classes.templateTreatment} onClick={chooseTreatment}>
+                                    <AssessmentIcon/>
+                                    <Typography  variant="body1">
+                                        {t(strings.templateTreatment)}
+                                    </Typography>
+                                </Grid>
+                                <div className={classes.spaceLeft}></div>
+                        
+
+                            </Grid>
+                
+                        </div>
+                        :
+                        // chooseType===true  && insertTemplate===false && isEdited=== false && rowsWithType!==null?
+
+                        <TableCustom
+                            titles={titles}
+                            data={rowsWithType}
+                            dataColumnsName={dataColumnsName}
+                            editable={editable}
+                            handleChangeIsEdited={handleChangeIsEdited}
+                            changeToEditPage={true}
+                            handleChangeSelectedRow={handleChangeSelectedRow}
+                            numberColumn={dataColumnsName.length}
+                            isDelete={isDelete}
+                            handleOpenDialog={handleOpenDialog}
+                            handleCloseDialog={handleCloseDialog}
+                        />
+                        // :
+                        // <div>Hello world</div>
                     }
-                   
-                   
+                    
+                
                 </Container>
-                
-                
-                
                 <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>
                     
                     <DialogContent>
@@ -291,91 +420,6 @@ const Template = () => {
             
         </div>
     )
-    // return (
-    //     <div className={classes.container}>
-            
-    //         <div className={classes.content}>
-    //             <Grid container>
-    //                 <Grid item xs={8}>
-    //                     <Typography className={classes.title} variant="h4">
-    //                         {t(strings.template)}
-    //                     </Typography>
-    //                 </Grid>
-                    
-    //             </Grid>
-    //             <Divider className={classes.titleDivider}/>
-
-    //             <Container style={{marginTop:'30px'}}>
-    //                 <Grid container>
-    //                     <Grid item xs={8}>
-    //                         <Typography className={classes.titleItem} variant="h5">
-    //                             {t(strings.recent)}
-    //                         </Typography>
-    //                     </Grid>
-                        
-    //                 </Grid>
-    //                 <Grid container >
-    //                     <Grid item className={classes.templateNewPatient}>
-    //                         <FiberNewIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.newPatient)}
-    //                         </Typography>
-    //                     </Grid>
-    //                     <div className={classes.spaceLeft}></div>
-    //                     <Grid item className={classes.templateInvoice}>
-    //                         <ReceiptIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.invoice)}
-    //                         </Typography>
-    //                     </Grid>
-
-    //                 </Grid>
-    //             </Container>
-    //             <Container style={{marginTop:'30px'}}>
-    //                 <Grid container>
-    //                     <Grid item xs={8}>
-    //                         <Typography className={classes.titleItem} variant="h5">
-    //                             {t(strings.allTemplates)}
-    //                         </Typography>
-    //                     </Grid>
-                        
-    //                 </Grid>
-    //                 <Grid container >
-    //                     <Grid item className={classes.templateNewPatient}>
-    //                         <FiberNewIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.newPatient)}
-    //                         </Typography>
-    //                     </Grid>
-    //                     <div className={classes.spaceLeft}></div>
-    //                     <Grid item className={classes.templateInvoice}>
-    //                         <ReceiptIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.invoice)}
-    //                         </Typography>
-    //                     </Grid>
-    //                     <div className={classes.spaceLeft}></div>
-    //                     <Grid item className={classes.templateReport}>
-    //                         <AssessmentIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.report)}
-    //                         </Typography>
-    //                     </Grid>
-    //                     <div className={classes.spaceLeft}></div>
-    //                     <Grid item className={classes.templateResignationLetter}>
-    //                         <GroupIcon/>
-    //                         <Typography  variant="body1">
-    //                             {t(strings.resignationLetter)}
-    //                         </Typography>
-    //                     </Grid>
-
-    //                 </Grid>
-    //             </Container>
-                
-    //         </div>
-            
-    //     </div>
-    // )
 }
 
 export default Template;

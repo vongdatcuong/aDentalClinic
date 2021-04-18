@@ -117,6 +117,10 @@ const invoice="Invoice";
 const resignationLetter="Resignation letter";
 const content="Content";
 const noteType="Note type";
+const templateDefault="DEFAULT";
+const templateMedicalAlert="MEDICAL ALERT";
+const templateProgress="PROGRESS";
+const templateTreatment="TREATMENT";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -565,6 +569,10 @@ export default {
     procedureType,
     toothSelect,
     toothType,
+    templateDefault,
+    templateMedicalAlert,
+    templateProgress,
+    templateTreatment,
     // Settings
     general,
     account,

@@ -150,7 +150,7 @@ const UpdateProcedure = (props) => {
                 setProcedureFee(result.data.payload.procedure_fee["$numberDecimal"]);
                 setProcedureTime(result.data.payload.procedure_time["$numberDecimal"]);
                 setProcedureType(result.data.payload.procedure_type);
-                setToothType(result.data.payload.tooth_select);
+                setToothType(result.data.payload.tooth_type);
                 setToothSelect(result.data.payload.tooth_select);
                 setDescription(result.data.payload.description);
                 setCategory(result.data.payload.category);

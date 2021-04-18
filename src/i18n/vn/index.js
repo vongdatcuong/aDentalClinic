@@ -214,6 +214,11 @@ export default {
         "Resignation letter":"Đơn thôi việc",
         "Content":"Nội dung",
         "Note type":"Loại",
+        "DEFAULT":"DEFAULT",
+        "MEDICAL ALERT":"MEDICAL ALERT",
+        "PROGRESS":"PROGRESS",
+        "TREATMENT":"TREATMENT",
+
         //provider
         "#":"#",
         "ID":"ID",

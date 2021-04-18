@@ -121,7 +121,7 @@ const UpdateChair = (props) => {
     };
 
     const onClickUpdate=async()=>{
-        if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
+        if(firstNameError===null && lastNameError===null && emailError===null)
         {
             const data={
                 // display_id: userData.display_id,
@@ -153,8 +153,8 @@ const UpdateChair = (props) => {
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
-                username: username,
-                password: password,
+                // username: username,
+                // password: password,
     
             };
             const update=await ProviderService.update(props.id,data);
@@ -269,7 +269,7 @@ const UpdateChair = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        {/* <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.username)}  
@@ -281,10 +281,10 @@ const UpdateChair = (props) => {
                                         helperText={usernameError}
 
                             />
-                        </div>
+                        </div> */}
                     
                     
-                    <div className={classes.item}>
+                    {/* <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
@@ -295,7 +295,7 @@ const UpdateChair = (props) => {
                                         error={passwordError !== null}
                                         helperText={passwordError}
                                         /> 
-                    </div>
+                    </div> */}
                     <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
@@ -316,6 +316,16 @@ const UpdateChair = (props) => {
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
+                                        /> 
+                    </div>
+                    <div className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        placeholder={t(strings.address)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
+
+
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -372,16 +382,7 @@ const UpdateChair = (props) => {
 
                                         /> 
                         </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-
-
-                                        /> 
-                        </div>
+                        
                         <div className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
