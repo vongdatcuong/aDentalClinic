@@ -5,6 +5,7 @@ import {
   httpGet,
   httpPatch,
   httpPut,
+  httpDelete,
 } from "../base-api";
 import apiPath from "../path";
 import strings from "../../configs/strings";
@@ -55,6 +56,21 @@ class ProgressNote {
       };
     } catch (error) {
       console.log("Failed to update note: ", error);
+      return {
+        success: false,
+      };
+    }
+  }
+  async delete(id,data) {
+    try {
+      const result = await httpDelete({
+        url: `${apiPath.progressNote.progressNote}/${id}`
+      });
+      return {
+        success: true,
+      };
+    } catch (error) {
+      console.log("Failed to delete note: ", error);
       return {
         success: false,
       };

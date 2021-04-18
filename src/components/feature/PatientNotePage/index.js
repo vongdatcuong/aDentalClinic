@@ -99,11 +99,10 @@ const PatientNotePage = ({ patientID }) => {
     try {
       const result = await ProgressNoteService.insert({
         patient: patientID,
-        provider: patientID,
         title: title,
         tooth: tooth,
         surface: surface,
-        content: content,
+        content: content ? content : "No content.",
       });
       if (result.success) {
         ////////////////setNotes(result.data);
@@ -120,11 +119,10 @@ const PatientNotePage = ({ patientID }) => {
     try {
       const result = await ProgressNoteService.update(noteID, {
         patient: patientID,
-        provider: patientID,
         title: title,
         tooth: tooth,
         surface: surface,
-        content: content,
+        content: content ? content : "No content.",
       });
       if (result.success) {
         ////////////////setNotes(result.data);
@@ -134,6 +132,20 @@ const PatientNotePage = ({ patientID }) => {
       return false;
     } catch (err) {
       toast.error(t(strings.updateFail));
+      return false;
+    }
+  };
+  const deleteNote = async (noteID) => {
+    try {
+      const result = await ProgressNoteService.delete(noteID);
+      if (result.success) {
+        ////////////////setNotes(result.data);
+        return true;
+      }
+      toast.error(result.message);
+      return false;
+    } catch (err) {
+      toast.error(t(strings.deleteFail));
       return false;
     }
   };
@@ -175,7 +187,11 @@ const PatientNotePage = ({ patientID }) => {
     setCurrUpdateNoteID("");
   };
 
-  const handleUpdateNote = (noteID) => {
+  const handleUpdateNote = (noteID, title, tooth, surface, content) => {
+    setUpdateNoteTitle(title);
+    setUpdateNoteTooth(tooth);
+    setUpdateNoteSurface(surface);
+    setUpdateNoteContent(content);
     handleClickOpenUpdateDialog(noteID);
   };
 
@@ -188,8 +204,8 @@ const PatientNotePage = ({ patientID }) => {
     setCurrUpdateNoteID(noteID); //////// attention
   };
 
-  function deleteNote() {
-    alert("delete:" + currUpdateNoteID);
+  function approveDeleteNote() {
+    deleteNote(currUpdateNoteID);
     setOpenDeleteDialog(false);
     setCurrUpdateNoteID("");
   }
@@ -230,7 +246,13 @@ const PatientNotePage = ({ patientID }) => {
                   handleDeleteNote(noteItem._id);
                 }}
                 handleUpdateNote={() => {
-                  handleUpdateNote(noteItem._id);
+                  handleUpdateNote(
+                    noteItem._id,
+                    noteItem.title,
+                    noteItem.tooth,
+                    noteItem.surface,
+                    noteItem.content
+                  );
                 }}
               ></NoteItem>
             );
@@ -273,13 +295,14 @@ const PatientNotePage = ({ patientID }) => {
               label={t(strings.surface)}
             />
             <TextField
+              required
               value={insertNoteContent}
               onChange={handleChangeInsertNoteContent}
               className={classes.noteContentInput}
               id="outlined-multiline-static"
               label={t(strings.content)}
               multiline
-              rows={5}
+              rows={10}
               variant="outlined"
               fullWidth
             />
@@ -332,13 +355,14 @@ const PatientNotePage = ({ patientID }) => {
               label={t(strings.surface)}
             />
             <TextField
+              required
               value={updateNoteContent}
               onChange={handleChangeUpdateNoteContent}
               className={classes.noteContentInput}
               id="outlined-multiline-static"
               label={t(strings.content)}
               multiline
-              rows={5}
+              rows={10}
               variant="outlined"
               fullWidth
             />
@@ -367,7 +391,11 @@ const PatientNotePage = ({ patientID }) => {
             <Button onClick={handleCloseDeleteDialog} color="secondary">
               {t(strings.no)}
             </Button>
-            <Button onClick={() => deleteNote()} color="primary" autoFocus>
+            <Button
+              onClick={() => approveDeleteNote()}
+              color="primary"
+              autoFocus
+            >
               {t(strings.yes)}
             </Button>
           </DialogActions>

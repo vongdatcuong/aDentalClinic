@@ -58,10 +58,10 @@ const NoteItem = ({ noteID, noteTitle, noteTooth, noteSurface, noteTime, noteCon
     let fullNoteTitle = "";
     if (!noteTitle) {
         // get note title from the content
-        let start = noteContent.indexOf(":", 0);
-        let end = noteContent.indexOf(":", start+1);
+        let start = noteContent?.indexOf(":", 0);
+        let end = noteContent?.indexOf(":", start+1);
         if (start && end) {
-            noteTitle = noteContent.substring(start+1, end);
+            noteTitle = noteContent?.substring(start+1, end);
         }
         else {
             noteTitle = "";
