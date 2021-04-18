@@ -155,7 +155,10 @@ export default {
         "Negative": "Negative",
         "Not applicable": "Not applicable",
         "Clear": "Clear",
-
+        // Progress Notes
+        "Add Note": "Add Note",
+        "Update Note": "Update Note",
+        "Title": "Title",
         // Settings
         "General" : "General",
         "Account": "Account",

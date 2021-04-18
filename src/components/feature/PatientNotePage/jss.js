@@ -18,6 +18,9 @@ const styles = (theme) => ({
     fontWeight: "bold",
     textTransform: "none",
   },
+  noteContentInput: {
+    marginTop: theme.spacing(5),
+  }
 });
 
 export default styles;

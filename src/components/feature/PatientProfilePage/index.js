@@ -82,7 +82,7 @@ const PatientProfilePage = ({ patientID }) => {
                 return false;
             } 
             catch(err)  {
-                toast.error(t(strings.refreshTokenFailMsg));    
+                toast.error(t(strings.errorLoadData));    
                 return false;
             }
         };

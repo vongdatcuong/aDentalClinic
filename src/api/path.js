@@ -22,6 +22,11 @@ const staff={
 const patient={
     patient:'/patient'
 }
+//patient progress note
+const progressNote={
+    progressNote:'/progress-note',
+    progressNoteByPatient:'/progress-note/patient',
+}
 // Practice 
 const practice = {
     practice: '/practice',
@@ -84,6 +89,7 @@ export default {
     practice,
     staff,
     patient,
+    progressNote,
     holiday,
     common,
     recall,

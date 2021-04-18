@@ -257,6 +257,11 @@ const negative = "Negative";
 const notApplicable = "Not applicable";
 const clear = "Clear";
 
+// Progress Notes
+const addNote = "Add Note";
+const updateNote = "Update Note";
+const title = "Title";
+
 
 // Report
 const payment = "Payment";
@@ -330,6 +335,7 @@ const back = "back";
 const select = "select";
 const defaultDateFormat = "DD-MM-YYYY";
 const holidayDormat = "DD/MM";
+const defaultDateTimeFormat = "DD/MM/YYYY HH:mm";
 
 // Unit
 const hours = "hours"
@@ -495,6 +501,10 @@ export default {
     negative,
     notApplicable,
     clear,
+    // Progress Notes
+    addNote,
+    updateNote,
+    title,
     // Management
     providers,
     staffs,
@@ -629,6 +639,7 @@ export default {
     select,
     defaultDateFormat,
     holidayDormat,
+    defaultDateTimeFormat,
     // Tooth
     selectOneTooth,
     selectMultiTooth,

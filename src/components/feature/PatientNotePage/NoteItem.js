@@ -16,6 +16,8 @@ import { useTranslation, Trans } from "react-i18next";
 
 //import styles from "./jss";
 import strings from "../../../configs/strings";
+// utils
+import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 
 const styles = (theme) => ({
   historyItemContainer: {
@@ -48,9 +50,47 @@ const styles = (theme) => ({
 });
 const useStyles = makeStyles(styles);
 
-const NoteItem = ({ noteTitle, noteTime, noteContent }) => {
+const NoteItem = ({ noteID, noteTitle, noteTooth, noteSurface, noteTime, noteContent, handleUpdateNote, handleDeleteNote }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+
+  function generateNoteTitle() {
+    let fullNoteTitle = "";
+    if (!noteTitle) {
+        // get note title from the content
+        let start = noteContent.indexOf(":", 0);
+        let end = noteContent.indexOf(":", start+1);
+        if (start && end) {
+            noteTitle = noteContent.substring(start+1, end);
+        }
+        else {
+            noteTitle = "";
+        }
+    };
+
+    if (noteTooth) {
+        fullNoteTitle +=`${t(strings.tooth)}: ${noteTooth}`;
+        if (noteSurface) {
+            if (noteTitle) {
+                fullNoteTitle += ` (${noteSurface}) - ${noteTitle}`;
+            }
+            else {
+                fullNoteTitle += ` (${noteSurface})`;
+            }
+        }
+        else {
+            if (noteTitle) {
+                fullNoteTitle += ` - ${noteTitle}`;
+            }
+        }
+    }
+    else {
+        fullNoteTitle += noteTitle;
+    }
+
+    
+    return fullNoteTitle;
+  }
   return (
     <div className={classes.historyItemContainer}>
       <Accordion>
@@ -59,9 +99,9 @@ const NoteItem = ({ noteTitle, noteTime, noteContent }) => {
           aria-controls="panel1c-content"
           id="panel1c-header"
         >
-          <span className={classes.historyItemContent}>{noteTitle}</span>
+          <span className={classes.historyItemContent}>{generateNoteTitle()}</span>
           <span>
-            <span className={classes.historyItemTime}>{noteTime} </span>
+            <span className={classes.historyItemTime}>{ConvertDateTimes.formatDate(noteTime, strings.defaultDateTimeFormat)} </span>
             {/* <span className={classes.btnDelete}>
               <Button>
                 <BackspaceIcon></BackspaceIcon>
@@ -74,13 +114,12 @@ const NoteItem = ({ noteTitle, noteTime, noteContent }) => {
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button size="small" color="secondary">
+          <Button size="small" color="secondary" onClick={handleDeleteNote}>
             {t(strings.btnDelete)}
           </Button>
-          <Button size="small" color="primary">
-            {t(strings.save)}
+          <Button size="small" color="primary" onClick={handleUpdateNote}>
+            {t(strings.update)}
           </Button>
-          <Button size="small">{t(strings.cancel)}</Button>
         </AccordionActions>
       </Accordion>
     </div>

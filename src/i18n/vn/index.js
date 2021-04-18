@@ -152,6 +152,10 @@ export default {
         "Negative": "Tiêu cực",
         "Not applicable": "Không thể áp dụng",
         "Clear": "Xóa hết",
+        // Progress Notes
+        "Add Note": "Thêm ghi chú",
+        "Update Note": "Sửa ghi chú",
+        "Title": "Tiêu đề",
         // Settings
         "General" : "Chung",
         "Account": "Tài khoản",
