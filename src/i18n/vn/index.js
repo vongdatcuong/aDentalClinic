@@ -103,6 +103,7 @@ export default {
         "Tooth is required": "Răng không được để trống",
         "Surface is required": "Bề mặt không được để trống",
         "Delete Appointment fail": "Xóa cuộc hẹn thất bại",
+        "This is a holiday": "Đây là ngày nghỉ",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",

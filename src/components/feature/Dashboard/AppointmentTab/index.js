@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../../configs/strings';
 import figures from '../../../../configs/figures';
@@ -162,7 +162,7 @@ const AppointmentTab = ({
         emailRef.current.value = "";
     }
 
-    const handleOnSelectPatient = async (option) => {
+    const handleOnSelectPatient = useCallback(async (option) => {
         if (option.value == -1){
             handleOnNewPatient();
             return;
@@ -210,7 +210,7 @@ const AppointmentTab = ({
         } finally {
             dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
-    }
+    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef]);
 
     const handleOnFirstNameChange = (evt) => {
         setFirstName(evt.target.value);
@@ -720,7 +720,7 @@ const AppointmentTab = ({
                                 >
                                 {(chairs.map((chair) => {
                                     return (
-                                        <MenuItem key={chair.id} value={chair.id}>{chair.text}</MenuItem>
+                                        <MenuItem key={chair.id} value={chair.id}>{chair.title}</MenuItem>
                                     )
                                 }))}
                                 </Select>
@@ -820,7 +820,7 @@ const AppointmentTab = ({
                                 {t(strings.note)}
                             </Typography>
                         </Grid>
-                        <Grid item md={12} sm={12} xs={12} spacing={2}>
+                        <Grid item md={12} sm={12} xs={12}>
                             <TextField
                                 label={t(strings.note)}
                                 id="appointment-note"
@@ -973,5 +973,3 @@ const AppointmentTab = ({
 }
 
 export default AppointmentTab;
-//validate time of chair (busy time)
-//Delete nwe added treatment

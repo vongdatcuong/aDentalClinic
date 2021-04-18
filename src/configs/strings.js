@@ -201,6 +201,7 @@ const appointProcedureErrMsg = "Procedure is required";
 const appointToothErrMsg = "Tooth is required";
 const appointSurfaceErrMsg = "Surface is required";
 const deleteAppointmentErrMsg = "Delete Appointment fail";
+const thisIsAHolidayErrMsg = "This is a holiday";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -443,6 +444,7 @@ export default {
     appointProcedureErrMsg,
     appointToothErrMsg,
     appointSurfaceErrMsg,
+    thisIsAHolidayErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,

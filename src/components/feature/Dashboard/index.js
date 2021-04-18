@@ -49,14 +49,10 @@ const DashBoard = () => {
     const [appointments, setAppointments] = useState([]);
     const [blocks, setBlocks] = useState([]);
 
-    const [chairs, setChairs] = useState(
-        [
-            { text: `${t(strings.chair)} 1`, _id: 1, isDisplay: false },
-        ]
-    );
+    const [chairs, setChairs] = useState([]);
     const [holidays, setHolidays] = useState([]);
 
-    const [selectedDate, setSelectedDate] = useState(new Date(2021, 2, 7, 0, 0, 0));
+    const [selectedDate, setSelectedDate] = useState(new Date(2021, 1, 19, 0, 0, 0));
     const [cellDuration, setCellDuration] = useState(figures.defaultCellDuration);
     const [startDayHour, setStartDayHour] = useState(figures.defaultStartDayHour);
     const [endDayHour, setEndDayHour] = useState(figures.defaultEndDayHour);
@@ -74,6 +70,10 @@ const DashBoard = () => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
     const [isWillMount, setIsWillMount] = useState(true);
+
+    // Appointment tooltip popover
+   const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
+
     // Will mount
     const handleWillMount = useCallback(async () => {
         try {
@@ -118,7 +118,7 @@ const DashBoard = () => {
                 // Chairs
                 const chairss = result[0].payload.map((chair, index) => Object.assign({}, chair, {
                     id: chair._id,
-                    text: `${t(strings.chair)} (${chair.name})`,
+                    title: `${t(strings.chair)} (${chair.name})`,
                     isDisplay: true,
                 }));
                 setChairs(chairss);
@@ -132,9 +132,9 @@ const DashBoard = () => {
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
-                        chairId: appointment.chair._id,
-                        startDate: aDate,
-                        endDate: (endDate.isValid())? endDate : aDate,
+                        resourceId: appointment.chair._id,
+                        start: aDate,
+                        end: (endDate.isValid())? endDate : aDate,
                         patientGender: appointment.patient?.gender || "",
                         chair: appointment.chair,
                         status: appointment.status,
@@ -145,6 +145,8 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
+                        backgroundColor: appointment.chair.color,
+                        "rendering": "background",
                     }
                 });
                 setAppointments(appointmentss);
@@ -157,20 +159,22 @@ const DashBoard = () => {
                     const endDate = moment(aDate).add(Number(block.duration), "minutes");
                     return {
                         id: block._id,
-                        chairId: block.chair,
-                        startDate: aDate,
-                        endDate: (endDate.isValid())? endDate : aDate,
+                        resourceId: block.chair,
+                        start: aDate,
+                        end: (endDate.isValid())? endDate : aDate,
                         block: true
                     }
                 });
                 setBlocks(blockss);
                 // Practice
                 const practice = result[3].payload;
-                const startTime = Number(practice.start_time.slice(0, 2)) + Number(practice.start_time.slice(2)) / 60;
-                const endTime = Number(practice.end_time.slice(0, 2)) + Number(practice.end_time.slice(2)) / 60;
+                const startSlices = [practice.start_time.slice(0, 2), practice.start_time.slice(2)]
+                const endSlices = [practice.end_time.slice(0, 2), practice.end_time.slice(2)]
+                const startTime = Number(startSlices[0]) + Number(startSlices[1]) / 60;
+                const endTime = Number(endSlices[0]) + Number(endSlices[1]) / 60;
                 if (startTime >= 0 && startTime <= 24 && endTime >= 0 && endTime <= 24){
-                    setStartDayHour(startTime);
-                    setEndDayHour(endTime);
+                    setStartDayHour(startSlices.join(":"));
+                    setEndDayHour(endSlices.join(":"));
                 };
                 // Holiday
                 const holidayss = [];
@@ -246,9 +250,9 @@ const DashBoard = () => {
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
-                        chairId: appointment.chair._id,
-                        startDate: aDate,
-                        endDate: (endDate.isValid())? endDate : aDate,
+                        resourceId: appointment.chair._id,
+                        start: aDate,
+                        end: (endDate.isValid())? endDate : aDate,
                         patientGender: appointment.patient?.gender || "",
                         chair: appointment.chair,
                         status: appointment.status,
@@ -259,6 +263,7 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
+                        backgroundColor: appointment.chair.color
                     }
                 });
                 setAppointments(appointmentss);
@@ -271,9 +276,9 @@ const DashBoard = () => {
                     const endDate = moment(aDate).add(Number(block.duration), "minutes");
                     return {
                         id: block._id,
-                        chairId: block.chair,
-                        startDate: aDate,
-                        endDate: (endDate.isValid())? endDate : aDate,
+                        resourceId: block.chair,
+                        start: aDate,
+                        end: (endDate.isValid())? endDate : aDate,
                         block: true
                     }
                 })
@@ -306,9 +311,9 @@ const DashBoard = () => {
     }, [selectedDate]);
 
     // Time Table Cell
-    const handleTimeTableCellClick = useCallback((chair, startDate, endDate) => {
+    const handleTimeTableCellClick = useCallback((chairID, startDate, endDate) => {
         setCheckedScheduler(false);
-        setSelectedChairId(chair.id);
+        setSelectedChairId(chairID);
         setSelectedAppointStart(new Date(startDate));
     }, []);
 
@@ -327,7 +332,7 @@ const DashBoard = () => {
     }
 
     const handleSelectDate = useCallback((date) => {
-        const newDate = new Date(date);
+        const newDate = date.start;
         newDate.setHours(0);
         if (newDate){
             setSelectedDate(newDate);
@@ -378,6 +383,7 @@ const DashBoard = () => {
             ];
             const result = await Promise.all(promises);
             if (result[0].success){
+                setOpenAppointTooltip(false);
                 //
                 const newAppointments = appointments.filter((appoint) => appoint.id != selectedAppoint);
                 setAppointments(newAppointments);
@@ -434,6 +440,8 @@ const DashBoard = () => {
                                     onSelectPatient={handleSelectPatient}
                                     onSelectDate={handleSelectDate}
                                     onDeleteAppointment={handleOpenConfirmDelete}
+                                    openAppointTooltip={openAppointTooltip}
+                                    setOpenAppointTooltip={setOpenAppointTooltip}
                                 />
                             </Box>
                         </Fade>

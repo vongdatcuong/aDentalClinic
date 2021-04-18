@@ -106,6 +106,7 @@ export default {
         "Tooth is required": "Tooth is required",
         "Surface is required": "Surface is required",
         "Delete Appointment fail": "Delete Appointment fail",
+        "This is a holiday": "This is a holiday",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",

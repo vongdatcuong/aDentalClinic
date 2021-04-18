@@ -1,7 +1,7 @@
 // Appointment
 const defaultCellDuration = 30;
-const defaultStartDayHour = 7;
-const defaultEndDayHour = 18;
+const defaultStartDayHour = "07:00";
+const defaultEndDayHour = "18:00";
 const maxAppointmentDuration = 240;
 
 // Toast

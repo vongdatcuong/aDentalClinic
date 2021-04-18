@@ -198,7 +198,10 @@ const RecallDialog = ({
           setIsLoading(true);
           const promises = [
               api.httpGet({
-                  url: apiPath.recall.recall + apiPath.patient.patient + '/' + patientID
+                  url: apiPath.recall.recall + apiPath.patient.patient + '/' + patientID,
+                  query: {
+                    date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat),
+                  }
               }),
           ];
           const result = await Promise.all(promises);

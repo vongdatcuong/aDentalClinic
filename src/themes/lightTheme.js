@@ -34,6 +34,7 @@ import {hexToRgb} from '../utils/colors';
   const appointTreatmentDialogWidth = '80%';
   const appointAddTreatmentDialogWidth = '50%';
   const confirmDialogMinWidth = 350;
+  const appointTooltipMaxWidth = 450;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -230,6 +231,7 @@ export default {
   appointTreatmentDialogWidth,
   appointAddTreatmentDialogWidth,
   confirmDialogMinWidth,
+  appointTooltipMaxWidth,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,

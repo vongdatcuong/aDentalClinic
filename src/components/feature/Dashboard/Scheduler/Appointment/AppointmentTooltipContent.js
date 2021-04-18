@@ -13,10 +13,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-// dx-react-scheduler
-import {
-    AppointmentTooltip,
-} from '@devexpress/dx-react-scheduler-material-ui';
 // Material UI Icons
 import { FaUserInjured } from "react-icons/fa";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -52,10 +48,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CustomAppointmentTooltipContent = memo(({children, appointmentData,...restProps }) => {
+const AppointmentTooltipContent = memo(({children, appointmentData,...restProps }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
 
+  appointmentData = appointmentData || {};
   const listItems = [
     {
       label: t(strings.patient),
@@ -64,9 +61,9 @@ const CustomAppointmentTooltipContent = memo(({children, appointmentData,...rest
     },
     {
       label: t(strings.time),
-      value: ConvertDateTimes.formatDate(appointmentData.startDate, "HH:mm") + " - " +
-            ConvertDateTimes.formatDate(appointmentData.endDate, "HH:mm") + " (" +
-            ConvertDateTimes.formatDate(appointmentData.startDate, "YYYY/MM/DD") + ")",
+      value: ConvertDateTimes.formatDate(appointmentData.start, "HH:mm") + " - " +
+            ConvertDateTimes.formatDate(appointmentData.end, "HH:mm") + " (" +
+            ConvertDateTimes.formatDate(appointmentData.start, "YYYY/MM/DD") + ")",
       icon: <AccessTimeIcon/>
     },
     {
@@ -118,4 +115,4 @@ const CustomAppointmentTooltipContent = memo(({children, appointmentData,...rest
   );
 });
 
-export default CustomAppointmentTooltipContent
+export default AppointmentTooltipContent
