@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect , useParams} from "react-router-dom";
 import path from "./path";
 import PrivateRoute from './PrivateRoute';
-
+import keysConfig from "../configs/keys"
 // @material-ui/core Component
 
 // Components
@@ -35,6 +35,7 @@ import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
+import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 function PatientProfile() {
     let { patientID } = useParams();
@@ -56,7 +57,7 @@ function PatientAddXRayImages() {
       <PatientViewXRayImagesPage
         patientID={patientID}
         MouthID={MouthID}
-        mode="ADD"
+        mode={keysConfig.MODE.MODE_ADD}
       />
     );
 }

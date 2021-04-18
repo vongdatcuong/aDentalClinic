@@ -32,6 +32,12 @@ const autocomplete = {
     limit: 10
 }
 
+//Image Mouth
+const MOUTH = {
+    MAX_WIDTH: 1200,
+    MAX_HEIGHT: 600,
+}
+
 export default {
     // Appointment
     defaultCellDuration,
@@ -52,4 +58,5 @@ export default {
     apiStatus,
     // Autocomplete
     autocomplete,
+    MOUTH
 }

@@ -10,8 +10,9 @@ const styles = (theme) => ({
     borderBottom: "solid " + theme.blackColor + " 0.05rem",
   },
   bodyContainer: {
-    padding: theme.spacing(10),
-    paddingTop: theme.spacing(2),
+    padding: theme.spacing(1),
+    paddingBottom: theme.spacing(10),
+    paddingTop: theme.spacing(1),
   },
   btnEditRecord: {
     color: "#edaa18",
@@ -49,10 +50,10 @@ const styles = (theme) => ({
     float: "left",
   },
   input: {
-    margin: "10px",
-    padding: "10px",
+    margin: "5px",
+    padding: "5px",
     flexDirection: "row",
-    paddingTop: "10px",
+    paddingTop: "5px",
   },
   box_no_cursor: {
     background: "#fff",

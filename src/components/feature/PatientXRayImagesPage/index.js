@@ -98,9 +98,6 @@ const PatientXRayImagesPage = ({ patientID }) => {
           >
             {t(strings.xRayImages)}
           </Typography>
-          {/* <Button simple className={classes.btnAddRecord}>
-            <AddCircleOutlineIcon></AddCircleOutlineIcon> {t(strings.addMoreImage)}
-          </Button> */}
         </div>
         <div className={classes.bodyContainer}>
           {templateList.map((template) => {
@@ -108,72 +105,6 @@ const PatientXRayImagesPage = ({ patientID }) => {
               <MouthTemplateRow template={template} patientID={patientID} />
             );
           })}
-          {/*<div>
-            <b>2-{t(strings.layer)}</b>
-            <div className={classes.xRayImagesContainer}>
-              <Button
-                onClick={handleAddXRayImage}
-                variant="contained"
-                className={classes.addXRayImage}
-              >
-                <AddBoxIcon></AddBoxIcon>
-              </Button>
-              {xRayImages.TwoLayer.map((image, index) => {
-                return (
-                  <img
-                    onClick={handleViewXRayImage}
-                    src={image.src}
-                    alt={image.title}
-                    className={classes.xRayThumbnail}
-                  />
-                );
-              })}
-            </div>
-          </div>
-          <div>
-          <b>4-{t(strings.layer)}</b>
-          <div className={classes.xRayImagesContainer}>
-            <Button onClick={handleAddXRayImage} variant="contained" className={classes.addXRayImage}>
-              <AddBoxIcon></AddBoxIcon>
-            </Button>
-            {xRayImages.FourLayer.map((image, index) => {
-              return <img onClick={handleViewXRayImage} src={image.src} alt={image.title} className={classes.xRayThumbnail} />;
-            })}
-          </div>
-        </div>{" "}
-        <div>
-          <b>8-{t(strings.layer)}</b>
-          <div className={classes.xRayImagesContainer}>
-            <Button onClick={handleAddXRayImage} variant="contained" className={classes.addXRayImage}>
-              <AddBoxIcon></AddBoxIcon>
-            </Button>
-            {xRayImages.EightLayer.map((image, index) => {
-              return <img onClick={handleViewXRayImage} src={image.src} alt={image.title} className={classes.xRayThumbnail} />;
-            })}
-          </div>
-        </div>{" "}
-        <div>
-          <b>16-{t(strings.layer)}</b>
-          <div className={classes.xRayImagesContainer}>
-            <Button onClick={handleAddXRayImage} variant="contained" className={classes.addXRayImage}>
-              <AddBoxIcon></AddBoxIcon>
-            </Button>
-            {xRayImages.SixteenLayer.map((image, index) => {
-              return <img onClick={handleViewXRayImage} src={image.src} alt={image.title} className={classes.xRayThumbnail} />;
-            })}
-          </div>
-        </div>{" "}
-        <div>
-          <b>32-{t(strings.layer)}</b>
-          <div className={classes.xRayImagesContainer}>
-            <Button onClick={handleAddXRayImage} variant="contained" className={classes.addXRayImage}>
-              <AddBoxIcon></AddBoxIcon>
-            </Button>
-            {xRayImages.ThirtyTwoLayer.map((image, index) => {
-              return <img onClick={handleViewXRayImage} src={image.src} alt={image.title} className={classes.xRayThumbnail} />;
-            })}
-          </div>
-          </div>*/}
         </div>
       </Container>
     </React.Fragment>

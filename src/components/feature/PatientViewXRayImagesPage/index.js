@@ -19,24 +19,29 @@ import PopupChat from "../../common/Messenger/PopupChat";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
 import { toast } from "react-toastify";
 import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
-import { FaPencilAlt, FaSave, FaSearchPlus, FaTimes, FaTrashAlt } from "react-icons/fa";
+import {
+  FaPencilAlt,
+  FaSave,
+  FaSearchPlus,
+  FaTimes,
+  FaTrashAlt,
+} from "react-icons/fa";
 import ImageFrame from "./components/ImageFrame";
 import MountService from "../../../api/xray/xray.service";
 import MountTemplateService from "../../../api/xray/xray.template.service";
 import { loadingStore } from "../../../contexts/loading-context";
 import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router";
+import keys from "../../../configs/keys";
+import ImageDialog from "./components/ImageDialog";
 const useStyles = makeStyles(styles);
 const MouthHeight = 600;
-const MouthWidth = 1000;
-const MODE_VIEW = "VIEW";
-const MODE_EDIT = "EDIT";
-const MODE_ADD = "ADD";
+const MouthWidth = 1200;
 const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
-  const [XrayMode, setXrayMode] = useState(mode ? mode : MODE_VIEW);
+  const [XrayMode, setXrayMode] = useState(mode ? mode : keys.MODE.MODE_VIEW);
   const [visible, setVisible] = React.useState(false);
   const [imageList, setImageList] = React.useState([]);
   const [MouthData, setMouthData] = useState(null);
@@ -45,18 +50,16 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   const [name, setName] = useState(moment().format("DD/MM/YYYY"));
   const [note, setNote] = useState("");
   const [resetState, setResetState] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingFrameId, setEditingFrameId] = useState(null);
   const handleViewImage = (order) => {
     setViewingImageIndex(order - 1);
     setVisible(true);
   };
-  const onTest = () => {
-    if (XrayMode === MODE_VIEW) setXrayMode(MODE_EDIT);
-    else if (XrayMode === MODE_EDIT) setXrayMode(MODE_VIEW);
-  };
   const onLoad = async (mount_id) => {
     try {
       dispatchLoading({ type: strings.setLoading, isLoading: true });
-      const data = await MountService.getsMouthById(mount_id);
+      let data = await MountService.getsMouthById(mount_id);
       if (data.success) {
         const imagesListData = [];
         for (const frame of data.payload.frames) {
@@ -66,7 +69,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
             ": " +
             (frame.image ? frame.image.image_name : null);
           const path = frame.image ? frame.image.image_path : null;
-          const imageData = Object.assign(frame, {
+          const imageData = Object.assign({}, frame, {
             src: path,
             alt: alt,
           });
@@ -76,6 +79,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
           return a.order - b.order;
         });
         setImageList(imagesListData);
+        data.payload.frames = [...imagesListData.slice()];
         setMouthData(data.payload);
         setNote(data.payload.note);
         setName(data.payload.name);
@@ -108,6 +112,59 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       dispatchLoading({ type: strings.setLoading, isLoading: false });
     }
   };
+  const onEditedFrameImage = (image_object) => {
+    //set image_object
+    const frameIndex = imageList.findIndex((n) => n._id === editingFrameId);
+    if (frameIndex === -1 || image_object == null) {
+      setEditingFrameId(null);
+      return;
+    }
+    let frame = Object.assign({}, imageList[frameIndex]);
+    frame.image = image_object;
+    const alt =
+      "Frame " +
+      frame.order +
+      ": " +
+      (frame.image ? frame.image.image_name : null);
+    const path = frame.image ? frame.image.image_path : null;
+    const imageData = Object.assign({}, frame, {
+      src: path,
+      alt: alt,
+    });
+    let imagesListData = frameIndex > 0 ? imageList.slice(0, frameIndex) : [];
+    imagesListData.push(imageData);
+    imagesListData = imagesListData.concat(imageList.slice(frameIndex + 1, frameIndex.length));
+    setImageList(imagesListData);
+    setEditingFrameId(null);
+  };
+  const onDeleteFrameImage = (frame_id) => {
+    const frameIndex = imageList.findIndex((n) => n._id === frame_id);
+    if (frameIndex === -1) {
+      setEditingFrameId(null);
+      return;
+    }
+    let frame = Object.assign({}, imageList[frameIndex]);
+    frame.image = null;
+    const alt = null;
+    const path = null;
+    const imageData = Object.assign({}, frame, {
+      src: path,
+      alt: alt,
+    });
+    let imagesListData = frameIndex > 0 ? imageList.slice(0, frameIndex) : [];
+    imagesListData.push(imageData);
+    imagesListData = imagesListData.concat(
+      imageList.slice(frameIndex + 1, frameIndex.length)
+    );
+    setImageList(imagesListData);
+  }
+  const onCloseDialog = () => {
+    setDialogOpen(false);
+  };
+  const onOpenDialog = (frame_id) => {
+    setEditingFrameId(frame_id);
+    setDialogOpen(true);
+  };
   const onChangeName = (e) => {
     setName(e.target.value);
   };
@@ -116,27 +173,28 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   };
   const onSave = () => {
     //Do the saving here
-    setXrayMode(MODE_VIEW);
+
+    setXrayMode(keys.MODE.MODE_VIEW);
   };
   const onCancel = async () => {
     //Do the cancel here
-    if (XrayMode === MODE_ADD) {
+    if (XrayMode === keys.MODE.MODE_ADD) {
       history.goBack();
       return;
-    } else if (XrayMode === MODE_EDIT) {
+    } else if (XrayMode === keys.MODE.MODE_EDIT) {
+      setImageList(MouthData.frames);
       setNote(MouthData.note);
       setName(MouthData.name);
-      console.log(MouthData);
       setResetState(!resetState);
     }
-    setXrayMode(MODE_VIEW);
+    setXrayMode(keys.MODE.MODE_VIEW);
   };
   const onEdit = () => {
-    setXrayMode(MODE_EDIT);
+    setXrayMode(keys.MODE.MODE_EDIT);
   };
   useEffect(() => {
     if (MouthID) {
-      if (XrayMode === MODE_ADD) {
+      if (XrayMode === keys.MODE.MODE_ADD) {
         onLoadTemplate(MouthID);
       } else {
         onLoad(MouthID);
@@ -153,6 +211,8 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
         mode={XrayMode}
         frameInfo={frameInfo}
         resetState={resetState}
+        onEdit={onOpenDialog}
+        onDelete={onDeleteFrameImage}
       />
     );
   };
@@ -172,13 +232,13 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
           >
             {t(strings.xRayImages)}
           </Typography>
-          {XrayMode === MODE_VIEW ? (
+          {XrayMode === keys.MODE.MODE_VIEW ? (
             <Button simple className={classes.btnEditRecord} onClick={onEdit}>
               <FaPencilAlt style={{ marginRight: 10 }}></FaPencilAlt>
               {t(strings.edit)}
             </Button>
           ) : null}
-          {XrayMode != MODE_VIEW ? (
+          {XrayMode != keys.MODE.MODE_VIEW ? (
             <div>
               <Button
                 simple
@@ -202,21 +262,21 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
             <TextField
               required
               id="name-required"
-              label="Name"
+              label={t(strings.name)}
               //defaultValue={moment().format("DD/MM/YYYY")}
               style={{ flex: 2 }}
               InputProps={{
-                readOnly: XrayMode === MODE_VIEW,
+                readOnly: XrayMode === keys.MODE.MODE_VIEW,
               }}
               value={name}
               onChange={onChangeName}
             />
             <TextField
               id="note"
-              label="Note"
+              label={t(strings.note)}
               style={{ marginLeft: 20, flex: 8 }}
               InputProps={{
-                readOnly: XrayMode === MODE_VIEW,
+                readOnly: XrayMode === keys.MODE.MODE_VIEW,
               }}
               value={note}
               onChange={onChangeNote}
@@ -250,6 +310,12 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
           }}
           images={imageList}
         />
+        <ImageDialog
+          open={dialogOpen}
+          onClose={onCloseDialog}
+          patientID={patientID}
+          onSelect={onEditedFrameImage}
+        ></ImageDialog>
       </Container>
     </React.Fragment>
   );

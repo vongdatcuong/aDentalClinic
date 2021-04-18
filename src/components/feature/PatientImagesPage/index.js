@@ -92,7 +92,7 @@ const PatientImagesPage = ({ patientID }) => {
   const onReload = (image, mode) => {
     let newImageList = imageList.slice();
     if (mode == "INSERT") {
-      newImageList.push(image);
+      newImageList.unshift(image);
     } else {
       const index = imageList.findIndex(function (img) {
         return img._id == image._id;
@@ -177,9 +177,9 @@ const PatientImagesPage = ({ patientID }) => {
                 id: "images-per-page",
               }}
             >
-              <option value={5}>5</option>
               <option value={8}>8</option>
-              <option value={10}>10</option>
+              <option value={16}>16</option>
+              <option value={32}>32</option>
               <option value={1000}>{t(strings.all)}</option>
             </Select>
           </div>

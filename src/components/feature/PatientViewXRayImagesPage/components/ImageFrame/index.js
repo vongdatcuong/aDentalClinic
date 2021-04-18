@@ -13,9 +13,9 @@ import IconButton from "@material-ui/core/IconButton";
 import { toast } from "react-toastify";
 import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import { FaPencilAlt, FaSearchPlus, FaTrashAlt } from "react-icons/fa";
+
+import keys from "../../../../../configs/keys";
 const useStyles = makeStyles(styles);
-const MODE_VIEW = "VIEW";
-const MODE_EDIT = "EDIT";
 const ImageFrame = ({
   frameInfo,
   mode,
@@ -23,6 +23,8 @@ const ImageFrame = ({
   MouthWidth,
   onView,
   resetState,
+  onEdit,
+  onDelete,
 }) => {
   const [frameWidth] = useState(frameInfo.width_ratio * MouthWidth);
   const [imageHeight] = useState(frameInfo.height_ratio * MouthHeight);
@@ -54,7 +56,7 @@ const ImageFrame = ({
       defaultPosition={{ x: defaultX, y: defaultY }}
       handle="strong"
       bounds="parent"
-      disabled={mode === MODE_VIEW ? true : false}
+      disabled={mode === keys.MODE.MODE_VIEW ? true : false}
       position={position}
       onDrag={onDrag}
     >
@@ -80,23 +82,25 @@ const ImageFrame = ({
             {frameInfo.order}
           </Typography>
           <div>
-            <IconButton onClick={onViewImage} size="small">
-              <FaSearchPlus style={{ margin: 5 }} />
-            </IconButton>
-            {mode === MODE_EDIT ? (
+            {mode === keys.MODE.MODE_VIEW ? (
+              <IconButton onClick={onViewImage} size="small">
+                <FaSearchPlus style={{ margin: 5 }} />
+              </IconButton>
+            ) : null}
+            {mode !== keys.MODE.MODE_VIEW ? (
               <IconButton
                 onClick={() => {
-                  toast.warning("Click edit");
+                  onEdit(frameInfo._id);
                 }}
                 size="small"
               >
                 <FaPencilAlt style={{ margin: 5 }} />
               </IconButton>
             ) : null}
-            {mode === MODE_EDIT ? (
+            {mode !== keys.MODE.MODE_VIEW ? (
               <IconButton
                 onClick={() => {
-                  toast.error("Click delete");
+                  onDelete(frameInfo._id);
                 }}
                 size="small"
               >
