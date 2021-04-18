@@ -123,7 +123,7 @@ const InsertChair = (props) => {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={isDeleted}
+                                    checked={!isDeleted}
                                     onChange={handleChangeIsDeleted}
                                     name={t(strings.active)}
                                     color="primary"
@@ -135,7 +135,7 @@ const InsertChair = (props) => {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={!isDeleted}
+                                    checked={isDeleted}
                                     onChange={handleChangeIsDeleted}
                                     name={t(strings.inactive)}
                                     color="primary"

@@ -64,9 +64,9 @@ const UpdatePerson = (props) => {
             name:name,
             order:order,
             color:color,
-            //is_deleted:isDeleted,
+            is_deleted:isDeleted,
         };
-        const result=await ChairService.insert(data);
+        const result=await ChairService.update(props.id,data);
         if(result.success)
         {
             alert(t(strings.updateSuccess));
@@ -87,7 +87,7 @@ const UpdatePerson = (props) => {
                 setName(result.data.payload.name);
                 setColor(result.data.payload.color);
                 setOrder(result.data.payload.order);
-                
+                setIsDeleted(result.data.payload.is_deleted);
             }
         }
         if(props.id && name===null)
@@ -139,7 +139,7 @@ const UpdatePerson = (props) => {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={isDeleted}
+                                    checked={!isDeleted}
                                     onChange={handleChangeIsDeleted}
                                     name={t(strings.active)}
                                     color="primary"
@@ -151,7 +151,7 @@ const UpdatePerson = (props) => {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={!isDeleted}
+                                    checked={isDeleted}
                                     onChange={handleChangeIsDeleted}
                                     name={t(strings.inactive)}
                                     color="primary"

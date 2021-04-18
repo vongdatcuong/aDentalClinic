@@ -90,7 +90,7 @@ const Management = () => {
 
     const managements = ["providers", "staffs", "schedule", "procedure", "chairs", "referral",
                       "practices","authentication",
-                      "templates","drug","portal"];
+                      "templates","drug"];
     let curManagement = managements.indexOf(management);
     if (curManagement == -1){
       history.push(routePaths.managementsPath + "/providers");
@@ -122,7 +122,7 @@ const Management = () => {
         t(strings.authentication),
         t(strings.templates),
         t(strings.drug),
-        t(strings.portal),
+        //t(strings.portal),
       ];
     const srcs=[
         DentalProvider,
@@ -135,7 +135,7 @@ const Management = () => {
         AuthenticationImage,
         TemplatesImage,
         DrugImage,
-        PortalImage,
+        //PortalImage,
     ];
     const tablePanels=[
         <Providers />,
@@ -148,7 +148,7 @@ const Management = () => {
         <Authentication/>,
         <Template/>,
         <Drug />,
-        <Portal/>,
+        //<Portal/>,
     ];
     return (
         <div className={classes.container}>
