@@ -21,6 +21,8 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import PermMedia from "@material-ui/icons/PermMedia";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
+import ListIcon from '@material-ui/icons/List';
+
 import { FaTeeth, FaXRay } from "react-icons/fa";
 
 // Components
@@ -67,12 +69,19 @@ const TreatmentMenu = ({ patientID }) => {
       text: t(strings.images),
       icon: <PermMedia />,
     },
+    {
+      link: path.patientPrescriptionPath.replace(':patientID', patientID),
+      text: t(strings.prescription),
+      icon: <ListIcon />,
+    },
   ];
   const links = <LinkList links={pathList} />;
 
     const getGoBackURL = () => {    // nếu đang ở trang toothOverviewInfo thì quay về tooth chart, còn lại thì quay về ds patients
         let curUrl = window.location.pathname;
-        if (curUrl.includes("toothOverviewInfo") || curUrl.includes("xRayImages/add") || curUrl.includes("xRayImages/view")){
+        if (curUrl.includes("toothOverviewInfo") || curUrl.includes("xRayImages/add") || curUrl.includes("xRayImages/view")
+            || curUrl.includes("prescription")
+        ){
             return curUrl.substring(0,curUrl.lastIndexOf("/"));
         }
         else {

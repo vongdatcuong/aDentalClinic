@@ -137,12 +137,15 @@ const Patients = () => {
     const [rowsPerPage, setRowsPerPage] = useState(figures.defaultRowsPerPage);
     const [searchText,setSearchText]=useState("");
     const [rows,setRows]=useState([]);
+    const [rowsActive,setRowsActive]=useState([]);
+    const [rowsInactive,setRowsInactive]=useState([]);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [insertPerson,setInsertPerson]=useState(false);
-
+    const [status,setStatus]=useState(t(strings.active));
+    const listStatus=[t(strings.active),t(strings.inactive),t(strings.all)];
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangePage = (event, newPage) => {
@@ -155,6 +158,10 @@ const Patients = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
+    const handleChangeStatus=(event)=>{
+        setStatus(event.target.value);
+        console.log("Check status:",event.target.value);
+    }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     };
@@ -165,6 +172,7 @@ const Patients = () => {
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
     };
+
     const handleChangeIsEdited=(e)=>{
         console.log("Handle change edit");
         setIsEdited(!isEdited);
@@ -189,6 +197,8 @@ const Patients = () => {
     ];
     const changeData=(data)=>{
         let temp=[];
+        let tempActive=[];
+        let tempInactive=[];
         data.map((a,index)=>{
             let status;
             let gender;
@@ -213,10 +223,20 @@ const Patients = () => {
             <Button size="small" variant="outlined" color="primary" className={classes.actionButton}
             onClick={() => history.push(path.patientProfilePath.replace(':patientID', a._id))}>{t(strings.profile)}</Button>);
             temp=temp.concat(newData);
+            if(status===t(strings.active))
+            {
+                tempActive=tempActive.concat(newData);
+            }
+            else
+            {
+                tempInactive=tempInactive.concat(newData);
+            }
 
         })
         console.log("Check rows in change data:",temp);
         setRows(temp);
+        setRowsActive(tempActive);
+        setRowsInactive(tempInactive);
     }
     useEffect(()=>{
         
@@ -252,20 +272,20 @@ const Patients = () => {
             
             <div className={classes.content}>
                 <Grid container>
-                    <Grid item xs={8}>
+                    <Grid item xs={6}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.patient)}
                         </Typography>
                     </Grid>
                     {insertPerson===true || isEdited===true ?
 
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
                                 {t(strings.goBack)}
                             </Typography>
                         </Grid>
                         :
-                        <Grid item xs={4} className={classes.serviceControl}>
+                        <Grid item xs={6} className={classes.serviceControl}>
                         
                             <FormControl variant="filled">
 
@@ -284,6 +304,19 @@ const Patients = () => {
                                     }
                                 />
                             </FormControl>
+                            <Select
+                            
+                                value={status}
+                                onChange={handleChangeStatus}
+                                disableUnderline 
+                                className={classes.status}
+                            >
+                            
+                                <MenuItem value={listStatus[0]}>{listStatus[0]}</MenuItem>
+                                <MenuItem value={listStatus[1]}>{listStatus[1]}</MenuItem>
+                                <MenuItem value={listStatus[2]}>{listStatus[2]}</MenuItem>
+
+                            </Select>
                             <Select
                             
                                 value={editable}
@@ -319,21 +352,34 @@ const Patients = () => {
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePatient
                                         id={selectedRowData.id}
-                                        // last_name={selectedRowData.last_name}
-                                        // username={selectedRowData.username}
-                                        // password={selectedRowData.password}
-                                        // facebook={selectedRowData.facebook}
-                                        // fax={selectedRowData.fax}
-                                        // mobile_phone={selectedRowData.mobile_phone}
-                                        // home_phone={selectedRowData.home_phone}
-                                        // staff_photo={selectedRowData.staff_photo}
-                                        // email={selectedRowData.email}
-                                        // address={selectedRowData.address}
                                         
-                                        // is_active={selectedRowData.is_active}
 
                         />
                         :
+                            status===t(strings.active)?
+                            <TableCustom titles={titles}
+                                    data={rowsActive}
+                                    dataColumnsName={dataColumnsName}
+                                    editable={editable}
+                                    handleChangeIsEdited={handleChangeIsEdited}
+                                    changeToEditPage={true}
+                                    handleChangeSelectedRow={handleChangeSelectedRow}
+                                    numberColumn={dataColumnsName.length}
+                                    
+                                    />
+                                    :
+                            status===t(strings.inactive)?
+                            <TableCustom titles={titles}
+                                    data={rowsInactive}
+                                    dataColumnsName={dataColumnsName}
+                                    editable={editable}
+                                    handleChangeIsEdited={handleChangeIsEdited}
+                                    changeToEditPage={true}
+                                    handleChangeSelectedRow={handleChangeSelectedRow}
+                                    numberColumn={dataColumnsName.length}
+                                    
+                                    />
+                                    :
                             <TableCustom titles={titles}
                                     data={rows}
                                     dataColumnsName={dataColumnsName}
@@ -343,7 +389,7 @@ const Patients = () => {
                                     handleChangeSelectedRow={handleChangeSelectedRow}
                                     numberColumn={dataColumnsName.length}
                                     
-                                    />
+                                    />        
                     }
                    
                    
@@ -354,123 +400,7 @@ const Patients = () => {
 
         </div>
     )
-    // return (
-    //     <div className={classes.container}>
-    //         <Grid container spacing={0}>
-    //             <Grid item md={7} xs={4}>
-    //                 <Typography className={classes.title} variant="h5" component="h5">{t(strings.patient)}</Typography>
-    //             </Grid>
-    //             <Grid item md={3} xs={5} className={classes.serviceControl}>
-    //                 <FormControl variant="filled">
-    //                     <OutlinedInput
-    //                         className={classes.searchControl}
-    //                         type='text'
-    //                         value={searchText}
-    //                         fullWidth
-    //                         placeholder={t(strings.search)}
-    //                         onChange={handleChangeSearchText}
-    //                         endAdornment={
-    //                         <InputAdornment position="end">
-    //                             <SearchIcon className={classes.iconButton} />
-    //                         </InputAdornment>
-    //                         }
-    //                         color="primary"
-    //                     />
-    //                 </FormControl>
-    //             </Grid>
-    //             <Grid item md={2} xs={3}>
-    //                 <Tooltip title={t(strings.filter)}>
-    //                     <IconButton className={classes.serviceIconBtn}>
-    //                         <FilterList fontSize="large" />
-    //                     </IconButton>
-    //                 </Tooltip>
-    //                 <Tooltip title={t(strings.add)}>
-    //                     <IconButton className={classes.serviceIconBtn}>
-    //                         <AddBox fontSize="large" />          
-    //                     </IconButton>
-    //                 </Tooltip>
-    //             </Grid>
-    //         </Grid>
-    //         <Divider className={classes.titleDivider}/>
-    //         <div className={classes.content}>
-    //             <Container className={classes.tableContainer}>
-    //                 <TableContainer component={Paper}>
-    //                     <Table className={classes.table} aria-label="custom pagination table">
-    //                         <TableHead>
-    //                             <TableRow onClick={() => history.push(path.patientProfilePath)}>
-    //                                 <TableCell align="center" className={clsx(classes.titleColumn, classes.tableCell)} width="5%">
-    //                                     {t(strings.index)}
-    //                                 </TableCell>
-    //                                 <TableCell algin="center" className={clsx(classes.titleColumn, classes.tableCe)} width="15%">
-    //                                     {t(strings.id)}
-    //                                 </TableCell>
-    //                                 <TableCell align="left" className={clsx(classes.titleColumn, classes.tableCe)} width="20%">
-    //                                     {t(strings.fullname)}
-    //                                 </TableCell>
-    //                                 <TableCell align="left" className={clsx(classes.titleColumn, classes.tableCe)} width="10%">
-    //                                     {t(strings.birth)}
-    //                                 </TableCell>
-    //                                 <TableCell align="center" className={clsx(classes.titleColumn, classes.tableCe)} width="10%">
-    //                                     {t(strings.gender)}
-    //                                 </TableCell>
-    //                                 <TableCell align="left" className={clsx(classes.titleColumn, classes.tableCe)} width="50%">
-    //                                     {t(strings.address)}
-    //                                 </TableCell>
-    //                             </TableRow>
-    //                         </TableHead>
-    //                         <TableBody>
-    //                             {(rowsPerPage > 0
-    //                                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    //                                 : rows
-    //                             ).map((row,index) => (
-    //                                 <TableRow key={row.id} onClick={() => history.push(path.patientProfilePath)}>
-    //                                     <TableCell align="center" width="5%" className={classes.tableCell}>
-    //                                         {page * rowsPerPage + index + 1}
-    //                                     </TableCell>
-    //                                     <TableCell algin="left" width="15%" className={classes.tableCell}>
-    //                                         {row.id}
-    //                                     </TableCell>
-    //                                     <TableCell align="left" width="20%" className={classes.tableCell}>
-    //                                         {row.fullname}
-    //                                     </TableCell>
-    //                                     <TableCell align="left" width="10%" className={classes.tableCell}>
-    //                                         {row.birth}
-    //                                     </TableCell>
-    //                                     <TableCell align="center" width="10%" className={classes.tableCell}>
-    //                                         {row.gender}
-    //                                     </TableCell>
-    //                                     <TableCell align="left" width="50%" className={classes.tableCell}>
-    //                                         {row.address}
-    //                                 </TableCell>
-    //                                 </TableRow>
-    //                             ))}
-    //                             {emptyRows > 0 && (
-    //                                 <TableRow style={{ height: 53 * emptyRows }}>
-    //                                 <TableCell colSpan={6} />
-    //                                 </TableRow>
-    //                             )}
-    //                         </TableBody>
-    //                         <TableFooter>
-    //                             <TableRow>
-    //                                 <TablePagination
-    //                                     rowsPerPageOptions={[...figures.rowsPerPageOption, { label: 'All', value: -1 }]}
-    //                                     count={rows.length}
-    //                                     rowsPerPage={rowsPerPage}
-    //                                     page={page}
-    //                                     onChangePage={handleChangePage}
-    //                                     onChangeRowsPerPage={handleChangeRowsPerPage}
-    //                                     ActionsComponent={TablePaginationActions}
-    //                                     labelRowsPerPage={t(strings.rowsPerPage)}
-    //                                 />
-    //                             </TableRow>
-    //                         </TableFooter>
-    //                     </Table>
-    //                 </TableContainer>
-    //             </Container>
-    //         </div>
-    //         <Footer/>
-    //     </div>
-    // )
+
 }
 
 export default Patients;

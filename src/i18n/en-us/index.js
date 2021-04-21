@@ -130,6 +130,10 @@ export default {
         "Add more image": "Add more image",
         "Layer": "Layer",
         "Images per page": "Images per page",
+        "Prescription":"Prescription",
+        "Add more drug":"Add more drug",
+        "Expired date":"Expired date",
+        "Agree":"Agree",
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",

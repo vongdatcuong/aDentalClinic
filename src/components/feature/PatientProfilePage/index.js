@@ -28,7 +28,7 @@ import PopupChat from '../../common/Messenger/PopupChat';
 import TabPanel from '../../common/TabPanel';
 import TreatmentHistory from './TreatmentHistory.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
-
+import Footer from "../../../layouts/Footer";
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
@@ -150,6 +150,7 @@ const PatientProfilePage = ({ patientID }) => {
                     </Grid>
                 </Grid>
             </Grid>
+
         </Container></React.Fragment>
     )
 }

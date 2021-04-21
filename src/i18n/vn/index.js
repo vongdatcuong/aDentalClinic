@@ -127,6 +127,11 @@ export default {
         "Add more image": "Thêm hình ảnh",
         "Layer": "Lớp",
         "Images per page": "Số hình trên mỗi trang",
+        "Prescription":"Đơn thuốc",
+        "Add more drug":"Thêm nhiều thuốc",
+        "Agree":"Đồng ý",
+        "Expired date":"Ngày hết hạn",
+
         // Tooth chart page
         "Overview": "Tổng quan",
         "Quickselect": "Chọn nhanh",

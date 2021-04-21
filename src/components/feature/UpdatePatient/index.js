@@ -22,6 +22,8 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -170,12 +172,12 @@ const UpdatePatient = (props) => {
             const update=await PatientService.update(props.id,data);
             if(update.success)
             {
-                alert(t(strings.updateSuccess));
+                toast.success(t(strings.updateSuccess));
                 console.log("Check update:",update);
             }
             else
             {
-                alert(t(strings.updateFail));
+                toast.error(t(strings.updateFail));
                 console.log("Check update:",update);
 
             }

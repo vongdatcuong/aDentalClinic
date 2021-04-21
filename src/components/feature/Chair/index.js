@@ -218,18 +218,7 @@ const Chairs = () => {
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateChair
                                         id={selectedRowData.id}
-                                        // last_name={selectedRowData.last_name}
-                                        // username={selectedRowData.username}
-                                        // password={selectedRowData.password}
-                                        // facebook={selectedRowData.facebook}
-                                        // fax={selectedRowData.fax}
-                                        // mobile_phone={selectedRowData.mobile_phone}
-                                        // home_phone={selectedRowData.home_phone}
-                                        // staff_photo={selectedRowData.staff_photo}
-                                        // email={selectedRowData.email}
-                                        // address={selectedRowData.address}
                                         
-                                        // is_active={selectedRowData.is_active}
 
                         />
                         :

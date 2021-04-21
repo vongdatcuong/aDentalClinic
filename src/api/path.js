@@ -74,6 +74,13 @@ const noteMacro={
     noteMacro:'/note-macro',
 
 }
+
+//prescription
+const prescription={
+    prescription:'/prescription',
+    detail:'/detail',
+    patient:'/patient',
+}
 export {
     authorization,
 }
@@ -92,5 +99,6 @@ export default {
     tooth,
     drug,
     referralSource,
-    noteMacro
+    noteMacro,
+    prescription
 };

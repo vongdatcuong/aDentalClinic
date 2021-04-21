@@ -24,6 +24,8 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -70,11 +72,11 @@ const InsertTemplate = (props) => {
         const result=await TemplateService.insert(data);
         if(result.success)
         {
-            alert(t(strings.insertSuccess));
+            toast.success(t(strings.insertSuccess));
         }
         else
         {
-            alert(t(strings.insertFail));
+            toast.error(t(strings.insertFail));
         }
 
     }

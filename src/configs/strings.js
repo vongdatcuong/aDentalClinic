@@ -235,6 +235,10 @@ const halitosis = "Halitosis";
 const addMoreImage = "Add more image";
 const layer = "Layer";
 const imagesPerPage = "Images per page";
+const prescription="Prescription";
+const addMoreDrug="Add more drug";
+const expired="Expired date";
+const agree="Agree";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -474,6 +478,10 @@ export default {
     addMoreImage,
     layer,
     imagesPerPage,
+    prescription,
+    addMoreDrug,
+    expired,
+    agree,
     // Tooth chart page
     overView,
     quickSelect,

@@ -32,6 +32,8 @@ import PropTypes from 'prop-types';
 
 import styles from "./jss";
 import darkTdarkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -146,11 +148,13 @@ const Template = () => {
             console.log("Delete template:",res);
             if(res.success)
             {
-                alert(t(strings.deleteSuccess))
+                toast.success(t(strings.deleteSuccess));
+                rowsWithType.splice(selectedRow,1);
+
             }
             else
             {
-                alert(t(strings.deleteFail));
+                toast.error(t(strings.deleteFail));
             }
         };
         deleteTemplate();
