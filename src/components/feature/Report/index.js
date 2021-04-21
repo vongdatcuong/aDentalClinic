@@ -282,8 +282,8 @@ const Report = () => {
     }
 
     const handleLoadStatistics = (evt) => {
-      const start = moment(fromDate).startOf('day');
-      const end = moment(toDate).endOf('day');
+      const start = moment(fromDate).utc().startOf('day');
+      const end = moment(toDate).utc().endOf('day');
       if (start._isValid && end._isValid){
         setApplyFromDate(start._d);
         setApplyToDate(end._d);

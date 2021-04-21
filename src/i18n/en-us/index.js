@@ -58,6 +58,8 @@ export default {
         // Success Messages Appointment
         "Delete Appointment successfully": "Delete Appointment successfully",
         "Delete Success":"Delete Success",
+        "Add Appointment successfully": "Add Appointment successfully",
+        "Update Appointment successfully": "Update Appointment successfully",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "Update Fail":"Update Fail",
@@ -107,6 +109,8 @@ export default {
         "Surface is required": "Surface is required",
         "Delete Appointment fail": "Delete Appointment fail",
         "This is a holiday": "This is a holiday",
+        "Add Appointment fail": "Add Appointment fail",
+        "Update Appointment fail": "Update Appointment fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",

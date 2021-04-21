@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useRef } from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import figures from '../../../configs/figures';
@@ -23,6 +23,7 @@ import Schedulerr from "./Scheduler";
 import LoadingPage from '../../../layouts/LoadingPage';
 import RightSidebar from '../../../layouts/RightSidebar';
 import AppoinmentTab from './AppointmentTab';
+import UpdateAppointmentTab from './UpdateAppointmentTab';
 import ConfirmDialog from '../../dialogs/ConfirmDialog';
 
 // API
@@ -44,6 +45,9 @@ const DashBoard = () => {
     // Context
     const {loadingState, dispatchLoading} = useContext(loadingStore);
 
+    // Ref
+    const calendarRef = useRef(null);
+
     // States
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [appointments, setAppointments] = useState([]);
@@ -52,13 +56,13 @@ const DashBoard = () => {
     const [chairs, setChairs] = useState([]);
     const [holidays, setHolidays] = useState([]);
 
-    const [selectedDate, setSelectedDate] = useState(new Date(2021, 1, 19, 0, 0, 0));
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [cellDuration, setCellDuration] = useState(figures.defaultCellDuration);
     const [startDayHour, setStartDayHour] = useState(figures.defaultStartDayHour);
     const [endDayHour, setEndDayHour] = useState(figures.defaultEndDayHour);
 
     // Slide
-    const [checkedScheduler, setCheckedScheduler] = useState(true);
+    const [displayTab, setDisplayTab] = useState(0);    //0: Scheduler, 1: Add Appointment Tab, 2: Update Appointment Tab
     const [selectedChairId, setSelectedChairId] = useState(null);
     const [selectedAppointStart, setSelectedAppointStart] = useState(null);
 
@@ -73,6 +77,9 @@ const DashBoard = () => {
 
     // Appointment tooltip popover
    const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
+
+   // Update appointment
+   const [selectedAppointID, setSelectedAppointmentID] = useState("");
 
     // Will mount
     const handleWillMount = useCallback(async () => {
@@ -112,7 +119,7 @@ const DashBoard = () => {
                 })
             ];
             const result = await Promise.all(promiseAll);
-            if (result[0].success && result[1].success && result[2].success && result[3].success && result[4]){
+            if (result[0].success && result[1].success && result[2].success && result[3].success && result[4].success){
                 setIsLoadingPage(false);
                 let aDate, aTime;
                 // Chairs
@@ -134,7 +141,7 @@ const DashBoard = () => {
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
                         resourceId: appointment.chair._id,
                         start: aDate,
-                        end: (endDate.isValid())? endDate : aDate,
+                        end: (endDate.isValid())? endDate._d : aDate,
                         patientGender: appointment.patient?.gender || "",
                         chair: appointment.chair,
                         status: appointment.status,
@@ -146,7 +153,6 @@ const DashBoard = () => {
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
                         backgroundColor: appointment.chair.color,
-                        "rendering": "background",
                     }
                 });
                 setAppointments(appointmentss);
@@ -252,7 +258,7 @@ const DashBoard = () => {
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
                         resourceId: appointment.chair._id,
                         start: aDate,
-                        end: (endDate.isValid())? endDate : aDate,
+                        end: (endDate.isValid())? endDate._d : aDate,
                         patientGender: appointment.patient?.gender || "",
                         chair: appointment.chair,
                         status: appointment.status,
@@ -312,13 +318,13 @@ const DashBoard = () => {
 
     // Time Table Cell
     const handleTimeTableCellClick = useCallback((chairID, startDate, endDate) => {
-        setCheckedScheduler(false);
+        setDisplayTab(1);
         setSelectedChairId(chairID);
         setSelectedAppointStart(new Date(startDate));
     }, []);
 
     const handleCloseAppointmentTab = useCallback(() => {
-        setCheckedScheduler(true);
+        setDisplayTab(0);
         setSelectedChairId(null);
     },[]);
 
@@ -333,7 +339,7 @@ const DashBoard = () => {
 
     const handleSelectDate = useCallback((date) => {
         const newDate = date.start;
-        newDate.setHours(0);
+        //newDate.setHours(0);
         if (newDate){
             setSelectedDate(newDate);
         } else {
@@ -361,7 +367,7 @@ const DashBoard = () => {
 
     // Right sidebar
     const handleSelectDateRightSidebar = (date) => {
-        setSelectedDate(date);
+        calendarRef.current.getApi().gotoDate(date)
     }
 
     // DELETE
@@ -373,6 +379,7 @@ const DashBoard = () => {
     const handleCloseConfirmDialog = () => {
         setOpenConfirmDialog(false);
     }
+
     const handleDeleteAppointment = useCallback(async () => {
         try {
             dispatchLoading({ type: strings.setLoading, isLoading: true});
@@ -400,6 +407,151 @@ const DashBoard = () => {
         setOpenConfirmDialog(false);
     }, [selectedAppoint, appointments]);
 
+    // Add appointment
+    const handleAddAppointment = useCallback(async (isNewPatient, patientData, appointData, resetFieldsFunc) => {
+        try {
+            dispatchLoading({type: strings.setLoading, isLoading: true});
+            if (isNewPatient){
+                const resultPatient = await api.httpPost({
+                    url: apiPath.patient.patient,
+                    body: patientData
+                });
+                // Add New Patient before add new appointment
+                if (resultPatient.success){
+                    appointData.patient = resultPatient.payload._id;
+                } else {
+                    toast.error(t(strings.addAppointmentErrMsg));
+                    return false;
+                }
+            } else {
+                if (!appointData.patient){
+                    toast.error(t(strings.addAppointmentErrMsg));
+                    return false;
+                }
+            }
+
+            const promiseAll = [
+                api.httpPost({
+                    url: apiPath.appointment.appointment,
+                    body: appointData
+                }),
+            ];
+            const result = await Promise.all(promiseAll);
+            if (result[0].success){
+                toast.success(t(strings.addAppointmentSuccess));
+                // Set new Appointment
+                const appointment = result[0].payload;
+                const newAppointments = [...appointments];
+                let aDate, aTime;
+                aDate = new Date(appointment.appointment_date);
+                aTime = appointment.appointment_time;
+                aDate.setHours(aTime.slice(0, 2));
+                aDate.setMinutes(aTime.slice(2));
+                const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+                newAppointments.push({
+                    id: appointment._id,
+                    title: (patientData.first_name + " " + patientData.last_name) || appointment.note || "",
+                    resourceId: appointment.chair._id,
+                    start: aDate,
+                    end: (endDate.isValid())? endDate._d : aDate,
+                    patientGender: appointment.patient?.gender || "",
+                    chair: appointment.chair,
+                    status: appointment.status,
+                    note: appointment.note,
+                    assistantDisplay: (appointment.assistant)? 
+                                    appointment.assistant.user.first_name + " " + appointment.assistant.user.last_name + " (" + appointment.assistant.display_id + ")"
+                                    : t(strings.no),
+                    providerDisplay: (appointment.provider)? 
+                                    appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
+                                    : t(strings.no),
+                    backgroundColor: appointment.chair.color
+                });
+                setAppointments(newAppointments);
+                resetFieldsFunc();
+                handleCloseAppointmentTab();
+            } else {
+                toast.error(result[0].message);
+                return false;
+            }
+        } catch(err){
+            toast.error(t(strings.addAppointmentErrMsg));
+            return false;
+        } finally {
+            dispatchLoading({type: strings.setLoading, isLoading: false});
+        }
+    }, [appointments]);
+    
+    // Update appointment
+    const handleOpenUpdateAppointTab = (appointID) => {
+        setSelectedAppointmentID(appointID);
+        setDisplayTab(2);
+    }
+
+    const handleCloseUpdateAppointTab = () => {
+        setSelectedAppointmentID("");
+        setDisplayTab(0);
+    }
+
+    const handleUpdateAppointment = useCallback(async (appointID, patientData, appointData, resetFieldsFunc) => {
+        try {
+            dispatchLoading({type: strings.setLoading, isLoading: true});
+            const promiseAll = [
+                api.httpPatch({
+                    url: apiPath.appointment.appointment + '/' + appointID,
+                    body: appointData
+                }),
+            ];
+            const result = await Promise.all(promiseAll);
+            if (result[0].success){
+                toast.success(t(strings.updateAppointmentSuccess));
+                // Set new Appointment
+                const appointment = result[0].payload;
+                let aDate, aTime;
+                aDate = new Date(appointment.appointment_date);
+                aTime = appointment.appointment_time;
+                aDate.setHours(aTime.slice(0, 2));
+                aDate.setMinutes(aTime.slice(2));
+                const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+                const newAppointments = [];
+                appointments.forEach((appoint) => {
+                    if (appoint.id != appointID){
+                        newAppointments.push(appoint);
+                    } else {
+                        newAppointments.push({
+                            id: appointment._id,
+                            title: (patientData.first_name + " " + patientData.last_name) || appointment.note || "",
+                            resourceId: appointment.chair._id,
+                            start: aDate,
+                            end: (endDate.isValid())? endDate._d : aDate,
+                            patientGender: appointment.patient?.gender || "",
+                            chair: appointment.chair,
+                            status: appointment.status,
+                            note: appointment.note,
+                            assistantDisplay: (appointment.assistant)? 
+                                            appointment.assistant.user.first_name + " " + appointment.assistant.user.last_name + " (" + appointment.assistant.display_id + ")"
+                                            : t(strings.no),
+                            providerDisplay: (appointment.provider)? 
+                                            appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
+                                            : t(strings.no),
+                            backgroundColor: appointment.chair.color
+                        });
+                    }
+                })
+                setAppointments(newAppointments);
+                resetFieldsFunc();
+                handleCloseUpdateAppointTab();
+            } else {
+                toast.error(result[0].message);
+                return false;
+            }
+        } catch(err){
+            toast.error(t(strings.updateAppointmentErrMsg));
+            return false;
+        } finally {
+            dispatchLoading({type: strings.setLoading, isLoading: false});
+        }
+    }, [selectedAppoint, appointments]);
+
     return (
         <React.Fragment>
             <Container className={classes.container}>
@@ -407,8 +559,8 @@ const DashBoard = () => {
                     <LoadingPage/>
                     :
                     <React.Fragment>
-                        <Fade in={!checkedScheduler}>
-                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (!checkedScheduler)? "block" : "none"}}>
+                        <Fade in={displayTab == 1}>
+                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (displayTab == 1)? "block" : "none"}}>
                                 <AppoinmentTab
                                     selectedChairId={selectedChairId}
                                     selectedAppointStart={selectedAppointStart}
@@ -420,12 +572,28 @@ const DashBoard = () => {
                                     onClose={handleCloseAppointmentTab}
                                     onSelectChair={handleOnAppointTabSelectChair}
                                     onSelectDate={handleOnAppointTabSelectDate}
+                                    onAddAppointment={handleAddAppointment}
                                 />
                             </Box>
                         </Fade>
-                        <Fade  in={checkedScheduler} style={{display: (checkedScheduler)? "block" : "none"}}>
-                            <Box p={0} m={0}>
+                        <Fade in={displayTab == 2}>
+                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (displayTab == 2)? "block" : "none"}}>
+                                <UpdateAppointmentTab
+                                    selectedAppointID={selectedAppointID}
+                                    chairs={chairs}
+                                    cellDuration={cellDuration}
+                                    startDayHour={startDayHour}
+                                    endDayHour={endDayHour}
+                                    holidays={holidays}
+                                    onClose={handleCloseUpdateAppointTab}
+                                    onUpdateAppointment={handleUpdateAppointment}
+                                />
+                            </Box>
+                        </Fade>
+                        <Fade  in={displayTab == 0} >
+                            <Box p={0} m={0} style={{display: (displayTab == 0)? "block" : "none"}}>
                                 <Schedulerr
+                                    calendarRef={calendarRef}
                                     appointments={appointments}
                                     blocks={blocks}
                                     chairs={chairs}
@@ -442,6 +610,7 @@ const DashBoard = () => {
                                     onDeleteAppointment={handleOpenConfirmDelete}
                                     openAppointTooltip={openAppointTooltip}
                                     setOpenAppointTooltip={setOpenAppointTooltip}
+                                    onUpdateAppointment={handleOpenUpdateAppointTab}
                                 />
                             </Box>
                         </Fade>

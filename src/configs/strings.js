@@ -159,6 +159,8 @@ const deleteSuccess = "Delete Success";
 const logInSuccessMsg = "Sign in successfully";
     // Success Messages Appointment
 const deleteAppointmentSuccess = "Delete Appointment successfully";
+const addAppointmentSuccess = "Add Appointment successfully";
+const updateAppointmentSuccess = "Update Appointment successfully";
     // Error Messages
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
@@ -202,6 +204,8 @@ const appointToothErrMsg = "Tooth is required";
 const appointSurfaceErrMsg = "Surface is required";
 const deleteAppointmentErrMsg = "Delete Appointment fail";
 const thisIsAHolidayErrMsg = "This is a holiday";
+const addAppointmentErrMsg = "Add Appointment fail";
+const updateAppointmentErrMsg = "Update Appointment fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -403,6 +407,8 @@ export default {
     // Success Messages Appointment
     deleteAppointmentSuccess,
     deleteAppointmentErrMsg,
+    addAppointmentSuccess,
+    updateAppointmentSuccess,
     // Error Messages
     updateFail,
     insertFail,
@@ -445,6 +451,8 @@ export default {
     appointToothErrMsg,
     appointSurfaceErrMsg,
     thisIsAHolidayErrMsg,
+    addAppointmentErrMsg,
+    updateAppointmentErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,

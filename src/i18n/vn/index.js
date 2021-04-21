@@ -57,6 +57,8 @@ export default {
         "Insert Success":"Thêm thành công",
         // Success Messages Appointment
         "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
+        "Add Appointment successfully": "Thêm cuộc hẹn thành công",
+        "Update Appointment successfully": "Cập nhật cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
         "Update Fail":"Cập nhật thất bại",
@@ -104,6 +106,8 @@ export default {
         "Surface is required": "Bề mặt không được để trống",
         "Delete Appointment fail": "Xóa cuộc hẹn thất bại",
         "This is a holiday": "Đây là ngày nghỉ",
+        "Add Appointment fail": "Thêm cuộc hẹn thất bại",
+        "Update Appointment fail": "Cập nhật cuộc hẹn thất bại",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",

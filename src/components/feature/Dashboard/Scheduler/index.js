@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo, useRef} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import { useTranslation } from 'react-i18next';
 import strings from '../../../../configs/strings';
 import figures from '../../../../configs/figures';
@@ -19,10 +19,7 @@ import HolidayMsgView from './TimeTable/HolidayMsgView';
 import FilterChairPopover from './Toolbar/FilterChairPopover';
 import FilterPatientPopover from './Toolbar/FilterPatientPopover';
 
-import Empty from '../../../common/Empty';
-
 // Utils
-import {disableClick} from '../../../../utils/general';
 
 // API
 import api from '../../../../api/base-api';
@@ -39,15 +36,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedulerr = (
   { 
-    appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, openAppointTooltip,
-    tableCellClick, onSelectChair, onSelectDate, onSelectPatient, onDeleteAppointment, setOpenAppointTooltip
+    calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, openAppointTooltip,
+    tableCellClick, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
   
   // States
   const [timeTableHeight, setTimeTableHeight] = useState(window.innerHeight - 100);
-  const calendarRef = useRef(null);
 
    // Filter Chair
    const [openFilterChairPopover, setOpenFilterChairPopover] = useState(false);
@@ -98,12 +94,6 @@ const Schedulerr = (
 
   })
 
-  // Tooltip
-  const handleAppointmentTooltipEdit = (info, startDate, endDate) => {
-    info.text = chairs[info.chairId - 1].text;
-    tableCellClick(info, startDate, endDate);
-  }
-
   // Filter chair
   const handleOpenFilterChair = (evt) => {
     setFilterChairAnchorEl(evt.target);
@@ -148,6 +138,12 @@ const Schedulerr = (
     setPopoverAppointID("");
   }
 
+  // Update appointment
+  const handleUpdateAppointment = () => {
+    onUpdateAppointment(popoverAppointID);
+    handleCloseAppointTooltip();
+  }
+  // Delete Appointment
   const handleDeleteAppointment = () => {
     onDeleteAppointment(popoverAppointID);
   }
@@ -236,11 +232,13 @@ const Schedulerr = (
                 const appointment = info.event.extendedProps;
                 const bound = el.getBoundingClientRect();
                 evt.preventDefault();
-                if (!appointment.block){console.log(info);
+                if (!appointment.block){
                   handleOpenAppointTooltip({left: bound.x, top: bound.y}, 
                     Object.assign({
-                      id: info.event._def.publicId,
-                      title: info.event._def.title
+                      id: info.event.id,
+                      title: info.event._def.title,
+                      start: info.event.start,
+                      end: info.event.end
                     }, info.event.extendedProps));
                 }
               }}
@@ -285,6 +283,7 @@ const Schedulerr = (
               onClose={handleCloseAppointTooltip}
               anchorPos={appointTooltipPos}
               appointment={appointTooltip}
+              onUpdateAppointment={handleUpdateAppointment}
               onDeleteAppointment={handleDeleteAppointment}
             />
         </Paper>
