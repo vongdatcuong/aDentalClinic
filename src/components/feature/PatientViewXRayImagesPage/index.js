@@ -356,7 +356,12 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
               value={note}
               onChange={onChangeNote}
             />
-            <div style={{ flex: 1 }}></div>
+            <div style={{ flex: 1, textAlign: "center", alignSelf: "center" }}>
+              {XrayMode == keys.MODE.MODE_ADD ? "" : "Created: "}
+              {MouthData
+                ? moment(MouthData.entry_date).format("DD/MM/YYYY")
+                : null}
+            </div>
           </div>
           <div
             className={classes.box}
