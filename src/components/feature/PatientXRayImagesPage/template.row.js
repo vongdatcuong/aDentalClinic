@@ -161,6 +161,7 @@ const MouthTemplateRow = ({ patientID, template }) => {
           {mouthList.map((mouth, index) => {
             return (
               <div
+                key={mouth._id}
                 className={classes.xRayThumbnail}
                 style={{ flexDirection: "column" }}
               >

@@ -56,10 +56,12 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
     setViewingImageIndex(order - 1);
     setVisible(true);
   };
-  const onLoad = async (mount_id) => {
+  const onSetData = (data) => {
+    if (data == null) {
+      return false;
+    }
     try {
       dispatchLoading({ type: strings.setLoading, isLoading: true });
-      let data = await MountService.getsMouthById(mount_id);
       if (data.success) {
         const imagesListData = [];
         for (const frame of data.payload.frames) {
@@ -67,7 +69,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
             "Frame " +
             frame.order +
             ": " +
-            (frame.image ? frame.image.image_name : null);
+            (frame.image ? frame.image.image_name : "");
           const path = frame.image ? frame.image.image_path : null;
           const imageData = Object.assign({}, frame, {
             src: path,
@@ -86,7 +88,51 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       } else {
         toast.error(data.message);
       }
+      return data.success;
     } catch (err) {
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
+  const onLoad = async (mount_id) => {
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      let data = await MountService.getsMouthById(mount_id);
+      onSetData(data);
+    } catch (err) {
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
+  const onUpdateXray = async (mount_id, mouth) => {
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      let data = await MountService.update(mount_id, mouth);
+      const rs = onSetData(data);
+      if (rs) {
+        toast.success(t(strings.updateSuccess));
+      }
+    } catch (err) {
+      toast.error(t(strings.updateFail));
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
+  const onInsertXray = async (mouth, patient_id) => {
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      const insertMouthObject = Object.assign({}, mouth, {
+        patient: patient_id,
+        entry_date: new Date(),
+        template: mouth._id,
+      });
+      let data = await MountService.insert(insertMouthObject);
+      const rs = onSetData(data);
+      if (rs) {
+        toast.success(t(strings.insertSuccess));
+      }
+    } catch (err) {
+      toast.error(t(strings.insertFail));
     } finally {
       dispatchLoading({ type: strings.setLoading, isLoading: false });
     }
@@ -112,6 +158,22 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       dispatchLoading({ type: strings.setLoading, isLoading: false });
     }
   };
+  const onEditFramePosition = (frame_id, x_ratio, y_ratio) => {
+    const frameIndex = imageList.findIndex((n) => n._id === frame_id);
+    if (frameIndex === -1) {
+      return;
+    }
+    let frame = Object.assign({}, imageList[frameIndex], {
+      x_ratio: parseFloat(x_ratio),
+      y_ratio: parseFloat(y_ratio),
+    });
+    let imagesListData = frameIndex > 0 ? imageList.slice(0, frameIndex) : [];
+    imagesListData.push(frame);
+    imagesListData = imagesListData.concat(
+      imageList.slice(frameIndex + 1, frameIndex.length)
+    );
+    setImageList(imagesListData);
+  };
   const onEditedFrameImage = (image_object) => {
     //set image_object
     const frameIndex = imageList.findIndex((n) => n._id === editingFrameId);
@@ -125,7 +187,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       "Frame " +
       frame.order +
       ": " +
-      (frame.image ? frame.image.image_name : null);
+      (frame.image ? frame.image.image_name : "");
     const path = frame.image ? frame.image.image_path : null;
     const imageData = Object.assign({}, frame, {
       src: path,
@@ -133,7 +195,9 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
     });
     let imagesListData = frameIndex > 0 ? imageList.slice(0, frameIndex) : [];
     imagesListData.push(imageData);
-    imagesListData = imagesListData.concat(imageList.slice(frameIndex + 1, frameIndex.length));
+    imagesListData = imagesListData.concat(
+      imageList.slice(frameIndex + 1, frameIndex.length)
+    );
     setImageList(imagesListData);
     setEditingFrameId(null);
   };
@@ -157,7 +221,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       imageList.slice(frameIndex + 1, frameIndex.length)
     );
     setImageList(imagesListData);
-  }
+  };
   const onCloseDialog = () => {
     setDialogOpen(false);
   };
@@ -171,9 +235,19 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   const onChangeNote = (e) => {
     setNote(e.target.value);
   };
-  const onSave = () => {
+  const onSave = async () => {
     //Do the saving here
-
+    const templateName = MouthData.name;
+    let newMouth = Object.assign({}, MouthData, { name: name, note: note });
+    newMouth.frames = imageList.slice();
+    if (XrayMode == keys.MODE.MODE_ADD) {
+      if (newMouth.note == null || newMouth.note == "") {
+        newMouth = Object.assign({}, newMouth, { note: templateName });
+      }
+      onInsertXray(newMouth, patientID);
+    } else if (XrayMode == keys.MODE.MODE_EDIT) {
+      onUpdateXray(newMouth._id, newMouth);
+    }
     setXrayMode(keys.MODE.MODE_VIEW);
   };
   const onCancel = async () => {
@@ -213,6 +287,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
         resetState={resetState}
         onEdit={onOpenDialog}
         onDelete={onDeleteFrameImage}
+        onChangePosition={onEditFramePosition}
       />
     );
   };

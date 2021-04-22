@@ -102,7 +102,7 @@ const PatientXRayImagesPage = ({ patientID }) => {
         <div className={classes.bodyContainer}>
           {templateList.map((template) => {
             return (
-              <MouthTemplateRow template={template} patientID={patientID} />
+              <MouthTemplateRow key={template._id} template={template} patientID={patientID} />
             );
           })}
         </div>

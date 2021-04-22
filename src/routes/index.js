@@ -65,7 +65,11 @@ function PatientAddXRayImages() {
 function PatientViewXRayImages() {
     let { patientID, MouthID } = useParams();
     return (
-      <PatientViewXRayImagesPage patientID={patientID} MouthID={MouthID} />
+      <PatientViewXRayImagesPage
+        patientID={patientID}
+        MouthID={MouthID}
+        mode={keysConfig.MODE.MODE_VIEW}
+      />
     );
 }
 

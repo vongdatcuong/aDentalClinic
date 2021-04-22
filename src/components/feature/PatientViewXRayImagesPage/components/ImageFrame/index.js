@@ -25,6 +25,7 @@ const ImageFrame = ({
   resetState,
   onEdit,
   onDelete,
+  onChangePosition,
 }) => {
   const [frameWidth] = useState(frameInfo.width_ratio * MouthWidth);
   const [imageHeight] = useState(frameInfo.height_ratio * MouthHeight);
@@ -44,21 +45,31 @@ const ImageFrame = ({
       y: data.y,
     });
   };
+  const onStop = (e, data) => {
+    setPosition({
+      x: data.x,
+      y: data.y,
+    });
+    const x_ratio = parseFloat(data.x / MouthWidth).toFixed(2);
+    const y_ratio = parseFloat(data.y / MouthHeight).toFixed(2);
+    const frame_id = frameInfo._id;
+    onChangePosition(frame_id, x_ratio, y_ratio);
+  };
   useEffect(() => {
     setPosition({
-      x: defaultX,
-      y: defaultY,
+      x: frameInfo.x_ratio * MouthWidth,
+      y: frameInfo.y_ratio * MouthHeight,
     });
   }, [resetState]);
   return (
     <Draggable
-      grid={[10, 10]}
       defaultPosition={{ x: defaultX, y: defaultY }}
       handle="strong"
       bounds="parent"
       disabled={mode === keys.MODE.MODE_VIEW ? true : false}
       position={position}
       onDrag={onDrag}
+      onStop={onStop}
     >
       <div
         className={classes.box_no_cursor}

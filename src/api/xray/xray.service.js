@@ -49,6 +49,43 @@ class MouthService {
       };
     }
   }
+  async insert(data) {
+    try {
+      const result = await httpPost({
+        url: apiPath.image.mouth,
+        body: data,
+      });
+      return result;
+    } catch (error) {
+      console.log("Failed to insert mouth:", error);
+      return {
+        success: false,
+      };
+    }
+  }
+  async update(id, data) {
+    try {
+      const result = await httpPatch({
+        url: `${apiPath.image.mouth}/${id}`,
+        body: data,
+      });
+      if (result.success) {
+        return result;
+      } else {
+        return {
+          success: false,
+          data: null,
+          message: result.message,
+        };
+      }
+    } catch (error) {
+      console.log("Failed to update mouth:", error);
+      return {
+        success: false,
+        data: null,
+      };
+    }
+  }
 }
 
 export default new MouthService();
