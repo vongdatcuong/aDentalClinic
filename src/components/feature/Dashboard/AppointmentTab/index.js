@@ -143,7 +143,7 @@ const AppointmentTab = ({
 
     useEffect(async () => {
         setDuration(selectedDuration);
-    }, [treatments, addedTreatments, patient]);
+    }, [treatments, addedTreatments, patient, selectedDuration]);
 
     const handleOnNewPatient = () => {
         setIsNewPatient(true);

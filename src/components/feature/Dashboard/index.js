@@ -68,7 +68,7 @@ const DashBoard = () => {
     const [selectedDuration, setSelectedDuration] = useState(figures.defaultCellDuration);
 
     // Filter Patient
-    const [patientDisplayObj, setPatientDisplayObj] = useState({});
+    const [patientDisplayObj, setPatientDisplayObj] = useState(Object.create(null));
 
     // Dialogs
     const [selectedAppoint, setSelectedAppoint] = useState(null);
@@ -383,7 +383,7 @@ const DashBoard = () => {
     }
 
     const resetFilter = () => {
-        setPatientDisplayObj({});
+        setPatientDisplayObj(Object.create(null));
     }
 
     // Right sidebar

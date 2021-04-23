@@ -1,7 +1,9 @@
 import React from "react";
 import { Switch, Route, Redirect , useParams} from "react-router-dom";
+import lists from '../configs/lists';
 import path from "./path";
 import PrivateRoute from './PrivateRoute';
+import AuthorizedRoute from './AuthorizedRoute';
 
 // @material-ui/core Component
 
@@ -19,7 +21,8 @@ import Schedule from "../components/feature/Schedule";
 import Portal from "../components/feature/Portal";
 import Drug from "../components/feature/Drug";
 import Practice from "../components/feature/Practice";
-import Dashboard from '../components/feature/Dashboard';
+import StaffDashboard from '../components/feature/Dashboard';
+import ProviderDashboard from '../components/feature//Dashboard/ProviderDashBoard';
 import LoginPage from '../components/feature/LoginPage';
 import Settings from '../components/feature/Settings';
 import ToothChartPage from '../components/feature/ToothChartPage';
@@ -89,7 +92,12 @@ function Routes() {
       <PrivateRoute path={path.dashboardPath}>
         <PageContainer>
           <LeftSidebar />
-          <Dashboard />
+          <AuthorizedRoute
+            components={{
+              [lists.staff.staffType.staff]: <StaffDashboard/>,
+              [lists.staff.staffType.provider]: <ProviderDashboard/>
+            }}
+          />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.providersPath}>

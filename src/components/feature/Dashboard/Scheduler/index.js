@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedulerr = (
   { 
-    isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, openAppointTooltip,
-    tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
+    isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, 
+    openAppointTooltip, tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
@@ -195,7 +195,7 @@ const Schedulerr = (
               }}
               initialDate={selectedDate}
               //editable={true}
-              selectable={true}
+              selectable={!isImmutable}
               selectOverlap={false}
               //selectMirror={true}
               dayMaxEvents={true}
@@ -278,7 +278,8 @@ const Schedulerr = (
                 onApply={handleSelectPatient}
             />
             <AppointmentTooltipPopover
-              isImmutable={isImmutable}
+              isEditable={true}
+              isDeletable={!isImmutable}
               id={appointTooltipPopoverId}
               open={openAppointTooltip}
               onClose={handleCloseAppointTooltip}

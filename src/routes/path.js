@@ -10,6 +10,7 @@ const settingsWithSectionPath = '/settings/:section';
 const loginPath = '/login';
 const managementsPath='/managements';
 const managementsWithManagementPath='/managements/:management';
+const patientPathNoS = '/patient';
 
 const providersPath='/providers';
 const staffsPath='/staffs';
@@ -32,11 +33,13 @@ const patientAddXRayImagesPath = '/patient/:patientID/xRayImages/add'; // TODO: 
 const patientViewXRayImagesPath = '/patient/:patientID/xRayImages/view'; // TODO: param: xray layer, image id
 const patientImagesPath = '/patient/:patientID/images';
 const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
+const profilePath = '/profile';
 
 const path = {
     defaultPath,
     dashboardPath,
     patientPath,
+    patientPathNoS,
     reportPath, 
     documentPath,
     settingsPath,
@@ -63,6 +66,7 @@ const path = {
     portalPath,
     managementsPath,
     managementsWithManagementPath,
+    profilePath,
     //insert
     insertPersonPath,
     
