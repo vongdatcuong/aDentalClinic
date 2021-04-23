@@ -24,6 +24,8 @@ import { Typography,
     DialogActions,
     DialogContent,
     DialogContentText,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -57,7 +59,6 @@ const dataColumnsName=["index","name","dispensed","quantity","description","refi
 const UpdatePatientPrescription = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
-    
     //state
    
     const [drug,setDrug]=useState([]);
@@ -163,33 +164,8 @@ const UpdatePatientPrescription = (props) => {
         handleCloseDialog();
         
     }
-    // const insertDrug=(e)=>{
-    //     if(currentDrug!==t(strings.drug))
-    //     {
-    //         handleCloseDialog();
-    //         let temp=drug;
-    //         temp=temp.concat(createData(listDrug[currentDrug].id,listDrug[currentDrug].name,dispensed,
-    //                                     quantity,description,refill,expired
-    //             ));
-
-           
-    //         setDrug(temp);
-    //         console.log("Check after add drug:",temp);
-    //         setDescription(null);
-    //         setDispensed(null);
-    //         setExpired(null);
-    //         setQuantity(null);
-    //         setRefill(null);
-    //         setCurrentDrug(t(strings.drug));
-            
-    //     }
-    // }
-    // const deleteRow=(e)=>{
-    //     handleCloseDialog2();
-    //     console.log("Delete now:",selectedRowData);
-        
-    //     drug.splice(selectedRow,1);
-    // }
+    
+    
     const changeDataForDisplay=(data)=>{
         let temp=[];
         data.map((a,index)=>{
@@ -213,55 +189,59 @@ const UpdatePatientPrescription = (props) => {
         setListDrug(temp);
     }
     const updatePrescription=async(e)=>{
-        if(provider!==t(strings.provider))
+        if(props.editable===true)
         {
             console.log("Check list detail:",listDetail[0]._id);
             let details=[];
             drug.map((a,index)=>{
                 let temp=details;
                 temp=temp.concat({
-                    drug:a.id,
-                    expiry_date:a.expired,
-                    description:a.description,
-                    dispensed:a.dispensed,
-                    refill:a.refill,
-                    quantity:a.quantity,
+                drug:a.id,
+                expiry_date:a.expired,
+                description:a.description,
+                dispensed:a.dispensed,
+                refill:a.refill,
+                quantity:a.quantity,
                 })
-                details=temp;
+            details=temp;
             });
             console.log("Check detail before update to db:",details);
             details.map((detail,index)=>{
                 const updateDetail=async()=>{
                     console.log("Check list detail index:",listDetail[index]);
                     const res=await PrescriptionService.updateDetail(listDetail[index]._id,detail);
-                    
-                }
+                        
+                    }
                 updateDetail();
             })
             const data={
                 patient:props.patientID,
                 provider:provider,
-                // details:details,
+                    // details:details,
             };
             console.log("Check before update:",data);
             const result=await PrescriptionService.update(props.id,data);
-            
             if(result.success===true )
             {
-                
+                    
                 toast.success(t(strings.updateSuccess));
             }
             else
             {
                 toast.error(t(strings.updateFail));
-            }
+            }            
         }
-       
-
+        
+        
+        
     }
     const renderListProvider=()=>{
         return listProvider.map((provider,index)=>{
-            return <MenuItem key={index} value={provider._id}>{provider.user.first_name} {provider.user.last_name}</MenuItem>
+            return <MenuItem key={index} 
+                            value={provider._id}
+                    >
+                        {provider.user.first_name} {provider.user.last_name}
+                    </MenuItem>
         })
     }
     const renderListDrug=()=>{
@@ -341,20 +321,22 @@ const UpdatePatientPrescription = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         {listProvider.length!==0 ?
-                        <div className={classes.itemSelect}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id={t(strings.provider)}>{t(strings.provider)}</InputLabel>
+
                             <Select
-                                
+                                labelId={t(strings.provider)}
                                 value={provider}
                                 onChange={handleChangeProvider}
                                 disableUnderline 
                                 className={classes.status}
+                                inputProps={{ readOnly: !props.editable }}
                                 >
-                            <MenuItem value={t(strings.provider)}>{t(strings.provider)}</MenuItem>
                             {renderListProvider()}
 
                         </Select>
                         
-                        </div>
+                        </FormControl>
                         :
                         <div></div>
 
@@ -378,7 +360,7 @@ const UpdatePatientPrescription = (props) => {
                         data={drug}
                         dataColumnsName={dataColumnsName}
                         isDelete={false}
-                        editable={true}
+                        editable={props.editable}
                         changeToEditPage={true}
                         handleChangeSelectedRow={handleChangeSelectedRow}
                         handleOpenDialog={handleOpenDialog}
@@ -409,61 +391,67 @@ const UpdatePatientPrescription = (props) => {
                 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id={t(strings.drug)} className={classes.inputItem}>{t(strings.drug)}</InputLabel>
+
                             <Select
+                                labelId={t(strings.drug)}
                                 value={currentDrug}
                                 onChange={handleChangeCurrentDrug}
-                                className={classes.menu}
-                                inputProps={{ readOnly: true }}
+                                className={classes.status}
+                                label={t(strings.provider)}
+                                inputProps={{ readOnly: !props.editable }}
                             >
-                                <MenuItem value={t(strings.drug)}>{t(strings.drug)}</MenuItem>
                                 {renderListDrug()}
                             </Select>
-                        </div>
+                        </FormControl>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         
-                                        placeholder={t(strings.description)}  
+                                        label={t(strings.description)}  
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
-                                        
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.refill)}  
+                                        label={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
-                                        
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
+                   
+
                     <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.dispensed)}  
+                                        label={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
-                                        
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.quantity)}  
+                                        // placeholder={t(strings.quantity)}  
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
-                                        
+                                        disabled={!props.editable}
+                                        label={t(strings.quantity)}
                                         /> 
                         </div>
-                        <div className={classes.item}>
+                        <div className={classes.itemDate}>
                             {/* <TextField className={classes.inputControl} 
                                         placeholder={t(strings.expired)}  
                                         variant="outlined" 
@@ -475,14 +463,15 @@ const UpdatePatientPrescription = (props) => {
                                 margin="normal"
                                 id="date-picker-dialog"
                                 // label="Date picker dialog"
-                                placeholder={t(strings.expired)}
+                                label={t(strings.expired)}
                                 format={t(strings.apiDateFormat)}
                                 value={expired}
                                 onChange={handleChangeExpired}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
-                                className={classes.inputControl} 
+                                className={classes.inputControlDate} 
+                                disabled={!props.editable}
                             />
                         </div>
                        

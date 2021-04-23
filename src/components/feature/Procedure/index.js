@@ -220,7 +220,7 @@ const Procedure = () => {
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateProcedure 
                             id={selectedRowData.id}
-
+                            editable={editable}
                         />
                         :
                         

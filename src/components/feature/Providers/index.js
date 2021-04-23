@@ -233,6 +233,7 @@ const Providers = () => {
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson 
+                                        editable={editable}
                                         id={selectedRowData.id}
                                         
 

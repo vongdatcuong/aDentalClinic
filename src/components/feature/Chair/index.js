@@ -218,7 +218,7 @@ const Chairs = () => {
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateChair
                                         id={selectedRowData.id}
-                                        
+                                        editable={editable}
 
                         />
                         :

@@ -228,7 +228,7 @@ const Staffs = () => {
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson  id={selectedRowData.id}
-
+                                        editable={editable}
                         />
                         :
                             <TableCustom titles={titles}

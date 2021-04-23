@@ -62,21 +62,25 @@ const UpdatePerson = (props) => {
 
    
     const onClickUpdate=async()=>{
-        const data={
-            name:name,
-            order:order,
-            color:color,
-            is_deleted:isDeleted,
-        };
-        const result=await ChairService.update(props.id,data);
-        if(result.success)
+        if(props.editable===true)
         {
-            toast.success(t(strings.updateSuccess));
+            const data={
+                name:name,
+                order:order,
+                color:color,
+                is_deleted:isDeleted,
+            };
+            const result=await ChairService.update(props.id,data);
+            if(result.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
-        else
-        {
-            toast.error(t(strings.updateFail));
-        }
+        
         
         
     }
@@ -114,7 +118,7 @@ const UpdatePerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -124,7 +128,8 @@ const UpdatePerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeOrder}
                                         value={order}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -134,7 +139,8 @@ const UpdatePerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeColor}
                                         value={color}
-                                       
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.itemSmall}>
@@ -146,6 +152,8 @@ const UpdatePerson = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    disabled={!props.editable}
+
                                 />
                                 }
                                 label={t(strings.active)}
@@ -158,6 +166,7 @@ const UpdatePerson = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    disabled={!props.editable}
 
                                 />
                                 }

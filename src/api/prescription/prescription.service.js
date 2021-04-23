@@ -117,7 +117,10 @@ class PrescriptionService{
                     
             const result = await httpGet({
                 url: `${apiPath.prescription.prescription}${apiPath.prescription.patient}/${id}`,
-
+                query:{
+                    // get_provider:true,
+                    get_details:true,
+                }
             });
             console.log("search prescription:",result);
             return {

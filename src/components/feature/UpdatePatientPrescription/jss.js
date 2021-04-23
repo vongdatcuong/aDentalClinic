@@ -13,7 +13,9 @@ const updatePatientPrescriptionStyle = (theme) => ({
 
         }
     },
-    
+    space:{
+        marginTop:'5px',
+    },
     searchControl:{
         height:40,
         width:200,
@@ -103,6 +105,9 @@ const updatePatientPrescriptionStyle = (theme) => ({
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
         },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
         //         borderColor: theme.primaryColor[0],
@@ -151,6 +156,51 @@ const updatePatientPrescriptionStyle = (theme) => ({
         }
 
     },
+    inputControlDate:{
+        height:'35px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginBottom:'20px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     updateButton:{
        
         height:'35px',
@@ -172,10 +222,33 @@ const updatePatientPrescriptionStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
+        '& .MuiFormLabel-root.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiFormLabel-root':{
+            paddingBottom:'20px',
+            marginRight:'20px',
 
+        },
+        '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
+            transform: 'translate(8px, -6px) scale(0.75)',
+        }
+    },
+    itemDate:{
+        '& .MuiFormLabel-root.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiFormLabel-root':{
+            paddingBottom:'20px',
+            marginRight:'20px',
+
+        },
+        '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
+            transform: 'translate(8px, -6px) scale(0.75)',
+        }
     },
     itemSelect:{
-        marginTop:'30px',
+        marginTop:'10px',
         marginLeft:'30px',
         // border:`1px solid ${theme.primaryColor[0]}`,
         // minWidth:'100%'
@@ -229,10 +302,28 @@ const updatePatientPrescriptionStyle = (theme) => ({
 
     },
     menu:{
-        minWidth:'300px',
+        minWidth:'36vw',
         marginLeft:'30px',
         marginTop:'15px',
     },
+    
+    inputSelect:{
+        marginTop:'15px',
+        '& .MuiFormLabel-root.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiFormLabel-root':{
+            paddingBottom:'20px',
+            marginLeft:'20px',
+
+        },
+        '& .MuiSelect-select':{
+            paddingLeft:'15px',
+        },
+        '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
+            transform: 'translate(8px, -6px) scale(0.75)',
+        }
+    }
 
 });
 

@@ -60,6 +60,7 @@ export default {
         "Delete Success":"Delete Success",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
+        "Cannot change in read mode":"Cannot change in read mode",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
         "Delete Fail":"Delete Fail",

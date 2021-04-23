@@ -55,12 +55,16 @@ import UpdatePatientPrescription from "../UpdatePatientPrescription";
 import PopupChat from '../../common/Messenger/PopupChat';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import Footer from "../../../layouts/Footer";
+import { TrainRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 const createData=(id,date)=>{
     return {id,date};
 };
+ 
 const dataColumnsName=["index","date"]
+
+
 
 const PatientPrescriptionPage = ({patientID}) => {
     const {t, i18n } = useTranslation();
@@ -81,6 +85,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     const [isDelete,setIsDelete]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+   
     const handleOpenDialog=(e)=>{
         setOpenDialog(true);
     }
@@ -108,6 +113,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         setInsertPatientPrescription(!insertPatientPrescription);
     }
     const handleChangeEditable=(e)=>{
+        console.log("Change editable:",!editable);
         setEditable(!editable);
     }
     const handleChangeSelectedRow=(value)=>{
@@ -185,16 +191,16 @@ const PatientPrescriptionPage = ({patientID}) => {
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rows[selectedRow] && isEdited===false )
+            if(selectedRowData!==rows[selectedRow] && isEdited===false && isDelete===false )
             {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
                 console.log("Check selected row data:",rows[selectedRow]);
             }
+            
 
         }
-  
     })
     return (  <React.Fragment>
         <TreatmentMenu patientID = { patientID }/>
@@ -265,12 +271,19 @@ const PatientPrescriptionPage = ({patientID}) => {
                         <InsertPatientPrescription
                                      patientID={patientID}
                         />
-                        : isEdited===true &&selectedRowData!==null && isDelete===false?
+                        : 
+                        // isEdited===true &&selectedRowData!==null && isDelete===false && editable===true?
+                        // <UpdatePatientPrescription
+                        //                 id={selectedRowData.id}
+                        //                 patientID={patientID}
+
+
+                        // />
+                        selectedRowData!==null && isDelete===false ?
                         <UpdatePatientPrescription
-                                        id={selectedRowData.id}
-                                        patientID={patientID}
-
-
+                                            id={selectedRowData.id}
+                                            patientID={patientID}
+                                            editable={editable}
                         />
                         :
                         rows.length!==0 ?
@@ -314,13 +327,16 @@ const PatientPrescriptionPage = ({patientID}) => {
                     </DialogActions>
                     
                 </Dialog>
+                
+                
             
+
             </div>
             
 
           </div>
           <Footer/>
-
+                    
         </Container>
         </React.Fragment>
     );

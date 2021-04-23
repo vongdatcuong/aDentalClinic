@@ -68,22 +68,25 @@ const UpdateTemplate = (props) => {
         })
     }
     const onClickUpdate=async()=>{
+        if(props.editable===true)
+        {
+            const data={
+                content:content,
+                note_type:noteType
+              
+            };
+            console.log("Data check onclick:",data);
+            const result=await TemplateService.update(props.id,data);
+            if(result.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
+        }
         
-        const data={
-            content:content,
-            note_type:noteType
-          
-        };
-        console.log("Data check onclick:",data);
-        const result=await TemplateService.update(props.id,data);
-        if(result.success)
-        {
-            toast.success(t(strings.updateSuccess));
-        }
-        else
-        {
-            toast.error(t(strings.updateFail));
-        }
         
         
     }
@@ -120,7 +123,7 @@ const UpdateTemplate = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
-                                       
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -140,6 +143,8 @@ const UpdateTemplate = (props) => {
                                 disableUnderline 
                                 displayEmpty
                                 className={classes.inputCombobox}
+                                disabled={!props.editable}
+
                                 //defaultValue={listCategory[0]._id}
                                 //placeholder={t(strings.category)}
                                 >

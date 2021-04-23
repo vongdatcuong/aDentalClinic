@@ -95,7 +95,7 @@ const UpdateProcedure = (props) => {
         setDescription(e.target.value);
     }
     const onClickUpdateProcedure=async(e)=>{
-        if(category!==null)
+        if(category!==null && props.editable===true)
         {
             const data={
                 abbreviation:abbreviation,
@@ -187,6 +187,7 @@ const UpdateProcedure = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAbbreviation}
                                         value={abbreviation}
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         
@@ -196,7 +197,10 @@ const UpdateProcedure = (props) => {
                                         placeholder={t(strings.procedureCode)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureCode}
-                                        value={procedureCode}/>
+                                        value={procedureCode}
+                                        disabled={!props.editable}
+
+                                        />
                              
                         </div>
                         <div className={classes.item}>
@@ -204,7 +208,10 @@ const UpdateProcedure = (props) => {
                                         placeholder={t(strings.procedureTime)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureTime}
-                                        value={procedureTime}/>
+                                        value={procedureTime}
+                                        disabled={!props.editable}
+
+                                        />
                              
                         </div>
                         <div className={classes.item}>
@@ -212,7 +219,10 @@ const UpdateProcedure = (props) => {
                                         placeholder={t(strings.procedureFee)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureFee}
-                                        value={procedureFee}/>
+                                        value={procedureFee}
+                                        disabled={!props.editable}
+
+                                        />
                              
                         </div>
                         <div className={classes.item}>
@@ -229,6 +239,8 @@ const UpdateProcedure = (props) => {
                                     disableUnderline 
                                     displayEmpty
                                     className={classes.inputCombobox}
+                                    disabled={!props.editable}
+
                                     //defaultValue={listCategory[0]._id}
                                     //placeholder={t(strings.category)}
                                     >
@@ -258,7 +270,10 @@ const UpdateProcedure = (props) => {
                                         placeholder={t(strings.description)}  
                                         variant="outlined"
                                         onChange={handleChangeDescription}
-                                        value={description}/> 
+                                        value={description}
+                                        disabled={!props.editable}
+
+                                        /> 
 
                         </div>
                         <div className={classes.item}>
@@ -266,7 +281,10 @@ const UpdateProcedure = (props) => {
                                         placeholder={t(strings.toothSelect)}  
                                         variant="outlined"
                                         onChange={handleChangeToothSelect}
-                                        value={toothSelect}/>
+                                        value={toothSelect}
+                                        disabled={!props.editable}
+
+                                        />
                              
                         </div>
                         <div className={classes.item}>
@@ -282,6 +300,7 @@ const UpdateProcedure = (props) => {
                                     onChange={handleChangeToothType}
                                     disableUnderline 
                                     displayEmpty
+                                    disabled={!props.editable}
                                     className={classes.inputCombobox}
                                     //defaultValue={listCategory[0]._id}
                                     //placeholder={t(strings.category)}
@@ -304,7 +323,8 @@ const UpdateProcedure = (props) => {
                                 disableUnderline 
                                 displayEmpty
                                 className={classes.inputCombobox}
-                                
+                                disabled={!props.editable}
+
                                 >
                                 <MenuItem value={procedureType}>{t(strings.procedureType)}</MenuItem>
                                 {renderListProcedureType()}

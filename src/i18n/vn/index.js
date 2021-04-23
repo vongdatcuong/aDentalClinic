@@ -59,6 +59,7 @@ export default {
         "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
+        "Cannot change in read mode":"Không thể thay đổi dữ liệu trong chế độ đọc",
         "Update Fail":"Cập nhật thất bại",
         "Insert Fail":"Thêm thất bại",
         "Full name must contain at least 3 to 30 characters": "Họ tên phải có từ 3 - 30 ký tự",

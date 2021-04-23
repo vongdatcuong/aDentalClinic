@@ -172,7 +172,7 @@ const Drug = () => {
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rows[selectedRow] && isEdited===false )
+            if(selectedRowData!==rows[selectedRow] && isEdited===false && isDelete===false )
             {
                 handleChangeIsEdited();
 
@@ -254,7 +254,7 @@ const Drug = () => {
                         : isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateDrug
                                         id={selectedRowData.id}
-                                        
+                                        editable={editable}
 
                         />
                         :

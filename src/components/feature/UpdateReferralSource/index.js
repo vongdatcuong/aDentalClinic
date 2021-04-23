@@ -73,24 +73,28 @@ const UpdateReferralSource = (props) => {
 
 
     const onClickUpdate=async()=>{
-        const data={
-            name:name,
-            phone:phone,
-            fax:fax,
-            address:address,
-            email:email,
-            additional_info:additionalInfo
-          
-        };
-        const result=await ReferralSourceService.update(props.id,data);
-        if(result.success)
+        if(props.editable===true)
         {
-            toast.success(t(strings.updateSuccess));
+            const data={
+                name:name,
+                phone:phone,
+                fax:fax,
+                address:address,
+                email:email,
+                additional_info:additionalInfo
+              
+            };
+            const result=await ReferralSourceService.update(props.id,data);
+            if(result.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
-        else
-        {
-            toast.error(t(strings.updateFail));
-        }
+        
         
         
     }
@@ -131,7 +135,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                       
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -141,7 +145,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -151,7 +156,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         
@@ -164,7 +170,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -173,7 +180,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -182,7 +190,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                        

@@ -177,7 +177,7 @@ const Referral = () => {
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rows[selectedRow] && isEdited===false )
+            if(selectedRowData!==rows[selectedRow] && isEdited===false && isDelete===false )
             {
                 handleChangeIsEdited();
 
@@ -259,6 +259,7 @@ const Referral = () => {
                         
                         : isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateReferralSource
+                                        editable={editable}
                                         id={selectedRowData.id}
                                         
 

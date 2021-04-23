@@ -164,6 +164,7 @@ const logInSuccessMsg = "Sign in successfully";
     // Success Messages Appointment
 const deleteAppointmentSuccess = "Delete Appointment successfully";
     // Error Messages
+const confirmChangeInReadMode="Cannot change in read mode";
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
 const insertFail = "Insert Fail";
@@ -411,6 +412,7 @@ export default {
     deleteAppointmentSuccess,
     deleteAppointmentErrMsg,
     // Error Messages
+    confirmChangeInReadMode,
     updateFail,
     insertFail,
     deleteFail,

@@ -338,6 +338,7 @@ const Template = () => {
                         isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateTemplate
                             id={selectedRowData.id}
+                            editable={editable}
                         />
                         :
 
