@@ -60,6 +60,9 @@ export default {
         "Delete Success":"Delete Success",
         "Add Appointment successfully": "Add Appointment successfully",
         "Update Appointment successfully": "Update Appointment successfully",
+        // Success Messages Settings
+        "Update Profile successfully": "Update Profile successfully",
+        "Change Password successfully": "Change Password successfully",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "Update Fail":"Update Fail",
@@ -111,6 +114,10 @@ export default {
         "This is a holiday": "This is a holiday",
         "Add Appointment fail": "Add Appointment fail",
         "Update Appointment fail": "Update Appointment fail",
+        // Error Messages Settings
+        "Change language fail": "Change language fail",
+        "Change theme fail": "Change theme fail",
+        "Change Password fail": "Change Password fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",

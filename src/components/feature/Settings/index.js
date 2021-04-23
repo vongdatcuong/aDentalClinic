@@ -26,6 +26,9 @@ import TermPrivacy from './TermPrivacy';
 import Notifications from './Notifications';
 import Location from './Location';
 
+// API
+import AuthService from '../../../api/authentication/auth.service';
+
 const useStyles = makeStyles(styles);
 
 function TabPanel(props) {
@@ -62,7 +65,9 @@ const Settings = () => {
     const history = useHistory();
     const { section } = useParams();
 
-    useEffect(() => {//alert(section)
+    const user = AuthService.getCurrentUser();
+
+    useEffect(() => {
       if (!section){
         history.push(routePaths.settingsPath + "/general");
       }

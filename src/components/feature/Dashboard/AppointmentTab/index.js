@@ -67,7 +67,7 @@ import apiPath from '../../../../api/path';
 const useStyles = makeStyles(styles);
 
 const AppointmentTab = ({
-    selectedChairId, selectedAppointStart, chairs, cellDuration, startDayHour, endDayHour, holidays,
+    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays,
     onClose, onSelectChair, onSelectDate, onAddAppointment
 }) => {
     const classes = useStyles();
@@ -101,7 +101,7 @@ const AppointmentTab = ({
     const [assistant, setAssistant] = useState(null);
     const [provider, setProvider] = useState(null);
     const [staging, setStaging] = useState(lists.appointment.staging.new);
-    const [duration, setDuration] = useState(cellDuration);
+    const [duration, setDuration] = useState(selectedDuration);
     const [note, setNote] = useState("");
 
     const [firstNameErrMsg, setFirstNameErrMsg] = useState("");
@@ -142,7 +142,7 @@ const AppointmentTab = ({
     const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
     useEffect(async () => {
-
+        setDuration(selectedDuration);
     }, [treatments, addedTreatments, patient]);
 
     const handleOnNewPatient = () => {
@@ -555,7 +555,7 @@ const AppointmentTab = ({
             <Grid container className={classes.gridContainer} spacing={2}>
                 <Grid container item md={6} sm={12} xs={12} spacing={0}>
                     {/* Select Patient */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -670,7 +670,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Patient contact */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -916,7 +916,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Note */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -943,7 +943,7 @@ const AppointmentTab = ({
                 </Grid>
                 <Grid container item md={6} sm={12} xs={12} spacing={0}>
                     {/* Select Recall */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid container item md={12} sm={12} xs={12} spacing={1}>
                             <Grid item md={6} sm={6} xs={6}>
@@ -984,7 +984,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Select Treatment */}
-                    <Grid container md={12} sm={12} xs={12} spacing={3} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={3} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid container item md={12} sm={12} xs={12} spacing={1}>
                             <Grid item md={6} sm={6} xs={6}>

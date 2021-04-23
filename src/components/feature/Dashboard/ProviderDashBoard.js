@@ -22,9 +22,6 @@ import styles from "./jss";
 import Schedulerr from "./Scheduler";
 import LoadingPage from '../../../layouts/LoadingPage';
 import RightSidebar from '../../../layouts/RightSidebar';
-import AppoinmentTab from './AppointmentTab';
-import UpdateAppointmentTab from './UpdateAppointmentTab';
-import ConfirmDialog from '../../dialogs/ConfirmDialog';
 
 // API
 import api from '../../../api/base-api';
@@ -61,26 +58,14 @@ const DashBoard = () => {
     const [startDayHour, setStartDayHour] = useState(figures.defaultStartDayHour);
     const [endDayHour, setEndDayHour] = useState(figures.defaultEndDayHour);
 
-    // Slide
-    const [displayTab, setDisplayTab] = useState(0);    //0: Scheduler, 1: Add Appointment Tab, 2: Update Appointment Tab
-    const [selectedChairId, setSelectedChairId] = useState(null);
-    const [selectedAppointStart, setSelectedAppointStart] = useState(null);
-    const [selectedDuration, setSelectedDuration] = useState(figures.defaultCellDuration);
-
     // Filter Patient
     const [patientDisplayObj, setPatientDisplayObj] = useState({});
 
-    // Dialogs
-    const [selectedAppoint, setSelectedAppoint] = useState(null);
-    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
     const [isWillMount, setIsWillMount] = useState(true);
 
     // Appointment tooltip popover
    const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
-
-   // Update appointment
-   const [selectedAppointID, setSelectedAppointmentID] = useState("");
 
     // Will mount
     const handleWillMount = useCallback(async () => {
@@ -185,7 +170,7 @@ const DashBoard = () => {
                 // Holiday
                 const holidayss = [];
                 for (let i = 0; i <= 12; i++){
-                    holidayss.push(Object.create(null));
+                    holidayss.push({})
                 }
                 result[4].payload.forEach((day) => {
                     let startDate = Number(day.start_date.slice(0, 2));
@@ -296,11 +281,9 @@ const DashBoard = () => {
                 dispatchLoading({type: strings.setLoading, isLoading: false});
                 toast.error(t(strings.loadAppointmentFailMsg));    
             }
-            resetFilter();
         } catch(err){
             dispatchLoading({type: strings.setLoading, isLoading: false});
             toast.error(t(strings.loadAppointmentFailMsg));
-            resetFilter();
         }
     }, [selectedDate]);
 
@@ -320,43 +303,13 @@ const DashBoard = () => {
 
     // Time Table Cell
     const handleTimeTableCellClick = useCallback((chairID, startDate) => {
-        setDisplayTab(1);
-        setSelectedChairId(chairID);
-        setSelectedAppointStart(new Date(startDate));
-        setSelectedDuration(cellDuration);
-    }, [cellDuration]);
+        
+    }, []);
 
     const handleTimeTableCellSelect = useCallback((chairID, startDate, endDate) => {
-        const momentStart = moment(startDate);
-        const momentEnd = moment(endDate);
-        if (momentStart.isValid() && momentEnd.isValid()){
-            const duration = moment.duration(momentEnd.diff(momentStart)).asMinutes();
-            if (duration >= cellDuration && duration <= figures.maxAppointmentDuration){
-                setDisplayTab(1);
-                setSelectedChairId(chairID);
-                setSelectedAppointStart(new Date(startDate));
-                setSelectedDuration(duration);
-            } else {
-                toast.error(t(strings.appointDurationErrMsg));
-            }
-        } else {
-            toast.error(t(strings.dateRangeInvalid));
-        }
-    }, [cellDuration]);
+        
+    }, []);
 
-    const handleCloseAppointmentTab = useCallback(() => {
-        setDisplayTab(0);
-        setSelectedChairId(null);
-    },[]);
-
-    // Appointment Tab
-    const handleOnAppointTabSelectChair = (evt) => {
-        setSelectedChairId(evt.target.value);
-    }
-
-    const handleOnAppointTabSelectDate = (type, value) => {
-        setSelectedAppointStart(value);
-    }
 
     const handleSelectDate = useCallback((date) => {
         const newDate = date.start;
@@ -382,196 +335,14 @@ const DashBoard = () => {
         setPatientDisplayObj(patientDisplayObj);
     }
 
-    const resetFilter = () => {
-        setPatientDisplayObj({});
-    }
-
     // Right sidebar
     const handleSelectDateRightSidebar = (date) => {
         calendarRef.current.getApi().gotoDate(date)
     }
 
-    // DELETE
-    const handleOpenConfirmDelete = (appointID) => {
-        setSelectedAppoint(appointID);
-        setOpenConfirmDialog(true);
-    }
+    const handleUpdatePatientProfile = useCallback(() => {
 
-    const handleCloseConfirmDialog = () => {
-        setOpenConfirmDialog(false);
-    }
-
-    const handleDeleteAppointment = useCallback(async () => {
-        try {
-            dispatchLoading({ type: strings.setLoading, isLoading: true});
-            const promises = [
-                api.httpDelete({
-                    url: apiPath.appointment.appointment + '/' + selectedAppoint
-                }),
-            ];
-            const result = await Promise.all(promises);
-            if (result[0].success){
-                setOpenAppointTooltip(false);
-                //
-                const newAppointments = appointments.filter((appoint) => appoint.id != selectedAppoint);
-                setAppointments(newAppointments);
-                setSelectedAppoint(null);
-                toast.success(t(strings.deleteAppointmentSuccess));
-            } else {
-                toast.error(result.message);
-            }
-        } catch(err){
-            toast.error(t(strings.deleteAppointmentErrMsg));
-        } finally {
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
-        }
-        setOpenConfirmDialog(false);
-    }, [selectedAppoint, appointments]);
-
-    // Add appointment
-    const handleAddAppointment = useCallback(async (isNewPatient, patientData, appointData, resetFieldsFunc) => {
-        try {
-            dispatchLoading({type: strings.setLoading, isLoading: true});
-            if (isNewPatient){
-                const resultPatient = await api.httpPost({
-                    url: apiPath.patient.patient,
-                    body: patientData
-                });
-                // Add New Patient before add new appointment
-                if (resultPatient.success){
-                    appointData.patient = resultPatient.payload._id;
-                } else {
-                    toast.error(t(strings.addAppointmentErrMsg));
-                    return false;
-                }
-            } else {
-                if (!appointData.patient){
-                    toast.error(t(strings.addAppointmentErrMsg));
-                    return false;
-                }
-            }
-
-            const promiseAll = [
-                api.httpPost({
-                    url: apiPath.appointment.appointment,
-                    body: appointData
-                }),
-            ];
-            const result = await Promise.all(promiseAll);
-            if (result[0].success){
-                toast.success(t(strings.addAppointmentSuccess));
-                // Set new Appointment
-                const appointment = result[0].payload;
-                const newAppointments = [...appointments];
-                let aDate, aTime;
-                aDate = new Date(appointment.appointment_date);
-                aTime = appointment.appointment_time;
-                aDate.setHours(aTime.slice(0, 2));
-                aDate.setMinutes(aTime.slice(2));
-                const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
-                newAppointments.push({
-                    id: appointment._id,
-                    title: (patientData.first_name + " " + patientData.last_name) || appointment.note || "",
-                    resourceId: appointment.chair._id,
-                    start: aDate,
-                    end: (endDate.isValid())? endDate._d : aDate,
-                    patientGender: appointment.patient?.gender || "",
-                    chair: appointment.chair,
-                    status: appointment.status,
-                    note: appointment.note,
-                    assistantDisplay: (appointment.assistant)? 
-                                    appointment.assistant.user.first_name + " " + appointment.assistant.user.last_name + " (" + appointment.assistant.display_id + ")"
-                                    : t(strings.no),
-                    providerDisplay: (appointment.provider)? 
-                                    appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
-                                    : t(strings.no),
-                    backgroundColor: appointment.chair.color
-                });
-                setAppointments(newAppointments);
-                resetFieldsFunc();
-                handleCloseAppointmentTab();
-            } else {
-                toast.error(result[0].message);
-                return false;
-            }
-        } catch(err){
-            toast.error(t(strings.addAppointmentErrMsg));
-            return false;
-        } finally {
-            dispatchLoading({type: strings.setLoading, isLoading: false});
-        }
-    }, [appointments]);
-    
-    // Update appointment
-    const handleOpenUpdateAppointTab = (appointID) => {
-        setSelectedAppointmentID(appointID);
-        setDisplayTab(2);
-    }
-
-    const handleCloseUpdateAppointTab = () => {
-        setSelectedAppointmentID("");
-        setDisplayTab(0);
-    }
-
-    const handleUpdateAppointment = useCallback(async (appointID, patientData, appointData, resetFieldsFunc) => {
-        try {
-            dispatchLoading({type: strings.setLoading, isLoading: true});
-            const promiseAll = [
-                api.httpPatch({
-                    url: apiPath.appointment.appointment + '/' + appointID,
-                    body: appointData
-                }),
-            ];
-            const result = await Promise.all(promiseAll);
-            if (result[0].success){
-                toast.success(t(strings.updateAppointmentSuccess));
-                // Set new Appointment
-                const appointment = result[0].payload;
-                let aDate, aTime;
-                aDate = new Date(appointment.appointment_date);
-                aTime = appointment.appointment_time;
-                aDate.setHours(aTime.slice(0, 2));
-                aDate.setMinutes(aTime.slice(2));
-                const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
-                const newAppointments = [];
-                appointments.forEach((appoint) => {
-                    if (appoint.id != appointID){
-                        newAppointments.push(appoint);
-                    } else {
-                        newAppointments.push({
-                            id: appointment._id,
-                            title: (patientData.first_name + " " + patientData.last_name) || appointment.note || "",
-                            resourceId: appointment.chair._id,
-                            start: aDate,
-                            end: (endDate.isValid())? endDate._d : aDate,
-                            patientGender: appointment.patient?.gender || "",
-                            chair: appointment.chair,
-                            status: appointment.status,
-                            note: appointment.note,
-                            assistantDisplay: (appointment.assistant)? 
-                                            appointment.assistant.user.first_name + " " + appointment.assistant.user.last_name + " (" + appointment.assistant.display_id + ")"
-                                            : t(strings.no),
-                            providerDisplay: (appointment.provider)? 
-                                            appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
-                                            : t(strings.no),
-                            backgroundColor: appointment.chair.color
-                        });
-                    }
-                })
-                setAppointments(newAppointments);
-                resetFieldsFunc();
-                handleCloseUpdateAppointTab();
-            } else {
-                toast.error(result[0].message);
-                return false;
-            }
-        } catch(err){
-            toast.error(t(strings.updateAppointmentErrMsg));
-            return false;
-        } finally {
-            dispatchLoading({type: strings.setLoading, isLoading: false});
-        }
-    }, [selectedAppoint, appointments]);
+    }, []);
 
     return (
         <React.Fragment>
@@ -580,75 +351,33 @@ const DashBoard = () => {
                     <LoadingPage/>
                     :
                     <React.Fragment>
-                        <Fade in={displayTab == 1}>
-                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (displayTab == 1)? "block" : "none"}}>
-                                <AppoinmentTab
-                                    selectedChairId={selectedChairId}
-                                    selectedAppointStart={selectedAppointStart}
-                                    selectedDuration={selectedDuration}
-                                    chairs={chairs}
-                                    cellDuration={cellDuration}
-                                    startDayHour={startDayHour}
-                                    endDayHour={endDayHour}
-                                    holidays={holidays}
-                                    onClose={handleCloseAppointmentTab}
-                                    onSelectChair={handleOnAppointTabSelectChair}
-                                    onSelectDate={handleOnAppointTabSelectDate}
-                                    onAddAppointment={handleAddAppointment}
-                                />
-                            </Box>
-                        </Fade>
-                        <Fade in={displayTab == 2}>
-                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (displayTab == 2)? "block" : "none"}}>
-                                <UpdateAppointmentTab
-                                    selectedAppointID={selectedAppointID}
-                                    chairs={chairs}
-                                    cellDuration={cellDuration}
-                                    startDayHour={startDayHour}
-                                    endDayHour={endDayHour}
-                                    holidays={holidays}
-                                    onClose={handleCloseUpdateAppointTab}
-                                    onUpdateAppointment={handleUpdateAppointment}
-                                />
-                            </Box>
-                        </Fade>
-                        <Fade  in={displayTab == 0} >
-                            <Box p={0} m={0} style={{display: (displayTab == 0)? "block" : "none"}}>
-                                <Schedulerr
-                                    isImmutable={false}
-                                    calendarRef={calendarRef}
-                                    appointments={appointments}
-                                    blocks={blocks}
-                                    chairs={chairs}
-                                    selectedDate={selectedDate}
-                                    cellDuration={cellDuration}
-                                    startDayHour={startDayHour}
-                                    endDayHour={endDayHour}
-                                    patientDisplayObj={patientDisplayObj}
-                                    holidays={holidays}
-                                    tableCellClick={handleTimeTableCellClick}
-                                    tableCellSelect={handleTimeTableCellSelect}
-                                    onSelectChair={handleSelectChair}
-                                    onSelectPatient={handleSelectPatient}
-                                    onSelectDate={handleSelectDate}
-                                    onDeleteAppointment={handleOpenConfirmDelete}
-                                    openAppointTooltip={openAppointTooltip}
-                                    setOpenAppointTooltip={setOpenAppointTooltip}
-                                    onUpdateAppointment={handleOpenUpdateAppointTab}
-                                />
-                            </Box>
-                        </Fade>
+                        <Box p={0} m={0}>
+                            <Schedulerr
+                                isImmutable={true}
+                                calendarRef={calendarRef}
+                                appointments={appointments}
+                                blocks={blocks}
+                                chairs={chairs}
+                                selectedDate={selectedDate}
+                                cellDuration={cellDuration}
+                                startDayHour={startDayHour}
+                                endDayHour={endDayHour}
+                                patientDisplayObj={patientDisplayObj}
+                                holidays={holidays}
+                                tableCellClick={handleTimeTableCellClick}
+                                tableCellSelect={handleTimeTableCellSelect}
+                                onSelectChair={handleSelectChair}
+                                onSelectPatient={handleSelectPatient}
+                                onSelectDate={handleSelectDate}
+                                onDeleteAppointment={() => {}}
+                                onUpdateAppointment={handleUpdatePatientProfile}
+                                openAppointTooltip={openAppointTooltip}
+                                setOpenAppointTooltip={setOpenAppointTooltip}
+                            />
+                        </Box>
                     </React.Fragment>
                 }
             </Container>
-            {/* Confirm Delete appointment */}
-            <ConfirmDialog
-                open={openConfirmDialog}
-                onClose={handleCloseConfirmDialog}
-                action={handleDeleteAppointment}
-            >
-                {t(strings.areYouSureWantTo) + " " + t(strings.btnDelete) + " " + t(strings.appointment)} 
-            </ConfirmDialog>
             <RightSidebar handleSelectDate={handleSelectDateRightSidebar}/>
         </React.Fragment>
     )

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 // use i18next
@@ -12,11 +12,17 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 
 // Component
+
+// Context
+import { loadingStore } from '../../../contexts/loading-context';
+
+// API
+import api from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import AuthService from '../../../api/authentication/auth.service';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,92 +67,186 @@ const useStyles = makeStyles((theme) => ({
 const Account = () => {
   const classes = useStyles();
   const {t, i18next} = useTranslation();
+  const { loadingState, dispatchLoading } = useContext(loadingStore);
+
+  const user = AuthService.getCurrentUser();
 
   // States
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [firstName, setFirstName] = useState(user.first_name);
+  const [lastName, setLastName] = useState(user.last_name);
+  const [email, setEmail] = useState(user.email);
+  const [homePhone, setHomePhone] = useState(user.home_phone);
+  const [mobilePhone, setMobilePhone] = useState(user.mobile_phone);
+  const [address, setAddress] = useState(user.address);
 
   // Error Messages
-  const [fullNameErrMsg, setFullNameErrMsg] = useState("");
+  const [firstNameErrMsg, setFirstNameErrMsg] = useState("");
+  const [lastNameErrMsg, setLastNameErrMsg] = useState("");
   const [emailErrMsg, setEmailErrMsg] = useState("");
-  const [phoneErrMsg, setPhoneErrMsg] = useState("");
+  const [homePhoneErrMsg, setHomePhoneErrMsg] = useState("");
+  const [mobilePhoneErrMsg, setMobilePhoneErrMsg] = useState("");
   const [addressErrMsg, setAddressErrMsg] = useState("");
   
   const [isSuccess, setIsSuccess] = useState(true);
   const [resultMsg, setResultMsg] = useState("");
 
-  const handleChangeFullName = (evt) => {
-    setFullName(evt.target.value);
+  const handleChangeFirstName = (evt) => {
+    setFirstName(evt.target.value);
+  }
+
+  const handleChangeLastName = (evt) => {
+    setLastName(evt.target.value);
   }
 
   const handleChangeEmail = (evt) => {
     setEmail(evt.target.value);
   }
 
-  const handleChangePhone = (evt) => {
-    setPhone(evt.target.value);
+  const handleChangeHomePhone = (evt) => {
+    setHomePhone(evt.target.value);
+  }
+
+  const handleChangeMobilePhone = (evt) => {
+    setMobilePhone(evt.target.value);
   }
 
   const handleChangeAddress = (evt) => {
     setAddress(evt.target.value);
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    // Full name
-    if (!isPropValid(validators.properties.fullName, fullName)){
-      setFullNameErrMsg(t(strings.fullNameErrMsg));
+
+    let isValid = true;
+    // First name
+    if (!isPropValid(validators.properties.firstName, firstName)){
+      setFirstNameErrMsg(t(strings.firstNameErrMsg));
+      isValid = false;
     } else {
-      setFullNameErrMsg("");
+      setFirstNameErrMsg("");
+    }
+
+    // Last name
+    if (!isPropValid(validators.properties.lastName, lastName)){
+      setLastNameErrMsg(t(strings.lastNameErrMsg));
+      isValid = false;
+    } else {
+      setLastNameErrMsg("");
     }
 
     // Email
     if (!isPropValid(validators.properties.email, email)){
       setEmailErrMsg(t(strings.emailErrMsg));
+      isValid = false;
     } else {
       setEmailErrMsg("");
     }
 
-    // Phone
-    if (!isPropValid(validators.properties.phone, phone)){
-      setPhoneErrMsg(t(strings.phoneErrMsg));
+    // Home Phone
+    if (!isPropValid(validators.properties.phone, homePhone)){
+      setHomePhoneErrMsg(t(strings.phoneErrMsg));
+      isValid = false;
     } else {
-      setPhoneErrMsg("");
+      setHomePhoneErrMsg("");
+    }
+
+    // Mobile Phone
+    if (!isPropValid(validators.properties.phone, mobilePhone)){
+      setMobilePhoneErrMsg(t(strings.phoneErrMsg));
+      isValid = false;
+    } else {
+      setMobilePhoneErrMsg("");
     }
 
     // Address
     if (!isPropValid(validators.properties.address, address)){
       setAddressErrMsg(t(strings.addressErrMsg));
+      isValid = false;
     } else {
       setAddressErrMsg("");
+    }
+    if (isValid){
+      try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
+        const result = await api.httpPatch({
+          url: apiPath.staff.staff + '/' + user.staff_id,
+          body: {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            home_phone: homePhone,
+            mobile_phone: mobilePhone,
+            address: address
+          }
+        })
+        if (result.success){
+          user.first_name = firstName;
+          user.last_name = lastName;
+          user.email = email;
+          user.home_phone = homePhone;
+          user.mobile_phone = mobilePhone;
+          user.address = address;
+          AuthService.updateCurrentUser(user);
+          setIsSuccess(true);
+          setResultMsg(t(strings.updateAccountSuccess));
+        } else {
+          setIsSuccess(false);
+          setResultMsg(result.message);
+        }
+      } catch(err){
+        setIsSuccess(false);
+        setResultMsg(t(strings.updateAccountFail));
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
+      }
     }
   }
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <Grid container justify="center" alignItems="center" spacing={2}>
-        {/* Full Name */}
+        {/* First Name */}
         <Grid className={classes.gridRow} container justify="flex-start" alignItems="center" item xs={12} md={12} spacing={4}>
           <Grid item md={2} sm={2} xs={2} className={classes.textFieldLabel}>
-            <FormLabel>{t(strings.fullName)}</FormLabel>
+            <FormLabel>{t(strings.firstName)}</FormLabel>
           </Grid>
           <Grid item md={8} sm={10} xs={10}>
             <TextField
               size="small"
-              name="fullName"
+              name="firstName"
               variant="outlined"
               required
               fullWidth
-              id="fullName"
-              label={t(strings.fullName)}
+              id="firstName"
+              label={t(strings.firstName)}
               autoFocus
-              value={fullName}
-              onChange={(evt) => handleChangeFullName(evt)}
+              value={firstName}
+              onChange={(evt) => handleChangeFirstName(evt)}
               className={classes.textField}
-              error={fullNameErrMsg !== ""}
-              helperText={fullNameErrMsg}
+              error={firstNameErrMsg !== ""}
+              helperText={firstNameErrMsg}
+            />
+          </Grid>
+        </Grid>
+        {/* Last Name */}
+        <Grid className={classes.gridRow} container justify="flex-start" alignItems="center" item xs={12} md={12} spacing={4}>
+          <Grid item md={2} sm={2} xs={2} className={classes.textFieldLabel}>
+            <FormLabel>{t(strings.lastName)}</FormLabel>
+          </Grid>
+          <Grid item md={8} sm={10} xs={10}>
+            <TextField
+              size="small"
+              name="lastName"
+              variant="outlined"
+              required
+              fullWidth
+              id="lastName"
+              label={t(strings.lastName)}
+              value={lastName}
+              onChange={(evt) => handleChangeLastName(evt)}
+              className={classes.textField}
+              error={lastNameErrMsg !== ""}
+              helperText={lastNameErrMsg}
             />
           </Grid>
         </Grid>
@@ -172,10 +272,32 @@ const Account = () => {
             />
           </Grid>
         </Grid>
-        {/* Phone */}
+        {/* Home Phone */}
         <Grid className={classes.gridRow} container justify="flex-start" alignItems="center" item md={12} spacing={4}>
           <Grid item md={2} sm={2} xs={2} className={classes.textFieldLabel}>
-            <FormLabel>{t(strings.phone)}</FormLabel>
+            <FormLabel>{t(strings.homePhone)}</FormLabel>
+          </Grid>
+          <Grid item md={8} sm={10} xs={10}>
+            <TextField
+              size="small"
+              name="homePhone"
+              variant="outlined"
+              required
+              fullWidth
+              id="homePhone"
+              label={t(strings.homePhone)}
+              value={homePhone}
+              onChange={(evt) => handleChangeHomePhone(evt)}
+              className={classes.textField}
+              error={homePhoneErrMsg !== ""}
+              helperText={homePhoneErrMsg}
+            />
+          </Grid>
+        </Grid>
+        {/* Mobile Phone */}
+        <Grid className={classes.gridRow} container justify="flex-start" alignItems="center" item md={12} spacing={4}>
+          <Grid item md={2} sm={2} xs={2} className={classes.textFieldLabel}>
+            <FormLabel>{t(strings.mobilePhone)}</FormLabel>
           </Grid>
           <Grid item md={8} sm={10} xs={10}>
             <TextField
@@ -185,12 +307,12 @@ const Account = () => {
               required
               fullWidth
               id="phone"
-              label={t(strings.phone)}
-              value={phone}
-              onChange={(evt) => handleChangePhone(evt)}
+              label={t(strings.mobilePhone)}
+              value={mobilePhone}
+              onChange={(evt) => handleChangeMobilePhone(evt)}
               className={classes.textField}
-              error={phoneErrMsg !== ""}
-              helperText={phoneErrMsg}
+              error={mobilePhoneErrMsg !== ""}
+              helperText={mobilePhoneErrMsg}
             />
           </Grid>
         </Grid>

@@ -19,14 +19,14 @@ const ThemeStateProvider = ({ children }) => {
   const [themeState, dispatchTheme] = useReducer((state, action) => {
     switch (action.type) {
       case "Set-Theme":
-        switch(action.theme){
+        switch(parseInt(action.theme)){
           case ThemeType.LIGHT:
             return {theme: lightTheme, type: ThemeType.LIGHT};
           case ThemeType.DARK:
             return {theme: darkTheme, type: ThemeType.DARK};
         }
       default:
-        return {...themeState};
+        return (themeState)? {...themeState} : {...initState};
         //throw new Error();
     }
   }, initState);

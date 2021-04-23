@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AppointmentTooltipPopover = ({id, open, onClose, anchorPos, appointment, onUpdateAppointment, onDeleteAppointment}) => {
+const AppointmentTooltipPopover = ({isImmutable, id, open, onClose, anchorPos, appointment, onUpdateAppointment, onDeleteAppointment}) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
 
@@ -62,12 +62,17 @@ const AppointmentTooltipPopover = ({id, open, onClose, anchorPos, appointment, o
     >
       <Card className={classes.card}>
         <CardActions className={classes.cardActions}>
-          <IconButton aria-label="edit-appointment" onClick={onUpdateAppointment}>
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete-appointment" onClick={onDeleteAppointment}>
-            <DeleteIcon />
-          </IconButton>
+          {(!isImmutable) 
+            && 
+            <React.Fragment>
+              <IconButton aria-label="edit-appointment" onClick={onUpdateAppointment}>
+                <EditIcon />
+              </IconButton>
+              <IconButton aria-label="delete-appointment" onClick={onDeleteAppointment}>
+                <DeleteIcon />
+              </IconButton>
+            </React.Fragment>
+          }
         </CardActions>
         <CardContent className={classes.cardContent}>
           <AppointmentTooltipContent

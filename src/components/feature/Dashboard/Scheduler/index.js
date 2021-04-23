@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedulerr = (
   { 
-    calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, openAppointTooltip,
-    tableCellClick, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
+    isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, openAppointTooltip,
+    tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
@@ -64,7 +64,7 @@ const Schedulerr = (
 
   // Filter instance
   const instances = [];
-  const chairMap = {};
+  const chairMap = Object.create(null);
   chairs.forEach((chair) => {
     if (chair.isDisplay){
       instances.push(chair);
@@ -174,7 +174,7 @@ const Schedulerr = (
                   click: (evt) => {
                     handleOpenFilterPatient(evt);
                   },
-              },
+                },
               }}
               resources={instances}
               eventDidMount={(info) => {
@@ -223,8 +223,8 @@ const Schedulerr = (
               dateClick={(info) => {
                 tableCellClick(info.resource._resource.id, info.date);
               }}
-              select={(info) => {
-                //alert('selected ' + info.startStr + ' to ' + info.endStr);
+              select={(info) => { console.log(info);
+                tableCellSelect(info.resource._resource.id, info.start, info.end);
               }}
               eventClick={(info) => {
                 const evt = info.jsEvent;
@@ -278,6 +278,7 @@ const Schedulerr = (
                 onApply={handleSelectPatient}
             />
             <AppointmentTooltipPopover
+              isImmutable={isImmutable}
               id={appointTooltipPopoverId}
               open={openAppointTooltip}
               onClose={handleCloseAppointTooltip}

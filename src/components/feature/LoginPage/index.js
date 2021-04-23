@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import {
     useHistory
-  } from "react-router-dom";
+} from "react-router-dom";
 
 // validators
 import validators, {isPropValid} from '../../../utils/validators';
@@ -38,6 +38,7 @@ import LoadingPage from '../../../layouts/LoadingPage';
 
 // Context
 import {loadingStore} from '../../../contexts/loading-context';
+import {themeStore} from '../../../contexts/theme-context';
 
 // API
 import AuthService from '../../../api/authentication/auth.service';
@@ -108,6 +109,10 @@ const LoginPage = () => {
             try {
                 const res = await AuthService.logIn(values["username"], values["password"]);
                 if (res.success){
+                    const language = res?.user.language;
+                    if (language){
+                        i18n.changeLanguage(language);
+                    }
                     history.push(routePath.dashboardPath);
                 } else {
                     setIsSuccess(false);

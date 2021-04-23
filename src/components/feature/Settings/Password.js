@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 // use i18next
@@ -12,11 +12,16 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 
 // Component
+
+// Context
+import { loadingStore } from '../../../contexts/loading-context';
+
+// API
+import api from '../../../api/base-api';
+import apiPath from '../../../api/path';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const Password = () => {
   const classes = useStyles();
   const {t, i18next} = useTranslation();
+  const { loadingState, dispatchLoading } = useContext(loadingStore);
 
   // States
   const [oldPwd, setOldPwd] = useState("");
@@ -89,23 +95,24 @@ const Password = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    let isValid = true;
     // Old Pwd
     if (!isPropValid(validators.properties.password, oldPwd)){
       setOldPwdErrMsg(t(strings.passwordErrMsg));
+      isValid = false;
     } else {
-      if (0){
-
-      } else {
-        setOldPwdErrMsg("");
-      }
+      setOldPwdErrMsg("");
     }
 
     // New Pwd
     if (!isPropValid(validators.properties.password, newPwd)){
       setNewPwdErrMsg(t(strings.passwordErrMsg));
+      isValid = false;
     } else {
       if (newPwd === oldPwd){
         setNewPwdErrMsg(t(strings.newPwdMatchOldPwd));
+        isValid = false;
       } else {
         setNewPwdErrMsg("");
       }
@@ -114,11 +121,36 @@ const Password = () => {
     // Confirm Pwd
     if (!isPropValid(validators.properties.password, confirmPwd)){
       setConfirmPwdErrMsg(t(strings.passwordErrMsg));
+      isValid = false;
     } else {
       if (confirmPwd !== newPwd){
         setConfirmPwdErrMsg(t(strings.confirmPwdNotMatchErrMsg));
+        isValid = false;
       } else {
         setConfirmPwdErrMsg(""); 
+      }
+    }
+    if (isValid){
+      try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
+        const result = {}/*await api.httpPatch({
+          url: apiPath.staff.staff + '/' + user.staff_id,
+          body: {
+            
+          }
+        })*/
+        if (1){
+          setIsSuccess(true);
+          setResultMsg(t(strings.changePwdSuccess));
+        } else {
+          setIsSuccess(false);
+          setResultMsg(result.message);
+        }
+      } catch(err){
+        setIsSuccess(false);
+        setResultMsg(t(strings.changePwdErrMsg));
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
       }
     }
   }
