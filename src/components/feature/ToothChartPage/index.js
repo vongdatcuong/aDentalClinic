@@ -52,19 +52,59 @@ const ToothChartPage = ({ patientID }) => {
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
   const [disabledOverviewUndoBtn, setDisabledOverviewUndoBtn] = React.useState(true);
 
-//   const [curTab, setCurTab] = React.useState(0);
-
-//   const handleChangeTab = (event, newTab) => {
-//     setCurTab(newTab);
-//   };
+  const [selectedTooth, setSelectedTooth] = React.useState([]);
 
   const handleClickToothOverview = (toothID) => {
     history.push(path.toothOverviewInfoPath.replace(':patientID', patientID) + `?toothID=${toothID}`);
     setDisabledOverviewUndoBtn(false);
   }
 
-  const handleClickToothQuickselect = (toothID) => {
-    setShowQuickselectMenu(!showQuickselectMenu);
+  const handleSelectToothQuickselect = (toothID) => {
+    // push tooth ID
+    selectedTooth.push(toothID);
+    if (!showQuickselectMenu) {
+        setShowQuickselectMenu(true);
+    }
+  }
+  const handleDeselectToothQuickselect = (toothID) => {
+    // pop tooth ID
+    let pos = selectedTooth.indexOf(toothID);
+    let removedItem = selectedTooth.splice(pos, 1);
+    if (selectedTooth.length === 0) {
+        setShowQuickselectMenu(false);
+    }
+  }
+
+  const handleClickToothMissing = () => {
+    // Todo: update tooth status and rerender
+    console.log("selected: " + selectedTooth);
+    console.log("Missing");
+    clearSelectedTooth();
+  }
+  const handleClickToothVeneer = () => {
+    // Todo: update tooth status and rerender
+    clearSelectedTooth();
+  }
+  const handleClickToothPontics = () => {
+    // Todo: update tooth status and rerender
+    clearSelectedTooth();
+  }
+  const handleClickToothCrown = () => {
+    // Todo: update tooth status and rerender
+    clearSelectedTooth();
+  }
+  const handleClickToothEndoTests = () => {
+    // Todo: update tooth status and rerender
+    clearSelectedTooth();
+  }
+  const handleClickToothClear = () => {
+    // Todo: update tooth status and rerender
+    clearSelectedTooth();
+  }
+  function clearSelectedTooth() {
+      /// Todo: bỏ trạng thái select của từng răng
+    setShowQuickselectMenu(false);
+    setSelectedTooth([]);
   }
 
   return (
@@ -88,7 +128,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onClickTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
+                      <AdultToothChart onSelectTooth={handleClickToothOverview} onDeselectTooth={()=>{}} viewType="overview"></AdultToothChart>
                     </span>
                     <Fab aria-label="Undo" className={classes.fabUndo} disabled={disabledOverviewUndoBtn}>
                       <MdSettingsBackupRestore />
@@ -101,16 +141,17 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onClickTooth={handleClickToothQuickselect} viewType="quickselect"></AdultToothChart>
+                      <AdultToothChart onSelectTooth={handleSelectToothQuickselect} onDeselectTooth={handleDeselectToothQuickselect} viewType="quickselect"></AdultToothChart>
                     </span>
                     <span className={classes.quickselectMenuContainer}>
                         <Grow in={showQuickselectMenu}>
                             <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group" className={classes.quickselectMenu}>
-                                <Button><b>{t(strings.missing)}</b></Button>
-                                <Button><b>{t(strings.veneer)}</b></Button>
-                                <Button><b>{t(strings.pontics)}</b></Button>
-                                <Button><b>{t(strings.crown)}</b></Button>
-                                <Button><b>{t(strings.endoTests)}</b></Button>
+                                <Button onClick={handleClickToothMissing}><b>{t(strings.missing)}</b></Button>
+                                <Button onClick={handleClickToothVeneer}><b>{t(strings.veneer)}</b></Button>
+                                <Button onClick={handleClickToothPontics}><b>{t(strings.pontics)}</b></Button>
+                                <Button onClick={handleClickToothCrown}><b>{t(strings.crown)}</b></Button>
+                                <Button onClick={handleClickToothEndoTests}><b>{t(strings.endoTests)}</b></Button>
+                                <Button onClick={handleClickToothClear}><b>{t(strings.clear)}</b></Button>
                             </ButtonGroup>
                         </Grow>
                     </span>

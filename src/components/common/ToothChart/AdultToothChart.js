@@ -18,7 +18,8 @@ const AdultToothChart = function (props) {
                 viewType={props.viewType}
                 key={index}
                 id={tooth.fullTooth.id}
-                onClickTooth={props.onClickTooth}
+                onSelectTooth={props.onSelectTooth}
+                onDeselectTooth={props.onDeselectTooth}
                 svgString={tooth.fullTooth.svgString}
               ></Tooth>
             );
@@ -33,7 +34,8 @@ const AdultToothChart = function (props) {
               viewType={props.viewType}
               key={index}
               id={tooth.fullTooth.id}
-              onClickTooth={props.onClickTooth}
+              onSelectTooth={props.onSelectTooth}
+              onDeselectTooth={props.onDeselectTooth}
               svgString={tooth.fullTooth.svgString}
             ></Tooth>
           );
