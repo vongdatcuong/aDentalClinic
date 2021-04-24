@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import strings from "../../configs/strings";
 // Routes
-import {useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import path from "../../routes/path";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -43,42 +43,48 @@ const TreatmentMenu = ({ patientID }) => {
 
   const pathList = [
     {
-      link: path.patientProfilePath.replace(':patientID', patientID),
+      link: path.patientProfilePath.replace(":patientID", patientID),
       text: t(strings.patientProfile),
       icon: <AssignmentInd />,
     },
     {
-      link: path.toothChartPath.replace(':patientID', patientID),
+      link: path.toothChartPath.replace(":patientID", patientID),
       text: t(strings.toothChart),
       icon: <FaTeeth />,
     },
     {
-      link: path.patientNotePath.replace(':patientID', patientID),
+      link: path.patientNotePath.replace(":patientID", patientID),
       text: t(strings.note),
       icon: <InsertDriveFileIcon />,
     },
     {
-      link: path.patientXRayImagesPath.replace(':patientID', patientID),
+      link: path.patientXRayImagesPath.replace(":patientID", patientID),
       text: t(strings.xRayImages),
       icon: <FaXRay />,
     },
     {
-      link: path.patientImagesPath.replace(':patientID', patientID),
+      link: path.patientImagesPath.replace(":patientID", patientID),
       text: t(strings.images),
       icon: <PermMedia />,
     },
   ];
   const links = <LinkList links={pathList} />;
 
-    const getGoBackURL = () => {    // nếu đang ở trang toothOverviewInfo thì quay về tooth chart, còn lại thì quay về ds patients
-        let curUrl = window.location.pathname;
-        if (curUrl.includes("toothOverviewInfo") || curUrl.includes("xRayImages/add") || curUrl.includes("xRayImages/view")){
-            return curUrl.substring(0,curUrl.lastIndexOf("/"));
-        }
-        else {
-            return path.patientPath;
-        }
+  const getGoBackURL = () => {
+    // nếu đang ở trang toothOverviewInfo thì quay về tooth chart, còn lại thì quay về ds patients
+    let curUrl = window.location.pathname;
+    if (
+      curUrl.includes("xRayImages/view") ||
+      curUrl.includes("xRayImages/add")
+    ) {
+      const newUrl = curUrl.substring(0, curUrl.lastIndexOf("/"));
+      return newUrl.substring(0, newUrl.lastIndexOf("/"));
+    } else if (curUrl.includes("toothOverviewInfo")) {
+      return curUrl.substring(0, curUrl.lastIndexOf("/"));
+    } else {
+      return path.patientPath;
     }
+  };
 
   const goBack = (
     <NavLink to={getGoBackURL()} className={classes.listItemLink}>

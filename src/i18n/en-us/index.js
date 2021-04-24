@@ -321,5 +321,7 @@ export default {
         "No Recall": "No Recall",
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
+        //Files
+        "File Name": "Tên tệp",
     }
 }
