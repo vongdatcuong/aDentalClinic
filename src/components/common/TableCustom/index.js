@@ -30,12 +30,10 @@ const useStyles = makeStyles(styles);
 const TableCustom=(props)=>{
     const {t, i18n } = useTranslation();
     const classes = useStyles();
-
-    const rows=props.data;
+    const [rows, setRows] = useState(props.data);
     const titles=props.titles;
     const dataColumnsName=props.dataColumnsName;
     
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage || figures.defaultRowsPerPage);
     // const [editable,setEditable]=useState(props.editable);
@@ -53,7 +51,9 @@ const TableCustom=(props)=>{
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    
+    useEffect(() => {
+        setRows([...props.data]);
+    },[props.data])
     
     return(
         <TableContainer component={Paper}>

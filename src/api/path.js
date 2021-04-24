@@ -86,6 +86,13 @@ const image = {
   mouth_template: "/image-mouth-template",
   mouth: "/image-mouth",
 };
+
+//prescription
+const prescription={
+    prescription:'/prescription',
+    detail:'/detail',
+    patient:'/patient',
+}
 export {
     authorization,
 }
@@ -106,5 +113,6 @@ export default {
     drug,
     referralSource,
     noteMacro,
-    image
+    image,
+    prescription
 };

@@ -38,19 +38,22 @@ const TableRowItemCustom=(props)=>{
     const [first,setFirst]=useState(true);
 
     const handleChangeOnClick=(e)=>{
-        if(props.editable===true && props.changeToEditPage===true)
+        // if(props.editable===true && props.changeToEditPage===true)
+        // {
+        //     console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+        //     // props.handleChangeIsEdited();
+        //     props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
+        // }
+        if(props.isDelete===true )
         {
-            console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
-            // props.handleChangeIsEdited();
-            props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
-        }
-        if(props.isDelete===true)
-        {
-            console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
-            // props.handleChangeIsEdited();
-            props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
+            // console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+            // // props.handleChangeIsEdited();
+            // props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
             props.handleOpenDialog();
         }
+        console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+        // props.handleChangeIsEdited();
+        props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
     }
     
     

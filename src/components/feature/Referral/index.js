@@ -32,6 +32,8 @@ import PropTypes from 'prop-types';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -144,11 +146,13 @@ const Referral = () => {
             console.log("Delete referral source:",res);
             if(res.success)
             {
-                alert(t(strings.deleteSuccess))
+                toast.success(t(strings.deleteSuccess));
+                rows.splice(selectedRow,1);
+
             }
             else
             {
-                alert(t(strings.deleteFail));
+                toast.error(t(strings.deleteFail));
             }
         };
         deleteReferralSource();
@@ -173,9 +177,15 @@ const Referral = () => {
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rows[selectedRow] && isEdited===false )
+            if(selectedRowData!==rows[selectedRow] && isEdited===false && isDelete===false )
             {
                 handleChangeIsEdited();
+
+                setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
+            }
+            if(selectedRowData!==rows[selectedRow] && isDelete===true  )
+            {
 
                 setSelectedRowData(rows[selectedRow])
                 console.log("Check selected row data:",rows[selectedRow]);
@@ -255,6 +265,7 @@ const Referral = () => {
                         
                         : isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateReferralSource
+                                        editable={editable}
                                         id={selectedRowData.id}
                                         
 

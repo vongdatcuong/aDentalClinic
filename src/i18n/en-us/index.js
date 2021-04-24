@@ -60,6 +60,8 @@ export default {
         "Delete Success":"Delete Success",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
+        "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
+        "Cannot change in read mode":"Cannot change in read mode",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
         "Delete Fail":"Delete Fail",
@@ -130,6 +132,10 @@ export default {
         "Add more image": "Add more image",
         "Layer": "Layer",
         "Images per page": "Images per page",
+        "Prescription":"Prescription",
+        "Add more drug":"Add more drug",
+        "Expired date":"Expired date",
+        "Agree":"Agree",
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",
@@ -221,6 +227,10 @@ export default {
         "Resignation letter":"Resignation letter",
         "Content":"Content",
         "Note type":"Note type",
+        "DEFAULT":"DEFAULT",
+        "MEDICAL ALERT":"MEDICAL ALERT",
+        "PROGRESS":"PROGRESS",
+        "TREATMENT":"TREATMENT",
         //provider
         "#":"#",
         "ID":"ID",

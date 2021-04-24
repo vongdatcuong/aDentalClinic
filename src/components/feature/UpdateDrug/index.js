@@ -24,6 +24,7 @@ import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
+import { toast } from 'react-toastify';
 //import image
 
 //import icons
@@ -71,24 +72,28 @@ const UpdateDrug = (props) => {
 
 
     const onClickUpdate=async()=>{
-        const data={
-            name:name,
-            description:description,
-            dispensed:dispensed,
-            note:note,
-            refill:refill,
-            quantity:quantity,
-          
-        };
-        const result=await DrugService.update(props.id,data);
-        if(result.success)
+        if(props.editable)
         {
-            alert(t(strings.updateSuccess));
+            const data={
+                name:name,
+                description:description,
+                dispensed:dispensed,
+                note:note,
+                refill:refill,
+                quantity:quantity,
+              
+            };
+            const result=await DrugService.update(props.id,data);
+            if(result.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
-        else
-        {
-            alert(t(strings.updateFail));
-        }
+        
         
         
     }
@@ -129,7 +134,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                       
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -139,7 +144,8 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -149,7 +155,8 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         
@@ -162,7 +169,8 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -171,7 +179,8 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -180,7 +189,8 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                        

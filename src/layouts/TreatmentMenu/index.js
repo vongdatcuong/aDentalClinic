@@ -21,6 +21,8 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import PermMedia from "@material-ui/icons/PermMedia";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
+import ListIcon from '@material-ui/icons/List';
+
 import { FaTeeth, FaXRay } from "react-icons/fa";
 
 // Components
@@ -66,6 +68,11 @@ const TreatmentMenu = ({ patientID }) => {
       link: path.patientImagesPath.replace(":patientID", patientID),
       text: t(strings.images),
       icon: <PermMedia />,
+    },
+    {
+      link: path.patientPrescriptionPath.replace(':patientID', patientID),
+      text: t(strings.prescription),
+      icon: <ListIcon />,
     },
   ];
   const links = <LinkList links={pathList} />;

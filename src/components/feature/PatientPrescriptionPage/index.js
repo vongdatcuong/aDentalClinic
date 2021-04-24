@@ -4,6 +4,9 @@ import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
 import apiPath from '../../../api/path';
 import DrugService from "../../../api/drug/drug.service";
+import ProviderService from "../../../api/provider/provider.service";
+
+import PrescriptionService from "../../../api/prescription/prescription.service";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -34,7 +37,8 @@ import PropTypes from 'prop-types';
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
-
+// moment
+import moment from 'moment';
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -46,20 +50,27 @@ import AddBox from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 //import component
 import TableCustom from "../../common/TableCustom";
-import InsertDrug from "../InsertDrug";
-import UpdateDrug from "../UpdateDrug";
+import InsertPatientPrescription from "../InsertPatientPrescription";
+import UpdatePatientPrescription from "../UpdatePatientPrescription";
+import PopupChat from '../../common/Messenger/PopupChat';
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
+import Footer from "../../../layouts/Footer";
+import { TrainRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
-const createData=(id,name,dispensed,quantity,descripton,note)=>{
-    return {id,name,dispensed,quantity,descripton,note};
+const createData=(id,date,status)=>{
+    return {id,date,status};
 };
-const dataColumnsName=["index","name","dispensed","quantity","descripton","note"]
+ 
+const dataColumnsName=["index","date","status"]
 
-const Drug = () => {
+
+
+const PatientPrescriptionPage = ({patientID}) => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
-    const [insertDrug,setInsertDrug]=useState(false);
+    const [insertPatientPrescription,setInsertPatientPrescription]=useState(false);
     const [openDialog,setOpenDialog]=useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -67,11 +78,14 @@ const Drug = () => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [providers,setProviders]=useState([]);
+    const [prescriptions,setPrescriptions]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isDelete,setIsDelete]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+   
     const handleOpenDialog=(e)=>{
         setOpenDialog(true);
     }
@@ -81,7 +95,7 @@ const Drug = () => {
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
-        setInsertDrug(false);
+        setInsertPatientPrescription(false);
         setIsEdited(false);
         setEditable(false);
     }
@@ -95,17 +109,18 @@ const Drug = () => {
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
-    const handleChangeInsertDrug=(e)=>{
-        setInsertDrug(!insertDrug);
+    const handleChangeInsertPrescription=(e)=>{
+        setInsertPatientPrescription(!insertPatientPrescription);
     }
     const handleChangeEditable=(e)=>{
+        console.log("Change editable:",!editable);
         setEditable(!editable);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
     const handleGoBack=(e)=>{
-        setInsertDrug(false);
+        setInsertPatientPrescription(false);
         setIsEdited(false);
         setSelectedRow(-1);
         setSelectedRowData(null);
@@ -116,30 +131,45 @@ const Drug = () => {
     }
     const titles=[
         t(strings.index),
-        t(strings.name),
-        t(strings.dispensed),
-        t(strings.quantity),
-        t(strings.description),
-        t(strings.note),
+        // t(strings.provider),
+        t(strings.date),
+        t(strings.status)
 
     ];
+
+    
     const changeData=(data)=>{
         let temp=[];
+        
         data.map((a,index)=>{
-            
-            let newData=createData(a._id,a.name,a.dispensed,a.quantity,a.description,a.note);
+            let date=moment(a.prescription_date).format('DD/MM/YYYY');
+            let status;
+            if(a.is_delete===true)
+            {
+                status=t(strings.inactive);
+            }
+            else
+            {
+                status=t(strings.active);
+
+            }
+            let newData=createData(a._id,date,status);
             temp=temp.concat(newData);
 
         })
         console.log("Check rows in change data:",temp);
         setRows(temp);
     }
+   
     const deleteRow=(e)=>{
         handleCloseDialog();
         console.log("Delete now:",selectedRowData);
-        const deleteDrug=async()=>{
-            const res=await DrugService.delete(selectedRowData.id);
-            console.log("Delete drug:",res);
+        const deletePrescription=async()=>{
+            const data={
+                is_delete:true,
+            };
+            const res=await PrescriptionService.update(selectedRowData.id,data);
+            console.log("Delete prescription:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -150,24 +180,26 @@ const Drug = () => {
                 toast.error(t(strings.deleteFail));
             }
         };
-        deleteDrug();
+        deletePrescription();
        
     }
     useEffect(()=>{
+        
         if(rows.length===0)
         {
-            const getDrug=async()=>{
-                const result=await DrugService.getDrug();
-                console.log("Get drug in useEffect:",result.data);
-                if(result.success)
+           
+            const getPrescription=async()=>{
+                console.log("Check patient ID:",patientID);
+                const result1=await PrescriptionService.searchByPatient(patientID);
+                console.log("result1:",result1.data);
+                if(result1.success && result1.data.payload.length!==0)
                 {
-                    changeData(result.data);
-    
+                    changeData(result1.data.payload);
                 }
-                
-
+               
             };
-            getDrug();
+            
+            getPrescription();
             
         }
         if(selectedRow!==-1)
@@ -185,21 +217,22 @@ const Drug = () => {
                 setSelectedRowData(rows[selectedRow])
                 console.log("Check selected row data:",rows[selectedRow]);
             }
+
         }
-        
-        
     })
-    return (
-        <div className={classes.container}>
-            
+    return (  <React.Fragment>
+        <TreatmentMenu patientID = { patientID }/>
+        <Container className={classes.container}>
+          
+            <div>
             <div >
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
-                            {t(strings.drug)}
+                            {t(strings.prescription)}
                         </Typography>
                     </Grid>
-                    {insertDrug===true || isEdited===true ?
+                    {insertPatientPrescription===true || isEdited===true ?
 
                         <Grid item xs={4}>
                             <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
@@ -238,7 +271,7 @@ const Drug = () => {
                                 <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
                             </Select>
-                            <IconButton onClick={handleChangeInsertDrug}>
+                            <IconButton onClick={handleChangeInsertPrescription}>
                                 <AddBox />            
 
                             </IconButton>
@@ -252,17 +285,26 @@ const Drug = () => {
                 </Grid>
                 <Divider className={classes.titleDivider}/>
                 <Container style={{marginLeft:"10px"}}>
-                    {insertDrug===true && isEdited=== false  ?
-                        <InsertDrug 
-                                     
+                    {insertPatientPrescription===true && isEdited=== false  ?
+                        <InsertPatientPrescription
+                                     patientID={patientID}
                         />
-                        : isEdited===true &&selectedRowData!==null && isDelete===false?
-                        <UpdateDrug
-                                        id={selectedRowData.id}
-                                        editable={editable}
+                        : 
+                        // isEdited===true &&selectedRowData!==null && isDelete===false && editable===true?
+                        // <UpdatePatientPrescription
+                        //                 id={selectedRowData.id}
+                        //                 patientID={patientID}
 
+
+                        // />
+                        selectedRowData!==null && isDelete===false ?
+                        <UpdatePatientPrescription
+                                            id={selectedRowData.id}
+                                            patientID={patientID}
+                                            editable={editable}
                         />
                         :
+                        rows.length!==0 ?
                             <TableCustom titles={titles}
                                     data={rows}
                                     dataColumnsName={dataColumnsName}
@@ -275,6 +317,8 @@ const Drug = () => {
                                     handleOpenDialog={handleOpenDialog}
                                     handleCloseDialog={handleCloseDialog}
                                     />
+                        :
+                        <div></div>
                     }
                    
                    
@@ -301,11 +345,20 @@ const Drug = () => {
                     </DialogActions>
                     
                 </Dialog>
+                
+                
             
+
             </div>
             
-        </div>
-    )
+
+          </div>
+          <Footer/>
+                    
+        </Container>
+        </React.Fragment>
+    );
+   
 }
 
-export default Drug;
+export default PatientPrescriptionPage;

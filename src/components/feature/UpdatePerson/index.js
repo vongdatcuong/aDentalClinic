@@ -22,6 +22,8 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -121,7 +123,7 @@ const UpdateChair = (props) => {
     };
 
     const onClickUpdate=async()=>{
-        if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
+        if(firstNameError===null && lastNameError===null && emailError===null && props.editable===true)
         {
             const data={
                 // display_id: userData.display_id,
@@ -153,19 +155,19 @@ const UpdateChair = (props) => {
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
-                username: username,
-                password: password,
+                // username: username,
+                // password: password,
     
             };
             const update=await ProviderService.update(props.id,data);
             if(update.success)
             {
-                alert(t(strings.updateSuccess));
+                toast.success(t(strings.updateSuccess));
                 console.log("Check update:",update);
             }
             else
             {
-                alert(t(strings.updateFail));
+                toast.error(t(strings.updateFail));
                 console.log("Check update:",update);
     
             }
@@ -269,33 +271,9 @@ const UpdateChair = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        required 
-                                        placeholder={t(strings.username)}  
-                                        
-                                        variant="outlined" 
-                                        onChange={handleChangeUsername}
-                                        value={username}
-                                        error={usernameError !== null}
-                                        helperText={usernameError}
 
-                            />
-                        </div>
                     
                     
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
-                                        required 
-                                        type="password"
-                                        placeholder={t(strings.password)}  
-                                        variant="outlined" 
-                                        onChange={handleChangePassword}
-                                        value={password}
-                                        error={passwordError !== null}
-                                        helperText={passwordError}
-                                        /> 
-                    </div>
                     <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
@@ -305,6 +283,7 @@ const UpdateChair = (props) => {
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
+                                        disabled={!props.editable}
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -316,6 +295,17 @@ const UpdateChair = (props) => {
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
+                                        disabled={!props.editable}
+
+                                        /> 
+                    </div>
+                    <div className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        placeholder={t(strings.address)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
+                                        disabled={!props.editable}
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -326,8 +316,7 @@ const UpdateChair = (props) => {
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
-
-
+                                        disabled={!props.editable}
                                         /> 
                     </div>
                     </Grid>
@@ -338,9 +327,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
-                                        
-
-
+                                        disabled={!props.editable}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -350,6 +337,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
+                                        disabled={!props.editable}
 
                                         /> 
                         </div>
@@ -360,6 +348,8 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         type="number"
+                                        disabled={!props.editable}
+
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -368,20 +358,11 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-
-
-                                        /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-
+                                        disabled={!props.editable}
 
                                         /> 
                         </div>
+                        
                         <div className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
@@ -391,6 +372,7 @@ const UpdateChair = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    disabled={!props.editable}
                                 />
                                 }
                                 label={t(strings.active)}
@@ -403,6 +385,7 @@ const UpdateChair = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    disabled={!props.editable}
 
                                 />
                                 }
@@ -410,33 +393,7 @@ const UpdateChair = (props) => {
                             />
                         </div>
                         
-                        {/* <div className={classes.itemSmall}>
-                            <FormControlplaceholder
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                placeholder={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div> */}
+                       
                         
                         
                     </Grid>

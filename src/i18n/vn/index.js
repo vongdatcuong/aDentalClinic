@@ -60,6 +60,8 @@ export default {
         "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
+        "You can't insert prescription if it don't have drug":"Không thể thêm đơn thuốc nếu không có thuốc",
+        "Cannot change in read mode":"Không thể thay đổi dữ liệu trong chế độ đọc",
         "Update Fail":"Cập nhật thất bại",
         "Insert Fail":"Thêm thất bại",
         "Delete Fail":"Xóa thất bại",
@@ -129,6 +131,11 @@ export default {
         "Add more image": "Thêm hình ảnh",
         "Layer": "Lớp",
         "Images per page": "Số hình trên mỗi trang",
+        "Prescription":"Đơn thuốc",
+        "Add more drug":"Thêm nhiều thuốc",
+        "Agree":"Đồng ý",
+        "Expired date":"Ngày hết hạn",
+
         // Tooth chart page
         "Overview": "Tổng quan",
         "Quickselect": "Chọn nhanh",
@@ -220,6 +227,11 @@ export default {
         "Resignation letter":"Đơn thôi việc",
         "Content":"Nội dung",
         "Note type":"Loại",
+        "DEFAULT":"DEFAULT",
+        "MEDICAL ALERT":"MEDICAL ALERT",
+        "PROGRESS":"PROGRESS",
+        "TREATMENT":"TREATMENT",
+
         //provider
         "#":"#",
         "ID":"ID",

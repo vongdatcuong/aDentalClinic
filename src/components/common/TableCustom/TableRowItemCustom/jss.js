@@ -22,7 +22,10 @@ const tableRowItemCustomStyle = (theme) => ({
         }
     },
     tableRow:{
-        
+        '&:hover':{
+            cursor:'pointer',
+
+        }
     },
 });
 

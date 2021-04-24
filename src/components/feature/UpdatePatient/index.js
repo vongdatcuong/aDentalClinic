@@ -22,6 +22,8 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -121,7 +123,7 @@ const UpdatePatient = (props) => {
     };
 
     const onClickUpdate=async()=>{
-        if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
+        if(firstNameError===null && lastNameError===null )
         {
             let genderData;
             if(gender===true)
@@ -163,19 +165,19 @@ const UpdatePatient = (props) => {
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
-                username: username,
-                password: password,
+                // username: username,
+                // password: password,
 
             };
             const update=await PatientService.update(props.id,data);
             if(update.success)
             {
-                alert(t(strings.updateSuccess));
+                toast.success(t(strings.updateSuccess));
                 console.log("Check update:",update);
             }
             else
             {
-                alert(t(strings.updateFail));
+                toast.error(t(strings.updateFail));
                 console.log("Check update:",update);
 
             }
@@ -186,7 +188,7 @@ const UpdatePatient = (props) => {
     useEffect(()=>{
         const searchPatient=async()=>{
             const result=await PatientService.search(props.id);
-            console.log("Search patient in useEffect:",result.data.payload._id);
+            console.log("Search patient in useEffect:",result.data.payload);
             if(result.success)
             {
                 setUserData(result.data.payload);
@@ -286,7 +288,7 @@ const UpdatePatient = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        {/* <div className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.username)}  
@@ -298,10 +300,10 @@ const UpdatePatient = (props) => {
                                         helperText={usernameError}
 
                             />
-                        </div>
+                        </div> */}
                     
                     
-                    <div className={classes.item}>
+                    {/* <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
@@ -312,7 +314,7 @@ const UpdatePatient = (props) => {
                                         error={passwordError !== null}
                                         helperText={passwordError}
                                         /> 
-                    </div>
+                    </div> */}
                     <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
@@ -336,6 +338,16 @@ const UpdatePatient = (props) => {
                                         /> 
                     </div>
                     <div className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        placeholder={t(strings.fax)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeFax}
+                                        value={fax}
+
+
+                                        /> 
+                    </div>
+                    <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         placeholder={t(strings.email)}  
                                         variant="outlined" 
@@ -347,33 +359,6 @@ const UpdatePatient = (props) => {
 
                                         /> 
                     </div>
-                    <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                label={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div>
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
@@ -407,17 +392,8 @@ const UpdatePatient = (props) => {
                                         type="number"
                                         /> 
                         </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeFax}
-                                        value={fax}
-
-
-                                        /> 
-                        </div>
-                        <div className={classes.item}>
+                        
+                        {/* <div className={classes.item}>
                             <TextField className={classes.inputControl}  
                                         placeholder={t(strings.address)}  
                                         variant="outlined" 
@@ -426,7 +402,35 @@ const UpdatePatient = (props) => {
 
 
                                         /> 
+                        </div> */}
+                        <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.male)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                                }
+                                label={t(strings.male)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.female)}
+                                    color="primary"
+                                    className={classes.checkbox}
+
+                                />
+                                }
+                                label={t(strings.female)}
+                            />
                         </div>
+                    
                         <div className={classes.itemSmall}>
                             <FormControlLabel
                                 control={

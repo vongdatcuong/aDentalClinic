@@ -28,6 +28,8 @@ import PropTypes from 'prop-types';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
+import { toast } from 'react-toastify';
+
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -226,7 +228,7 @@ const Staffs = () => {
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson  id={selectedRowData.id}
-
+                                        editable={editable}
                         />
                         :
                             <TableCustom titles={titles}

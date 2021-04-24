@@ -117,6 +117,10 @@ const invoice="Invoice";
 const resignationLetter="Resignation letter";
 const content="Content";
 const noteType="Note type";
+const templateDefault="DEFAULT";
+const templateMedicalAlert="MEDICAL ALERT";
+const templateProgress="PROGRESS";
+const templateTreatment="TREATMENT";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -160,6 +164,8 @@ const logInSuccessMsg = "Sign in successfully";
     // Success Messages Appointment
 const deleteAppointmentSuccess = "Delete Appointment successfully";
     // Error Messages
+const errorNoDrug="You can't insert prescription if it don't have drug";
+const confirmChangeInReadMode="Cannot change in read mode";
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
 const insertFail = "Insert Fail";
@@ -231,6 +237,10 @@ const halitosis = "Halitosis";
 const addMoreImage = "Add more image";
 const layer = "Layer";
 const imagesPerPage = "Images per page";
+const prescription="Prescription";
+const addMoreDrug="Add more drug";
+const expired="Expired date";
+const agree="Agree";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -413,6 +423,8 @@ export default {
     deleteAppointmentSuccess,
     deleteAppointmentErrMsg,
     // Error Messages
+    errorNoDrug,
+    confirmChangeInReadMode,
     updateFail,
     insertFail,
     deleteFail,
@@ -480,6 +492,10 @@ export default {
     addMoreImage,
     layer,
     imagesPerPage,
+    prescription,
+    addMoreDrug,
+    expired,
+    agree,
     // Tooth chart page
     overView,
     quickSelect,
@@ -579,6 +595,10 @@ export default {
     procedureType,
     toothSelect,
     toothType,
+    templateDefault,
+    templateMedicalAlert,
+    templateProgress,
+    templateTreatment,
     // Settings
     general,
     account,
