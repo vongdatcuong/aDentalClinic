@@ -19,6 +19,11 @@ const styles = (theme) => ({
     fontWeight: "bold",
     textTransform: "none",
   },
+  btnDeleteRecord: {
+    color: "red",
+    fontWeight: "bold",
+    textTransform: "none",
+  },
   btnSaveRecord: {
     color: "#24a0ed",
     fontWeight: "bold",

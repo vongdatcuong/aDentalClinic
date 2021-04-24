@@ -34,6 +34,7 @@ import { TextField } from "@material-ui/core";
 import { useHistory } from "react-router";
 import keys from "../../../configs/keys";
 import ImageDialog from "./components/ImageDialog";
+import ConfirmDialog from "../../dialogs/ConfirmDialog";
 const useStyles = makeStyles(styles);
 const MouthHeight = 600;
 const MouthWidth = 1200;
@@ -52,6 +53,7 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   const [resetState, setResetState] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingFrameId, setEditingFrameId] = useState(null);
+  const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
   const handleViewImage = (order) => {
     setViewingImageIndex(order - 1);
     setVisible(true);
@@ -266,6 +268,28 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
   const onEdit = () => {
     setXrayMode(keys.MODE.MODE_EDIT);
   };
+  const onDelete = () => {
+    setOpenConfirmDialog(true);
+  };
+  const onCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
+  const onDeleteMouth = async () => {
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      const data = await MountService.delete(MouthData._id);
+      if (data.success) {
+        toast.success(t(strings.deleteSuccess));
+        history.goBack();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      toast.error(t(strings.deleteFail));
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
   useEffect(() => {
     if (MouthID) {
       if (XrayMode === keys.MODE.MODE_ADD) {
@@ -308,10 +332,20 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
             {t(strings.xRayImages)}
           </Typography>
           {XrayMode === keys.MODE.MODE_VIEW ? (
-            <Button simple className={classes.btnEditRecord} onClick={onEdit}>
-              <FaPencilAlt style={{ marginRight: 10 }}></FaPencilAlt>
-              {t(strings.edit)}
-            </Button>
+            <div>
+              <Button
+                simple
+                className={classes.btnDeleteRecord}
+                onClick={onDelete}
+              >
+                <FaTrashAlt style={{ marginRight: 10 }}></FaTrashAlt>
+                {t(strings.btnDelete)}
+              </Button>
+              <Button simple className={classes.btnEditRecord} onClick={onEdit}>
+                <FaPencilAlt style={{ marginRight: 10 }}></FaPencilAlt>
+                {t(strings.edit)}
+              </Button>
+            </div>
           ) : null}
           {XrayMode != keys.MODE.MODE_VIEW ? (
             <div>
@@ -396,6 +430,17 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
           patientID={patientID}
           onSelect={onEditedFrameImage}
         ></ImageDialog>
+        <ConfirmDialog
+          open={openConfirmDialog}
+          onClose={onCloseConfirmDialog}
+          action={onDeleteMouth}
+        >
+          {t(strings.areYouSureWantTo) +
+            " " +
+            t(strings.btnDelete) +
+            " " +
+            t(strings.xRayImages)}
+        </ConfirmDialog>
       </Container>
     </React.Fragment>
   );

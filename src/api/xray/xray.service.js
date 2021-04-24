@@ -63,6 +63,28 @@ class MouthService {
       };
     }
   }
+  async delete(id) {
+    try {
+      const result = await httpDelete({
+        url: `${apiPath.image.mouth}/${id}`,
+      });
+      if (result.success) {
+        return result;
+      } else {
+        return {
+          success: false,
+          data: null,
+          message: result.message,
+        };
+      }
+    } catch (error) {
+      console.log("Failed to update mouth:", error);
+      return {
+        success: false,
+        data: null,
+      };
+    }
+  }
   async update(id, data) {
     try {
       const result = await httpPatch({
