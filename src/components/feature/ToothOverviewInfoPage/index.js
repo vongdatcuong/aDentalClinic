@@ -95,7 +95,7 @@ const ToothOverviewInfoPage = ({ patientID }) => {
                 index={index}
                 key={index}
                 id={tooth.fullTooth.id}
-                // onClickTooth={props.onClickTooth}
+                // onSelectTooth={props.onSelectTooth}
                 toothSvgString={tooth.fullTooth.svgString}
               ></ToothOverviewInfoTab>
             );
