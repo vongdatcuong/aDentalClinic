@@ -179,7 +179,12 @@ const Drug = () => {
                 setSelectedRowData(rows[selectedRow])
                 console.log("Check selected row data:",rows[selectedRow]);
             }
+            if(selectedRowData!==rows[selectedRow] && isDelete===true  )
+            {
 
+                setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
+            }
         }
         
         
