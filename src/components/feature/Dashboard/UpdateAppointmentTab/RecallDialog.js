@@ -278,10 +278,10 @@ const RecallDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleOnClose} color="primary" variant="contained" autoFocus>
+          <Button autoFocus onClick={handleOnClose} color="secondary" variant="outlined" autoFocus>
             {t(strings.cancel)}
           </Button>
-          <Button onClick={handleOnSetRecalls} color="secondary" variant="contained">
+          <Button onClick={handleOnSetRecalls} color="primary" variant="contained">
             {t(strings.ok)}
           </Button>
         </DialogActions>
