@@ -28,12 +28,13 @@ import {hexToRgb} from '../utils/colors';
   const filterPatientPopoverMaxWidth = 700;
   const filterPatientPopoverHeight = 300;
   const filterPatientPopoverMaxHeight = 800;
-  const appointmentRecallTableHeight = 200;
-  const appointmentTreatmentTableHeight = 300;
+  const appointmentRecallTableHeight = 300;
+  const appointmentTreatmentTableHeight = 350;
   const appointRecallDialogWidth = '70%';
   const appointTreatmentDialogWidth = '80%';
   const appointAddTreatmentDialogWidth = '50%';
   const confirmDialogMinWidth = 350;
+  const appointTooltipMaxWidth = 450;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -230,6 +231,7 @@ export default {
   appointTreatmentDialogWidth,
   appointAddTreatmentDialogWidth,
   confirmDialogMinWidth,
+  appointTooltipMaxWidth,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,

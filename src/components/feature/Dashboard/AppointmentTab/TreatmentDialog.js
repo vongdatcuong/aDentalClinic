@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../../configs/strings';
 import figures from '../../../../configs/figures';
@@ -137,7 +137,7 @@ const CustomNoRowsOverlay = () => {
 }
 
 const TreatmentDialog = ({
-  open, patientID,
+  open, patientID, selectedDate,
   onClose, onSelect
 }) => {
   const classes = useStyles();
@@ -213,52 +213,36 @@ const TreatmentDialog = ({
   const [selectedTreatments, setSelectedTreatments] = useState([]); // Only ID
   const [originalSelectedTreatments, setOriginalSelectedTreatments] = useState([]);
 
-  const rows = [
-    {
-      id: 1,
-      date: "2018-24-12",
-      code: "D2392",
-      note: "ABCDEFGH",
-    },
-    {
-      id: 2,
-      date: "2018-24-12",
-      code: "D2392",
-      note: "ABCDEFGH"
-    },
-    {
-      id: 3,
-      date: "2018-24-12",
-      code: "D2392",
-      note: "ABCDEFGH"
-    },
-  ];
   let noneStr = t(strings.none);
   let currencyStr = t(strings.CURRENCY_PRE);
-  let lastPatientID = "";
+  const [lastPatientID, setLastPatientID] = useState("");
+  const [lastSelectedDate, setLastSelectedDate] = useState("");
 
   // use effect
   useEffect(async () => {
     
   }, [treatments])
 
-  const handleLoadTreatments = async () => {
+  const handleLoadTreatments = useCallback(async () => {
     setOriginalSelectedTreatments([...selectedTreatments]);
     if (patientID){
-      if (patientID != lastPatientID){
+      const selectedDateStr = ConvertDateTimes.formatDate(selectedDate, strings.defaultDateFormat);
+      if (patientID != lastPatientID || selectedDateStr != lastSelectedDate){
         try {
           setIsLoading(true);
           const promises = [
               api.httpGet({
                   url: apiPath.treatment.treatment + apiPath.patient.patient + '/' + patientID,
                   query: {
-                    get_staff: true
+                    get_staff: true,
+                    query_date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
                   }
               }),
           ];
           const result = await Promise.all(promises);
           if (result[0].success){
-            lastPatientID = patientID; console.log(result[0].payload)
+            setLastPatientID(patientID);
+            setLastSelectedDate(selectedDateStr);
             const columnss = result[0].payload.map((treatment) => {
               const assistant = treatment.assistant?.user;
               const provider = treatment.provider?.user;
@@ -275,23 +259,35 @@ const TreatmentDialog = ({
                 description: treatment.description || noneStr
             })});
             setTreatments(columnss);
+            setSelectedTreatments([]);
           } else {
               toast.error(result.message);
+              setTreatments([]);
+              setSelectedTreatments([]);
+              setOriginalSelectedTreatments([]);
+              setLastPatientID("");
+              setLastSelectedDate("");
           }
         } catch(err){
             toast.error(t(strings.loadTreatmentErrMsg));
+            setTreatments([]);
+            setSelectedTreatments([]);
+            setOriginalSelectedTreatments([]);
+            setLastPatientID("");
+            setLastSelectedDate("");
         } finally {
           setIsLoading(false);
         }
-      } else {
-
       }
       
     } else {
       setTreatments([]);
       setSelectedTreatments([]);
+      setOriginalSelectedTreatments([]);
+      setLastPatientID("");
+      setLastSelectedDate("");
     }
-  }
+  }, [selectedTreatments ,patientID, selectedDate]);
 
   const handleOnCheckTreatments = (newSelection) => {
     setSelectedTreatments(newSelection.selectionModel);
@@ -343,10 +339,10 @@ const TreatmentDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleOnClose} color="primary" variant="contained" autoFocus>
+          <Button autoFocus onClick={handleOnClose} color="secondary" variant="outlined" autoFocus>
             {t(strings.cancel)}
           </Button>
-          <Button onClick={handleOnSetTreatments} color="secondary" variant="contained">
+          <Button onClick={handleOnSetTreatments} color="primary" variant="contained">
             {t(strings.ok)}
           </Button>
         </DialogActions>

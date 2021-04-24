@@ -86,7 +86,7 @@ const FilterChairPopover = ({id, open, onClose, anchorEl, chairs, onApply}) => {
                 const labelId = `checkbox-list-secondary-label-${chair.id}`;
                 return (
                   <ListItem key={chair.id} button>
-                      <ListItemText id={labelId} primary={chair.text} />
+                      <ListItemText id={labelId} primary={chair.title} />
                       <ListItemSecondaryAction>
                           <Checkbox
                               checked={chairsDisplay[index]}

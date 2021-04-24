@@ -128,7 +128,7 @@ const CustomNoRowsOverlay = () => {
 }
 
 const RecallDialog = ({
-  open, patientID, selectedDate,
+  loadedRecalls, open, patientID, selectedDate,
   onClose, onSelect
 }) => {
   const classes = useStyles();
@@ -159,7 +159,7 @@ const RecallDialog = ({
     },
   ];
   const [recalls, setRecalls] = useState([]);
-  const [selectedRecalls, setSelectedRecalls] = useState([]);
+  const [selectedRecalls, setSelectedRecalls] = useState([]); // Only ID
   const [originalSelectedRecalls, setOriginalSelectedRecalls] = useState([]);
 
   let noneStr = t(strings.none);
@@ -169,10 +169,11 @@ const RecallDialog = ({
   // use effect
   useEffect(async () => {
     
-  }, [recalls])
+  }, [loadedRecalls])
 
   const handleLoadRecalls = useCallback(async () => {
-    setOriginalSelectedRecalls([...selectedRecalls]);
+    let loadedRecallIDs = loadedRecalls.map((recall) => recall.id);
+    setOriginalSelectedRecalls([...loadedRecallIDs]);
     if (patientID){
       const selectedDateStr = ConvertDateTimes.formatDate(selectedDate, strings.defaultDateFormat);
       if (patientID != lastPatientID || selectedDateStr != lastSelectedDate){
@@ -183,7 +184,6 @@ const RecallDialog = ({
                   url: apiPath.recall.recall + apiPath.patient.patient + '/' + patientID,
                   query: {
                     date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
-                    link: true,
                   }
               }),
           ];
@@ -198,7 +198,7 @@ const RecallDialog = ({
               note: recall.note || noneStr
             }));
             setRecalls(columnss);
-            setSelectedRecalls([]);
+            setSelectedRecalls(loadedRecallIDs);
           } else {
               toast.error(result.message);
               setRecalls([]);
@@ -226,7 +226,7 @@ const RecallDialog = ({
       setLastPatientID("");
       setLastSelectedDate("");
     }
-  }, [selectedRecalls, patientID, selectedDate])
+  }, [selectedRecalls, patientID, selectedDate, loadedRecalls])
 
   const handleOnCheckRecalls = (newSelection) => {
     setSelectedRecalls(newSelection.selectionModel);

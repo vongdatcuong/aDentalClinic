@@ -44,11 +44,10 @@ import styles from "./jss";
 // Components
 import RecallDialog from './RecallDialog';
 import TreatmentDialog from './TreatmentDialog';
-import AddTreatmentDialog from './AddTreatmentDialog';
+//import AddTreatmentDialog from './AddTreatmentDialog';
 
 // Icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import AddIcon from '@material-ui/icons/Add';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
 
 // Utils
@@ -66,9 +65,9 @@ import apiPath from '../../../../api/path';
 
 const useStyles = makeStyles(styles);
 
-const AppointmentTab = ({
-    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays,
-    onClose, onSelectChair, onSelectDate, onAddAppointment
+const UpdateAppointmentTab = ({
+    selectedAppointID, chairs, cellDuration, startDayHour, endDayHour, holidays,
+    onClose, onUpdateAppointment
 }) => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
@@ -87,28 +86,21 @@ const AppointmentTab = ({
 
     // None option
     const noneOption = {value: "", label: t(strings.none)};
+    let noneStr = t(strings.none);
+    let currencyStr = t(strings.CURRENCY_PRE);
 
     // States
-    const [isNewPatient, setIsNewPatient] = useState(true);
 
     const [patient, setPatient] = useState(noneOption);
-    //const [patientID, setPatientID] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [homePhone, setHomePhone] = useState("");
-    const [mobile, setMobile] = useState("");
-    const [email, setEmail] = useState("");
     const [assistant, setAssistant] = useState(null);
     const [provider, setProvider] = useState(null);
     const [staging, setStaging] = useState(lists.appointment.staging.new);
-    const [duration, setDuration] = useState(selectedDuration);
+    const [duration, setDuration] = useState(cellDuration);
     const [note, setNote] = useState("");
 
-    const [firstNameErrMsg, setFirstNameErrMsg] = useState("");
-    const [lastNameErrMsg, setLastNameErrMsg] = useState("");
-    const [homePhoneErrMsg, setHomePhoneErrMsg] = useState("");
-    const [mobileErrMsg, setMobileErrMsg] = useState("");
-    const [emailErrMsg, setEmailErrMsg] = useState("");
+    const [chairID, setChairID] = useState("");
+    const [date, setDate] = useState(new Date());
+
     const [providerErrMsg, setProviderErrMsg] = useState("");
     const [dateErrMsg, setDateErrMsg] = useState("");
     const [timeErrMsg, setTimeErrMsg] = useState("");
@@ -122,7 +114,6 @@ const AppointmentTab = ({
     const emailRef = useRef(null);
     const noteRef = useRef(null);
 
-    let noneStr = t(strings.none);
 
     // Duration options
     const durationOptions = [];
@@ -130,114 +121,115 @@ const AppointmentTab = ({
         durationOptions.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
     }
     // Recalls
+    const [oriRecalls, setOriRecalls] = useState([]);
     const [recalls, setRecalls] = useState([]);
 
     // Treatments
+    const [oriTreatments, setOriTreatments] = useState([]);
     const [treatments, setTreatments] = useState([]);
-    const [addedTreatments, setAddedTreatments] = useState([]);
+    //const [addedTreatments, setAddedTreatments] = useState([]);
 
     // Dialogs
     const [openRecallDialog, setOpenRecallDialog] = useState(false);
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
-    const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
+    //const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
     useEffect(async () => {
-        setDuration(selectedDuration);
-    }, [treatments, addedTreatments, patient, selectedDuration]);
+        if (selectedAppointID){
+            try {
+                dispatchLoading({type: strings.setLoading, isLoading: true});
+                const promiseAll = [
+                    api.httpGet({
+                        url: apiPath.appointment.appointment + '/' + selectedAppointID,
+                        query: {
+                            get_treatments: true,
+                            get_recalls: true
+                        },
+                    }),
+                ];
+                const result = await Promise.all(promiseAll);
+                if (result[0].success){
+                    const appointment = result[0].payload;
+                    const patient = appointment?.patient;
+                    const patientUser = patient?.user;
+                    const appointAssistant = appointment.assistant;
+                    const appointProvider = appointment.provider;
 
-    const handleOnNewPatient = () => {
-        setIsNewPatient(true);
-        setPatient({...noneOption});
-        //setPatientID("");
-        setFirstName("");
-        setLastName("");
-        setHomePhone("");
-        setMobile("");
-        setEmail("");
-
-        setRecalls([]);
-        setTreatments([]);
-        setAddedTreatments([]);
-
-        // Ref
-        patientIDRef.current.value = "";
-        firstNameRef.current.value = "";
-        lastNameRef.current.value = "";
-        homePhoneRef.current.value = "";
-        mobileRef.current.value = "";
-        emailRef.current.value = "";
-        noteRef.current.value = "";
-    }
-
-    const handleOnSelectPatient = useCallback(async (option) => {
-        if (option.value == -1){
-            handleOnNewPatient();
-            return;
-        } else if (option.value == patient.value){
-            return;
-        }
-        try {
-            dispatchLoading({ type: strings.setLoading, isLoading: true});
-            const promises = [
-                api.httpGet({
-                    url: apiPath.patient.patient + '/' + option.value
-                }),
-            ];
-            const result = await Promise.all(promises);
-            if (result[0].success){
-                //setPatientID(option.value);
-                const patient = result[0].payload;
-                const patientUser = patient?.user;
-                if (patient && patientUser){
-                    setPatient(option);
-                    setIsNewPatient(false);
-                    //setPatientID(patient._id || "");
-                    setFirstName(patientUser.first_name || "");
-                    setLastName(patientUser.last_name || "");
-                    setHomePhone(patientUser.home_phone || "");
-                    setMobile(patientUser.mobile_phone || "");
-                    setEmail(patientUser.email || "");
-
-                    // Ref
+                    setPatient({
+                        value: patient._id,
+                        label: ""
+                    });
                     patientIDRef.current.value = patient.patient_id;
-                    firstNameRef.current.value = patientUser.first_name || noneStr;
-                    lastNameRef.current.value = patientUser.last_name || noneStr;
-                    homePhoneRef.current.value = patientUser.home_phone || noneStr;
-                    mobileRef.current.value = patientUser.mobile_phone || noneStr;
-                    emailRef.current.value = patientUser.email || noneStr;
+                    firstNameRef.current.value = patientUser.first_name;
+                    lastNameRef.current.value = patientUser.last_name;
+                    homePhoneRef.current.value = patientUser.home_phone;
+                    mobileRef.current.value = patientUser.mobile_phone;
+                    emailRef.current.value = patientUser.email;
+
+                    if (appointAssistant){
+                        setAssistant({
+                            value: appointAssistant._id,
+                            label: `${appointAssistant?.user.first_name} ${appointAssistant?.user.last_name} (${appointAssistant.display_id})`
+                        });
+                    }
+
+                    if (appointProvider){
+                        setProvider({
+                            value: appointProvider._id,
+                            label: `${appointProvider?.user.first_name} ${appointProvider?.user.last_name} (${appointProvider.display_id})`
+                        });
+                    }
+                    // Date Time
+                    const newDate = new Date(appointment.appointment_date);
+                    const appointTime = appointment.appointment_time;
+                    newDate.setHours(Number(appointTime.slice(0, 2)));
+                    newDate.setMinutes(Number(appointTime.slice(2)));
+                    setDate(newDate);
+
+                    // Chair
+                    setChairID(appointment.chair._id);
+                    setStaging(appointment.status);
+                    setDuration(Number(appointment.duration));
+                    setNote(appointment.note);
+                    noteRef.current.value = appointment.note;
+
+                    // Recalls
+                    const recallss = appointment.recalls.map((recall) => {
+                        return ({
+                            id: recall._id,
+                            date: (recall.recall_date)? ConvertDateTimes.formatDate(new Date(recall.recall_date), strings.defaultDateFormat) : noneStr,
+                            code: recall.procedure || noneStr,
+                            note: recall.note || noneStr
+                    })});
+                    setOriRecalls([...recallss]);
+                    setRecalls(recallss);
+
+                    // Treatments
+                    const treatmentss = appointment.treatments.map((treatment) => {
+                        return ({
+                            id: treatment._id,
+                            date: (treatment.treatment_date)? ConvertDateTimes.formatDate(new Date(treatment.treatment_date), strings.defaultDateFormat) : noneStr,
+                            code: treatment.ada_code || noneStr,
+                            tooth: treatment.tooth || noneStr,
+                            surface: treatment.surface || noneStr,
+                            provider: (provider)? (provider.first_name + " " + provider.last_name) : noneStr,
+                            assistant: (assistant)? (assistant.first_name + " " + assistant.last_name) : noneStr,
+                            status: treatment.status || noneStr,
+                            fee: (treatment.fee.$numberDecimal)? `${currencyStr}${Number(treatment.fee.$numberDecimal)}` : 0,
+                            description: treatment.description || noneStr
+                    })});
+                    setOriTreatments([...treatmentss]);
+                    setTreatments(treatmentss);
+                } else {
+                    toast.error(t(strings.loadAppointmentFailMsg));    
                 }
-                setRecalls([]);
-                setTreatments([]);
-                setAddedTreatments([]);
-            } else {
-                toast.error(result.message);
+            } catch(err){
+                toast.error(t(strings.loadAppointmentFailMsg));
+            } finally {
+                dispatchLoading({type: strings.setLoading, isLoading: false});
             }
-        } catch(err){
-            toast.error(t(strings.loadPatientErrMsg));
-        } finally {
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
-    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef]);
-
-    const handleOnFirstNameChange = (evt) => {
-        setFirstName(evt.target.value);
-    }
-
-    const handleOnLastNameChange = (evt) => {
-        setLastName(evt.target.value);
-    }
-
-    const handleOnHomePhoneChange = (evt) => {
-        setHomePhone(evt.target.value);
-    }
-
-    const handleOnMobileChange = (evt) => {
-        setMobile(evt.target.value);
-    }
-
-    const handleOnEmailChange = (evt) => {
-        setEmail(evt.target.value);
-    }
+    }, [selectedAppointID]);
 
     const handleOnAssistantChange = (option) => {
         setAssistant(option);
@@ -247,18 +239,22 @@ const AppointmentTab = ({
         setProvider(option);
     }
 
+    const handleOnChairChange = (evt) => {
+        setChairID(evt.target.value);
+    }
+
     const handleOnStagingChange = (evt) => {
         setStaging(evt.target.value);
     }
 
     const handleOnDateChange = (date) => {
-        onSelectDate("date", date._d);
+        setDate(date._d);
         setRecalls([]);
         setTreatments([]);
     }
 
     const handleOnTimeChange = (date) => {
-        onSelectDate("time", date._d);
+        setDate(date._d);
     }
 
     const handleOnDurationChange = (evt) => {
@@ -269,49 +265,11 @@ const AppointmentTab = ({
         setNote(evt.target.value);
     }
 
-    const handleAddAppointment = async (evt) => {
+    // Update appointment
+    const handleUpdateAppointment = async (evt) => {
         evt.preventDefault();
 
         let isValid = true;
-        // First name
-        if (isNewPatient && !isPropValid(validators.properties.firstName, firstName)){
-            setFirstNameErrMsg(t(strings.firstNameErrMsgShort));
-            isValid = false;
-        } else {
-            setFirstNameErrMsg("");
-        }
-
-        // Last name
-        if (isNewPatient && !isPropValid(validators.properties.lastName, lastName)){
-            setLastNameErrMsg(t(strings.lastNameErrMsgShort));
-            isValid = false;
-        } else {
-            setLastNameErrMsg("");
-        }
-
-        // Home phone
-        if (isNewPatient && !isPropValid(validators.properties.phone, homePhone)){
-            setHomePhoneErrMsg(t(strings.phoneErrMsg));
-            isValid = false;
-        } else {
-            setHomePhoneErrMsg("");
-        }
-
-        // Mobile phone
-        if (isNewPatient && !isPropValid(validators.properties.phone, mobile)){
-            setMobileErrMsg(t(strings.phoneErrMsg));
-            isValid = false;
-        } else {
-            setMobileErrMsg("");
-        }
-
-        // Email
-        if (isNewPatient && !isPropValid(validators.properties.email, email)){
-            setEmailErrMsg(t(strings.emailErrMsg));
-            isValid = false;
-        } else {
-            setEmailErrMsg("");
-        }
 
         // Provider
         if (!isPropValid(validators.properties.provider, provider?.value || "")){
@@ -322,7 +280,7 @@ const AppointmentTab = ({
         }
 
         // Holiday
-        if (holidays[selectedAppointStart.getMonth() + 1][selectedAppointStart.getDate()]){
+        if (holidays[date.getMonth() + 1][date.getDate()]){
             setDateErrMsg(t(strings.appointHolidayErrMsg));
             isValid = false;
         } else {
@@ -330,7 +288,7 @@ const AppointmentTab = ({
         }
 
         // Time
-        const selectedTime = (selectedAppointStart)? selectedAppointStart.getHours() * 60 + selectedAppointStart.getMinutes() : 0;
+        const selectedTime = (date)? date.getHours() * 60 + date.getMinutes() : 0;
         if (selectedTime < startDayHourMins|| selectedTime > endDayHourMins){
             setTimeErrMsg(t(strings.appointTimeErrMsg));
             isValid = false;
@@ -339,38 +297,59 @@ const AppointmentTab = ({
         }
 
         if (isValid){
-            // Add appointment
-            const patientData = {
-                first_name: firstName,
-                last_name: lastName,
-                home_phone: homePhone,
-                mobile_phone: mobile,
-                email: email,
-                new_patient: true
-            };
-            const selectedAppointStartMoment = moment(selectedAppointStart);
+            // Update appointment
+            const selectedAppointStartMoment = moment(date);
             if (selectedAppointStartMoment.isValid()){
+                // Patient Dât
+                const patientData = {
+                    first_name: firstNameRef.current.value,
+                    last_name: lastNameRef.current.value,
+                };
                 const appointTime = selectedAppointStartMoment.format("HHmm"); 
                 const startOfSelectedDate = selectedAppointStartMoment.utc().startOf('day');
                 let startDayNum = Number(startDayHour.slice(0, 2)) + Number(startDayHour.slice(3)) / 60,
                     endDayNum = Number(endDayHour.slice(0, 2)) + Number(endDayHour.slice(3)) / 60,
                     appointTimeNum = Number(appointTime.slice(0, 2)) + Number(appointTime.slice(2)) / 60;
                     appointTimeNum+= duration/60;
+                // Links
+                let recallLinks = [], recallUnlinks = [], treatmentLinks =[], treatmentUnlinks = [];
+                let recallObj = Object.create(null), treatmentObj = Object.create(null);
+                recalls.forEach((recall) => {
+                    recallLinks.push(recall.id);
+                    recallObj[recall.id] = true;
+                });
+                oriRecalls.forEach((recall) => {
+                    if (!recallObj[recall.id]){
+                        recallUnlinks.push(recall.id);
+                    }
+                });
+
+                treatments.forEach((treatment) => {
+                    treatmentLinks.push(treatment.id);
+                    treatmentObj[treatment.id] = true;
+                })
+                oriTreatments.forEach((treatment) => {
+                    if (!treatmentObj[treatment.id]){
+                        treatmentUnlinks.push(treatment.id);
+                    }
+                })
+                
                 if (appointTimeNum >= startDayNum && appointTimeNum <= endDayNum){
                     const appointData = {
-                        patient: patient?.value || "",
                         provider: provider?.value || "",
                         assistant: assistant?.value || "",
-                        chair: selectedChairId,
+                        chair: chairID,
                         appointment_date:  startOfSelectedDate._d,
                         appointment_time: appointTime,
                         duration: duration,
                         note: note,
                         status: staging,
-                        recall_link: recalls.map((recall) => recall.id),
-                        treatment_link: treatments.map((treatment) => treatment.id),
+                        recall_link: recallLinks,
+                        recall_unlink: recallUnlinks,
+                        treatment_link: treatmentLinks,
+                        treatment_unlink: treatmentUnlinks,
                     };
-                    await onAddAppointment(isNewPatient, patientData, appointData, resetAllFields);
+                    await onUpdateAppointment(selectedAppointID, patientData, appointData, resetAllFields);
                 } else {
                     toast.error(t(strings.dateRangeInvalid));
                 }
@@ -379,32 +358,6 @@ const AppointmentTab = ({
             }
         }
     }
-
-    // Autocomplete Patient
-    const loadPatientOptions  = (inputValue) => {
-        return new Promise(async (resolve) => {
-            try {
-                let options = [];
-                const result = await api.httpGet({
-                    url: apiPath.patient.patient + apiPath.common.autocomplete,
-                    query: {
-                        data: inputValue,
-                        limit: figures.autocomplete.limit
-                    }
-                });
-                if (result.success){
-                    options = result.payload.map((option) => ({
-                        value: option._id,
-                        label: option.first_name + " " + option.last_name
-                    }));
-                }
-                options.unshift({value: -1, label: t(strings.none)});
-                resolve(options);
-            } catch(err){
-                toast.error(err);
-            }
-          });
-    };
 
     // Autocomplete Assistant
     const loadAssistantOptions  = (inputValue) => {
@@ -467,9 +420,7 @@ const AppointmentTab = ({
 
     // Recall Dialog
     const handleOpenRecalltDialog = () => {
-        if (!isNewPatient){
-            setOpenRecallDialog(true);
-        }
+        setOpenRecallDialog(true);
     }
 
     const handleCloseRecallDialog = () => {
@@ -478,15 +429,14 @@ const AppointmentTab = ({
 
     // Treatment Dialog
     const handleOpenTreatmentDialog = () => {
-        if (!isNewPatient){
-            setOpenTreatmentDialog(true);
-        }
+        setOpenTreatmentDialog(true);
     }
 
     const handleCloseTreatmentDialog = () => {
         setOpenTreatmentDialog(false);
     }
 
+    /*
     // Add Treatment Dialog
     const handleOpenAddTreatmentDialog = () => {
         setOpenAddTreatmentDialog(true);
@@ -506,35 +456,26 @@ const AppointmentTab = ({
         const addeds = [...addedTreatments];
         addeds.push(newTreatment);
         setAddedTreatments(addeds)
-      }
+      }*/
 
     const resetAllFields = () => {
-        setIsNewPatient(true);
         setPatient(noneOption);
-        setFirstName("");
-        setLastName("");
-        setHomePhone("");
-        setMobile("");
-        setEmail("");
         setAssistant(null);
         setProvider(null);
         setStaging(lists.appointment.staging.new);
         setDuration(cellDuration);
         setNote("");
-        setFirstNameErrMsg("");
-        setLastNameErrMsg("");
-        setHomePhoneErrMsg("");
-        setMobileErrMsg("");
-        setEmailErrMsg("");
         setProviderErrMsg("");
         setDateErrMsg("");
         setTimeErrMsg("");
         setRecalls([]);
         setTreatments([]);
-        setAddedTreatments([]);
+        //setAddedTreatments([]);
         setOpenRecallDialog(false);
         setOpenTreatmentDialog(false);
-        setOpenAddTreatmentDialog(false);
+        //setOpenAddTreatmentDialog(false);
+        setOriRecalls([]);
+        setOriTreatments([]);
 
         // Ref
         patientIDRef.current.value = "";
@@ -551,45 +492,11 @@ const AppointmentTab = ({
             <IconButton aria-label="back" className={classes.backBtn} onClick={handleOnCloseTab}>
                 <ArrowBackIcon fontSize="small" />
             </IconButton>
-            <Typography className={classes.title} variant="h4" component="h4">{t(strings.add)} {t(strings.appointment)}</Typography>
+            <Typography className={classes.title} variant="h4" component="h4">{t(strings.update)} {t(strings.appointment)}</Typography>
             <Grid container className={classes.gridContainer} spacing={2}>
                 <Grid container item md={6} sm={12} xs={12} spacing={0}>
-                    {/* Select Patient */}
-                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
-                        {/* Group title */}
-                        <Grid item md={12} sm={12} xs={12}>
-                            <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
-                                {t(strings.selectPatient + " | " + t(strings.enterNewPatient))}
-                            </Typography>
-                        </Grid>
-                        <Grid container item md={12} sm={12} xs={12} spacing={1}>
-                            <Grid item md={8} sm={12} xs={12}>
-                                <AsyncSelect 
-                                    item
-                                    cacheOptions 
-                                    defaultOptions 
-                                    loadOptions={loadPatientOptions}
-                                    defaultValue={noneOption}
-                                    styles={selectPatientStyle}
-                                    placeholder={t(strings.select) + " " + t(strings.patient)}
-                                    noOptionsMessage={() => t(strings.noOptions)}
-                                    onChange={handleOnSelectPatient}
-                                    value={patient}
-                                />
-                            </Grid>
-                            <Grid item md={4} sm={12} xs={12}>
-                                <Button variant="contained" 
-                                    color="secondary" 
-                                    className={classes.newPatientBtn}
-                                    onClick={handleOnNewPatient}
-                                >
-                                    {t(strings.newPatient)}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
                     {/* Patient information */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -630,10 +537,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     type="text"
-                                    onBlur={handleOnFirstNameChange}
-                                    error={Boolean(firstNameErrMsg)}
-                                    helperText={t(firstNameErrMsg)}
-                                    disabled={!isNewPatient}
+                                    disabled
                                     inputRef={firstNameRef}
                                     InputLabelProps={{
                                         shrink: true,
@@ -654,10 +558,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     type="text"
-                                    onBlur={handleOnLastNameChange}
-                                    error={Boolean(lastNameErrMsg)}
-                                    helperText={t(lastNameErrMsg)}
-                                    disabled={!isNewPatient}
+                                    disabled
                                     inputRef={lastNameRef}
                                     InputLabelProps={{
                                         shrink: true
@@ -689,10 +590,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     type="tel"
-                                    onBlur={handleOnHomePhoneChange}
-                                    error={Boolean(homePhoneErrMsg)}
-                                    helperText={t(homePhoneErrMsg)}
-                                    disabled={!isNewPatient}
+                                    disabled
                                     inputRef={homePhoneRef}
                                     InputLabelProps={{
                                         shrink: true
@@ -713,10 +611,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     type="tel"
-                                    onBlur={handleOnMobileChange}
-                                    error={Boolean(mobileErrMsg)}
-                                    helperText={t(mobileErrMsg)}
-                                    disabled={!isNewPatient}
+                                    disabled
                                     inputRef={mobileRef}
                                     InputLabelProps={{
                                         shrink: true
@@ -737,10 +632,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     type="email"
-                                    onBlur={handleOnEmailChange}
-                                    error={Boolean(emailErrMsg)}
-                                    helperText={t(emailErrMsg)}
-                                    disabled={!isNewPatient}
+                                    disabled
                                     inputRef={emailRef}
                                     InputLabelProps={{
                                         shrink: true
@@ -753,7 +645,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Schedule */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -818,8 +710,8 @@ const AppointmentTab = ({
                                     variant="outlined"
                                     size="small"
                                     fullWidth
-                                    value={selectedChairId || 0}
-                                    onChange={onSelectChair}
+                                    value={chairID || ""}
+                                    onChange={handleOnChairChange}
                                 >
                                 {(chairs.map((chair) => {
                                     return (
@@ -862,7 +754,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     format={strings.defaultDateFormat}
-                                    value={selectedAppointStart}
+                                    value={date}
                                     onChange={() => {}}
                                     onAccept={handleOnDateChange}
                                     InputLabelProps={{
@@ -883,7 +775,7 @@ const AppointmentTab = ({
                                     size="small"
                                     fullWidth
                                     ampm={false}
-                                    value={selectedAppointStart}
+                                    value={date}
                                     onAccept={handleOnTimeChange}
                                     onChange={() => {}}
                                     minutesStep={cellDuration}
@@ -937,6 +829,9 @@ const AppointmentTab = ({
                                 rows={4}
                                 onBlur={handleOnNoteChange}
                                 inputRef={noteRef}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
                             />
                         </Grid>
                     </Grid>
@@ -999,12 +894,6 @@ const AppointmentTab = ({
                                 >
                                     <InsertLinkIcon/>
                                 </IconButton>
-                                {/*<IconButton aria-label="add-treatment" 
-                                    className={clsx(classes.tableIconBtn, classes.addIcon)}
-                                    onClick={handleOpenAddTreatmentDialog}
-                                >
-                                    <AddIcon/>
-                                </IconButton>*/}
                             </Grid>
                         </Grid>
                         <Grid item md={12} sm={12} xs={12}>
@@ -1029,15 +918,6 @@ const AppointmentTab = ({
                                             <TableCell align="center" width="17%" className={classes.tableCell}>{treatment.status}</TableCell>
                                         </TableRow>
                                     ))}
-                                    {/*addedTreatments.map((treatment, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell align="center" width="13%" className={classes.tableCell}>{treatment.code}</TableCell>
-                                            <TableCell align="center" width="15%" className={classes.tableCell}>{treatment.tooth}</TableCell>
-                                            <TableCell align="left" width="15%" className={classes.tableCell}>{treatment.surface}</TableCell>
-                                            <TableCell align="left" width="35%" className={classes.tableCell}>{treatment.description}</TableCell>
-                                            <TableCell align="center" width="17%" className={classes.tableCell}>{treatment.status}</TableCell>
-                                        </TableRow>
-                                    ))*/}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -1050,35 +930,30 @@ const AppointmentTab = ({
                         color="primary" 
                         variant="contained"
                         fullWidth
-                        onClick={handleAddAppointment}
+                        onClick={handleUpdateAppointment}
                     >
-                        {t(strings.add)}
+                        {t(strings.update)}
                     </Button>
                 </Grid>
             </Grid>
             <RecallDialog
                 patientID={patient.value}
+                loadedRecalls={recalls}
                 open={openRecallDialog}
                 onClose={handleCloseRecallDialog}
                 onSelect={setRecalls}
-                selectedDate={selectedAppointStart}
+                selectedDate={date}
             />
             <TreatmentDialog
                 patientID={patient.value}
+                loadedTreatments={treatments}
                 open={openTreatmentDialog}
                 onClose={handleCloseTreatmentDialog}
                 onSelect={setTreatments}
-                selectedDate={selectedAppointStart}
-            />
-            <AddTreatmentDialog
-                patientID={patient.value}
-                open={openAddTreatmentDialog}
-                onClose={handleCloseAddTreatmentDialog}
-                onAdd={handleAddNewTreatment}
-                selectedDate={selectedAppointStart}
+                selectedDate={date}
             />
         </Paper>
     )
 }
 
-export default AppointmentTab;
+export default UpdateAppointmentTab;

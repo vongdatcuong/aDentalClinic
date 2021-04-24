@@ -67,20 +67,20 @@ const ConfirmDialog = ({open, onClose, action, children}) => {
         </DialogContent>
         <DialogActions className={classes.action}>
           <Button
-            onClick={handleOK}
-            variant="contained"
+            onClick={onClose}
+            variant="outlined"
             color="secondary"
             className={classes.button}
           >
-            {t(strings.ok)}
+            {t(strings.cancel)}
           </Button>
           <Button
-            onClick={onClose}
+            onClick={handleOK}
             variant="contained"
             color="primary"
             className={classes.button}
           >
-            {t(strings.cancel)}
+            {t(strings.ok)}
           </Button>
         </DialogActions>
       </Dialog>

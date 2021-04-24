@@ -163,6 +163,11 @@ const deleteSuccess = "Delete Success";
 const logInSuccessMsg = "Sign in successfully";
     // Success Messages Appointment
 const deleteAppointmentSuccess = "Delete Appointment successfully";
+const addAppointmentSuccess = "Add Appointment successfully";
+const updateAppointmentSuccess = "Update Appointment successfully";
+    // Success Messages Settings
+const updateUserProfileSuccess = "Update Profile successfully";
+const changePwdSuccess = "Change Password successfully";
     // Error Messages
 const errorNoDrug="You can't insert prescription if it don't have drug";
 const confirmChangeInReadMode="Cannot change in read mode";
@@ -207,6 +212,13 @@ const appointProcedureErrMsg = "Procedure is required";
 const appointToothErrMsg = "Tooth is required";
 const appointSurfaceErrMsg = "Surface is required";
 const deleteAppointmentErrMsg = "Delete Appointment fail";
+const thisIsAHolidayErrMsg = "This is a holiday";
+const addAppointmentErrMsg = "Add Appointment fail";
+const updateAppointmentErrMsg = "Update Appointment fail";
+    // Error Messages Settings
+const changeLanguageErrMsg = "Change language fail";
+const changeThemeErrMsg = "Change theme fail";
+const changePwdErrMsg = "Change Password fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -422,6 +434,11 @@ export default {
     // Success Messages Appointment
     deleteAppointmentSuccess,
     deleteAppointmentErrMsg,
+    addAppointmentSuccess,
+    updateAppointmentSuccess,
+    // Success Messages Settings
+    updateUserProfileSuccess,
+    changePwdSuccess,
     // Error Messages
     errorNoDrug,
     confirmChangeInReadMode,
@@ -465,6 +482,13 @@ export default {
     appointProcedureErrMsg,
     appointToothErrMsg,
     appointSurfaceErrMsg,
+    thisIsAHolidayErrMsg,
+    addAppointmentErrMsg,
+    updateAppointmentErrMsg,
+    changePwdErrMsg,
+    // Settings Error Messages
+    changeLanguageErrMsg,
+    changeThemeErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,

@@ -1,10 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import { makeStyles,  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import lists from '../../../configs/lists';
 // use i18next
 import i18n from '../../../i18n';
 import { useTranslation } from 'react-i18next';
+
+// Toast
+import { toast } from 'react-toastify';
 
 // Context
 import { loadingStore } from '../../../contexts/loading-context';
@@ -25,6 +28,14 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 
 // Component
 import SimpleCombobox from '../../common/SimpleComboBox';
+
+// API
+import api from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import AuthService from '../../../api/authentication/auth.service';
+
+// Utils
+import ThemeType from '../../../utils/types/Theme';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -52,9 +63,15 @@ const useStyles = makeStyles((theme) => ({
 const General = () => {
   const classes = useStyles();
   const {t, i18next} = useTranslation();
+  const {loadingState, dispatchLoading} = useContext(loadingStore);
   const {themeState, dispatchTheme} = useContext(themeStore);
 
+  const user = AuthService.getCurrentUser();
+
   // States
+  const [language, setLanguage] = useState(user.language?.toLowerCase() || "en");
+  const [theme, setTheme] = useState((user.theme != undefined)? user.theme : ThemeType.DARK);
+
   const [openLanguagePopover, setOpenLanguagePopover] = useState(false);
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
 
@@ -90,10 +107,33 @@ const General = () => {
     setOpenLanguagePopover(false);
   };
 
-  const handleChangeLanguage = (value) => {
-    handleCloseLanguagePopover();
-    i18n.changeLanguage(value);
-  }
+  const handleChangeLanguage = useCallback(async (value) => {
+    if (value === language){
+      return;
+    }
+    try {
+      dispatchLoading({type: strings.setLoading, isLoading: true});
+      const result = await api.httpPatch({
+        url: apiPath.staff.staff + '/' + user.staff_id,
+        body: {
+          language: value
+        }
+      })
+      if (result.success){
+        setLanguage(value);
+        user.language = value;
+        AuthService.updateCurrentUser(user);
+        handleCloseLanguagePopover();
+        i18n.changeLanguage(value);
+      } else {
+        toast.error(result.message);
+      }
+    } catch(err){
+      toast.error(t(strings.changeLanguageErrMsg));
+    } finally {
+      dispatchLoading({type: strings.setLoading, isLoading: false});
+    }
+  }, [user]);
 
   const handleOpenThemePopover = (event) => {
     setOpenThemePopover(true);
@@ -105,10 +145,33 @@ const General = () => {
     setOpenThemePopover(false);
   };
 
-  const handleChangeTheme = (value) => {
-    handleCloseThemePopover();
-    dispatchTheme({type: strings.setTheme, theme: parseInt(value)});
-  }
+  const handleChangeTheme = useCallback(async (value) => {
+    if (value === language){
+      return;
+    }
+    try {
+      dispatchLoading({type: strings.setLoading, isLoading: true});
+      const result = await api.httpPatch({
+        url: apiPath.staff.staff + '/' + user.staff_id,
+        body: {
+          theme: value
+        }
+      })
+      if (result.success){
+        setTheme(value);
+        user.theme = value;
+        AuthService.updateCurrentUser(user);
+        handleCloseThemePopover();
+        dispatchTheme({type: strings.setTheme, theme: value});
+      } else {
+        toast.error(result.message);
+      }
+    } catch(err){
+      toast.error(t(strings.changeThemeErrMsg));
+    } finally {
+      dispatchLoading({type: strings.setLoading, isLoading: false});
+    }
+  }, [user]);
   
   return (
     <List className={classes.list}>
@@ -163,7 +226,7 @@ const General = () => {
                 horizontal: 'right',
             }}
             >
-            <SimpleCombobox list={languages} value={i18n.language} onChange={handleChangeLanguage}/>
+            <SimpleCombobox list={languages} value={language} onChange={handleChangeLanguage}/>
         </Popover>
         {/* Theme Popover */}
         <Popover 
@@ -180,7 +243,7 @@ const General = () => {
                 horizontal: 'right',
             }}
             >
-            <SimpleCombobox list={themes} value={themeState.type} onChange={handleChangeTheme}/>
+            <SimpleCombobox list={themes} value={theme} onChange={handleChangeTheme}/>
         </Popover>
     </List>
     )

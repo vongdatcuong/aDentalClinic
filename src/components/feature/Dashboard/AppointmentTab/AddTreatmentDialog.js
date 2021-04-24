@@ -469,10 +469,10 @@ const AddTreatmentDialog = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleOnClose} color="primary" variant="contained" autoFocus>
+          <Button autoFocus onClick={handleOnClose} color="secondary" variant="outlined" autoFocus>
             {t(strings.cancel)}
           </Button>
-          <Button onClick={handleOnAdd} color="secondary" variant="contained">
+          <Button onClick={handleOnAdd} color="primary" variant="contained">
             {t(strings.ok)}
           </Button>
         </DialogActions>
