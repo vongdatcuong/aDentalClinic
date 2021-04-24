@@ -164,6 +164,7 @@ const logInSuccessMsg = "Sign in successfully";
     // Success Messages Appointment
 const deleteAppointmentSuccess = "Delete Appointment successfully";
     // Error Messages
+const errorNoDrug="You can't insert prescription if it don't have drug";
 const confirmChangeInReadMode="Cannot change in read mode";
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
@@ -412,6 +413,7 @@ export default {
     deleteAppointmentSuccess,
     deleteAppointmentErrMsg,
     // Error Messages
+    errorNoDrug,
     confirmChangeInReadMode,
     updateFail,
     insertFail,

@@ -230,7 +230,7 @@ const insertPatientPrescriptionStyle = (theme) => ({
         textTransform: "none",
     },
     menu:{
-        minWidth:'300px',
+        minWidth:'36vw',
         marginLeft:'30px',
         marginTop:'15px',
     },

@@ -148,7 +148,7 @@ const Chairs = () => {
                 setSelectedRowData(rows[selectedRow])
                 console.log("Check selected row data:",rows[selectedRow]);
             }
-
+            
         }
     })
     return (

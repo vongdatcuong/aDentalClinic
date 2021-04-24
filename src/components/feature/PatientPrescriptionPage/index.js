@@ -58,11 +58,11 @@ import Footer from "../../../layouts/Footer";
 import { TrainRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
-const createData=(id,date)=>{
-    return {id,date};
+const createData=(id,date,status)=>{
+    return {id,date,status};
 };
  
-const dataColumnsName=["index","date"]
+const dataColumnsName=["index","date","status"]
 
 
 
@@ -133,7 +133,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         t(strings.index),
         // t(strings.provider),
         t(strings.date),
-        
+        t(strings.status)
 
     ];
 
@@ -143,7 +143,17 @@ const PatientPrescriptionPage = ({patientID}) => {
         
         data.map((a,index)=>{
             let date=moment(a.prescription_date).format('DD/MM/YYYY');
-            let newData=createData(a._id,date);
+            let status;
+            if(a.is_delete===true)
+            {
+                status=t(strings.inactive);
+            }
+            else
+            {
+                status=t(strings.active);
+
+            }
+            let newData=createData(a._id,date,status);
             temp=temp.concat(newData);
 
         })
@@ -155,7 +165,10 @@ const PatientPrescriptionPage = ({patientID}) => {
         handleCloseDialog();
         console.log("Delete now:",selectedRowData);
         const deletePrescription=async()=>{
-            const res=await PrescriptionService.delete(selectedRowData.id);
+            const data={
+                is_delete:true,
+            };
+            const res=await PrescriptionService.update(selectedRowData.id,data);
             console.log("Delete prescription:",res);
             if(res.success)
             {

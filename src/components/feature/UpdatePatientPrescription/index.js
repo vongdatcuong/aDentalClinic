@@ -142,6 +142,7 @@ const UpdatePatientPrescription = (props) => {
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
+    
     const updateDrug=(e)=>{
         console.log("Check drug before update:",drug);
         console.log("Selected row data:",selectedRowData);
@@ -406,24 +407,48 @@ const UpdatePatientPrescription = (props) => {
                             </Select>
                         </FormControl>
                         <div className={classes.item}>
+                            {description ?
                             <TextField className={classes.inputControl} 
                                         
-                                        label={t(strings.description)}  
+                            label={t(strings.description)}  
+                            variant="outlined" 
+                            onChange={handleChangeDescription}
+                            value={description}
+                            disabled={!props.editable}
+                            />
+                            :
+                            <TextField className={classes.inputControl} 
+                                        
+                                        placeholder={t(strings.description)}  
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
                                         disabled={!props.editable}
-                                        /> 
+                                        />
+                            }
+                             
                         </div>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        required 
-                                        label={t(strings.refill)}  
+                            {refill ?
+                            <TextField 
+                                className={classes.inputControl} 
+                                label={t(strings.refill)}  
+                                variant="outlined" 
+                                onChange={handleChangeRefill}
+                                value={refill}
+                                disabled={!props.editable}
+                            />                     
+                            :
+                            <TextField 
+                                        className={classes.inputControl} 
+                                        placeholder={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
                                         disabled={!props.editable}
-                                        /> 
+                                        />        
+                            }
+
                         </div>
                         
                         
@@ -432,37 +457,50 @@ const UpdatePatientPrescription = (props) => {
                    
 
                     <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        required 
-                                        label={t(strings.dispensed)}  
+                        {dispensed ?
+                        <TextField className={classes.inputControl} 
+                        label={t(strings.dispensed)}  
+                        variant="outlined" 
+                        onChange={handleChangeDispensed}
+                        value={dispensed}
+                        disabled={!props.editable}
+                        /> 
+                        :
+                        <TextField className={classes.inputControl} 
+                                        placeholder={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
                                         disabled={!props.editable}
                                         /> 
+                        }
+                            
                         </div>
                         <div className={classes.item}>
+                            {quantity ?
                             <TextField className={classes.inputControl} 
-                                        // placeholder={t(strings.quantity)}  
+                                variant="outlined" 
+                                onChange={handleChangeQuantity}
+                                value={quantity}
+                                disabled={!props.editable}
+                                label={t(strings.quantity)}
+                            /> 
+                            :
+                            <TextField className={classes.inputControl} 
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
                                         disabled={!props.editable}
-                                        label={t(strings.quantity)}
+                                        placeholder={t(strings.quantity)}
                                         /> 
+                            }
+                            
                         </div>
                         <div className={classes.itemDate}>
-                            {/* <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.expired)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeExpired}
-                                        value={expired}
-                                        
-                                        />  */}
+                            {expired ? 
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="date-picker-dialog"
-                                // label="Date picker dialog"
                                 label={t(strings.expired)}
                                 format={t(strings.apiDateFormat)}
                                 value={expired}
@@ -473,6 +511,22 @@ const UpdatePatientPrescription = (props) => {
                                 className={classes.inputControlDate} 
                                 disabled={!props.editable}
                             />
+                            :
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                placeholder={t(strings.expired)}
+                                format={t(strings.apiDateFormat)}
+                                value={expired}
+                                onChange={handleChangeExpired}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                className={classes.inputControlDate} 
+                                disabled={!props.editable}
+                            />
+                            }
+                            
                         </div>
                        
                     </Grid>

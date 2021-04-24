@@ -59,6 +59,7 @@ export default {
         "Delete Appointment successfully": "Xóa cuộc hẹn thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
+        "You can't insert prescription if it don't have drug":"Không thể thêm đơn thuốc nếu không có thuốc",
         "Cannot change in read mode":"Không thể thay đổi dữ liệu trong chế độ đọc",
         "Update Fail":"Cập nhật thất bại",
         "Insert Fail":"Thêm thất bại",

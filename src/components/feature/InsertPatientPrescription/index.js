@@ -146,7 +146,7 @@ const InsertPatientPrescription = (props) => {
             console.log("Check after add drug:",temp);
             setDescription(null);
             setDispensed(null);
-            setExpired(null);
+            setExpired(new Date());
             setQuantity(null);
             setRefill(null);
             setCurrentDrug(t(strings.drug));
@@ -172,7 +172,8 @@ const InsertPatientPrescription = (props) => {
     }
 
     const insertPrescription=async(e)=>{
-        if(provider!==t(strings.provider))
+        console.log("Drug :",drug);
+        if(provider!==t(strings.provider) && drug.length!==0)
         {
             let details=[];
             drug.map((a,index)=>{
@@ -205,7 +206,10 @@ const InsertPatientPrescription = (props) => {
                 toast.error(t(strings.insertFail));
             }
         }
-       
+        if(drug.length===0)
+        {
+            toast.error(t(strings.errorNoDrug))
+        }
 
     }
     const renderListProvider=()=>{

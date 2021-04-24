@@ -60,6 +60,7 @@ export default {
         "Delete Success":"Delete Success",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
+        "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
         "Cannot change in read mode":"Cannot change in read mode",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
