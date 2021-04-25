@@ -337,10 +337,10 @@ const PatientPrescriptionPage = ({patientID}) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseDialog} color="secondary">
+                        <Button variant="outlined" onClick={handleCloseDialog} color="secondary">
                             {t(strings.no)}
                         </Button>
-                        <Button onClick={deleteRow} color="primary" autoFocus>
+                        <Button variant="contained" onClick={deleteRow} color="primary" autoFocus>
                             {t(strings.yes)}
 
                         </Button>

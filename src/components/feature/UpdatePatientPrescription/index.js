@@ -534,10 +534,10 @@ const UpdatePatientPrescription = (props) => {
                 
             </DialogContent>
             <DialogActions>
-            <Button onClick={handleCloseDialog} color="secondary">
+            <Button variant="outlined" onClick={handleCloseDialog} color="secondary">
                 {t(strings.cancel)}
             </Button>
-            <Button onClick={updateDrug} color="primary">
+            <Button variant="contained" onClick={updateDrug} color="primary">
                 {t(strings.agree)}
             </Button>
             </DialogActions>

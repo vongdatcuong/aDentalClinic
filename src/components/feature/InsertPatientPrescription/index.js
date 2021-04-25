@@ -423,10 +423,10 @@ const InsertPatientPrescription = (props) => {
                 
             </DialogContent>
             <DialogActions>
-            <Button onClick={handleCloseDialog} color="secondary">
+            <Button variant="outlined" onClick={handleCloseDialog} color="secondary">
                 {t(strings.cancel)}
             </Button>
-            <Button onClick={insertDrug} color="primary">
+            <Button variant="contained" onClick={insertDrug} color="primary">
                 {t(strings.agree)}
             </Button>
             </DialogActions>
@@ -440,10 +440,10 @@ const InsertPatientPrescription = (props) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseDialog2} color="secondary">
+                        <Button variant="outlined" onClick={handleCloseDialog2} color="secondary">
                             {t(strings.no)}
                         </Button>
-                        <Button onClick={deleteRow} color="primary" autoFocus>
+                        <Button variant="contained" onClick={deleteRow} color="primary" autoFocus>
                             {t(strings.yes)}
 
                         </Button>
