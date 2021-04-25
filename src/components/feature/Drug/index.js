@@ -143,7 +143,9 @@ const Drug = () => {
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
-                rows.splice(selectedRow,1);
+                let temp=rows;
+                temp.splice(selectedRow,1);
+                setRows(temp);
             }
             else
             {

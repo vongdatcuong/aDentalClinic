@@ -230,6 +230,7 @@ const Providers = () => {
                         <InsertPerson 
                                         staffType={t(strings.staffTypeProvider)}
                                         userType={t(strings.userTypePatient)}
+
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson 

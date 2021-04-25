@@ -198,7 +198,7 @@ const UpdateReferralSource = (props) => {
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
                         {t(strings.update)}
                     </Button>
                 </div>

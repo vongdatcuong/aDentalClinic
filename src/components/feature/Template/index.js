@@ -83,7 +83,6 @@ const Template = () => {
     const titles=[
         t(strings.index),
         t(strings.content),
-        t(strings.noteType),
 
     ];
     const handleOpenDialog=(e)=>{
@@ -149,8 +148,9 @@ const Template = () => {
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
-                rowsWithType.splice(selectedRow,1);
-
+                let temp=rowsWithType;
+                temp.splice(selectedRow,1);
+                setRowsWithType(temp);
             }
             else
             {
@@ -236,21 +236,46 @@ const Template = () => {
             
             <div className={classes.content}>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={10}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.template)}
                         </Typography>
                     </Grid>
                     {insertTemplate===true || isEdited===true && isDelete===false ?
 
-                    <Grid item xs={6}>
+                    <Grid item xs={2}>
                         <Typography variant="h6" onClick={handleGoBackToTable} className={classes.goBack}>
                             {t(strings.goBack)}
                         </Typography>
                     </Grid>
                     :
-                    chooseType===true && insertTemplate===false ?
-                    <Grid item xs={6} className={classes.serviceGroup}>
+                    insertTemplate===true && isEdited=== false  ?
+                        <div 
+                                     
+                        />
+                        :
+                        isEdited===true &&selectedRowData!==null && isDelete===false?
+                        <div
+                        />
+                        :
+                        chooseType===false && insertTemplate===false && isEdited=== false?
+                        <div>
+                            
+                        </div>
+                        :
+                        <Grid item xs={2}>
+
+                            <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
+                                {t(strings.goBack)}
+                            </Typography>
+                        </Grid>
+                    }
+                </Grid>
+                
+                <Divider className={classes.titleDivider}/>
+               
+                {chooseType===true && insertTemplate===false &&isEdited===false ?
+                    <div item xs={6} className={classes.serviceGroup}>
                         <FormControl variant="filled">
 
                             <OutlinedInput
@@ -290,34 +315,9 @@ const Template = () => {
                         </IconButton>
                         
                         
-                    </Grid>
-                       
+                    </div>
                     :
-                    <Grid></Grid>
-                    }
-                </Grid>
-                
-                <Divider className={classes.titleDivider}/>
-                {
-                        insertTemplate===true && isEdited=== false  ?
-                        <div 
-                                     
-                        />
-                        :
-                        isEdited===true &&selectedRowData!==null && isDelete===false?
-                        <div
-                        />
-                        :
-                        chooseType===false && insertTemplate===false && isEdited=== false?
-                        <div>
-                            
-                        </div>
-                        :
-
-                        <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
-                            {t(strings.goBack)}
-                        </Typography>
-                       
+                    <div/>
                 }
                 {/* {chooseType===true && insertTemplate===false && isEdited===false?
                 <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
@@ -332,7 +332,6 @@ const Template = () => {
                     {
                         insertTemplate===true && isEdited=== false  ?
                         <InsertTemplate 
-                                     
                         />
                         :
                         isEdited===true &&selectedRowData!==null && isDelete===false?

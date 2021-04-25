@@ -143,7 +143,7 @@ const InsertTemplate = (props) => {
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertTemplate}>
+                    <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertTemplate} >
                         {t(strings.insert)}
                     </Button>
                 </div>

@@ -343,7 +343,7 @@ const UpdateProcedure = (props) => {
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdateProcedure}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdateProcedure} disabled={!props.editable}>
                         {t(strings.update)}
                     </Button>
                 </div>

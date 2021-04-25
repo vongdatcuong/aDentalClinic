@@ -374,7 +374,7 @@ const UpdatePatientPrescription = (props) => {
                 
                 
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={updatePrescription}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={updatePrescription} disabled={!props.editable}>
                         {t(strings.update)}
                     </Button>
                 </div>
