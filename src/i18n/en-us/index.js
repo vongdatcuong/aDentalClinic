@@ -148,6 +148,7 @@ export default {
         "Add more drug":"Add more drug",
         "Expired date":"Expired date",
         "Agree":"Agree",
+        "Info":"Info",
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",

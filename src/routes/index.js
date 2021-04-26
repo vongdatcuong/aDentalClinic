@@ -39,6 +39,7 @@ import PatientImagesPage from "../components/feature/PatientImagesPage";
 import PatientPrescriptionPage from "../components/feature/PatientPrescriptionPage";
 
 import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
+import PatientInfoPage from '../components/feature/PatientInfoPage';
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
@@ -47,6 +48,10 @@ import { keys } from "@material-ui/core/styles/createBreakpoints";
 function PatientProfile() {
     let { patientID } = useParams();
     return <PatientProfilePage patientID={patientID}/>;
+}
+function PatientInfo() {
+    let { patientID } = useParams();
+    return <PatientInfoPage patientID={patientID}/>;
 }
 function PatientNote() {
     let { patientID } = useParams();
@@ -202,6 +207,11 @@ function Routes() {
       <PrivateRoute path={path.patientProfilePath}>
         <PageContainer>
           <PatientProfile />
+        </PageContainer>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientInfoPath}>
+        <PageContainer>
+          <PatientInfo />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientNotePath}>

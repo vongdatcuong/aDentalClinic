@@ -22,6 +22,7 @@ import PermMedia from "@material-ui/icons/PermMedia";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
 import ListIcon from '@material-ui/icons/List';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 
 import { FaTeeth, FaXRay } from "react-icons/fa";
 
@@ -73,6 +74,11 @@ const TreatmentMenu = ({ patientID }) => {
       link: path.patientPrescriptionPath.replace(':patientID', patientID),
       text: t(strings.prescription),
       icon: <ListIcon />,
+    },
+    {
+      link: path.patientInfoPath.replace(':patientID', patientID),
+      text: t(strings.info),
+      icon: <ContactPhoneIcon />,
     },
   ];
   const links = <LinkList links={pathList} />;

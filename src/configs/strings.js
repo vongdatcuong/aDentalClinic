@@ -253,6 +253,7 @@ const prescription="Prescription";
 const addMoreDrug="Add more drug";
 const expired="Expired date";
 const agree="Agree";
+const info = "Info";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -520,6 +521,7 @@ export default {
     addMoreDrug,
     expired,
     agree,
+    info,
     // Tooth chart page
     overView,
     quickSelect,

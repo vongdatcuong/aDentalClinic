@@ -146,6 +146,7 @@ export default {
         "Prescription":"Đơn thuốc",
         "Add more drug":"Thêm nhiều thuốc",
         "Agree":"Đồng ý",
+        "Info":"Info",
         "Expired date":"Ngày hết hạn",
 
         // Tooth chart page

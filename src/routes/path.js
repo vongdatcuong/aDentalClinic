@@ -34,6 +34,7 @@ const patientAddXRayImagesPath = "/patient/:patientID/xRayImages/add/:MouthID"; 
 const patientViewXRayImagesPath = '/patient/:patientID/xRayImages/view/:MouthID'; // TODO: param: xray layer, image id
 const patientImagesPath = '/patient/:patientID/images';
 const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
+const patientInfoPath = '/patient/:patientID/info';
 const profilePath = '/profile';
 
 const path = {
@@ -64,6 +65,7 @@ const path = {
     patientViewXRayImagesPath,
     patientImagesPath,
     toothOverviewInfoPath,
+    patientInfoPath,
     drugPath,
     portalPath,
     managementsPath,
