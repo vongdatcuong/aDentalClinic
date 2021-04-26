@@ -45,10 +45,10 @@ import InsertProcedure from "../InsertProcedure";
 import UpdateProcedure from "../UpdateProcedure";
 
 const useStyles = makeStyles(styles);
-const createData=(id,abbreviation,description,toothSelect,toothType)=>{
-    return {id,abbreviation,description,toothSelect,toothType};
+const createData=(id,abbreviation,code,description,toothSelect,toothType)=>{
+    return {id,abbreviation,code,description,toothSelect,toothType};
 };
-const dataColumnsName=["index","abbreviation","description","toothSelect","toothType"];
+const dataColumnsName=["index","abbreviation","code","description","toothSelect","toothType"];
 
 
 const Procedure = () => {
@@ -101,6 +101,7 @@ const Procedure = () => {
     const titles=[
         t(strings.index),
         t(strings.abbreviation),
+        t(strings.code),
         t(strings.description),
         // t(strings.category),
         t(strings.toothSelect),
@@ -118,7 +119,7 @@ const Procedure = () => {
                 
             // }
             // searchCategory();
-            let newData=createData(a._id,a.abbreviation,a.description,a.tooth_select,a.tooth_type);
+            let newData=createData(a._id,a.abbreviation,a.code,a.description,a.tooth_select,a.tooth_type);
             temp=temp.concat(newData);
             
         })

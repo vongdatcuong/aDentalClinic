@@ -50,7 +50,7 @@ const UpdateTemplate = (props) => {
     const [noteType,setNoteType]=useState(null);
     const [listTypeTemplate,setListTypeTemplate]=useState([
         "TREATMENT",
-        "MEDICAL_ALERT",
+        "MEDICAL ALERT",
         "PROGRESS",
     ]);
 
@@ -123,7 +123,7 @@ const UpdateTemplate = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -143,7 +143,7 @@ const UpdateTemplate = (props) => {
                                 disableUnderline 
                                 displayEmpty
                                 className={classes.inputCombobox}
-                                disabled={!props.editable}
+                                inputProps={{ readOnly: !props.editable }}
 
                                 //defaultValue={listCategory[0]._id}
                                 //placeholder={t(strings.category)}
@@ -163,11 +163,16 @@ const UpdateTemplate = (props) => {
                         
                     </Grid>
                 </Grid>
+                {props.editable ?
                 <div>
                     <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
                         {t(strings.update)}
                     </Button>
                 </div>
+                :
+                <div></div>
+                }
+                
         </div>
     </div>
     )

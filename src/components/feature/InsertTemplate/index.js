@@ -50,7 +50,7 @@ const InsertTemplate = (props) => {
     const [noteType,setNoteType]=useState(null);
     const [listTypeTemplate,setListTypeTemplate]=useState([
         "TREATMENT",
-        "MEDICAL_ALERT",
+        "MEDICAL ALERT",
         "PROGRESS",
     ]);
 

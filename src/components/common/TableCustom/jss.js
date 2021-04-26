@@ -3,7 +3,11 @@ const tableStyle = (theme) => ({
         flexGrow: 1,
         margin:"0px"
     },
-    
+    table:{
+        borderRadius:'10px',
+        boxShadow:`3px 3px 3px ${theme.grayColor[0]}`,
+        
+    },
     footer:{
         marginLeft:"300px",
     },

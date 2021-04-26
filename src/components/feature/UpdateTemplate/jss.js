@@ -78,7 +78,7 @@ const updateTemplateStyle = (theme) => ({
     },
     inputCombobox:{
         height:'35px',
-        width:'35vw',
+        width:'36vw',
         marginLeft:'30px',
         marginTop:'10px',
         borderRadius: 4,

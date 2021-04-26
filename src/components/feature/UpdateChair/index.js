@@ -113,12 +113,11 @@ const UpdatePerson = (props) => {
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                         
                                         placeholder={t(strings.name)}  
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -128,18 +127,19 @@ const UpdatePerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeOrder}
                                         value={order}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                         <div className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
                                          
                                         placeholder={t(strings.color)}  
                                         variant="outlined" 
                                         onChange={handleChangeColor}
                                         value={color}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -152,7 +152,7 @@ const UpdatePerson = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -166,7 +166,7 @@ const UpdatePerson = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -177,9 +177,14 @@ const UpdatePerson = (props) => {
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                    {props.editable ? 
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} >
                         {t(strings.update)}
                     </Button>
+                    :
+                    <div></div>
+                    }
+                    
                 </div>
         </div>
         

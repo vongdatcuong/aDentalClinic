@@ -126,10 +126,6 @@ const updatePersonStyle = (theme) => ({
         flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
         color:theme.primaryColor[3],
-        '& .MuiInputBase-root':{
-            width:'10.2vw',
-
-        },
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -143,11 +139,14 @@ const updatePersonStyle = (theme) => ({
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
+            //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
-        }
+        },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
 
     },
     updateButton:{
