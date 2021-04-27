@@ -135,7 +135,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -145,7 +145,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -156,7 +156,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -170,7 +170,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -180,28 +180,33 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         placeholder={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                        
                     </Grid>
                 </Grid>
+                {props.editable ?
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
                         {t(strings.update)}
                     </Button>
-                </div>
+                </div>          
+                :
+                <div></div>     
+                }
+                
         </div>
     </div>
     )

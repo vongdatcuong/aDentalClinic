@@ -372,12 +372,16 @@ const UpdatePatientPrescription = (props) => {
                     <div></div>
                 }
                 
-                
+                {props.editable ?
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={updatePrescription} disabled={!props.editable}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={updatePrescription}>
                         {t(strings.update)}
                     </Button>
                 </div>
+                :
+                <div></div>
+                }
+                
 
         </div>
            
@@ -414,7 +418,7 @@ const UpdatePatientPrescription = (props) => {
                             variant="outlined" 
                             onChange={handleChangeDescription}
                             value={description}
-                            disabled={!props.editable}
+                            inputProps={{ readOnly: !props.editable }}
                             />
                             :
                             <TextField className={classes.inputControl} 
@@ -423,7 +427,7 @@ const UpdatePatientPrescription = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         />
                             }
                              
@@ -436,7 +440,7 @@ const UpdatePatientPrescription = (props) => {
                                 variant="outlined" 
                                 onChange={handleChangeRefill}
                                 value={refill}
-                                disabled={!props.editable}
+                                inputProps={{ readOnly: !props.editable }}
                             />                     
                             :
                             <TextField 
@@ -445,7 +449,7 @@ const UpdatePatientPrescription = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         />        
                             }
 
@@ -463,7 +467,7 @@ const UpdatePatientPrescription = (props) => {
                         variant="outlined" 
                         onChange={handleChangeDispensed}
                         value={dispensed}
-                        disabled={!props.editable}
+                        inputProps={{ readOnly: !props.editable }}
                         /> 
                         :
                         <TextField className={classes.inputControl} 
@@ -471,7 +475,7 @@ const UpdatePatientPrescription = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         }
                             
@@ -482,7 +486,7 @@ const UpdatePatientPrescription = (props) => {
                                 variant="outlined" 
                                 onChange={handleChangeQuantity}
                                 value={quantity}
-                                disabled={!props.editable}
+                                inputProps={{ readOnly: !props.editable }}
                                 label={t(strings.quantity)}
                             /> 
                             :
@@ -490,7 +494,7 @@ const UpdatePatientPrescription = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         placeholder={t(strings.quantity)}
                                         /> 
                             }
@@ -509,7 +513,7 @@ const UpdatePatientPrescription = (props) => {
                                     'aria-label': 'change date',
                                 }}
                                 className={classes.inputControlDate} 
-                                disabled={!props.editable}
+                                inputProps={{ readOnly: !props.editable }}
                             />
                             :
                             <KeyboardDatePicker
@@ -523,7 +527,7 @@ const UpdatePatientPrescription = (props) => {
                                     'aria-label': 'change date',
                                 }}
                                 className={classes.inputControlDate} 
-                                disabled={!props.editable}
+                                inputProps={{ readOnly: !props.editable }}
                             />
                             }
                             

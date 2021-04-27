@@ -288,33 +288,9 @@ const UpdatePatient = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        {/* <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        required 
-                                        placeholder={t(strings.username)}  
-                                        
-                                        variant="outlined" 
-                                        onChange={handleChangeUsername}
-                                        value={username}
-                                        error={usernameError !== null}
-                                        helperText={usernameError}
-
-                            />
-                        </div> */}
+                        
                     
-                    
-                    {/* <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
-                                        required 
-                                        type="password"
-                                        placeholder={t(strings.password)}  
-                                        variant="outlined" 
-                                        onChange={handleChangePassword}
-                                        value={password}
-                                        error={passwordError !== null}
-                                        helperText={passwordError}
-                                        /> 
-                    </div> */}
+                   
                     <div className={classes.item}>
                         <TextField className={classes.inputControl} 
                                         required 
@@ -324,6 +300,8 @@ const UpdatePatient = (props) => {
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
+                                        inputProps={{ readOnly: !props.editable }}
+
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -335,6 +313,8 @@ const UpdatePatient = (props) => {
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
+                                        inputProps={{ readOnly: !props.editable }}
+
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -343,8 +323,7 @@ const UpdatePatient = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-
-
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -355,6 +334,7 @@ const UpdatePatient = (props) => {
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
+                                        inputProps={{ readOnly: !props.editable }}
 
 
                                         /> 
@@ -368,8 +348,7 @@ const UpdatePatient = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
-                                        
-
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -380,6 +359,7 @@ const UpdatePatient = (props) => {
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -390,19 +370,12 @@ const UpdatePatient = (props) => {
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         type="number"
+                                        inputProps={{ readOnly: !props.editable }}
+
                                         /> 
                         </div>
                         
-                        {/* <div className={classes.item}>
-                            <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-
-
-                                        /> 
-                        </div> */}
+                        
                         <div className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
@@ -412,6 +385,8 @@ const UpdatePatient = (props) => {
                                     name={t(strings.male)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
                                 />
                                 }
                                 label={t(strings.male)}
@@ -424,6 +399,7 @@ const UpdatePatient = (props) => {
                                     name={t(strings.female)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -440,6 +416,8 @@ const UpdatePatient = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
                                 />
                                 }
                                 label={t(strings.active)}
@@ -452,6 +430,7 @@ const UpdatePatient = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -463,12 +442,16 @@ const UpdatePatient = (props) => {
                         
                     </Grid>
                 </Grid>
+                    {props.editable ?
+                    <div>
+                        <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
+                            {t(strings.update)}
+                        </Button>
+                    </div>
+                    :
+                    <div></div>                   
+                    }
 
-                        <div>
-                            <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
-                                {t(strings.update)}
-                            </Button>
-                        </div>
         </div>  
     </div>
     )

@@ -137,8 +137,10 @@ const Patients = () => {
     const [rowsPerPage, setRowsPerPage] = useState(figures.defaultRowsPerPage);
     const [searchText,setSearchText]=useState("");
     const [rows,setRows]=useState([]);
+    const [rowsAll,setRowsAll]=useState([]);
     const [rowsActive,setRowsActive]=useState([]);
     const [rowsInactive,setRowsInactive]=useState([]);
+
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -160,6 +162,18 @@ const Patients = () => {
     };
     const handleChangeStatus=(event)=>{
         setStatus(event.target.value);
+        if(event.target.value===t(strings.active))
+        {
+            setRows(rowsActive);
+        }
+        if(event.target.value===t(strings.inactive))
+        {
+            setRows(rowsInactive);
+        }
+        if(event.target.value===t(strings.all))
+        {
+            setRows(rowsAll);
+        }
         console.log("Check status:",event.target.value);
     }
     const handleChangeSelectedRow=(value)=>{
@@ -234,7 +248,8 @@ const Patients = () => {
 
         })
         console.log("Check rows in change data:",temp);
-        setRows(temp);
+        setRows(tempActive);
+        setRowsAll(temp);
         setRowsActive(tempActive);
         setRowsInactive(tempInactive);
     }
@@ -356,31 +371,8 @@ const Patients = () => {
 
                         />
                         :
-                            status===t(strings.active)?
-                            <TableCustom titles={titles}
-                                    data={rowsActive}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                                    :
-                            status===t(strings.inactive)?
-                            <TableCustom titles={titles}
-                                    data={rowsInactive}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                                    :
-                            <TableCustom titles={titles}
+                        rows.length!==0 && dataColumnsName.length!==0?
+                        <TableCustom titles={titles}
                                     data={rows}
                                     dataColumnsName={dataColumnsName}
                                     editable={editable}
@@ -388,8 +380,43 @@ const Patients = () => {
                                     changeToEditPage={true}
                                     handleChangeSelectedRow={handleChangeSelectedRow}
                                     numberColumn={dataColumnsName.length}
+                        />
+                        :
+                        <div></div>
+                            // status===t(strings.active)?
+                            // <TableCustom titles={titles}
+                            //         data={rowsActive}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
                                     
-                                    />        
+                            //         />
+                            //         :
+                            // status===t(strings.inactive)?
+                            // <TableCustom titles={titles}
+                            //         data={rowsInactive}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
+                                    
+                            //         />
+                            //         :
+                            // <TableCustom titles={titles}
+                            //         data={rows}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
+                                    
+                            //         />        
                     }
                    
                    

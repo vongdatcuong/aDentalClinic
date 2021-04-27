@@ -134,7 +134,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -144,7 +144,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -155,7 +155,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -169,7 +169,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -179,7 +179,7 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -189,18 +189,23 @@ const UpdateDrug = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                        
                     </Grid>
                 </Grid>
+                {props.editable ?
                 <div>
                     <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
                         {t(strings.update)}
                     </Button>
                 </div>
+                :
+                <div/>
+                }
+                
         </div>
     </div>
     )

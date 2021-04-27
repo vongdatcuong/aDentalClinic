@@ -157,7 +157,7 @@ const InsertReferralSource = (props) => {
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         placeholder={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
