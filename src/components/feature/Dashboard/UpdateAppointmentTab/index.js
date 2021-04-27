@@ -66,7 +66,7 @@ import apiPath from '../../../../api/path';
 const useStyles = makeStyles(styles);
 
 const UpdateAppointmentTab = ({
-    selectedAppointID, chairs, cellDuration, startDayHour, endDayHour, holidays,
+    selectedAppointID, chairs, cellDuration, startDayHour, endDayHour, holidays, isEditAppointAllowed,
     onClose, onUpdateAppointment
 }) => {
     const classes = useStyles();
@@ -668,6 +668,7 @@ const UpdateAppointmentTab = ({
                                         noOptionsMessage={() => t(strings.noOptions)}
                                         value={assistant || null}
                                         onChange={handleOnAssistantChange}
+                                        isDisabled={!isEditAppointAllowed}
                                     />
                                 </FormControl>
                             </Grid>
@@ -686,6 +687,7 @@ const UpdateAppointmentTab = ({
                                         noOptionsMessage={() => t(strings.noOptions)}
                                         value={provider || null}
                                         onChange={handleOnProviderChange}
+                                        isDisabled={!isEditAppointAllowed}
                                     />
                                     {Boolean(providerErrMsg) && 
                                         <FormHelperText
@@ -712,6 +714,7 @@ const UpdateAppointmentTab = ({
                                     fullWidth
                                     value={chairID || ""}
                                     onChange={handleOnChairChange}
+                                    disabled={!isEditAppointAllowed}
                                 >
                                 {(chairs.map((chair) => {
                                     return (
@@ -762,6 +765,7 @@ const UpdateAppointmentTab = ({
                                     }}
                                     helperText={dateErrMsg}
                                     error={Boolean(dateErrMsg)}
+                                    disabled={!isEditAppointAllowed}
                                 />
                             </Grid>
                             {/* Schedule Time */}
@@ -784,6 +788,7 @@ const UpdateAppointmentTab = ({
                                     }}
                                     helperText={timeErrMsg}
                                     error={Boolean(timeErrMsg)}
+                                    disabled={!isEditAppointAllowed}
                                 />
                             </Grid>
                             {/* Schedule Duration */}
@@ -801,6 +806,7 @@ const UpdateAppointmentTab = ({
                                     fullWidth
                                     value={duration}
                                     onChange={handleOnDurationChange}
+                                    disabled={!isEditAppointAllowed}
                                 >
                                     {durationOptions}
                                 </Select>

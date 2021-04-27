@@ -35,9 +35,23 @@ const staff = {
     }
 }
 
+// Date Time
+const dates = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+// Schedule
+const schedule = {
+    mode: {
+        monthly: "MONTHLY",
+        weekly: "WEEKLY",
+        auto: "AUTO"
+    }
+}
+
 export default {
     languages,
     themes,
     appointment,
-    staff
+    staff,
+    dates,
+    schedule
 }

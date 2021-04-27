@@ -50,6 +50,8 @@ export default {
         "FEMALE": "FEMALE",
         "None": "None",
         "Confirm": "Confirm",
+        "Start Date": "Start Date",
+        "End Date": "End Date",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -120,6 +122,8 @@ export default {
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",
         "Change Password fail": "Change Password fail",
+        // Error Messages Schedule
+        "Load Providers fail": "Load Providers fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -345,5 +349,10 @@ export default {
         "Next Available": "Next Available",
         //Files
         "File Name": "Tên tệp",
+        // Schedule
+        "Mode": "Mode",
+        "Monthly": "Monthly",
+        "Weekly": "Weekly",
+        "Auto": "Auto"
     }
 }

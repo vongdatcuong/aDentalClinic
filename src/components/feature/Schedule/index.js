@@ -1,7 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //translation
 import { useTranslation, Trans } from 'react-i18next';
+
+// Toast
+import { toast } from 'react-toastify';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -9,21 +12,16 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
+    Paper,
     OutlinedInput,
     Select,
     MenuItem,
+    Button,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -35,125 +33,193 @@ import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
+import UpdateSchedule from "../UpdateSchedule";
+import LoadingPage from '../../../layouts/LoadingPage';
+
+// API
+import api from '../../../api/base-api';
+import apiPath from '../../../api/path';
+import AuthService from '../../../api/authentication/auth.service';
+
+// Utils
+import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
+import ConvertSchedule from '../../../utils/datetimes/convertSchedule';
+
 
 const useStyles = makeStyles(styles);
-const createData=(id,provider,date,workTime,note)=>{
-    return {id,provider,date,workTime,note};
+const createData=(id, provider, startDate, endDate, note)=>{
+    return {id, provider, startDate, endDate, note};
 };
 
-const dataColumnsName=["index","id","provider","date","workTime","note"];
-
-const rows = [
-    createData('1712321', "Doan", "02/01/1999", "7:00", "Fulltime"),
-    createData('1712322', "Thai", "03/01/1999", "7:00", "Fulltime"),
-    createData('1712323', "Dan", "02/01/1999", "7:00", "Fulltime"),
-    createData('1712324', "Cuong", "02/01/1999", "7:00", "Fulltime"),
-    createData('1712325', "Vong", "02/01/1999", "7:00", "Fulltime"),
-    createData('1712326', "Hung", "02/01/1999", "7:00", "Part-time"),
-    createData('1712327', "The", "04/01/1999", "7:00", "Part-time"),
-    createData('1712328', "Anh", "05/01/1999", "7:00", "Part-time"),
-    createData('1712329', "Nguyen", "06/01/1999", "7:00", "Part-time"),
-    createData('1712330', "Tang", "02/01/1999", "7:00", "Part-time"),
-    createData('1712331', "Vu", "02/01/1999", "7:00", "Part-time"),
-
-
+const originalDataa = [
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
+    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
 ];
+
 
 const Schedule = () => {
     const {t, i18n } = useTranslation();
-
     const classes = useStyles();
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [searchText,setSearchText]=useState(null);
-    const [editable,setEditable]=useState(false);
-    const [isEdited,setIsEdited]=useState(false);
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-    
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-    const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
-    };
-    const handleChangeEditable=(e)=>{
-        setEditable(!editable);
-    }
-
-    const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
-        setIsEdited(!isEdited);
-    }
+    const dataColumnsName=["index","id","provider","startDate","endDate", "mode", "note"];
     const titles=[
         t(strings.index),
         t(strings.id),
         t(strings.provider),
-        t(strings.date),
-        t(strings.workTime),
+        t(strings.startDate),
+        t(strings.endDate),
+        t(strings.mode),
         t(strings.note),
     ];
+
+    // States
+    const [isLoadingPage, setIsLoadingPage] = useState(true);
+    const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+
+    const [originalData, setOriginalData] = useState([]);
+    const [data, setData] = useState(originalData);
+
+    // Change Tab
+    const [selectedRow,setSelectedRow]=useState(-1);
+    const [selectedRowData,setSelectedRowData]=useState(null);
+
+    useEffect(async() => {
+        try {
+            const promises = [
+                api.httpGet({
+                    url: apiPath.staff.staff + apiPath.staff.provider,
+                    query: {
+                      get_schedule: true
+                    }
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                const newData = result[0].payload.map((provider) => {
+                    const providerUser = provider.user || {};
+                    const providerSchedule = provider.schedule || {};
+                    const scheduleObj = {
+                        startDate: "...",
+                        endDate: "...",
+                        mode: "...",
+                        note: "..."
+                    };
+                    // If Provider has schedule
+                    if (providerSchedule.length > 0){
+                        const schedule = providerSchedule[0];
+                        scheduleObj.startDate = (schedule.start_date)? ConvertDateTimes.formatDate(schedule.start_date, strings.defaultDateFormat) : "...";
+                        scheduleObj.endDate = (schedule.end_date)? ConvertDateTimes.formatDate(schedule.endate, strings.defaultDateFormat) : "...";
+                        scheduleObj.mode = schedule.mode || "";
+                        scheduleObj.note = ConvertSchedule.formatScheduleMode(schedule.mode, schedule.value || "");
+                    }
+                    return {
+                        _id: provider._id,
+                        id: provider.display_id,
+                        provider: providerUser.first_name + " " + providerUser.last_name,
+                        ...scheduleObj
+                    }
+                });
+                setOriginalData([...newData]);
+                setData(newData);
+            }
+        } catch(err){
+            toast.error(t(strings.loadProviderErrMsg));
+        } finally {
+            setIsLoadingPage(false);
+        }
+    }, [])
+
+    const handleChangeSelectedRow=(value)=>{
+        if (editable){
+            setSelectedRow(value);
+        }
+    }
+    
+    const handleChangeSearchText = (event) => {
+        let value = event.target.value.toLowerCase();
+        setSearchText(value);
+
+        const searchRegex = new RegExp(value, "gi");
+
+        const newData = originalData.filter((row) => row.provider.toLowerCase().indexOf(value) != -1);
+        setData(newData);
+    };
+
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
+    
     return (
-        <div className={classes.container}>
-            
-            <div >
-                <Grid container>
-                    <Grid item xs={8}>
-                        <Typography className={classes.title} variant="h4">
-                            {t(strings.schedule)}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={4} className={classes.serviceControl}>
-                        <FormControl variant="filled">
-
-                            <OutlinedInput
-                                className={classes.searchControl}
-                                id="outlined-adornment-password"
-                                type={'text'}
-                                value={searchText}
-                                placeholder={t(strings.search)}
-                                onChange={handleChangeSearchText}
-                                endAdornment={
-                                <InputAdornment position="end">
-                                    <SearchIcon className={classes.iconButton} />
-
-                                </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <Select
-                            
+        <Paper className={classes.container}>
+            {(isLoadingPage)? 
+                <LoadingPage/> :
+                <Paper>
+                    <Grid container>
+                        <Grid item xs={8}>
+                            <Typography className={classes.title} variant="h4">
+                                {t(strings.schedule)}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4} className={classes.serviceControl}>
+                            <FormControl variant="filled">
+                                <OutlinedInput
+                                    className={classes.searchControl}
+                                    id="outlined-adornment-password"
+                                    type={'text'}
+                                    value={searchText}
+                                    placeholder={t(strings.search)}
+                                    onChange={handleChangeSearchText}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <SearchIcon className={classes.iconButton} />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <Select
                                 value={editable}
                                 onChange={handleChangeEditable}
                                 disableUnderline 
                                 className={classes.status}
                             >
-                            
                                 <MenuItem value={false}>{t(strings.read)}</MenuItem>
                                 <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-
                             </Select>
-                        <IconButton >
-                            <AddBox />            
-
-                        </IconButton>
+                        </Grid>
                     </Grid>
-                    
-                    
-                </Grid>
-                <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
-                    <TableCustom titles={titles} data={rows} dataColumnsName={dataColumnsName}/>
-                </Container>
-                
-                
-            </div>
-            
-        </div>
+                    <Divider className={classes.titleDivider}/>
+                    <Container style={{marginLeft:"10px"}}>
+                        {(editable && selectedRow != -1)?
+                            <UpdateSchedule 
+                                editable={editable}
+                                id={"606ffb4ac0d3f91754328db5"}
+                            /> : 
+                            <TableCustom 
+                                titles={titles} 
+                                data={data}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                            />
+                        }
+                        {data.map((d) => d.provider + " " + d.id)}
+                    </Container>
+                </Paper>
+            }
+        </Paper>
     )
 }
 

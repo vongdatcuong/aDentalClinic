@@ -50,6 +50,8 @@ export default {
         "FEMALE": "NỮ",
         "None": "Không",
         "Confirm": "Xác nhận",
+        "Start Date": "Ngày BĐ",
+        "End Date": "Ngày KT",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -119,6 +121,8 @@ export default {
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",
         "Change Password fail": "Đổi mật khẩu thất bại",
+        // Error Messages Schedule
+        "Load Providers fail": "Tải bác sỹ thất bại",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",
@@ -344,11 +348,12 @@ export default {
         "No Recall": "Không có lịch sử tái hẹn",
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
-
-
-
-        
         //Files
         "File Name": "Tên tệp",
+        // Schedule
+        "Mode": "Chế độ",
+        "Monthly": "Tháng",
+        "Weekly": "Tuần",
+        "Auto": "Tự chọn"
     }
 }

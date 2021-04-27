@@ -19,6 +19,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // @material-ui/core Icons
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 // Components
 import AppointmentTooltipContent from './AppointmentTooltipContent'
@@ -38,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppointmentTooltipPopover = ({
-  isEditable, isDeletable , id, open, onClose, anchorPos, appointment, 
-  onUpdateAppointment, onDeleteAppointment}) => {
+  isEditable, isDeletable, isToProfile, id, open, onClose, anchorPos, appointment, 
+  onToPatientProfile, onUpdateAppointment, onDeleteAppointment}) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
 
@@ -64,6 +65,12 @@ const AppointmentTooltipPopover = ({
     >
       <Card className={classes.card}>
         <CardActions className={classes.cardActions}>
+          {(isToProfile) 
+            && 
+              <IconButton aria-label="edit-appointment" onClick={onToPatientProfile}>
+                <AccountBoxIcon />
+              </IconButton>
+          }
           {(isEditable) 
             && 
               <IconButton aria-label="edit-appointment" onClick={onUpdateAppointment}>
