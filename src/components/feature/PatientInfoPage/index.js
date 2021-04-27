@@ -55,6 +55,8 @@ const PatientInfoPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
 
+  const [editInfo, setEditInfo] = useState(false);
+
   const [userData, setUserData] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [firstNameError, setFirstNameError] = useState(null);
@@ -115,7 +117,6 @@ const PatientInfoPage = ({ patientID }) => {
   };
 
   const handleUploadClick = (event) => {
-    console.log();
     var file = event.target.files[0];
     const reader = new FileReader();
     var url = reader.readAsDataURL(file);
@@ -125,9 +126,11 @@ const PatientInfoPage = ({ patientID }) => {
     };
 
     setSelectedFile(event.target.files[0]);
-    console.log("Url:", reader);
+    //console.log("Url:", reader);
   };
-
+  const onClickEdit = async () => {
+    setEditInfo(true);
+  };
   const onClickUpdate = async () => {
     if (firstNameError === null && lastNameError === null) {
       let genderData;
@@ -157,17 +160,15 @@ const PatientInfoPage = ({ patientID }) => {
       const update = await PatientService.update(patientID, data);
       if (update.success) {
         toast.success(t(strings.updateSuccess));
-        console.log("Check update:", update);
+        setEditInfo(false);
       } else {
         toast.error(t(strings.updateFail));
-        console.log("Check update:", update);
       }
     }
   };
   useEffect(() => {
     const searchPatient = async () => {
       const result = await PatientService.search(patientID);
-      console.log("Search patient in useEffect:", result.data.payload);
       if (result.success) {
         setUserData(result.data.payload);
         setFirstName(result.data.payload.user.first_name);
@@ -270,6 +271,7 @@ const PatientInfoPage = ({ patientID }) => {
               <Grid item xs={6} className={classes.leftContent}>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     required
                     placeholder={t(strings.firstName)}
@@ -282,6 +284,7 @@ const PatientInfoPage = ({ patientID }) => {
                 </div>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     required
                     placeholder={t(strings.lastName)}
@@ -294,6 +297,7 @@ const PatientInfoPage = ({ patientID }) => {
                 </div>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     placeholder={t(strings.fax)}
                     variant="outlined"
@@ -303,6 +307,7 @@ const PatientInfoPage = ({ patientID }) => {
                 </div>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     placeholder={t(strings.email)}
                     variant="outlined"
@@ -316,6 +321,7 @@ const PatientInfoPage = ({ patientID }) => {
               <Grid item xs={6} className={classes.rightContent}>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     placeholder={t(strings.facebook)}
                     variant="outlined"
@@ -325,6 +331,7 @@ const PatientInfoPage = ({ patientID }) => {
                 </div>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     placeholder={t(strings.mobilePhone)}
                     variant="outlined"
@@ -335,6 +342,7 @@ const PatientInfoPage = ({ patientID }) => {
                 </div>
                 <div className={classes.item}>
                   <TextField
+                    disabled={!editInfo}
                     className={classes.inputControl}
                     placeholder={t(strings.homePhone)}
                     variant="outlined"
@@ -348,6 +356,7 @@ const PatientInfoPage = ({ patientID }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        disabled={!editInfo}
                         checked={gender}
                         onChange={handleChangeGender}
                         name={t(strings.male)}
@@ -360,6 +369,7 @@ const PatientInfoPage = ({ patientID }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        disabled={!editInfo}
                         checked={!gender}
                         onChange={handleChangeGender}
                         name={t(strings.female)}
@@ -375,6 +385,7 @@ const PatientInfoPage = ({ patientID }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        disabled={!editInfo}
                         checked={active}
                         onChange={handleChangeActive}
                         name={t(strings.active)}
@@ -387,6 +398,7 @@ const PatientInfoPage = ({ patientID }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        disabled={!editInfo}
                         checked={!active}
                         onChange={handleChangeActive}
                         name={t(strings.inactive)}
@@ -401,14 +413,24 @@ const PatientInfoPage = ({ patientID }) => {
             </Grid>
 
             <div>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.updateButton}
-                onClick={onClickUpdate}
-              >
-                {t(strings.update)}
-              </Button>
+              {editInfo ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.updateButton}
+                  onClick={onClickUpdate}
+                >
+                  {t(strings.update)}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className={classes.editButton}
+                  onClick={onClickEdit}
+                >
+                  {t(strings.edit)}
+                </Button>
+              )}
             </div>
           </div>
         </div>

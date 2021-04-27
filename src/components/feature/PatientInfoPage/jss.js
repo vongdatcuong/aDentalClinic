@@ -45,6 +45,7 @@ const style = (theme) => ({
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center',
+        paddingBottom:theme.spacing(10),
 
     },
     
@@ -156,7 +157,13 @@ const style = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+    },
+    editButton:{
+       
+        height:'35px',
+        width:'30vw',
+        marginLeft:"30px",
+        marginTop:'40px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),
