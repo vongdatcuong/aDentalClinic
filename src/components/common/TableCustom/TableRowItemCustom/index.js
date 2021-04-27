@@ -41,7 +41,7 @@ const TableRowItemCustom=(props)=>{
         // if(props.editable===true && props.changeToEditPage===true)
         // {
         //     console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
-        //     // props.handleChangeIsEdited();
+        //     props.handleChangeIsEdited();
         //     props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
         // }
         if(props.isDelete===true )

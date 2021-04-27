@@ -148,8 +148,17 @@ const Patients = () => {
     const [insertPerson,setInsertPerson]=useState(false);
     const [status,setStatus]=useState(t(strings.active));
     const listStatus=[t(strings.active),t(strings.inactive),t(strings.all)];
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -253,19 +262,20 @@ const Patients = () => {
         setRowsActive(tempActive);
         setRowsInactive(tempInactive);
     }
+    const getPatient=async()=>{
+        const result=await PatientService.getPatient();
+        console.log("Get patient in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+    };
     useEffect(()=>{
         
         if(rows.length===0)
         {
-            const getPatient=async()=>{
-                const result=await PatientService.getPatient();
-                console.log("Get patient in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-            };
+            
             getPatient();
             
         }
@@ -280,6 +290,16 @@ const Patients = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
 
+        }
+        if(isInsert===true)
+        {
+            getPatient();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getPatient();
+            setIsUpdate(false);
         }
     })
     return (
@@ -363,12 +383,13 @@ const Patients = () => {
                     {insertPerson===true ?
                         <InsertPatient 
                                         userType={t(strings.userTypePatient)}
+                                        handleChangeIsInsert={handleChangeIsInsert}
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePatient
                                         id={selectedRowData.id}
-                                        
-
+                                        editable={editable}
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
                         rows.length!==0 && dataColumnsName.length!==0?

@@ -173,6 +173,7 @@ const UpdatePatient = (props) => {
             if(update.success)
             {
                 toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
                 console.log("Check update:",update);
             }
             else

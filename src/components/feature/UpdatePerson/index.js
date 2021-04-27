@@ -163,7 +163,7 @@ const UpdateChair = (props) => {
             if(update.success)
             {
                 toast.success(t(strings.updateSuccess));
-                console.log("Check update:",update);
+                props.handleChangeIsUpdate();
             }
             else
             {

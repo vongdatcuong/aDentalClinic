@@ -72,6 +72,7 @@ const InsertChair = (props) => {
         if(result.success)
         {
             toast.success(t(strings.insertSuccess));
+            props.handleChangeIsInsert();
         }
         else
         {

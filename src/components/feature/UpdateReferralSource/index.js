@@ -88,6 +88,7 @@ const UpdateReferralSource = (props) => {
             if(result.success)
             {
                 toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
             }
             else
             {

@@ -37,7 +37,7 @@ const useStyles = makeStyles(styles);
 
 
 
-const InsertProcedure = () => {
+const InsertProcedure = (props) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     
@@ -111,6 +111,8 @@ const InsertProcedure = () => {
             if(result.success)
             {
                 toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+
             }
             else
             {

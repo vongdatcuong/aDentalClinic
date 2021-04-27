@@ -70,8 +70,17 @@ const Drug = () => {
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isDelete,setIsDelete]=useState(false);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleOpenDialog=(e)=>{
         setOpenDialog(true);
     }
@@ -100,6 +109,7 @@ const Drug = () => {
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
+        setIsDelete(false);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -146,6 +156,8 @@ const Drug = () => {
                 let temp=rows;
                 temp.splice(selectedRow,1);
                 setRows(temp);
+                setSelectedRowData(null);
+                setSelectedRowData(-1);
             }
             else
             {
@@ -155,20 +167,21 @@ const Drug = () => {
         deleteDrug();
        
     }
+    const getDrug=async()=>{
+        const result=await DrugService.getDrug();
+        console.log("Get drug in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+        
+
+    };
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getDrug=async()=>{
-                const result=await DrugService.getDrug();
-                console.log("Get drug in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-                
-
-            };
+            
             getDrug();
             
         }
@@ -188,7 +201,16 @@ const Drug = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
         }
-        
+        if(isInsert===true)
+        {
+            getDrug();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getDrug();
+            setIsUpdate(false);
+        }
         
     })
     return (
@@ -256,13 +278,13 @@ const Drug = () => {
                 <Container style={{marginLeft:"10px"}}>
                     {insertDrug===true && isEdited=== false  ?
                         <InsertDrug 
-                                     
+                                        handleChangeIsInsert={handleChangeIsInsert}
                         />
                         : isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateDrug
                                         id={selectedRowData.id}
                                         editable={editable}
-
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
                             <TableCustom titles={titles}
@@ -293,10 +315,10 @@ const Drug = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseDialog} color="secondary">
+                        <Button variant="outlined" onClick={handleCloseDialog} color="secondary" >
                             {t(strings.no)}
                         </Button>
-                        <Button onClick={deleteRow} color="primary" autoFocus>
+                        <Button variant="contained" onClick={deleteRow} color="primary" autoFocus>
                             {t(strings.yes)}
 
                         </Button>

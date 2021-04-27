@@ -61,8 +61,17 @@ const Chairs = () => {
     const [rows,setRows]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangeInsertChair=(e)=>{
         setInsertChair(!insertChair);
     }
@@ -122,20 +131,21 @@ const Chairs = () => {
         console.log("Check rows in change data:",temp);
         setRows(temp);
     }
+    const getChair=async()=>{
+        const result=await ChairService.getChair();
+        console.log("Get chair in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+        
+
+    };
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getChair=async()=>{
-                const result=await ChairService.getChair();
-                console.log("Get chair in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-                
-
-            };
+            
             getChair();
             
         }
@@ -149,6 +159,16 @@ const Chairs = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
             
+        }
+        if(isInsert===true)
+        {
+            getChair();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getChair();
+            setIsUpdate(false);
         }
     })
     return (
@@ -213,13 +233,13 @@ const Chairs = () => {
                 <Container style={{marginLeft:"10px"}}>
                     {insertChair===true && isEdited=== false ?
                         <InsertChair 
-                                     
+                                    handleChangeIsInsert={handleChangeIsInsert}
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateChair
                                         id={selectedRowData.id}
                                         editable={editable}
-
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
                             <TableCustom titles={titles}

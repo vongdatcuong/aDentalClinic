@@ -74,10 +74,19 @@ const Providers = () => {
     const [rows,setRows]=useState([]);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
@@ -132,19 +141,20 @@ const Providers = () => {
         console.log("Check rows in change data:",temp);
         setRows(temp);
     }
+    const getProvider=async()=>{
+        const result=await ProviderService.getProvider();
+        console.log("Get provider in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+    };
     useEffect(()=>{
         
         if(rows.length===0)
         {
-            const getProvider=async()=>{
-                const result=await ProviderService.getProvider();
-                console.log("Get provider in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-            };
+            
             getProvider();
             
         }
@@ -160,6 +170,17 @@ const Providers = () => {
             }
 
         }
+        if(isInsert===true)
+        {
+            getProvider();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getProvider();
+            setIsUpdate(false);
+        }
+        
     })
     return (
         <div className={classes.container}>
@@ -230,17 +251,30 @@ const Providers = () => {
                         <InsertPerson 
                                         staffType={t(strings.staffTypeProvider)}
                                         userType={t(strings.userTypePatient)}
-
+                                        handleChangeIsInsert={handleChangeIsInsert}
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson 
                                         editable={editable}
                                         id={selectedRowData.id}
-                                        
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
 
                         />
                         :
-                            <TableCustom titles={titles}
+                        // rows.length!==0 && dataColumnsName.length!==0?
+                        //     <TableCustom titles={titles}
+                        //             data={rows}
+                        //             dataColumnsName={dataColumnsName}
+                        //             editable={editable}
+                        //             handleChangeIsEdited={handleChangeIsEdited}
+                        //             changeToEditPage={true}
+                        //             handleChangeSelectedRow={handleChangeSelectedRow}
+                        //             numberColumn={dataColumnsName.length}
+                                    
+                        //             />
+                        // :
+                        // <div></div>
+                        <TableCustom titles={titles}
                                     data={rows}
                                     dataColumnsName={dataColumnsName}
                                     editable={editable}

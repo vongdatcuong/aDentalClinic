@@ -53,6 +53,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertTemplate from "../InsertTemplate";
 import UpdateTemplate from "../UpdateTemplate";
+import { indigo } from '@material-ui/core/colors';
 const createData=(id,content,noteType)=>{
     return {id,content,noteType};
 };
@@ -73,18 +74,31 @@ const Template = () => {
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
     const [rowsWithType,setRowsWithType]=useState(null);
-    const [chooseType,setChooseType]=useState(false);
+    const [rowsTreatment,setRowsTreatment]=useState([]);
+    const [rowsMedicalAlert,setRowsMedicalAlert]=useState([]);
+    const [rowsProgress,setRowsProgress]=useState([]);
+    const [chooseType,setChooseType]=useState(0);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [openDialog,setOpenDialog]=useState(false);
     const [insertTemplate,setInsertTemplate]=useState(false);
     const [isDelete,setIsDelete]=useState(false);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
 
     const titles=[
         t(strings.index),
         t(strings.content),
 
     ];
+
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleOpenDialog=(e)=>{
         setOpenDialog(true);
     }
@@ -96,7 +110,7 @@ const Template = () => {
         setIsDelete(!isDelete);
         setInsertTemplate(false);
         setIsEdited(false);
-        //setEditable(false);
+        setEditable(false);
     }
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
@@ -106,18 +120,12 @@ const Template = () => {
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
+        setIsDelete(false);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
-    // const handleGoBack=(e)=>{
-    //     setInsertTemplate(false);
-    //     setIsEdited(false);
-    //     setSelectedRow(-1);
-    //     setSelectedRowData(null);
-    //     setChooseType(false);
-    //     setRowsWithType(null);
-    // }
+    
     const handleGoBackToTable=(e)=>{
         setInsertTemplate(false);
         setIsEdited(false);
@@ -129,15 +137,15 @@ const Template = () => {
         setIsEdited(false);
         setSelectedRow(-1);
         setSelectedRowData(null);
-        setChooseType(false);
+        setChooseType(0);
         setRowsWithType(null);
     }
     const handleChangeIsEdited=(e)=>{
         console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
-    const handleChangeChooseType=(e)=>{
-        setChooseType(!chooseType);
+    const handleChangeChooseType=(value)=>{
+        setChooseType(value);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
@@ -148,9 +156,27 @@ const Template = () => {
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
-                let temp=rowsWithType;
-                temp.splice(selectedRow,1);
-                setRowsWithType(temp);
+                
+                if(chooseType===1)
+                {
+                    let temp=rowsMedicalAlert;
+                    temp.splice(selectedRow,1);
+                    setRowsMedicalAlert(temp);
+                }
+                if(chooseType===2)
+                {
+                    let temp=rowsProgress;
+                    temp.splice(selectedRow,1);
+                    setRowsProgress(temp);
+                }
+                if(chooseType===1)
+                {
+                    let temp=rowsTreatment;
+                    temp.splice(selectedRow,1);
+                    setRowsTreatment(temp);
+                }
+                setSelectedRow(-1);
+                setSelectedRowData(null);
             }
             else
             {
@@ -177,8 +203,9 @@ const Template = () => {
             if(a.noteType==="MEDICAL_ALERT")
             temp=temp.concat(a);
         })
+        setRowsMedicalAlert(temp);
         setRowsWithType(temp);
-        setChooseType(true);
+        setChooseType(1);
     }
     const chooseProgress=()=>{
         let temp=[];
@@ -186,8 +213,10 @@ const Template = () => {
             if(a.noteType==="PROGRESS")
             temp=temp.concat(a);
         })
+        setRowsProgress(temp);
         setRowsWithType(temp);
-        setChooseType(true);
+
+        setChooseType(2);
 
     }
     const chooseTreatment=()=>{
@@ -196,36 +225,79 @@ const Template = () => {
             if(a.noteType==="TREATMENT")
             temp=temp.concat(a);
         })
+        setRowsTreatment(temp);
         setRowsWithType(temp);
-        setChooseType(true);
 
+        setChooseType(3);
+
+    }
+    const getTemplate=async()=>{
+        const result=await TemplateService.getTemplate();
+        console.log("Get template in useEffect",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
     }
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getTemplate=async()=>{
-                const result=await TemplateService.getTemplate();
-                console.log("Get template in useEffect",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-        
-                }
-            }
+            
             getTemplate();  
         }
         if(selectedRow!==-1)
         {
-            if(selectedRowData!==rowsWithType[selectedRow] && isEdited===false)
+            if(selectedRowData!==rowsWithType[selectedRow] && isEdited===false && isDelete===false)
             {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rowsWithType[selectedRow])
                 console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
+            if(selectedRowData!==rows[selectedRow] && isDelete===true  )
+            {
+
+                setSelectedRowData(rows[selectedRow])
+                console.log("Check selected row data:",rows[selectedRow]);
+            }
+
 
         }
-        
+        if(isInsert)
+        {
+            getTemplate();
+            if(chooseType===1)
+            {
+                chooseMedicalAlert();
+            }
+            if(chooseType===2)
+            {
+                chooseProgress();
+            }
+            if(chooseType===3)
+            {
+                chooseTreatment();
+            }
+            setIsInsert(false);
+        }
+        if(isUpdate)
+        {
+            getTemplate();
+            if(chooseType===1)
+            {
+                chooseMedicalAlert();
+            }
+            if(chooseType===2)
+            {
+                chooseProgress();
+            }
+            if(chooseType===3)
+            {
+                chooseTreatment();
+            }
+            setIsUpdate(false);
+        }
     })
 
     
@@ -258,7 +330,7 @@ const Template = () => {
                         <div
                         />
                         :
-                        chooseType===false && insertTemplate===false && isEdited=== false?
+                        chooseType===0 && insertTemplate===false && isEdited=== false?
                         <div>
                             
                         </div>
@@ -274,7 +346,7 @@ const Template = () => {
                 
                 <Divider className={classes.titleDivider}/>
                
-                {chooseType===true && insertTemplate===false &&isEdited===false ?
+                {chooseType!==0 && insertTemplate===false && isEdited===false ?
                     <div item xs={6} className={classes.serviceGroup}>
                         <FormControl variant="filled">
 
@@ -319,29 +391,24 @@ const Template = () => {
                     :
                     <div/>
                 }
-                {/* {chooseType===true && insertTemplate===false && isEdited===false?
-                <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
-                    {t(strings.goBack)}
-                </Typography>
-                :
                 
-                <div></div>
-                } */}
                 
                 <Container style={{marginTop:'20px'}}>
                     {
                         insertTemplate===true && isEdited=== false  ?
                         <InsertTemplate 
+                                handleChangeIsInsert={handleChangeIsInsert}
                         />
                         :
                         isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateTemplate
                             id={selectedRowData.id}
                             editable={editable}
+                            handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
 
-                        chooseType===false && insertTemplate===false && isEdited=== false?
+                        chooseType===0 && insertTemplate===false && isEdited=== false?
                         <div>
                             <Grid container>
                                 <Grid item xs={8}>
@@ -379,8 +446,7 @@ const Template = () => {
                 
                         </div>
                         :
-                        // chooseType===true  && insertTemplate===false && isEdited=== false && rowsWithType!==null?
-
+                        
                         <TableCustom
                             titles={titles}
                             data={rowsWithType}
@@ -394,6 +460,7 @@ const Template = () => {
                             handleOpenDialog={handleOpenDialog}
                             handleCloseDialog={handleCloseDialog}
                         />
+                       
                         // :
                         // <div>Hello world</div>
                     }

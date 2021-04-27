@@ -65,8 +65,17 @@ const Procedure = () => {
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -127,20 +136,21 @@ const Procedure = () => {
         setRows(temp);
        
     }
+    const getProcedure=async()=>{
+        const result=await ProcedureService.getProcedure();
+        console.log("Get procedure in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+        
+
+    };
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getProcedure=async()=>{
-                const result=await ProcedureService.getProcedure();
-                console.log("Get procedure in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-                
-
-            };
+            
             getProcedure();
             
         }
@@ -155,7 +165,16 @@ const Procedure = () => {
             }
 
         }
-
+        if(isInsert===true)
+        {
+            getProcedure();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getProcedure();
+            setIsUpdate(false);
+        }
         
     })
     return (
@@ -217,11 +236,14 @@ const Procedure = () => {
                 <Divider className={classes.titleDivider}/>
                 <Container >
                     {insertProcedure===true  ?
-                        <InsertProcedure />
+                        <InsertProcedure 
+                        handleChangeIsInsert={handleChangeIsInsert}
+                        />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateProcedure 
                             id={selectedRowData.id}
                             editable={editable}
+                            handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
                         
