@@ -253,12 +253,12 @@ const practiceStyle=(theme)=>({
         
     },
     content:{
-        background:theme.whiteColor,
+        // background:theme.whiteColor,
         marginTop:"30px",
         display:'flex',
         flexDirection:'column',
-        alignItems:'center',
-        justifyContent:'center',
+        // alignItems:'center',
+        // justifyContent:'center',
     },
     title:{
         marginLeft:"30px",
@@ -272,7 +272,8 @@ const practiceStyle=(theme)=>({
     logo:{
         width:'150px',
         height:'150px',
-        
+        marginLeft:'40vw',
+        marginTop:'30px',
     },
     leftContent:{
         color:theme.primaryColor[0],
@@ -389,7 +390,7 @@ const practiceStyle=(theme)=>({
         },
         '& .MuiInputBase-root':{
             height:'60px',
-            width:'16vw',
+            width:'17.1vw',
             border:`1px solid ${theme.grayColor[0]}`,
             borderRadius:'3px',
         },
@@ -422,5 +423,28 @@ const practiceStyle=(theme)=>({
     
 
     },
+    inputDate:{
+        flexDirection:'row',
+        justifyContent:'space-around',
+        // alignItems:'space-between',
+
+        width:'36vw',
+    },
+    status:{
+        marginLeft:'20px',
+        marginRight:'10px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+    },
+    information:{
+        backgroundColor:theme.whiteColor,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    logoContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+    }
 });
 export default practiceStyle;  

@@ -22,6 +22,8 @@ import {Grid,
     Button,
     Divider,
     TextField,
+    Select,
+    MenuItem,
 } from '@material-ui/core';
 import {
     KeyboardDatePicker
@@ -76,13 +78,23 @@ const Practice = () => {
         setFax(e.target.value);
     }
     const handleChangeStartTime=(e,date)=>{
-        setStartTime(date);
+        if(editable)
+        {
+            setStartTime(date);
+
+        }
     }
     const handleChangeEndTime=(e,date)=>{
-        setEndTime(date);
+        if(editable)
+        {
+            setEndTime(date);
+
+        }
     }
 
-
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
     
     const getPractice=async()=>{
         const res=await PracticeService.getPractice();
@@ -135,19 +147,37 @@ const Practice = () => {
         <div className={classes.container}>
             <div className={classes.content}>
                 <Grid container>
-                    <Grid item>
+                    <Grid item xs={10}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.practices)}
                         </Typography>
                     </Grid>
-                    
+                    <Grid item xs={2}>
+                        <Select
+                            
+                            value={editable}
+                            onChange={handleChangeEditable}
+                            disableUnderline 
+                            className={classes.status}
+                        >
+                        
+                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+
+                        </Select>
+                    </Grid>
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <div className={classes.logo}>
-                    <img src={Logo} />
-                </div>
+                
                 {rows!==null ?
-                    <Grid container>
+                <div className={classes.information}>
+                    <div className={classes.logo}>
+                            <img src={Logo} />
+                    </div>
+                    
+                    
+                    <Grid container className={classes.information}>
+                    
                     
                     <Grid item xs={6} className={classes.leftContent}>
                         <Typography className={classes.title} variant="h5">
@@ -287,6 +317,7 @@ const Practice = () => {
                                         type={'text'}
                                         value={name}
                                         placeholder={t(strings.name)}
+                                        readOnly={!editable}
                                         onChange={handleChangeName}
                                         startAdornment={
                                         <InputAdornment position="start">
@@ -308,6 +339,7 @@ const Practice = () => {
                                     value={address}
                                     placeholder={t(strings.address)}
                                     onChange={handleChangeAddress}
+                                    readOnly={!editable}
                                     startAdornment={
                                     <InputAdornment position="start">
                                         <LocationCity className={classes.iconButton} />
@@ -329,6 +361,7 @@ const Practice = () => {
                                         value={phone}
                                         placeholder={t(strings.phone)}
                                         onChange={handleChangePhone}
+                                        readOnly={!editable}
                                         startAdornment={
                                         <InputAdornment position="start">
                                             <ContactPhone className={classes.iconButton} />
@@ -350,6 +383,7 @@ const Practice = () => {
                                     value={fax}
                                     placeholder={t(strings.fax)}
                                     onChange={handleChangeFax}
+                                    readOnly={!editable}
                                     startAdornment={
                                     <InputAdornment position="start">
                                         <Devices className={classes.iconButton} />
@@ -361,36 +395,41 @@ const Practice = () => {
                             </FormControl>
                         
                         </div>
-                        <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label={t(strings.startTime)}
-                                format={t(strings.apiDateFormat)}
-                                value={startTime}
-                                onChange={handleChangeStartTime}
-                                InputProps={{
-                                    disableUnderline: true,
-                                }}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                                className={classes.inputControlSmall} 
-                        />
-                        <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label={t(strings.endTime)}
-                                format={t(strings.apiDateFormat)}
-                                value={endTime}
-                                onChange={handleChangeEndTime}
-                                InputProps={{
-                                    disableUnderline: true,
-                                }}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                                className={classes.inputControlSmall} 
-                        />
+                        <div className={classes.inputDate}>
+                            <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label={t(strings.startTime)}
+                                    format={t(strings.apiDateFormat)}
+                                    value={startTime}
+                                    onChange={handleChangeStartTime}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        readOnly: !editable
+                                    }}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                    className={classes.inputControlSmall} 
+                            />
+                            <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label={t(strings.endTime)}
+                                    format={t(strings.apiDateFormat)}
+                                    value={endTime}
+                                    onChange={handleChangeEndTime}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        readOnly: !editable,
+                                    }}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                    className={classes.inputControlSmall} 
+                            />
+                        </div>
+                        
                         {/* <div>
                             <FormControl variant="filled">
                                 <OutlinedInput
@@ -431,6 +470,8 @@ const Practice = () => {
                     </Grid>
                 </Grid>
        
+                </div>
+                
                 :
                 <div></div>
                 }
