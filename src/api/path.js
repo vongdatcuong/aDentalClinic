@@ -93,6 +93,7 @@ const prescription={
     detail:'/detail',
     patient:'/patient',
 }
+
 export {
     authorization,
 }
@@ -114,5 +115,5 @@ export default {
     referralSource,
     noteMacro,
     image,
-    prescription
+    prescription,
 };

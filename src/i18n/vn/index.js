@@ -300,6 +300,8 @@ export default {
         "Save":"Lưu",
         "Organization":"Tổ chức",
         "Hotline":"Đường dây nóng",
+        "Start time":"Thời gian bắt đầu",
+        "End time":"Thời gian kết thúc",
         //chair
         "Number":"Số",
         "Room":"Phòng",

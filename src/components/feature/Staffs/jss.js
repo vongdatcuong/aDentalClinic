@@ -47,7 +47,14 @@ const staffStyle = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
-    }
+    },
+    containerTable:{
+        marginLeft:'10px',
+        '@media (min-width: 1280px)':{
+            maxWidth:'none',
+            width:'99%',
+        }
+    },
 });
   
 export default staffStyle;  

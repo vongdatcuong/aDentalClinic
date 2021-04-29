@@ -240,7 +240,7 @@ const Staffs = () => {
                     
                     </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPerson===true && isEdited=== false ?
                         <InsertPerson staffType={t(strings.staffTypeStaff)}
                                         userType={t(strings.userTypeStaff)}

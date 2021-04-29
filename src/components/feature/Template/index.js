@@ -393,7 +393,7 @@ const Template = () => {
                 }
                 
                 
-                <Container style={{marginTop:'20px'}}>
+                <Container className={classes.containerTable}>
                     {
                         insertTemplate===true && isEdited=== false  ?
                         <InsertTemplate 

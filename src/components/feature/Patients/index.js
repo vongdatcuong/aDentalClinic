@@ -379,7 +379,7 @@ const Patients = () => {
                     
                     
                 
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPerson===true ?
                         <InsertPatient 
                                         userType={t(strings.userTypePatient)}

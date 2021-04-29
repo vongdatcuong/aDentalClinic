@@ -67,8 +67,14 @@ const drugStyle = (theme) => ({
     },
     dialogButton:{
         marginLeft:'15px',
-    }
-
+    },
+    containerTable:{
+        marginLeft:'10px',
+        '@media (min-width: 1280px)':{
+            maxWidth:'none',
+            width:'99%',
+        }
+    },
 });
 
   

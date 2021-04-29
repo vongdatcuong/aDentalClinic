@@ -275,7 +275,7 @@ const Drug = () => {
                     }
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertDrug===true && isEdited=== false  ?
                         <InsertDrug 
                                         handleChangeIsInsert={handleChangeIsInsert}

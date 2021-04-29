@@ -299,6 +299,8 @@ export default {
         "Save":"Save",
         "Organization":"Organization",
         "Hotline":"Hotline",
+        "Start time":"Start time",
+        "End time":"End time",
         //chair
         "Number":"Number",
         "Room":"Room",

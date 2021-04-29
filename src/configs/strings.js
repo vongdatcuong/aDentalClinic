@@ -87,7 +87,8 @@ const aboutUsContent="Lorem Ipsum is simply dummy text of the printing and types
 const save="Save";
 const organization="Organization";
 const hotline="Hotline";
-
+const startTime="Start time";
+const endTime="End time";
 //chair
 const number="Number";
 const room="Room";
@@ -576,6 +577,8 @@ export default {
     name,
     organization,
     hotline,
+    startTime,
+    endTime,
     idCard,
     publisher,
     country,

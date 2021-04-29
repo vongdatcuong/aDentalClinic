@@ -246,7 +246,7 @@ const Providers = () => {
                     
                     
                 
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPerson===true && isEdited=== false ?
                         <InsertPerson 
                                         staffType={t(strings.staffTypeProvider)}

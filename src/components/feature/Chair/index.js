@@ -230,7 +230,7 @@ const Chairs = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertChair===true && isEdited=== false ?
                         <InsertChair 
                                     handleChangeIsInsert={handleChangeIsInsert}

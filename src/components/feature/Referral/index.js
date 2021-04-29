@@ -280,7 +280,7 @@ const Referral = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertReferralSource===true && isEdited=== false  ?
                         <InsertReferralSource
                                 handleChangeIsInsert={handleChangeIsInsert}

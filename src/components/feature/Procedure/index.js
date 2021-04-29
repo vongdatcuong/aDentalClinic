@@ -234,7 +234,7 @@ const Procedure = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container >
+                <Container className={classes.containerTable}>
                     {insertProcedure===true  ?
                         <InsertProcedure 
                         handleChangeIsInsert={handleChangeIsInsert}
