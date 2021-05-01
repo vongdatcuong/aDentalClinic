@@ -147,45 +147,7 @@ const Template = () => {
     const handleChangeChooseType=(value)=>{
         setChooseType(value);
     }
-    const deleteRow=(e)=>{
-        handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
-        const deleteTemplate=async()=>{
-            const res=await TemplateService.delete(selectedRowData.id);
-            console.log("Delete template:",res);
-            if(res.success)
-            {
-                toast.success(t(strings.deleteSuccess));
-                
-                if(chooseType===1)
-                {
-                    let temp=rowsMedicalAlert;
-                    temp.splice(selectedRow,1);
-                    setRowsMedicalAlert(temp);
-                }
-                if(chooseType===2)
-                {
-                    let temp=rowsProgress;
-                    temp.splice(selectedRow,1);
-                    setRowsProgress(temp);
-                }
-                if(chooseType===1)
-                {
-                    let temp=rowsTreatment;
-                    temp.splice(selectedRow,1);
-                    setRowsTreatment(temp);
-                }
-                setSelectedRow(-1);
-                setSelectedRowData(null);
-            }
-            else
-            {
-                toast.error(t(strings.deleteFail));
-            }
-        };
-        deleteTemplate();
-       
-    }
+    
     const changeData=(data)=>{
         let temp=[];
         data.map((a,index)=>{
@@ -253,6 +215,48 @@ const Template = () => {
         }
         
     }
+    const deleteRow=(e)=>{
+        handleCloseDialog();
+        console.log("Delete now:",selectedRowData);
+        const deleteTemplate=async()=>{
+            const res=await TemplateService.delete(selectedRowData.id);
+            console.log("Delete template:",res);
+            if(res.success)
+            {
+                toast.success(t(strings.deleteSuccess));
+                getTemplate()
+                if(chooseType===1)
+                {
+                    let temp=rowsMedicalAlert;
+                    temp.splice(selectedRow,1);
+                    setRowsMedicalAlert(temp);
+                    chooseMedicalAlert(temp);
+                }
+                if(chooseType===2)
+                {
+                    let temp=rowsProgress;
+                    temp.splice(selectedRow,1);
+                    setRowsProgress(temp);
+                    chooseProgress(temp);
+                }
+                if(chooseType===1)
+                {
+                    let temp=rowsTreatment;
+                    temp.splice(selectedRow,1);
+                    setRowsTreatment(temp);
+                    chooseTreatment(temp);
+                }
+                setSelectedRow(-1);
+                setSelectedRowData(null);
+            }
+            else
+            {
+                toast.error(t(strings.deleteFail));
+            }
+        };
+        deleteTemplate();
+       
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
@@ -271,8 +275,8 @@ const Template = () => {
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
-                setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                setSelectedRowData(rowsWithType[selectedRow])
+                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
 
 
@@ -295,195 +299,202 @@ const Template = () => {
 
     
 
-
-    return (
-        <div className={classes.container}>
-            
-            <div className={classes.content}>
-                <Grid container>
-                    <Grid item xs={10}>
-                        <Typography className={classes.title} variant="h4">
-                            {t(strings.template)}
-                        </Typography>
-                    </Grid>
-                    {insertTemplate===true || isEdited===true && isDelete===false ?
-
-                    <Grid item xs={2}>
-                        <Typography variant="h6" onClick={handleGoBackToTable} className={classes.goBack}>
-                            {t(strings.goBack)}
-                        </Typography>
-                    </Grid>
-                    :
-                    insertTemplate===true && isEdited=== false  ?
-                        <div 
-                                     
-                        />
-                        :
-                        isEdited===true &&selectedRowData!==null && isDelete===false?
-                        <div
-                        />
-                        :
-                        chooseType===0 && insertTemplate===false && isEdited=== false?
-                        <div>
-                            
-                        </div>
-                        :
+    if(rows.length!==0)
+    {
+        return (
+            <div className={classes.container}>
+                
+                <div className={classes.content}>
+                    <Grid container>
+                        <Grid item xs={10}>
+                            <Typography className={classes.title} variant="h4">
+                                {t(strings.template)}
+                            </Typography>
+                        </Grid>
+                        {insertTemplate===true || isEdited===true && isDelete===false ?
+    
                         <Grid item xs={2}>
-
-                            <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
+                            <Typography variant="h6" onClick={handleGoBackToTable} className={classes.goBack}>
                                 {t(strings.goBack)}
                             </Typography>
                         </Grid>
-                    }
-                </Grid>
-                
-                <Divider className={classes.titleDivider}/>
-               
-                {chooseType!==0 && insertTemplate===false && isEdited===false ?
-                    <div item xs={6} className={classes.serviceGroup}>
-                        <FormControl variant="filled">
-
-                            <OutlinedInput
-                                className={classes.searchControl}
-                                id="outlined-adornment-password"
-                                type={'text'}
-                                value={searchText}
-                                placeholder={t(strings.search)}
-                                onChange={handleChangeSearchText}
-                                endAdornment={
-                                <InputAdornment position="end">
-                                    <SearchIcon className={classes.iconButton} />
-
-                                </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <Select
-
-                        value={editable}
-                        onChange={handleChangeEditable}
-                        disableUnderline 
-                        className={classes.status}
-                        >
-
-                        <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                        <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-
-                        </Select>
-                        <IconButton onClick={handleChangeInsertTemplate}>
-                        <AddBox />            
-
-                        </IconButton>
-                        <IconButton onClick={handleChangeIsDelete}>
-                        <DeleteIcon />            
-
-                        </IconButton>
-                        
-                        
-                    </div>
-                    :
-                    <div/>
-                }
-                
-                
-                <Container className={classes.containerTable}>
-                    {
+                        :
                         insertTemplate===true && isEdited=== false  ?
-                        <InsertTemplate 
-                                handleChangeIsInsert={handleChangeIsInsert}
-                        />
-                        :
-                        isEdited===true &&selectedRowData!==null && isDelete===false?
-                        <UpdateTemplate
-                            id={selectedRowData.id}
-                            editable={editable}
-                            handleChangeIsUpdate={handleChangeIsUpdate}
-                        />
-                        :
-
-                        chooseType===0 && insertTemplate===false && isEdited=== false?
-                        <div>
-                            <Grid container>
-                                <Grid item xs={8}>
-                                    <Typography className={classes.titleItem} variant="h5">
-                                        {t(strings.allTemplates)}
-                                    </Typography>
-                                </Grid>
-                        
-                             </Grid>
-                            <Grid container >
-                                <Grid item className={classes.templateProgress} onClick={chooseProgress}>
-                                    <FiberNewIcon/>
-                                    <Typography  variant="body1">
-                                        {t(strings.templateProgress)}
-                                    </Typography>
-                                </Grid>
-                                <div className={classes.spaceLeft}></div>
-                                <Grid item className={classes.templateMedicalAlert} onClick={chooseMedicalAlert}>
-                                    <ReceiptIcon/>
-                                    <Typography  variant="body1">
-                                        {t(strings.templateMedicalAlert)}
-                                    </Typography>
-                                </Grid>
-                                <div className={classes.spaceLeft}></div>
-                                <Grid item className={classes.templateTreatment} onClick={chooseTreatment}>
-                                    <AssessmentIcon/>
-                                    <Typography  variant="body1">
-                                        {t(strings.templateTreatment)}
-                                    </Typography>
-                                </Grid>
-                                <div className={classes.spaceLeft}></div>
-                        
-
+                            <div 
+                                         
+                            />
+                            :
+                            isEdited===true &&selectedRowData!==null && isDelete===false?
+                            <div
+                            />
+                            :
+                            chooseType===0 && insertTemplate===false && isEdited=== false?
+                            <div>
+                                
+                            </div>
+                            :
+                            <Grid item xs={2}>
+    
+                                <Typography variant="h6" onClick={handleGoBackToHome} className={classes.goBack}>
+                                    {t(strings.goBack)}
+                                </Typography>
                             </Grid>
-                
+                        }
+                    </Grid>
+                    
+                    <Divider className={classes.titleDivider}/>
+                   
+                    {chooseType!==0 && insertTemplate===false && isEdited===false ?
+                        <div item xs={6} className={classes.serviceGroup}>
+                            <FormControl variant="filled">
+    
+                                <OutlinedInput
+                                    className={classes.searchControl}
+                                    id="outlined-adornment-password"
+                                    type={'text'}
+                                    value={searchText}
+                                    placeholder={t(strings.search)}
+                                    onChange={handleChangeSearchText}
+                                    endAdornment={
+                                    <InputAdornment position="end">
+                                        <SearchIcon className={classes.iconButton} />
+    
+                                    </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <Select
+    
+                            value={editable}
+                            onChange={handleChangeEditable}
+                            disableUnderline 
+                            className={classes.status}
+                            >
+    
+                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+    
+                            </Select>
+                            <IconButton onClick={handleChangeInsertTemplate}>
+                            <AddBox />            
+    
+                            </IconButton>
+                            <IconButton onClick={handleChangeIsDelete}>
+                            <DeleteIcon />            
+    
+                            </IconButton>
+                            
+                            
                         </div>
                         :
-                        
-                        <TableCustom
-                            titles={titles}
-                            data={rowsWithType}
-                            dataColumnsName={dataColumnsName}
-                            editable={editable}
-                            handleChangeIsEdited={handleChangeIsEdited}
-                            changeToEditPage={true}
-                            handleChangeSelectedRow={handleChangeSelectedRow}
-                            numberColumn={dataColumnsName.length}
-                            isDelete={isDelete}
-                            handleOpenDialog={handleOpenDialog}
-                            handleCloseDialog={handleCloseDialog}
-                        />
-                       
-                        // :
-                        // <div>Hello world</div>
+                        <div/>
                     }
                     
+                    
+                    <Container className={classes.containerTable}>
+                        {
+                            insertTemplate===true && isEdited=== false  ?
+                            <InsertTemplate 
+                                    handleChangeIsInsert={handleChangeIsInsert}
+                            />
+                            :
+                            isEdited===true &&selectedRowData!==null && isDelete===false?
+                            <UpdateTemplate
+                                id={selectedRowData.id}
+                                editable={editable}
+                                handleChangeIsUpdate={handleChangeIsUpdate}
+                            />
+                            :
+    
+                            chooseType===0 && insertTemplate===false && isEdited=== false?
+                            <div>
+                                <Grid container>
+                                    <Grid item xs={8}>
+                                        <Typography className={classes.titleItem} variant="h5">
+                                            {t(strings.allTemplates)}
+                                        </Typography>
+                                    </Grid>
+                            
+                                 </Grid>
+                                <Grid container >
+                                    <Grid item className={classes.templateProgress} onClick={()=>chooseProgress(rows)}>
+                                        <FiberNewIcon/>
+                                        <Typography  variant="body1">
+                                            {t(strings.templateProgress)}
+                                        </Typography>
+                                    </Grid>
+                                    <div className={classes.spaceLeft}></div>
+                                    <Grid item className={classes.templateMedicalAlert} onClick={()=>chooseMedicalAlert(rows)}>
+                                        <ReceiptIcon/>
+                                        <Typography  variant="body1">
+                                            {t(strings.templateMedicalAlert)}
+                                        </Typography>
+                                    </Grid>
+                                    <div className={classes.spaceLeft}></div>
+                                    <Grid item className={classes.templateTreatment} onClick={()=>chooseTreatment(rows)}>
+                                        <AssessmentIcon/>
+                                        <Typography  variant="body1">
+                                            {t(strings.templateTreatment)}
+                                        </Typography>
+                                    </Grid>
+                                    <div className={classes.spaceLeft}></div>
+                            
+    
+                                </Grid>
+                    
+                            </div>
+                            :
+                            
+                            <TableCustom
+                                titles={titles}
+                                data={rowsWithType}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                isDelete={isDelete}
+                                handleOpenDialog={handleOpenDialog}
+                                handleCloseDialog={handleCloseDialog}
+                            />
+                           
+                            // :
+                            // <div>Hello world</div>
+                        }
+                        
+                    
+                    </Container>
+                    <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>
+                        
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                            {t(strings.deleteConfirmMessage)}
+    
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button variant="outlined" onClick={handleCloseDialog} color="secondary">
+                                {t(strings.no)}
+                            </Button>
+                            <Button variant="contained" onClick={deleteRow} color="primary" autoFocus>
+                                {t(strings.yes)}
+    
+                            </Button>
+                        </DialogActions>
+                        
+                    </Dialog>
                 
-                </Container>
-                <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>
-                    
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                        {t(strings.deleteConfirmMessage)}
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="outlined" onClick={handleCloseDialog} color="secondary">
-                            {t(strings.no)}
-                        </Button>
-                        <Button variant="contained" onClick={deleteRow} color="primary" autoFocus>
-                            {t(strings.yes)}
-
-                        </Button>
-                    </DialogActions>
-                    
-                </Dialog>
-            
+                </div>
+                
             </div>
-            
-        </div>
-    )
+        )
+    }
+    else
+    {
+        return <div></div>
+    }
+    
 }
 
 export default Template;
