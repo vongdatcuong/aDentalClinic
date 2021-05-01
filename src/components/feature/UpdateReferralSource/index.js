@@ -50,6 +50,8 @@ const UpdateReferralSource = (props) => {
     const [address,setAddress]=useState(null);
     const [email,setEmail]=useState(null);
     const [additionalInfo,setAdditionalInfo]=useState(null);
+    const [nameErrorMessage,setNameErrorMessage]=useState(null);
+    const [emailErrorMessage,setEmailErrorMessage]=useState(null);
 
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -73,7 +75,7 @@ const UpdateReferralSource = (props) => {
 
 
     const onClickUpdate=async()=>{
-        if(props.editable===true)
+        if(props.editable===true && nameErrorMessage===null && emailErrorMessage===null)
         {
             const data={
                 name:name,
@@ -118,7 +120,24 @@ const UpdateReferralSource = (props) => {
             searchReferralSource();
 
         }
-       
+        if(!isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(t(strings.nameErrMsg));
+        }
+        
+        if(nameErrorMessage!==null && isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(null);
+        }
+        
+        if(!isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(t(strings.emailErrMsg));
+        }
+        if(emailErrorMessage!==null && isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(null);
+        }
     })
     
     return (
@@ -137,6 +156,8 @@ const UpdateReferralSource = (props) => {
                                         onChange={handleChangeName}
                                         value={name}
                                         inputProps={{ readOnly: !props.editable }}
+                                        error={nameErrorMessage !== null}
+                                        helperText={nameErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -158,7 +179,7 @@ const UpdateReferralSource = (props) => {
                                         onChange={handleChangePhone}
                                         value={phone}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        
                                         /> 
                         </div>
                         
@@ -172,7 +193,8 @@ const UpdateReferralSource = (props) => {
                                         onChange={handleChangeEmail}
                                         value={email}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        error={emailErrorMessage !== null}
+                                        helperText={emailErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>

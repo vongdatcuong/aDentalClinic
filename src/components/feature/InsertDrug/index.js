@@ -71,27 +71,39 @@ const InsertPatient = (props) => {
     }
     
     const insertDrug=async(e)=>{
-        
-        const data={
-            name:name,
-            description:description,
-            dispensed:dispensed,
-            note:note,
-            refill:refill,
-            quantity:quantity,
-          
-        };
-        const result=await DrugService.insert(data);
-        if(result.success)
+        if(name!==null && name!=='' &&
+            description!==null && description!=='' &&
+            dispensed!==null && dispensed!=='' &&
+            note!==null && note!=='' &&
+            refill!==null && refill!=='' &&
+            quantity!==null && quantity!==''
+        )
         {
-            toast.success(t(strings.insertSuccess));
-            props.handleChangeIsInsert();
+            const data={
+                name:name,
+                description:description,
+                dispensed:dispensed,
+                note:note,
+                refill:refill,
+                quantity:quantity,
+              
+            };
+            const result=await DrugService.insert(data);
+            if(result.success)
+            {
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+            }
+            else
+            {
+                toast.error(t(strings.insertFail));
+            }
         }
         else
         {
-            toast.error(t(strings.insertFail));
-        }
+            toast.error(t(strings.errorInput));
 
+        }
     }
     useEffect(()=>{
        

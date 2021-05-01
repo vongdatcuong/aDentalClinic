@@ -186,6 +186,8 @@ const confirmPwdNotMatchErrMsg = "Confirm password does not match with new passw
 const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
 const errorLoadData="Error when load data";
+const errorInput="Please fill out all fields";
+const nameErrMsg="Name must contain at least 1 to 30 characters";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
@@ -457,6 +459,8 @@ export default {
     newPwdMatchOldPwd,
     dateRangeInvalid,
     errorLoadData,
+    errorInput,
+    nameErrMsg,
     // Error Messages Login
     usernameErrMsg,
     logInFailMsg,

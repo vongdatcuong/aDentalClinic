@@ -72,7 +72,13 @@ const UpdateDrug = (props) => {
 
 
     const onClickUpdate=async()=>{
-        if(props.editable)
+        if(name!==null && name!=='' &&
+            description!==null && description!=='' &&
+            dispensed!==null && dispensed!=='' &&
+            note!==null && note!=='' &&
+            refill!==null && refill!=='' &&
+            quantity!==null && quantity!=='' && props.editable===true
+        )
         {
             const data={
                 name:name,
@@ -94,6 +100,11 @@ const UpdateDrug = (props) => {
                 toast.error(t(strings.updateFail));
             }
         }
+        else
+        {
+            toast.error(t(strings.errorInput))
+        }
+       
         
         
         

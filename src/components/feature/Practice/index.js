@@ -2,6 +2,9 @@ import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 //api
 import PracticeService from "../../../api/practice/practice.service";
+//validators
+import validators, {isPropValid} from '../../../utils/validators';
+
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 //import icon
@@ -24,6 +27,7 @@ import {Grid,
     TextField,
     Select,
     MenuItem,
+    FormHelperText,
 } from '@material-ui/core';
 import {
     KeyboardDatePicker
@@ -62,8 +66,9 @@ const Practice = () => {
     const [fax,setFax]=useState(null);
     const [startTime,setStartTime]=useState(null);
     const [endTime,setEndTime]=useState(null);
-
-
+    const [nameErrorMessage,setNameErrorMessage]=useState(null);
+    const [phoneErrorMessage,setPhoneErrorMessage]=useState(null);
+    
     //handle
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -140,6 +145,24 @@ const Practice = () => {
         if(rows===null)
         {
             getPractice();
+        }
+        if(!isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(t(strings.nameErrMsg));
+        }
+        
+        if(nameErrorMessage!==null && isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(null);
+        }
+        if(!isPropValid(validators.properties.phone, phone))
+        {
+            setPhoneErrorMessage(t(strings.phoneErrMsg));
+        }
+        
+        if(phoneErrorMessage!==null && isPropValid(validators.properties.phone, phone))
+        {
+            setPhoneErrorMessage(null);
         }
     })
     
@@ -325,8 +348,16 @@ const Practice = () => {
 
                                         </InputAdornment>
                                         }
+                                        
+                                        
                                     />
-                                    
+                                    <FormHelperText 
+                                        error={nameErrorMessage!==null}
+                                        className={classes.errorText}
+                                    >
+                                        {nameErrorMessage}
+                                    </FormHelperText>
+                                   
                             </FormControl>   
                         </div>
 
@@ -368,8 +399,14 @@ const Practice = () => {
 
                                         </InputAdornment>
                                         }
+                                        
                                     />
-                                
+                                    <FormHelperText 
+                                        error={phoneErrorMessage!==null}
+                                        className={classes.errorText}
+                                    >
+                                        {phoneErrorMessage}
+                                    </FormHelperText>
                             </FormControl>
                             
                             
@@ -410,6 +447,7 @@ const Practice = () => {
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
+                                    
                                     className={classes.inputControlSmall} 
                             />
                             <KeyboardDatePicker

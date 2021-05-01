@@ -175,9 +175,9 @@ const insertProcedureStyle = (theme) => ({
     },
     inputCombobox:{
         height:'35px',
-        width:'35vw',
+        width:'36vw',
         marginLeft:'30px',
-        marginTop:'10px',
+        marginTop:'15px',
         borderRadius: 4,
         position: 'relative',
         backgroundColor: theme.palette.background.paper,

@@ -95,31 +95,46 @@ const UpdateProcedure = (props) => {
         setDescription(e.target.value);
     }
     const onClickUpdateProcedure=async(e)=>{
-        if(category!==null && props.editable===true)
+        if(category!=='' || abbreviation!=='' || procedureCode!=='' || procedureFee!=='' || procedureTime!==''
+            || procedureType!=='' || toothSelect!=='' || toothType!=='' || description!=='')
         {
-            const data={
-                abbreviation:abbreviation,
-                // insuredPercent:insuredPercent,
-                procedure_code:procedureCode,
-                procedure_fee:procedureFee,
-                procedure_time:procedureTime,
-                procedure_type:procedureType,
-                category:category,
-                tooth_select:toothSelect,
-                tooth_type:toothType,
-                description:description,
-            }
-            const result=await ProcedureService.update(props.id,data);
-            if(result.success)
+            toast.error(t(strings.errorInput));
+
+        }
+        else
+        {
+            if(category!==null && abbreviation!==null && procedureCode!==null && procedureFee!==null && procedureTime!==null
+                && procedureType!==null && toothSelect!==null && toothType!==null && description!==null && props.editable===true)
             {
-                toast.success(t(strings.updateSuccess));
-                props.handleChangeIsUpdate();
+                const data={
+                    abbreviation:abbreviation,
+                    // insuredPercent:insuredPercent,
+                    procedure_code:procedureCode,
+                    procedure_fee:procedureFee,
+                    procedure_time:procedureTime,
+                    procedure_type:procedureType,
+                    category:category,
+                    tooth_select:toothSelect,
+                    tooth_type:toothType,
+                    description:description,
+                }
+                const result=await ProcedureService.update(props.id,data);
+                if(result.success)
+                {
+                    toast.success(t(strings.updateSuccess));
+                    props.handleChangeIsUpdate();
+                }
+                else
+                {
+                    toast.error(t(strings.updateFail));
+                }
             }
             else
             {
-                toast.error(t(strings.updateFail));
+                toast.error(t(strings.errorInput));
             }
         }
+        
         
     }
 

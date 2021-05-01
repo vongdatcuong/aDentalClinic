@@ -62,23 +62,35 @@ const UpdatePerson = (props) => {
 
    
     const onClickUpdate=async()=>{
-        if(props.editable===true)
+        if(name===''|| order==='' || color==='')
         {
-            const data={
-                name:name,
-                order:order,
-                color:color,
-                is_deleted:isDeleted,
-            };
-            const result=await ChairService.update(props.id,data);
-            if(result.success)
+            toast.error(t(strings.errorInput));
+
+        }
+        else
+        {
+            if(props.editable===true && name!==null && order!==null && color!==null)
             {
-                toast.success(t(strings.updateSuccess));
-                props.handleChangeIsUpdate();
+                const data={
+                    name:name,
+                    order:order,
+                    color:color,
+                    is_deleted:isDeleted,
+                };
+                const result=await ChairService.update(props.id,data);
+                if(result.success)
+                {
+                    toast.success(t(strings.updateSuccess));
+                    props.handleChangeIsUpdate();
+                }
+                else
+                {
+                    toast.error(t(strings.updateFail));
+                }
             }
             else
             {
-                toast.error(t(strings.updateFail));
+                toast.error(t(strings.errorInput));
             }
         }
         

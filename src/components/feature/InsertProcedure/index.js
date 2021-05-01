@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import validators, {isPropValid} from '../../../utils/validators';
 //api
 import ProcedureService from "../../../api/procedure/procedure.service";
 //translation
@@ -56,7 +57,6 @@ const InsertProcedure = (props) => {
     const [description,setDescription]=useState(null);
     const [listCategory,setListCategory]=useState([]);
 
-
     const handleChangeAbbreviation=(e)=>{
         setAbbreviation(e.target.value);
     }
@@ -93,33 +93,48 @@ const InsertProcedure = (props) => {
         setDescription(e.target.value);
     }
     const onClickInsertProcedure=async(e)=>{
-        if(category!==null)
+        if(category!=='' || abbreviation!=='' || procedureCode!=='' || procedureFee!=='' || procedureTime!==''
+        || procedureType!=='' || toothSelect!=='' || toothType!=='' || description!=='')
         {
-            const data={
-                abbreviation:abbreviation,
-                // insuredPercent:insuredPercent,
-                procedure_code:procedureCode,
-                procedure_fee:procedureFee,
-                procedure_time:procedureTime,
-                procedure_type:procedureType,
-                category:category,
-                tooth_select:toothSelect,
-                tooth_type:toothType,
-                description:description,
-            }
-            const result=await ProcedureService.insert(data);
-            if(result.success)
-            {
-                toast.success(t(strings.insertSuccess));
-                props.handleChangeIsInsert();
+            toast.error(t(strings.errorInput));
 
+        }
+        else
+        {
+            if(category!==null && abbreviation!==null && procedureCode!==null && procedureFee!==null && procedureTime!==null
+                && procedureType!==null && toothSelect!==null && toothType!==null && description!==null)
+            {
+                const data={
+                    abbreviation:abbreviation,
+                    // insuredPercent:insuredPercent,
+                    procedure_code:procedureCode,
+                    procedure_fee:procedureFee,
+                    procedure_time:procedureTime,
+                    procedure_type:procedureType,
+                    category:category,
+                    tooth_select:toothSelect,
+                    tooth_type:toothType,
+                    description:description,
+                }
+                const result=await ProcedureService.insert(data);
+                if(result.success)
+                {
+                    toast.success(t(strings.insertSuccess));
+                    props.handleChangeIsInsert();
+    
+                }
+                else
+                {
+                    toast.error(t(strings.insertFail));
+                }
             }
             else
             {
-                toast.error(t(strings.insertFail));
+                toast.error(t(strings.errorInput));
             }
         }
         
+       
     }
 
     const renderListProcedureType=(e)=>{

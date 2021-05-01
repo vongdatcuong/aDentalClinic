@@ -62,22 +62,39 @@ const InsertChair = (props) => {
 
     
     const insertChair=async(e)=>{
-        const data={
-            name:name,
-            order:order,
-            color:color,
-            //is_deleted:isDeleted,
-        };
-        const result=await ChairService.insert(data);
-        if(result.success)
+        if(name===''|| order==='' || color==='')
         {
-            toast.success(t(strings.insertSuccess));
-            props.handleChangeIsInsert();
+            toast.error(t(strings.errorInput));
+
         }
         else
         {
-            toast.error(t(strings.insertFail));
+            if(name!==null && order!==null && color!==null)
+            {
+                const data={
+                    name:name,
+                    order:order,
+                    color:color,
+                    //is_deleted:isDeleted,
+                };
+                const result=await ChairService.insert(data);
+                if(result.success)
+                {
+                    toast.success(t(strings.insertSuccess));
+                    props.handleChangeIsInsert();
+                }
+                else
+                {
+                    toast.error(t(strings.insertFail));
+                }
+            }
+            else
+            {
+                toast.error(t(strings.errorInput));
+            }
         }
+        
+        
         
 
     }

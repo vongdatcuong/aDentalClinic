@@ -68,7 +68,7 @@ const UpdateTemplate = (props) => {
         })
     }
     const onClickUpdate=async()=>{
-        if(props.editable===true)
+        if(props.editable===true && content!==null && content !=='' && noteType!==null)
         {
             const data={
                 content:content,
@@ -87,7 +87,10 @@ const UpdateTemplate = (props) => {
                 toast.error(t(strings.updateFail));
             }
         }
-        
+        else
+        {
+            toast.error(t(strings.errorInput));
+        }
         
         
     }
