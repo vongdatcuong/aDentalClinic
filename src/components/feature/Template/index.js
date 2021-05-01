@@ -196,10 +196,22 @@ const Template = () => {
         })
         console.log("Check rows in change data:",temp);
         setRows(temp);
+        if(chooseType===1)
+        {
+            chooseMedicalAlert(temp);
+        }
+        if(chooseType===2)
+        {
+            chooseProgress(temp);
+        }
+        if(chooseType===3)
+        {
+            chooseTreatment(temp);
+        }
     }
-    const chooseMedicalAlert=()=>{
+    const chooseMedicalAlert=(data)=>{
         let temp=[];
-        rows.map((a,index)=>{
+        data.map((a,index)=>{
             if(a.noteType==="MEDICAL_ALERT")
             temp=temp.concat(a);
         })
@@ -207,9 +219,9 @@ const Template = () => {
         setRowsWithType(temp);
         setChooseType(1);
     }
-    const chooseProgress=()=>{
+    const chooseProgress=(data)=>{
         let temp=[];
-        rows.map((a,index)=>{
+        data.map((a,index)=>{
             if(a.noteType==="PROGRESS")
             temp=temp.concat(a);
         })
@@ -219,9 +231,9 @@ const Template = () => {
         setChooseType(2);
 
     }
-    const chooseTreatment=()=>{
+    const chooseTreatment=(data)=>{
         let temp=[];
-        rows.map((a,index)=>{
+        data.map((a,index)=>{
             if(a.noteType==="TREATMENT")
             temp=temp.concat(a);
         })
@@ -239,6 +251,7 @@ const Template = () => {
             changeData(result.data);
 
         }
+        
     }
     useEffect(()=>{
         if(rows.length===0)
@@ -266,36 +279,16 @@ const Template = () => {
         }
         if(isInsert)
         {
+            console.log("Co vao day insert");
             getTemplate();
-            if(chooseType===1)
-            {
-                chooseMedicalAlert();
-            }
-            if(chooseType===2)
-            {
-                chooseProgress();
-            }
-            if(chooseType===3)
-            {
-                chooseTreatment();
-            }
+            
             setIsInsert(false);
         }
         if(isUpdate)
         {
+            console.log("Co vao day update:");
             getTemplate();
-            if(chooseType===1)
-            {
-                chooseMedicalAlert();
-            }
-            if(chooseType===2)
-            {
-                chooseProgress();
-            }
-            if(chooseType===3)
-            {
-                chooseTreatment();
-            }
+            
             setIsUpdate(false);
         }
     })
