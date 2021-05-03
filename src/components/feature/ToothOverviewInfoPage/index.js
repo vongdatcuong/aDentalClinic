@@ -94,7 +94,8 @@ const ToothOverviewInfoPage = ({ patientID }) => {
                 value={value}
                 index={index}
                 key={index}
-                id={tooth.fullTooth.id}
+                toothID={tooth.fullTooth.id}
+                patientID={patientID}
                 // onSelectTooth={props.onSelectTooth}
                 toothSvgString={tooth.fullTooth.svgString}
               ></ToothOverviewInfoTab>

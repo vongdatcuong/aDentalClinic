@@ -134,6 +134,9 @@ const style = (theme) => ({
     fontWeight: "bold",
     width: "90%",
   },
+  selectedBtn: {
+      border: "solid",
+  },
 });
 
 export default style;
