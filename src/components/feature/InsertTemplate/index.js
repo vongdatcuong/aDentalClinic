@@ -50,7 +50,7 @@ const InsertTemplate = (props) => {
     const [noteType,setNoteType]=useState(null);
     const [listTypeTemplate,setListTypeTemplate]=useState([
         "TREATMENT",
-        "MEDICAL_ALERT",
+        "MEDICAL ALERT",
         "PROGRESS",
     ]);
 
@@ -63,20 +63,27 @@ const InsertTemplate = (props) => {
     
     
     const insertTemplate=async(e)=>{
-        
-        const data={
-            content:content,
-            note_type:noteType
-          
-        };
-        const result=await TemplateService.insert(data);
-        if(result.success)
+        if(content!==null && content!=='' && noteType!==null)
         {
-            toast.success(t(strings.insertSuccess));
+            const data={
+                content:content,
+                note_type:noteType
+              
+            };
+            const result=await TemplateService.insert(data);
+            if(result.success)
+            {
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+            }
+            else
+            {
+                toast.error(t(strings.insertFail));
+            }
         }
         else
         {
-            toast.error(t(strings.insertFail));
+            toast.error(t(strings.errorInput));
         }
 
     }

@@ -82,6 +82,8 @@ export default {
         "First name must contain at least 1 character":"Họ phải có ít nhất 1 ký tự",
         "Last name must contain at least 1 character":"Tên phải có ít nhất 1 ký tự",
         "Error when load data":"Lỗi khi tải dữ liệu",
+        "Please fill out all fields":"Hãy điền tất cả thông tin",
+        "Name must contain at least 1 to 30 characters":"Tên phải có từ 1 đến 30 ký tự",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username phải có từ 1 đến 30 ký tự",
         "Sign in successfully": "Đăng nhập thành công",
@@ -301,6 +303,8 @@ export default {
         "Save":"Lưu",
         "Organization":"Tổ chức",
         "Hotline":"Đường dây nóng",
+        "Start time":"Thời gian bắt đầu",
+        "End time":"Thời gian kết thúc",
         //chair
         "Number":"Số",
         "Room":"Phòng",

@@ -83,6 +83,8 @@ export default {
         "First name must contain at least 1 character":"First name must contain at least 1 character",
         "Last name must contain at least 1 character":"Last name must contain at least 1 character",
         "Error when load data":"Error when load data",
+        "Please fill out all fields":"Please fill out all fields",
+        "Name must contain at least 1 character":"Name must contain at least 1 to 30 characters",
         // Error Messages Login
         "Username must contain at least 1 to 30 characters": "Username must contain at least 1 to 30 characters",
         "Sign in successfully": "Sign in successfully",
@@ -300,6 +302,8 @@ export default {
         "Save":"Save",
         "Organization":"Organization",
         "Hotline":"Hotline",
+        "Start time":"Start time",
+        "End time":"End time",
         //chair
         "Number":"Number",
         "Room":"Room",

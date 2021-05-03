@@ -51,6 +51,8 @@ const InsertReferralSource = (props) => {
     const [address,setAddress]=useState(null);
     const [email,setEmail]=useState(null);
     const [additionalInfo,setAdditionalInfo]=useState(null);
+    const [nameErrorMessage,setNameErrorMessage]=useState(null);
+    const [emailErrorMessage,setEmailErrorMessage]=useState(null);
 
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -72,28 +74,50 @@ const InsertReferralSource = (props) => {
     }
 
     const insertReferralSource=async(e)=>{
+        if(nameErrorMessage===null && emailErrorMessage===null)
+        {
+            const data={
+                name:name,
+                phone:phone,
+                fax:fax,
+                address:address,
+                email:email,
+                additional_info:additionalInfo
+              
+            };
+            const result=await ReferralSourceService.insert(data);
+            if(result.success)
+            {
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+            }
+            else
+            {
+                toast.error(t(strings.insertFail));
+            }
+        }
         
-        const data={
-            name:name,
-            phone:phone,
-            fax:fax,
-            address:address,
-            email:email,
-            additional_info:additionalInfo
-          
-        };
-        const result=await ReferralSourceService.insert(data);
-        if(result.success)
-        {
-            toast.success(t(strings.insertSuccess));
-        }
-        else
-        {
-            toast.error(t(strings.insertFail));
-        }
 
     }
     useEffect(()=>{
+        if(!isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(t(strings.nameErrMsg));
+        }
+        
+        if(nameErrorMessage!==null && isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(null);
+        }
+        
+        if(!isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(t(strings.emailErrMsg));
+        }
+        if(emailErrorMessage!==null && isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(null);
+        }
        
     })
     return (
@@ -111,7 +135,8 @@ const InsertReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                       
+                                        error={nameErrorMessage !== null}
+                                        helperText={nameErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -144,7 +169,8 @@ const InsertReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
-                                        
+                                        error={emailErrorMessage !== null}
+                                        helperText={emailErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -157,7 +183,7 @@ const InsertReferralSource = (props) => {
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         placeholder={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}

@@ -54,7 +54,7 @@ const TableCellCustom=(props)=>{
                     onChange={handleChangeValue}
                     //id={fieldName}
                     defaultValue={props.value}
-                    value={value}
+                    value={value ? value : '...'}
                     InputProps={{
                         endAdornment: (
                           <InputAdornment position="start" onClick={clickTick} className={classes.checkIcon}>
@@ -65,9 +65,8 @@ const TableCellCustom=(props)=>{
                 />
                 :
                 <Grid container>
-                    <Grid item xs={10}>
-                        {value}
-
+                    <Grid item xs={10} >
+                        {value ? value: '...'}
                     </Grid>
                     <Grid item xs={2} onClick={handleChangeEditable}>
                         {props.changeToEditPage===false &&props.editable===true && props.index!==0? 

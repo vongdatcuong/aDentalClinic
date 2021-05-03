@@ -45,10 +45,10 @@ import InsertProcedure from "../InsertProcedure";
 import UpdateProcedure from "../UpdateProcedure";
 
 const useStyles = makeStyles(styles);
-const createData=(id,abbreviation,description,toothSelect,toothType)=>{
-    return {id,abbreviation,description,toothSelect,toothType};
+const createData=(id,abbreviation,code,description,toothSelect,toothType)=>{
+    return {id,abbreviation,code,description,toothSelect,toothType};
 };
-const dataColumnsName=["index","abbreviation","description","toothSelect","toothType"];
+const dataColumnsName=["index","abbreviation","code","description","toothSelect","toothType"];
 
 
 const Procedure = () => {
@@ -65,8 +65,17 @@ const Procedure = () => {
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -101,6 +110,7 @@ const Procedure = () => {
     const titles=[
         t(strings.index),
         t(strings.abbreviation),
+        t(strings.code),
         t(strings.description),
         // t(strings.category),
         t(strings.toothSelect),
@@ -118,7 +128,7 @@ const Procedure = () => {
                 
             // }
             // searchCategory();
-            let newData=createData(a._id,a.abbreviation,a.description,a.tooth_select,a.tooth_type);
+            let newData=createData(a._id,a.abbreviation,a.code,a.description,a.tooth_select,a.tooth_type);
             temp=temp.concat(newData);
             
         })
@@ -126,20 +136,21 @@ const Procedure = () => {
         setRows(temp);
        
     }
+    const getProcedure=async()=>{
+        const result=await ProcedureService.getProcedure();
+        console.log("Get procedure in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+        
+
+    };
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getProcedure=async()=>{
-                const result=await ProcedureService.getProcedure();
-                console.log("Get procedure in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-                
-
-            };
+            
             getProcedure();
             
         }
@@ -154,7 +165,16 @@ const Procedure = () => {
             }
 
         }
-
+        if(isInsert===true)
+        {
+            getProcedure();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getProcedure();
+            setIsUpdate(false);
+        }
         
     })
     return (
@@ -214,13 +234,16 @@ const Procedure = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container >
+                <Container className={classes.containerTable}>
                     {insertProcedure===true  ?
-                        <InsertProcedure />
+                        <InsertProcedure 
+                        handleChangeIsInsert={handleChangeIsInsert}
+                        />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdateProcedure 
                             id={selectedRowData.id}
                             editable={editable}
+                            handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
                         

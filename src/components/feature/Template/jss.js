@@ -191,6 +191,14 @@ const templateStyle = (theme) => ({
         },
         cursor:'pointer',
     },
+    containerTable:{
+        marginLeft:'10px',
+        '@media (min-width: 1280px)':{
+            maxWidth:'none',
+            width:'99%',
+        }
+    },
+    
 });
   
 export default templateStyle;  

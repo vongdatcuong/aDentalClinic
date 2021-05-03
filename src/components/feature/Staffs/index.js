@@ -70,9 +70,17 @@ const Staffs = () => {
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
-
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
     }
@@ -132,19 +140,20 @@ const Staffs = () => {
         t(strings.status),
     ];
 
+    const getStaff=async()=>{
+        const result=await StaffService.getStaff();
+        console.log("Get staff in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+    };
     useEffect(()=>{
         
         if(rows.length===0)
         {
-            const getStaff=async()=>{
-                const result=await StaffService.getStaff();
-                console.log("Get staff in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-            };
+            
             getStaff();
             
         }
@@ -159,6 +168,16 @@ const Staffs = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
 
+        }
+        if(isInsert)
+        {
+            getStaff();
+            setIsInsert(false);
+        }
+        if(isUpdate)
+        {
+            getStaff();
+            setIsUpdate(false);
         }
     })
     return (
@@ -221,14 +240,18 @@ const Staffs = () => {
                     
                     </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPerson===true && isEdited=== false ?
                         <InsertPerson staffType={t(strings.staffTypeStaff)}
                                         userType={t(strings.userTypeStaff)}
+                                        handleChangeIsInsert={handleChangeIsInsert}
+
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePerson  id={selectedRowData.id}
                                         editable={editable}
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
+
                         />
                         :
                             <TableCustom titles={titles}

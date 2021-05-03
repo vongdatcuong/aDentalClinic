@@ -1,5 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+//api
+import PracticeService from "../../../api/practice/practice.service";
+//validators
+import validators, {isPropValid} from '../../../utils/validators';
+
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 //import icon
@@ -7,6 +12,7 @@ import {AccountBox,
         LocationCity,
         LocationOn,
         Assignment,
+        Devices,
         ContactPhone,
 } from "@material-ui/icons";
 //import image
@@ -17,8 +23,16 @@ import {Grid,
     OutlinedInput,
     InputAdornment,
     Button,
-    Divider
+    Divider,
+    TextField,
+    Select,
+    MenuItem,
+    FormHelperText,
 } from '@material-ui/core';
+import {
+    KeyboardDatePicker
+} from '@material-ui/pickers';
+import { toast } from 'react-toastify';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
@@ -26,53 +40,298 @@ import darkTheme from "../../../themes/darkTheme";
 import strings from "../../../configs/strings";
 //import component
 import TableCustom from "../../common/TableCustom";
-
 const useStyles = makeStyles(styles);
+
+const createData=(id,name,address,phone,fax,startTime,endTime)=>{
+    return {id,name,address,phone,fax,startTime,endTime};
+};
+const dataColumnsName=["index","name","address","phone","fax","startTime","endTime"];
 
 const Practice = () => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
+    
+    const [rows,setRows]=useState(null);
+    const [page, setPage] = useState(0);
+    const [searchText,setSearchText]=useState(null);
+    const [editable,setEditable]=useState(false);
+    const [isEdited,setIsEdited]=useState(false);
+    
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const [name,setName]=useState(null);
-    const [organization,setOrganization]=useState(null);
-    const [location,setLocation]=useState(null);
-    const [hotline,setHotline]=useState(null);
-    const [description,setDescription]=useState(null);
-
-    const handleChangeLocation=(e)=>{
-        setLocation(e.target.value);
-    }
-    const handleChangeHotline=(e)=>{
-        setHotline(e.target.value);
-    }
-    const handleChangeDescription=(e)=>{
-        setDescription(e.target.value);
-    }
-    const handleChangeOrganization=(e)=>{
-        setOrganization(e.target.value);
-    }
+    const [address,setAddress]=useState(null);
+    const [phone,setPhone]=useState(null);
+    const [fax,setFax]=useState(null);
+    const [startTime,setStartTime]=useState(null);
+    const [endTime,setEndTime]=useState(null);
+    const [nameErrorMessage,setNameErrorMessage]=useState(null);
+    const [phoneErrorMessage,setPhoneErrorMessage]=useState(null);
+    
+    //handle
     const handleChangeName=(e)=>{
         setName(e.target.value);
     }
+    const handleChangeAddress=(e)=>{
+        setAddress(e.target.value);
+    }
+    const handleChangePhone=(e)=>{
+        setPhone(e.target.value);
+    }
+    const handleChangeFax=(e)=>{
+        setFax(e.target.value);
+    }
+    const handleChangeStartTime=(e,date)=>{
+        if(editable)
+        {
+            setStartTime(date);
+
+        }
+    }
+    const handleChangeEndTime=(e,date)=>{
+        if(editable)
+        {
+            setEndTime(date);
+
+        }
+    }
+
+    const handleChangeEditable=(e)=>{
+        setEditable(!editable);
+    }
+    
+    const getPractice=async()=>{
+        const res=await PracticeService.getPractice();
+        console.log("Check res after get practice:",res.data);
+        if(res.success)
+        {
+            let a=res.data;
+            
+            let newData=createData(a._id,a.name,a.address,a.phone,a.fax,a.start_time,a.end_time);
+            setName(a.name);
+            setAddress(a.address);
+            setPhone(a.phone);
+            setFax(a.fax);
+            setStartTime(a.start_time);
+            setEndTime(a.end_time);
+            setRows(newData);
+
+        }
+
+    }
+
+    const onClickUpdate=async()=>{
+        const data={
+            name:name,
+            address:address,
+            phone:phone,
+            fax:fax,
+            start_time:startTime,
+            end_time:endTime,
+
+        }
+        const res=await PracticeService.update(rows.id,data);
+        if(res.success)
+        {
+            toast.success(t(strings.updateSuccess));
+        }
+        else
+        {
+            toast.error(t(strings.updateFail));
+        }
+    }
+    useEffect(()=>{
+        if(rows===null)
+        {
+            getPractice();
+        }
+        if(!isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(t(strings.nameErrMsg));
+        }
+        
+        if(nameErrorMessage!==null && isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(null);
+        }
+        if(!isPropValid(validators.properties.phone, phone))
+        {
+            setPhoneErrorMessage(t(strings.phoneErrMsg));
+        }
+        
+        if(phoneErrorMessage!==null && isPropValid(validators.properties.phone, phone))
+        {
+            setPhoneErrorMessage(null);
+        }
+    })
+    
     return (
         <div className={classes.container}>
             <div className={classes.content}>
                 <Grid container>
-                    <Grid item>
+                    <Grid item xs={10}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.practices)}
                         </Typography>
                     </Grid>
-                    
+                    <Grid item xs={2}>
+                        <Select
+                            
+                            value={editable}
+                            onChange={handleChangeEditable}
+                            disableUnderline 
+                            className={classes.status}
+                        >
+                        
+                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+
+                        </Select>
+                    </Grid>
                 </Grid>
-                <div className={classes.logo}>
-                    <img src={Logo} />
-                </div>
-                <Grid container>
+                <Divider className={classes.titleDivider}/>
+                
+                {rows!==null ?
+                <div className={classes.information}>
+                    <div className={classes.logo}>
+                            <img src={Logo} />
+                    </div>
+                    
+                    
+                    <Grid container className={classes.information}>
+                    
+                    
                     <Grid item xs={6} className={classes.leftContent}>
                         <Typography className={classes.title} variant="h5">
                             {t(strings.general)}
                         </Typography>
+                        {/* <div className={classes.item}>
+                            {name ?
+                            <OutlinedInput className={classes.inputControl} 
+                                placeholder={t(strings.name)}  
+                                variant="outlined" 
+                                onChange={handleChangeName}
+                                value={name}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <AccountBox className={classes.iconButton} />
+
+                                    </InputAdornment>
+                                    }
+                            /> 
+                            :
+                            <OutlinedInput className={classes.inputControl} 
+                                        label={t(strings.name)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeName}
+                                        value={name}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <AccountBox className={classes.iconButton} />
+        
+                                            </InputAdornment>
+                                            }
+                                        /> 
+                            }
+                            
+                        </div>
+                        {address ?
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                        placeholder={t(strings.address)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <LocationCity className={classes.iconButton} />
+        
+                                            </InputAdornment>
+                                            }
+                                        /> 
+                        </div>
+                        :
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                        label={t(strings.address)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <LocationCity className={classes.iconButton} />
+        
+                                            </InputAdornment>
+                                            }
+                                        /> 
+                        </div>
+                        }
+                        
+                        {phone ? 
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                        placeholder={t(strings.phone)}  
+                                        variant="outlined" 
+                                        onChange={handleChangePhone}
+                                        value={phone}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <ContactPhone className={classes.iconButton} />
+    
+                                            </InputAdornment>
+                                            }
+                                        /> 
+                        </div>
+                        :
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                        label={t(strings.phone)}  
+                                        variant="outlined" 
+                                        onChange={handleChangePhone}
+                                        value={phone}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <ContactPhone className={classes.iconButton} />
+    
+                                            </InputAdornment>
+                                            }
+                                        /> 
+                        </div>
+                        }
+                        {fax ? 
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                    placeholder={t(strings.fax)}  
+                                    variant="outlined" 
+                                    onChange={handleChangeFax}
+                                    value={fax}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <Devices className={classes.iconButton} />
+    
+                                        </InputAdornment>
+                                        }
+                                    /> 
+                        </div>
+                        :
+                        <div className={classes.item}>
+                            <OutlinedInput className={classes.inputControl} 
+                                    label={t(strings.fax)}  
+                                    variant="outlined" 
+                                    onChange={handleChangeFax}
+                                    value={fax}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <Devices className={classes.iconButton} />
+    
+                                        </InputAdornment>
+                                        }
+                                    /> 
+                        </div>
+                        } */}
+                       
+                       
                         <div>
                             <FormControl variant="filled">
                                     <OutlinedInput
@@ -81,6 +340,7 @@ const Practice = () => {
                                         type={'text'}
                                         value={name}
                                         placeholder={t(strings.name)}
+                                        readOnly={!editable}
                                         onChange={handleChangeName}
                                         startAdornment={
                                         <InputAdornment position="start">
@@ -88,8 +348,16 @@ const Practice = () => {
 
                                         </InputAdornment>
                                         }
+                                        
+                                        
                                     />
-                                    
+                                    <FormHelperText 
+                                        error={nameErrorMessage!==null}
+                                        className={classes.errorText}
+                                    >
+                                        {nameErrorMessage}
+                                    </FormHelperText>
+                                   
                             </FormControl>   
                         </div>
 
@@ -99,9 +367,10 @@ const Practice = () => {
                                     className={classes.inputControl}
                                     id="outlined-adornment-password"
                                     type={'text'}
-                                    value={organization}
-                                    placeholder={t(strings.organization)}
-                                    onChange={handleChangeOrganization}
+                                    value={address}
+                                    placeholder={t(strings.address)}
+                                    onChange={handleChangeAddress}
+                                    readOnly={!editable}
                                     startAdornment={
                                     <InputAdornment position="start">
                                         <LocationCity className={classes.iconButton} />
@@ -120,17 +389,24 @@ const Practice = () => {
                                         className={classes.inputControl}
                                         id="outlined-adornment-password"
                                         type={'text'}
-                                        value={location}
-                                        placeholder={t(strings.location)}
-                                        onChange={handleChangeLocation}
+                                        value={phone}
+                                        placeholder={t(strings.phone)}
+                                        onChange={handleChangePhone}
+                                        readOnly={!editable}
                                         startAdornment={
                                         <InputAdornment position="start">
-                                            <LocationOn className={classes.iconButton} />
+                                            <ContactPhone className={classes.iconButton} />
 
                                         </InputAdornment>
                                         }
+                                        
                                     />
-                                
+                                    <FormHelperText 
+                                        error={phoneErrorMessage!==null}
+                                        className={classes.errorText}
+                                    >
+                                        {phoneErrorMessage}
+                                    </FormHelperText>
                             </FormControl>
                             
                             
@@ -141,12 +417,13 @@ const Practice = () => {
                                     className={classes.inputControl}
                                     id="outlined-adornment-password"
                                     type={'text'}
-                                    value={hotline}
-                                    placeholder={t(strings.hotline)}
-                                    onChange={handleChangeHotline}
+                                    value={fax}
+                                    placeholder={t(strings.fax)}
+                                    onChange={handleChangeFax}
+                                    readOnly={!editable}
                                     startAdornment={
                                     <InputAdornment position="start">
-                                        <ContactPhone className={classes.iconButton} />
+                                        <Devices className={classes.iconButton} />
 
                                     </InputAdornment>
                                     }
@@ -155,7 +432,43 @@ const Practice = () => {
                             </FormControl>
                         
                         </div>
-                        <div>
+                        <div className={classes.inputDate}>
+                            <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label={t(strings.startTime)}
+                                    format={t(strings.apiDateFormat)}
+                                    value={startTime}
+                                    onChange={handleChangeStartTime}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        readOnly: !editable
+                                    }}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                    
+                                    className={classes.inputControlSmall} 
+                            />
+                            <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    label={t(strings.endTime)}
+                                    format={t(strings.apiDateFormat)}
+                                    value={endTime}
+                                    onChange={handleChangeEndTime}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        readOnly: !editable,
+                                    }}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                    className={classes.inputControlSmall} 
+                            />
+                        </div>
+                        
+                        {/* <div>
                             <FormControl variant="filled">
                                 <OutlinedInput
                                     className={classes.inputControl}
@@ -175,14 +488,16 @@ const Practice = () => {
                             </FormControl>
                             
                         </div>
+                         */}
                         <div>
-                            <Button variant="contained" color="primary" className={classes.saveButton}>
+                            <Button variant="contained" color="primary" className={classes.saveButton} onClick={onClickUpdate}>
                                     {t(strings.save)}
                             </Button>
                         </div>
                         
                         
                     </Grid>
+                    
                     <Grid item xs={6} className={classes.rightContent}>
                         <Typography className={classes.rightContentTitle} variant="h5">
                             {t(strings.aboutUs)}
@@ -192,9 +507,19 @@ const Practice = () => {
                         </Typography>
                     </Grid>
                 </Grid>
+       
+                </div>
+                
+                :
+                <div></div>
+                }
+                
+
+                      
             </div>
         </div>
     )
+    
 }
 
 export default Practice;

@@ -163,7 +163,7 @@ const UpdateChair = (props) => {
             if(update.success)
             {
                 toast.success(t(strings.updateSuccess));
-                console.log("Check update:",update);
+                props.handleChangeIsUpdate();
             }
             else
             {
@@ -283,7 +283,7 @@ const UpdateChair = (props) => {
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -295,7 +295,7 @@ const UpdateChair = (props) => {
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                     </div>
@@ -305,7 +305,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                     </div>
                     <div className={classes.item}>
@@ -316,7 +316,7 @@ const UpdateChair = (props) => {
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                     </div>
                     </Grid>
@@ -327,7 +327,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -337,7 +337,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -348,7 +348,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         type="number"
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -358,7 +358,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -372,8 +372,8 @@ const UpdateChair = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
-                                />
+                                    inputProps={{ readOnly: !props.editable }}
+                                    />
                                 }
                                 label={t(strings.active)}
                             />
@@ -385,7 +385,7 @@ const UpdateChair = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -398,12 +398,16 @@ const UpdateChair = (props) => {
                         
                     </Grid>
                 </Grid>
-
-                        <div>
-                            <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
-                                {t(strings.update)}
-                            </Button>
-                        </div>
+                {props.editable ?
+                <div>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                        {t(strings.update)}
+                    </Button>
+                </div>
+                :
+                <div></div>
+                }
+                        
         </div>  
     </div>
     )

@@ -137,8 +137,10 @@ const Patients = () => {
     const [rowsPerPage, setRowsPerPage] = useState(figures.defaultRowsPerPage);
     const [searchText,setSearchText]=useState("");
     const [rows,setRows]=useState([]);
+    const [rowsAll,setRowsAll]=useState([]);
     const [rowsActive,setRowsActive]=useState([]);
     const [rowsInactive,setRowsInactive]=useState([]);
+
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -146,8 +148,17 @@ const Patients = () => {
     const [insertPerson,setInsertPerson]=useState(false);
     const [status,setStatus]=useState(t(strings.active));
     const listStatus=[t(strings.active),t(strings.inactive),t(strings.all)];
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -160,6 +171,18 @@ const Patients = () => {
     };
     const handleChangeStatus=(event)=>{
         setStatus(event.target.value);
+        if(event.target.value===t(strings.active))
+        {
+            setRows(rowsActive);
+        }
+        if(event.target.value===t(strings.inactive))
+        {
+            setRows(rowsInactive);
+        }
+        if(event.target.value===t(strings.all))
+        {
+            setRows(rowsAll);
+        }
         console.log("Check status:",event.target.value);
     }
     const handleChangeSelectedRow=(value)=>{
@@ -234,23 +257,25 @@ const Patients = () => {
 
         })
         console.log("Check rows in change data:",temp);
-        setRows(temp);
+        setRows(tempActive);
+        setRowsAll(temp);
         setRowsActive(tempActive);
         setRowsInactive(tempInactive);
     }
+    const getPatient=async()=>{
+        const result=await PatientService.getPatient();
+        console.log("Get patient in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+    };
     useEffect(()=>{
         
         if(rows.length===0)
         {
-            const getPatient=async()=>{
-                const result=await PatientService.getPatient();
-                console.log("Get patient in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-            };
+            
             getPatient();
             
         }
@@ -265,6 +290,16 @@ const Patients = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
 
+        }
+        if(isInsert===true)
+        {
+            getPatient();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            getPatient();
+            setIsUpdate(false);
         }
     })
     return (
@@ -344,43 +379,21 @@ const Patients = () => {
                     
                     
                 
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPerson===true ?
                         <InsertPatient 
                                         userType={t(strings.userTypePatient)}
+                                        handleChangeIsInsert={handleChangeIsInsert}
                         />
                         : isEdited===true &&selectedRowData!==null ?
                         <UpdatePatient
                                         id={selectedRowData.id}
-                                        
-
+                                        editable={editable}
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
                         />
                         :
-                            status===t(strings.active)?
-                            <TableCustom titles={titles}
-                                    data={rowsActive}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                                    :
-                            status===t(strings.inactive)?
-                            <TableCustom titles={titles}
-                                    data={rowsInactive}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                                    :
-                            <TableCustom titles={titles}
+                        rows.length!==0 && dataColumnsName.length!==0?
+                        <TableCustom titles={titles}
                                     data={rows}
                                     dataColumnsName={dataColumnsName}
                                     editable={editable}
@@ -388,8 +401,43 @@ const Patients = () => {
                                     changeToEditPage={true}
                                     handleChangeSelectedRow={handleChangeSelectedRow}
                                     numberColumn={dataColumnsName.length}
+                        />
+                        :
+                        <div></div>
+                            // status===t(strings.active)?
+                            // <TableCustom titles={titles}
+                            //         data={rowsActive}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
                                     
-                                    />        
+                            //         />
+                            //         :
+                            // status===t(strings.inactive)?
+                            // <TableCustom titles={titles}
+                            //         data={rowsInactive}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
+                                    
+                            //         />
+                            //         :
+                            // <TableCustom titles={titles}
+                            //         data={rows}
+                            //         dataColumnsName={dataColumnsName}
+                            //         editable={editable}
+                            //         handleChangeIsEdited={handleChangeIsEdited}
+                            //         changeToEditPage={true}
+                            //         handleChangeSelectedRow={handleChangeSelectedRow}
+                            //         numberColumn={dataColumnsName.length}
+                                    
+                            //         />        
                     }
                    
                    

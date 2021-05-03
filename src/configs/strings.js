@@ -87,7 +87,8 @@ const aboutUsContent="Lorem Ipsum is simply dummy text of the printing and types
 const save="Save";
 const organization="Organization";
 const hotline="Hotline";
-
+const startTime="Start time";
+const endTime="End time";
 //chair
 const number="Number";
 const room="Room";
@@ -185,6 +186,8 @@ const confirmPwdNotMatchErrMsg = "Confirm password does not match with new passw
 const newPwdMatchOldPwd = "The new password is identical to old password";
 const dateRangeInvalid = "Range of date is invalid";
 const errorLoadData="Error when load data";
+const errorInput="Please fill out all fields";
+const nameErrMsg="Name must contain at least 1 to 30 characters";
     // Error Messages Login
 const usernameErrMsg = "Username must contain at least 1 to 30 characters";
 const logInFailMsg = "Sign in fail";
@@ -457,6 +460,8 @@ export default {
     newPwdMatchOldPwd,
     dateRangeInvalid,
     errorLoadData,
+    errorInput,
+    nameErrMsg,
     // Error Messages Login
     usernameErrMsg,
     logInFailMsg,
@@ -578,6 +583,8 @@ export default {
     name,
     organization,
     hotline,
+    startTime,
+    endTime,
     idCard,
     publisher,
     country,

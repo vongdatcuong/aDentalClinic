@@ -13,13 +13,18 @@ const properties = {
     lastName: "lastName",
     assistant: "assistant",
     provider: "provider",
-    appointDuration: "appointDuration"
+    appointDuration: "appointDuration",
+    name:'name',
 }
 
 // Schemas
 const fullNameSchema = Joi.string()
     .alphanum()
     .min(3)
+    .max(30)
+    .required();
+const nameSchema = Joi.string()
+    .min(1)
     .max(30)
     .required();
 const emailSchema = Joi.string()
@@ -65,6 +70,9 @@ const isPropValid = (type, value) => {
     switch(type){
         case properties.fullName: 
             schema = fullNameSchema;
+            break;
+        case properties.name: 
+            schema = nameSchema;
             break;
         case properties.email: 
             schema = emailSchema;

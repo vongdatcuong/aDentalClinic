@@ -50,6 +50,8 @@ const UpdateReferralSource = (props) => {
     const [address,setAddress]=useState(null);
     const [email,setEmail]=useState(null);
     const [additionalInfo,setAdditionalInfo]=useState(null);
+    const [nameErrorMessage,setNameErrorMessage]=useState(null);
+    const [emailErrorMessage,setEmailErrorMessage]=useState(null);
 
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -73,7 +75,7 @@ const UpdateReferralSource = (props) => {
 
 
     const onClickUpdate=async()=>{
-        if(props.editable===true)
+        if(props.editable===true && nameErrorMessage===null && emailErrorMessage===null)
         {
             const data={
                 name:name,
@@ -88,6 +90,7 @@ const UpdateReferralSource = (props) => {
             if(result.success)
             {
                 toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
             }
             else
             {
@@ -117,7 +120,24 @@ const UpdateReferralSource = (props) => {
             searchReferralSource();
 
         }
-       
+        if(!isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(t(strings.nameErrMsg));
+        }
+        
+        if(nameErrorMessage!==null && isPropValid(validators.properties.name, name))
+        {
+            setNameErrorMessage(null);
+        }
+        
+        if(!isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(t(strings.emailErrMsg));
+        }
+        if(emailErrorMessage!==null && isPropValid(validators.properties.email, email))
+        {
+            setEmailErrorMessage(null);
+        }
     })
     
     return (
@@ -135,7 +155,9 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
+                                        error={nameErrorMessage !== null}
+                                        helperText={nameErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -145,7 +167,7 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -156,8 +178,8 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
-                                        disabled={!props.editable}
-
+                                        inputProps={{ readOnly: !props.editable }}
+                                        
                                         /> 
                         </div>
                         
@@ -170,8 +192,9 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
-                                        disabled={!props.editable}
-
+                                        inputProps={{ readOnly: !props.editable }}
+                                        error={emailErrorMessage !== null}
+                                        helperText={emailErrorMessage}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -180,28 +203,33 @@ const UpdateReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         placeholder={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                        
                     </Grid>
                 </Grid>
+                {props.editable ?
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
                         {t(strings.update)}
                     </Button>
-                </div>
+                </div>          
+                :
+                <div></div>     
+                }
+                
         </div>
     </div>
     )

@@ -159,7 +159,8 @@ const InsertPerson = (props) => {
             const result=await ProviderService.insert(data);
             if(result.success)
             {
-                toast.success(t(strings.insertSuccess))
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
             }
             else
             {

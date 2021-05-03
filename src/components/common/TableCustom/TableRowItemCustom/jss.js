@@ -10,7 +10,7 @@ const tableRowItemCustomStyle = (theme) => ({
     },
     tableRowEditChangePage:{
         '&:hover':{
-            backgroundColor:theme.primaryColor[1],
+            backgroundColor:theme.primaryColor[3],
             cursor:'pointer',
         }
     },

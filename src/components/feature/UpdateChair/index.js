@@ -62,22 +62,35 @@ const UpdatePerson = (props) => {
 
    
     const onClickUpdate=async()=>{
-        if(props.editable===true)
+        if(name===''|| order==='' || color==='')
         {
-            const data={
-                name:name,
-                order:order,
-                color:color,
-                is_deleted:isDeleted,
-            };
-            const result=await ChairService.update(props.id,data);
-            if(result.success)
+            toast.error(t(strings.errorInput));
+
+        }
+        else
+        {
+            if(props.editable===true && name!==null && order!==null && color!==null)
             {
-                toast.success(t(strings.updateSuccess));
+                const data={
+                    name:name,
+                    order:order,
+                    color:color,
+                    is_deleted:isDeleted,
+                };
+                const result=await ChairService.update(props.id,data);
+                if(result.success)
+                {
+                    toast.success(t(strings.updateSuccess));
+                    props.handleChangeIsUpdate();
+                }
+                else
+                {
+                    toast.error(t(strings.updateFail));
+                }
             }
             else
             {
-                toast.error(t(strings.updateFail));
+                toast.error(t(strings.errorInput));
             }
         }
         
@@ -113,12 +126,11 @@ const UpdatePerson = (props) => {
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                         
                                         placeholder={t(strings.name)}  
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -128,18 +140,19 @@ const UpdatePerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeOrder}
                                         value={order}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
                         <div className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
                                          
                                         placeholder={t(strings.color)}  
                                         variant="outlined" 
                                         onChange={handleChangeColor}
                                         value={color}
-                                        disabled={!props.editable}
+                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
                         </div>
@@ -152,7 +165,7 @@ const UpdatePerson = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -166,7 +179,7 @@ const UpdatePerson = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    disabled={!props.editable}
+                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
@@ -177,9 +190,14 @@ const UpdatePerson = (props) => {
                     </Grid>
                 </Grid>
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                    {props.editable ? 
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} >
                         {t(strings.update)}
                     </Button>
+                    :
+                    <div></div>
+                    }
+                    
                 </div>
         </div>
         

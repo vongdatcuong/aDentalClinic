@@ -6,6 +6,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
 import apiPath from '../../../api/path';
 import ReferralSourceService from "../../../api/referralSource/referralSource.service";
+
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
@@ -72,9 +73,17 @@ const Referral = () => {
     const [openDialog,setOpenDialog]=useState(false);
     const [insertReferralSource,setInsertReferralSource]=useState(false);
     const [isDelete,setIsDelete]=useState(false);
-
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
+    //handle
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    };
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
     const handleOpenDialog=(e)=>{
         setOpenDialog(true);
     }
@@ -150,7 +159,8 @@ const Referral = () => {
                 let temp=rows;
                 temp.splice(selectedRow,1);
                 setRows(temp);
-
+                setSelectedRow(-1);
+                setSelectedRowData(null);
             }
             else
             {
@@ -160,20 +170,21 @@ const Referral = () => {
         deleteReferralSource();
        
     }
+    const getReferralSource=async()=>{
+        const result=await ReferralSourceService.getReferralSource();
+        console.log("Get referral source in useEffect:",result.data);
+        if(result.success)
+        {
+            changeData(result.data);
+
+        }
+        
+
+    };
     useEffect(()=>{
         if(rows.length===0)
         {
-            const getReferralSource=async()=>{
-                const result=await ReferralSourceService.getReferralSource();
-                console.log("Get referral source in useEffect:",result.data);
-                if(result.success)
-                {
-                    changeData(result.data);
-    
-                }
-                
-
-            };
+            
             getReferralSource();
             
         }
@@ -193,6 +204,17 @@ const Referral = () => {
                 console.log("Check selected row data:",rows[selectedRow]);
             }
 
+        }
+        if(isInsert)
+        {
+            getReferralSource();
+            setIsInsert(false);
+
+        }
+        if(isUpdate)
+        {
+            getReferralSource();
+            setIsUpdate(false);
         }
     })
     return (
@@ -259,17 +281,18 @@ const Referral = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertReferralSource===true && isEdited=== false  ?
                         <InsertReferralSource
-                                     
+                                handleChangeIsInsert={handleChangeIsInsert}
+
                         />
                         
                         : isEdited===true &&selectedRowData!==null && isDelete===false?
                         <UpdateReferralSource
                                         editable={editable}
                                         id={selectedRowData.id}
-                                        
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
 
                         />
                         :
