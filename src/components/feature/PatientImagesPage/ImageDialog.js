@@ -194,10 +194,10 @@ const ImageDialog = ({ open, onClose, patient, onReload, mode, image }) => {
         ) : null}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel} color="primary">
+        <Button onClick={handleCancel} color="secondary" variant="outlined">
           {t(strings.cancel)}
         </Button>
-        <Button onClick={handleSave} color="primary" type="submit">
+        <Button onClick={handleSave} color="primary" variant="contained" type="submit">
           {t(strings.save)}
         </Button>
       </DialogActions>

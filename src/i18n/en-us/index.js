@@ -124,6 +124,10 @@ export default {
         "Change Password fail": "Change Password fail",
         // Error Messages Schedule
         "Load Providers fail": "Load Providers fail",
+        "Start day is required": "Start day is required",
+        "Dates are quired": "Dates are quired",
+        "Add Schedule fail": "Add Schedule fail",
+        "Update Schedule fail": "Update Schedule fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -353,6 +357,13 @@ export default {
         "Mode": "Mode",
         "Monthly": "Monthly",
         "Weekly": "Weekly",
-        "Auto": "Auto"
+        "Auto": "Auto",
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday",
+        "Saturday": "Saturday",
+        "Sunday": "Sunday",
     }
 }

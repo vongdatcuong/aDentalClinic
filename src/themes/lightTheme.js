@@ -35,6 +35,9 @@ import {hexToRgb} from '../utils/colors';
   const appointAddTreatmentDialogWidth = '50%';
   const confirmDialogMinWidth = 350;
   const appointTooltipMaxWidth = 450;
+  const scheduleAutoItemMinWidth = 150;
+  const addScheduleMonthlyWidth = 600;
+  const addScheduleMonthlyHeight = 500;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -82,12 +85,17 @@ import {hexToRgb} from '../utils/colors';
   const tableInsertLinkIconColor = "#bb001b";
   const tableAddIconColor = "#34a853";
 
+  const scheduleMonthlyItemColor = "#8c8daf";
+  const scheduleWeeklyItemColor = "#ba9187";
+  const scheduleAutoItemColor = "#639f88";
+
   // Google map
   const mapMinWidth = 500;
   const mapMinHeight = 500;
 
   // opacity
   const secondaryOpacity = 0.54;
+
   
   const boxShadow = {
     boxShadow:
@@ -232,6 +240,9 @@ export default {
   appointAddTreatmentDialogWidth,
   confirmDialogMinWidth,
   appointTooltipMaxWidth,
+  scheduleAutoItemMinWidth,
+  addScheduleMonthlyWidth,
+  addScheduleMonthlyHeight,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,
@@ -257,6 +268,9 @@ export default {
   hoverDarkColor,
   tableInsertLinkIconColor,
   tableAddIconColor,
+  scheduleMonthlyItemColor,
+  scheduleWeeklyItemColor,
+  scheduleAutoItemColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

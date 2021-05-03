@@ -223,6 +223,10 @@ const changeThemeErrMsg = "Change theme fail";
 const changePwdErrMsg = "Change Password fail";
     // Error Messages Schedule
 const loadProviderErrMsg = "Load Providers fail";
+const startDateErrMsg = "Start day is required";
+const datesErrMsg = "Dates are quired";
+const addScheduleErrMsg = "Add Schedule fail";
+const updateScheduleErrMsg = "Update Schedule fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -502,6 +506,10 @@ export default {
     changeThemeErrMsg,
     // Error Messages Schedule
     loadProviderErrMsg,
+    startDateErrMsg,
+    datesErrMsg,
+    addScheduleErrMsg,
+    updateScheduleErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,

@@ -1,9 +1,13 @@
 const scheduleStyle = (theme) => ({
     container: {
         flexGrow: 1,
-        margin:"0px"
+        margin:"0px",
     },
-
+    tableContainer: {
+        maxWidth: 'none',
+        marginLeft: '10px',
+        width: '99%'
+    },
     searchControl:{
         height:40,
         width:'100%',
@@ -40,7 +44,14 @@ const scheduleStyle = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
-    }
+    },
+    goBack:{
+        cursor:'pointer',
+        color:theme.primaryColor[1],
+        display:'flex',
+        justifyContent:'flex-end',
+        marginRight:'15px',
+    },
 });
 
   

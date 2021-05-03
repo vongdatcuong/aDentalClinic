@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
+
 //translation
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -12,11 +13,9 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    Paper,
     OutlinedInput,
     Select,
     MenuItem,
-    Button,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,6 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import styles from "./jss";
 //import configs
 import strings from "../../../configs/strings";
+import lists from "../../../configs/lists";
 //import image
 
 //import icons
@@ -51,36 +51,26 @@ const createData=(id, provider, startDate, endDate, note)=>{
     return {id, provider, startDate, endDate, note};
 };
 
-const originalDataa = [
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-    createData('123', "Doanasd", "01/02/2021", "02/01/1999",  "092140214921059u\n21905u21095u90215u09215u0912q\nweqweqweqweqweqwewqeqweqweqwewqeqweqwe"),
-];
-
-
 const Schedule = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
 
-    const dataColumnsName=["index","id","provider","startDate","endDate", "mode", "note"];
+    const dataColumnsName=["index","id","provider", "note"];
     const titles=[
         t(strings.index),
         t(strings.id),
         t(strings.provider),
-        t(strings.startDate),
-        t(strings.endDate),
-        t(strings.mode),
         t(strings.note),
     ];
+
+    const days = lists.date.dates.map((day) => t(day));
+    const emptyRow = {
+        schedule: {
+            monthly: [],
+            weekly: [],
+            auto: [],
+        }
+    }
 
     // States
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -92,7 +82,7 @@ const Schedule = () => {
 
     // Change Tab
     const [selectedRow,setSelectedRow]=useState(-1);
-    const [selectedRowData,setSelectedRowData]=useState(null);
+    const [selectedRowData,setSelectedRowData]=useState(emptyRow);
 
     useEffect(async() => {
         try {
@@ -100,7 +90,8 @@ const Schedule = () => {
                 api.httpGet({
                     url: apiPath.staff.staff + apiPath.staff.provider,
                     query: {
-                      get_schedule: true
+                      get_schedule: true,
+                      date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat)
                     }
                 }),
             ];
@@ -110,24 +101,66 @@ const Schedule = () => {
                     const providerUser = provider.user || {};
                     const providerSchedule = provider.schedule || {};
                     const scheduleObj = {
-                        startDate: "...",
-                        endDate: "...",
-                        mode: "...",
-                        note: "..."
-                    };
+                        monthly: [],
+                        weekly: [],
+                        auto: [],
+                        autoID: "",
+                    }
+                    let val = null;
                     // If Provider has schedule
-                    if (providerSchedule.length > 0){
-                        const schedule = providerSchedule[0];
-                        scheduleObj.startDate = (schedule.start_date)? ConvertDateTimes.formatDate(schedule.start_date, strings.defaultDateFormat) : "...";
-                        scheduleObj.endDate = (schedule.end_date)? ConvertDateTimes.formatDate(schedule.endate, strings.defaultDateFormat) : "...";
-                        scheduleObj.mode = schedule.mode || "";
-                        scheduleObj.note = ConvertSchedule.formatScheduleMode(schedule.mode, schedule.value || "");
+                    if (typeof providerSchedule === "object" && providerSchedule.length > 0){
+                        providerSchedule.forEach((schedule) => {
+                            val = ConvertSchedule.formatScheduleMode(schedule.mode, schedule.value, days);
+                            // Auto
+                            if (schedule.mode === lists.schedule.mode.auto){
+                                val.forEach((va) => {
+                                    scheduleObj.auto.push({
+                                        value: va,
+                                        valueStr: ConvertDateTimes.formatDate(va, strings.defaultDateFormat)
+                                    });
+                                });
+                                scheduleObj.autoID = schedule._id;
+                            } 
+                            // Monthly
+                            else if (schedule.mode === lists.schedule.mode.monthly){
+                                scheduleObj.monthly.push({
+                                    _id: schedule._id,
+                                    startDate: ConvertDateTimes.formatDate(schedule.start_date, strings.defaultDateFormat),
+                                    endDate: schedule.end_date? ConvertDateTimes.formatDate(schedule.end_date, strings.defaultDateFormat) : null,
+                                    value: val,
+                                    valueStr: val.join(", "),
+                                    startDateVal: schedule.start_date? new Date(schedule.start_date) : null
+                                });
+                            } 
+                            // Weekly
+                            else if (schedule.mode === lists.schedule.mode.weekly){
+                                let valueStr = "";
+                                if (val){
+                                    let len = val.length;
+                                    val.forEach((dayVal, index) =>{
+                                        valueStr+= days[dayVal];
+                                        if (index < len - 1){
+                                            valueStr+= ", ";
+                                        }
+                                    });
+                                }
+                                scheduleObj.weekly.push({
+                                    _id: schedule._id,
+                                    startDate: ConvertDateTimes.formatDate(schedule.start_date, strings.defaultDateFormat),
+                                    endDate: schedule.end_date? ConvertDateTimes.formatDate(schedule.end_date, strings.defaultDateFormat) : null,
+                                    value: val,
+                                    valueStr: valueStr,
+                                    startDateVal: schedule.start_date? new Date(schedule.start_date) : null
+                                });
+                            }
+                        })
                     }
                     return {
                         _id: provider._id,
                         id: provider.display_id,
                         provider: providerUser.first_name + " " + providerUser.last_name,
-                        ...scheduleObj
+                        note: ConvertSchedule.generateNoteForSchedule(scheduleObj) || "...",
+                        schedule: scheduleObj
                     }
                 });
                 setOriginalData([...newData]);
@@ -141,16 +174,13 @@ const Schedule = () => {
     }, [])
 
     const handleChangeSelectedRow=(value)=>{
-        if (editable){
-            setSelectedRow(value);
-        }
+        setSelectedRow(value);
+        setSelectedRowData(data[value]);
     }
     
     const handleChangeSearchText = (event) => {
         let value = event.target.value.toLowerCase();
         setSearchText(value);
-
-        const searchRegex = new RegExp(value, "gi");
 
         const newData = originalData.filter((row) => row.provider.toLowerCase().indexOf(value) != -1);
         setData(newData);
@@ -159,52 +189,87 @@ const Schedule = () => {
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
     }
+
+    // Go back
+    const handleGoBack=(e)=>{
+        // Update data
+        const newData = [];
+        data.forEach((provi) => {
+            if (provi._id === selectedRowData._id){
+                selectedRowData.note = ConvertSchedule.generateNoteForSchedule(selectedRowData.schedule) || "...";
+                newData.push(selectedRowData);
+
+                // Original Data
+                for (let i = 0; i < originalData.length; i++){
+                    if (originalData[i]._id === selectedRowData._id){
+                        originalData[i] = selectedRowData;
+                    }
+                }
+            } else {
+                newData.push(provi);
+            }
+        })
+        setData(newData);
+
+        setSelectedRow(-1);
+        setSelectedRowData(emptyRow);
+    }
     
     return (
-        <Paper className={classes.container}>
+        <div className={classes.container}>
             {(isLoadingPage)? 
                 <LoadingPage/> :
-                <Paper>
+                <div>
                     <Grid container>
                         <Grid item xs={8}>
                             <Typography className={classes.title} variant="h4">
                                 {t(strings.schedule)}
                             </Typography>
                         </Grid>
-                        <Grid item xs={4} className={classes.serviceControl}>
-                            <FormControl variant="filled">
-                                <OutlinedInput
-                                    className={classes.searchControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={searchText}
-                                    placeholder={t(strings.search)}
-                                    onChange={handleChangeSearchText}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <SearchIcon className={classes.iconButton} />
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                            <Select
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-                            </Select>
-                        </Grid>
+                        
+                        {(selectedRow != -1)?
+                            <Grid item xs={4}>
+                                <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
+                                    {t(strings.goBack)}
+                                </Typography>
+                            </Grid>
+                            :
+                            <Grid item xs={4} className={classes.serviceControl}>
+                                <FormControl variant="filled">
+                                    <OutlinedInput
+                                        className={classes.searchControl}
+                                        id="outlined-adornment-password"
+                                        type='text'
+                                        value={searchText}
+                                        placeholder={t(strings.search)}
+                                        onChange={handleChangeSearchText}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <SearchIcon className={classes.iconButton} />
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                                <Select
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                </Select>
+                            </Grid>
+                        }
                     </Grid>
                     <Divider className={classes.titleDivider}/>
-                    <Container style={{marginLeft:"10px"}}>
-                        {(editable && selectedRow != -1)?
+                    <Container className={classes.tableContainer}>
+                        {(selectedRow != -1)?
                             <UpdateSchedule 
+                                data={selectedRowData}
+                                setData={setSelectedRowData}
                                 editable={editable}
-                                id={"606ffb4ac0d3f91754328db5"}
-                            /> : 
+                            /> :
                             <TableCustom 
                                 titles={titles} 
                                 data={data}
@@ -215,11 +280,10 @@ const Schedule = () => {
                                 numberColumn={dataColumnsName.length}
                             />
                         }
-                        {data.map((d) => d.provider + " " + d.id)}
                     </Container>
-                </Paper>
+                </div>
             }
-        </Paper>
+        </div>
     )
 }
 

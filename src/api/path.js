@@ -17,6 +17,7 @@ const appointment = {
 const staff={
     staff:'/staff',
     provider:'/provider',
+    schedule: '/schedule'
 }
 //patient
 const patient={
