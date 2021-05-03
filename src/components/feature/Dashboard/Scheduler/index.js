@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const Schedulerr = (
   { 
     isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, 
-    openAppointTooltip, tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
+    openAppointTooltip, tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onToPatientProfile, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
@@ -136,6 +136,11 @@ const Schedulerr = (
     setOpenAppointTooltip(false);
     setAppointTooltipPos({left: 0, top: 0});
     setPopoverAppointID("");
+  }
+
+  // To Patient Profile
+  const handleToPatientProfile = () => {
+    onToPatientProfile(popoverAppointID);
   }
 
   // Update appointment
@@ -278,6 +283,7 @@ const Schedulerr = (
                 onApply={handleSelectPatient}
             />
             <AppointmentTooltipPopover
+              isToProfile={true}
               isEditable={true}
               isDeletable={!isImmutable}
               id={appointTooltipPopoverId}
@@ -285,6 +291,7 @@ const Schedulerr = (
               onClose={handleCloseAppointTooltip}
               anchorPos={appointTooltipPos}
               appointment={appointTooltip}
+              onToPatientProfile={handleToPatientProfile}
               onUpdateAppointment={handleUpdateAppointment}
               onDeleteAppointment={handleDeleteAppointment}
             />

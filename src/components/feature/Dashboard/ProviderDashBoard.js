@@ -6,7 +6,7 @@ import path from '../../../routes/path';
 
 import {
     useHistory
-  } from "react-router-dom";
+} from "react-router-dom";
 
 // moment
 import moment from 'moment';
@@ -27,6 +27,7 @@ import styles from "./jss";
 import Schedulerr from "./Scheduler";
 import LoadingPage from '../../../layouts/LoadingPage';
 import RightSidebar from '../../../layouts/RightSidebar';
+import UpdateAppointmentTab from './UpdateAppointmentTab';
 
 // API
 import api from '../../../api/base-api';
@@ -64,6 +65,10 @@ const DashBoard = () => {
     const [startDayHour, setStartDayHour] = useState(figures.defaultStartDayHour);
     const [endDayHour, setEndDayHour] = useState(figures.defaultEndDayHour);
 
+    // Slide
+    const [displayTab, setDisplayTab] = useState(0);    //0: Scheduler, 1: Add Appointment Tab, 2: Update Appointment Tab
+    const [selectedChairId, setSelectedChairId] = useState(null);
+
     // Filter Patient
     const [patientDisplayObj, setPatientDisplayObj] = useState({});
 
@@ -73,6 +78,10 @@ const DashBoard = () => {
     // Appointment tooltip popover
    const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
    const [appointPatientObj, setAppointPatientObj] = useState(Object.create(null));
+
+    // Update appointment
+    const [selectedAppointID, setSelectedAppointmentID] = useState("");
+    const [selectedAppoint, setSelectedAppoint] = useState(null);
 
     // Will mount
     const handleWillMount = useCallback(async () => {
@@ -113,7 +122,7 @@ const DashBoard = () => {
             ];
             const result = await Promise.all(promiseAll);
             if (result[0].success && result[1].success && result[2].success && result[3].success && result[4].success){
-                let aDate, aTime;
+                let aDate, aTime, newAppointPatientObj = Object.create(null);
                 // Chairs
                 const chairss = result[0].payload.map((chair, index) => Object.assign({}, chair, {
                     id: chair._id,
@@ -128,6 +137,9 @@ const DashBoard = () => {
                     aDate.setHours(aTime.slice(0, 2));
                     aDate.setMinutes(aTime.slice(2));
                     const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+
+                    // Appointment Patient Object
+                    newAppointPatientObj[appointment._id] = appointment.patient._id;
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
@@ -148,6 +160,7 @@ const DashBoard = () => {
                     }
                 });
                 setAppointments(appointmentss);
+                setAppointPatientObj(newAppointPatientObj);
                 // Blocks
                 const blockss = result[2].payload.map((block) => {
                     aDate = new Date(block.block_date);
@@ -358,6 +371,85 @@ const DashBoard = () => {
         }
     }, [appointPatientObj]);
 
+    // Update appointment
+    const handleOpenUpdateAppointTab = (appointID) => {
+        setSelectedAppointmentID(appointID);
+        setDisplayTab(2);
+    }
+
+    const handleCloseUpdateAppointTab = () => {
+        setSelectedAppointmentID("");
+        setDisplayTab(0);
+    }
+
+    const handleUpdateAppointment = useCallback(async (appointID, patientData, appointData, resetFieldsFunc) => {
+        try {
+            dispatchLoading({type: strings.setLoading, isLoading: true});
+            const promiseAll = [
+                api.httpPatch({
+                    url: apiPath.appointment.appointment + '/' + appointID,
+                    body: appointData
+                }),
+            ];
+            const result = await Promise.all(promiseAll);
+            if (result[0].success){
+                toast.success(t(strings.updateAppointmentSuccess));
+                // Set new Appointment
+                const appointment = result[0].payload;
+                let aDate, aTime;
+                aDate = new Date(appointment.appointment_date);
+                aTime = appointment.appointment_time;
+                aDate.setHours(aTime.slice(0, 2));
+                aDate.setMinutes(aTime.slice(2));
+                const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+                const newAppointments = [];
+                appointments.forEach((appoint) => {
+                    if (appoint.id != appointID){
+                        newAppointments.push(appoint);
+                    } else {
+                        newAppointments.push({
+                            id: appointment._id,
+                            title: (patientData.first_name + " " + patientData.last_name) || appointment.note || "",
+                            resourceId: appointment.chair._id,
+                            start: aDate,
+                            end: (endDate.isValid())? endDate._d : aDate,
+                            patientGender: appointment.patient?.gender || "",
+                            chair: appointment.chair,
+                            status: appointment.status,
+                            note: appointment.note,
+                            assistantDisplay: (appointment.assistant)? 
+                                            appointment.assistant.user.first_name + " " + appointment.assistant.user.last_name + " (" + appointment.assistant.display_id + ")"
+                                            : t(strings.no),
+                            providerDisplay: (appointment.provider)? 
+                                            appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
+                                            : t(strings.no),
+                            backgroundColor: appointment.chair.color
+                        });
+                    }
+                })
+                setAppointments(newAppointments);
+                resetFieldsFunc();
+                handleCloseUpdateAppointTab();
+            } else {
+                toast.error(result[0].message);
+                return false;
+            }
+        } catch(err){
+            toast.error(t(strings.updateAppointmentErrMsg));
+            return false;
+        } finally {
+            dispatchLoading({type: strings.setLoading, isLoading: false});
+        }
+    }, [selectedAppointID, appointments]);
+
+    // To Patient Profile
+    const handleToPatientProfile = useCallback((appointID) => {
+        const patientID = appointPatientObj[appointID];
+        if (patientID){
+            history.push(path.patientPathNoS + '/' + patientID  + path.profilePath);
+        }
+    }, [appointPatientObj]);
+
     return (
         <React.Fragment>
             <Container className={classes.container}>
@@ -365,30 +457,48 @@ const DashBoard = () => {
                     <LoadingPage/>
                     :
                     <React.Fragment>
-                        <Box p={0} m={0}>
-                            <Schedulerr
-                                isImmutable={true}
-                                calendarRef={calendarRef}
-                                appointments={appointments}
-                                blocks={blocks}
-                                chairs={chairs}
-                                selectedDate={selectedDate}
-                                cellDuration={cellDuration}
-                                startDayHour={startDayHour}
-                                endDayHour={endDayHour}
-                                patientDisplayObj={patientDisplayObj}
-                                holidays={holidays}
-                                tableCellClick={handleTimeTableCellClick}
-                                tableCellSelect={handleTimeTableCellSelect}
-                                onSelectChair={handleSelectChair}
-                                onSelectPatient={handleSelectPatient}
-                                onSelectDate={handleSelectDate}
-                                onDeleteAppointment={() => {}}
-                                onUpdateAppointment={handleUpdatePatientProfile}
-                                openAppointTooltip={openAppointTooltip}
-                                setOpenAppointTooltip={setOpenAppointTooltip}
-                            />
-                        </Box>
+                        <Fade in={displayTab == 2}>
+                            <Box p={0} m={0} className={classes.appointmentTabBox} style={{display: (displayTab == 2)? "block" : "none"}}>
+                                <UpdateAppointmentTab
+                                    selectedAppointID={selectedAppointID}
+                                    chairs={chairs}
+                                    cellDuration={cellDuration}
+                                    startDayHour={startDayHour}
+                                    endDayHour={endDayHour}
+                                    holidays={holidays}
+                                    onClose={handleCloseUpdateAppointTab}
+                                    onUpdateAppointment={handleUpdateAppointment}
+                                    isEditAppointAllowed={false}
+                                />
+                            </Box>
+                        </Fade>
+                        <Fade in={displayTab == 0}>
+                            <Box p={0} m={0} style={{display: (displayTab == 0)? "block" : "none"}}>
+                                <Schedulerr
+                                    isImmutable={true}
+                                    calendarRef={calendarRef}
+                                    appointments={appointments}
+                                    blocks={blocks}
+                                    chairs={chairs}
+                                    selectedDate={selectedDate}
+                                    cellDuration={cellDuration}
+                                    startDayHour={startDayHour}
+                                    endDayHour={endDayHour}
+                                    patientDisplayObj={patientDisplayObj}
+                                    holidays={holidays}
+                                    tableCellClick={handleTimeTableCellClick}
+                                    tableCellSelect={handleTimeTableCellSelect}
+                                    onSelectChair={handleSelectChair}
+                                    onSelectPatient={handleSelectPatient}
+                                    onSelectDate={handleSelectDate}
+                                    onDeleteAppointment={() => {}}
+                                    onUpdateAppointment={handleOpenUpdateAppointTab}
+                                    openAppointTooltip={openAppointTooltip}
+                                    setOpenAppointTooltip={setOpenAppointTooltip}
+                                    onToPatientProfile={handleToPatientProfile}
+                                />
+                            </Box>
+                        </Fade>
                     </React.Fragment>
                 }
             </Container>

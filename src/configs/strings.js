@@ -151,6 +151,8 @@ const MALE="MALE";
 const FEMALE="FEMALE";
 const none = "None";
 const confirm = "Confirm";
+const startDate = "Start Date";
+const endDate = "End Date";
 
 // Messages
 
@@ -222,6 +224,12 @@ const updateAppointmentErrMsg = "Update Appointment fail";
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
 const changePwdErrMsg = "Change Password fail";
+    // Error Messages Schedule
+const loadProviderErrMsg = "Load Providers fail";
+const startDateErrMsg = "Start day is required";
+const datesErrMsg = "Dates are quired";
+const addScheduleErrMsg = "Add Schedule fail";
+const updateScheduleErrMsg = "Update Schedule fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -379,6 +387,12 @@ const CURRENCY_PRE = "CURRENCY_PRE";
 const fileName = "File Name";
 const image = "image";
 
+// Schedule
+const mode = "Mode";
+const monthly = "Monthly";
+const weekly = "Weekly";
+const auto = "Auto";
+
 export default {
     appointment,
     patient,
@@ -426,7 +440,8 @@ export default {
     FEMALE,
     none,
     confirm,
-    
+    startDate,
+    endDate,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -495,6 +510,12 @@ export default {
     // Settings Error Messages
     changeLanguageErrMsg,
     changeThemeErrMsg,
+    // Error Messages Schedule
+    loadProviderErrMsg,
+    startDateErrMsg,
+    datesErrMsg,
+    addScheduleErrMsg,
+    updateScheduleErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
@@ -728,5 +749,10 @@ export default {
     aboutUsContent,
     save,
     fileName,
-    image
+    image,
+    // Schedule
+    mode,
+    monthly,
+    weekly,
+    auto,
 };

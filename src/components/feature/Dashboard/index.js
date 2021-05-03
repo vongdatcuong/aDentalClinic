@@ -3,6 +3,13 @@ import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import figures from '../../../configs/figures';
 
+// Route
+import path from '../../../routes/path';
+
+import {
+    useHistory
+} from "react-router-dom";
+
 // moment
 import moment from 'moment';
 
@@ -41,6 +48,7 @@ const useStyles = makeStyles(styles);
 const DashBoard = () => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
+    const history = useHistory();
 
     // Context
     const {loadingState, dispatchLoading} = useContext(loadingStore);
@@ -78,6 +86,7 @@ const DashBoard = () => {
 
     // Appointment tooltip popover
    const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
+   const [appointPatientObj, setAppointPatientObj] = useState(Object.create(null));
 
    // Update appointment
    const [selectedAppointID, setSelectedAppointmentID] = useState("");
@@ -121,7 +130,7 @@ const DashBoard = () => {
             ];
             const result = await Promise.all(promiseAll);
             if (result[0].success && result[1].success && result[2].success && result[3].success && result[4].success){
-                let aDate, aTime;
+                let aDate, aTime, newAppointPatientObj = Object.create(null);
                 // Chairs
                 const chairss = result[0].payload.map((chair, index) => Object.assign({}, chair, {
                     id: chair._id,
@@ -136,6 +145,9 @@ const DashBoard = () => {
                     aDate.setHours(aTime.slice(0, 2));
                     aDate.setMinutes(aTime.slice(2));
                     const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+
+                    // Appointment Patient Object
+                    newAppointPatientObj[appointment._id] = appointment.patient._id;
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
@@ -156,6 +168,7 @@ const DashBoard = () => {
                     }
                 });
                 setAppointments(appointmentss);
+                setAppointPatientObj(newAppointPatientObj);
                 // Blocks
                 const blockss = result[2].payload.map((block) => {
                     aDate = new Date(block.block_date);
@@ -247,7 +260,7 @@ const DashBoard = () => {
             ];
             const result = await Promise.all(promiseAll);
             if (result[0].success && result[1].success){
-                let aDate, aTime;
+                let aDate, aTime, newAppointPatientObj = Object.create(null);
                 // Appointments
                 const appointmentss = result[0].payload.map((appointment) => {
                     aDate = new Date(appointment.appointment_date);
@@ -255,6 +268,9 @@ const DashBoard = () => {
                     aDate.setHours(aTime.slice(0, 2));
                     aDate.setMinutes(aTime.slice(2));
                     const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
+
+                    // Appointment Patient Object
+                    newAppointPatientObj[appointment._id] = appointment.patient._id;
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
@@ -275,6 +291,8 @@ const DashBoard = () => {
                     }
                 });
                 setAppointments(appointmentss);
+                setAppointPatientObj(newAppointPatientObj);
+
                 // Blocks
                 const blockss = result[1].payload.map((block) => {
                     aDate = new Date(block.block_date);
@@ -573,6 +591,13 @@ const DashBoard = () => {
         }
     }, [selectedAppoint, appointments]);
 
+    const handleToPatientProfile = useCallback((appointID) => {
+        const patientID = appointPatientObj[appointID];
+        if (patientID){
+            history.push(path.patientPathNoS + '/' + patientID  + path.profilePath);
+        }
+    }, [appointPatientObj]);
+
     return (
         <React.Fragment>
             <Container className={classes.container}>
@@ -609,6 +634,7 @@ const DashBoard = () => {
                                     holidays={holidays}
                                     onClose={handleCloseUpdateAppointTab}
                                     onUpdateAppointment={handleUpdateAppointment}
+                                    isEditAppointAllowed={true}
                                 />
                             </Box>
                         </Fade>
@@ -635,6 +661,7 @@ const DashBoard = () => {
                                     openAppointTooltip={openAppointTooltip}
                                     setOpenAppointTooltip={setOpenAppointTooltip}
                                     onUpdateAppointment={handleOpenUpdateAppointTab}
+                                    onToPatientProfile={handleToPatientProfile}
                                 />
                             </Box>
                         </Fade>
