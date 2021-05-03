@@ -21,21 +21,22 @@ const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
   const classes = useStyles();
-  const { id, svgString, jaw, viewType, ...other } = props;
-  const [isSelected, setIsSelected] = useState(false);
+  const { id, svgString, jaw, viewType,isSelectedTooth, ...other } = props;
+  //const [isSelected, setIsSelected] = useState(false);
 
   function handlePickToothOverview() {}
 
   function handlePickToothQuickselect() {
-    setIsSelected(!isSelected);
+    //setIsSelected(!isSelected);
   }
 
   function clickTooth() {
-    if (isSelected) {
-      props.onDeselectTooth(id);
-    } else {
-      props.onSelectTooth(id);
-    }
+    // if (isSelectedTooth) {
+    //   props.onDeselectTooth(id);
+    // } else {
+    //   props.onSelectTooth(id);
+    // }
+    props.onSelectTooth(id);
     if (viewType === "overview") {
       handlePickToothOverview();
     } else if (viewType === "quickselect") {
@@ -69,7 +70,7 @@ const Tooth = function (props) {
             onClick={() => clickTooth()}
             className={clsx(
               classes.toothContainer,
-              isSelected ? classes.selectedTooth : classes.unSelectedTooth
+              isSelectedTooth ? classes.selectedTooth : classes.unSelectedTooth
             )}
           >
             {svgString}

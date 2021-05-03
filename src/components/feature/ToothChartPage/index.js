@@ -60,20 +60,32 @@ const ToothChartPage = ({ patientID }) => {
   }
 
   const handleSelectToothQuickselect = (toothID) => {
-    // push tooth ID
-    selectedTooth.push(toothID);
-    if (!showQuickselectMenu) {
-        setShowQuickselectMenu(true);
+    if (selectedTooth.includes(toothID)) {  // selected
+        // pop tooth ID
+        let pos = selectedTooth.indexOf(toothID);
+        let removedItem = selectedTooth.splice(pos, 1);
+        console.log(selectedTooth);
+        if (selectedTooth.length === 0) {
+            setShowQuickselectMenu(false);
+        }
+    }
+    else {                                  // unselected
+        // push tooth ID
+        selectedTooth.push(toothID);
+        console.log(selectedTooth);
+        if (!showQuickselectMenu) {
+            setShowQuickselectMenu(true);
+        }
     }
   }
-  const handleDeselectToothQuickselect = (toothID) => {
-    // pop tooth ID
-    let pos = selectedTooth.indexOf(toothID);
-    let removedItem = selectedTooth.splice(pos, 1);
-    if (selectedTooth.length === 0) {
-        setShowQuickselectMenu(false);
-    }
-  }
+//   const handleDeselectToothQuickselect = (toothID) => {
+//     // pop tooth ID
+//     let pos = selectedTooth.indexOf(toothID);
+//     let removedItem = selectedTooth.splice(pos, 1);
+//     if (selectedTooth.length === 0) {
+//         setShowQuickselectMenu(false);
+//     }
+//   }
 
   const handleClickToothMissing = () => {
     // Todo: update tooth status and rerender
@@ -128,7 +140,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onSelectTooth={handleClickToothOverview} onDeselectTooth={()=>{}} viewType="overview"></AdultToothChart>
+                      <AdultToothChart selectedTooth={selectedTooth} onSelectTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
                     </span>
                     <Fab aria-label="Undo" className={classes.fabUndo} disabled={disabledOverviewUndoBtn}>
                       <MdSettingsBackupRestore />
@@ -141,7 +153,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onSelectTooth={handleSelectToothQuickselect} onDeselectTooth={handleDeselectToothQuickselect} viewType="quickselect"></AdultToothChart>
+                      <AdultToothChart selectedTooth={selectedTooth} onSelectTooth={handleSelectToothQuickselect} viewType="quickselect"></AdultToothChart>
                     </span>
                     <span className={classes.quickselectMenuContainer}>
                         <Grow in={showQuickselectMenu}>

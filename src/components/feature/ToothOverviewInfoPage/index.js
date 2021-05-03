@@ -31,11 +31,14 @@ const useStyles = makeStyles(styles);
 const ToothOverviewInfoPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  let currURL = window.location.href;
+  let toothNumber = parseInt(currURL.substring(currURL.lastIndexOf("=Tooth")+6));
+  const [value, setValue] = React.useState(toothNumber-1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  //alert(toothNumber);
 
   return (  <React.Fragment>
     <TreatmentMenu patientID = { patientID }/>
