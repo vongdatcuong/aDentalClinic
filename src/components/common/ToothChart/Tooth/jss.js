@@ -31,7 +31,22 @@ const toothStyle = (theme) => ({
         "& .MuiSvgIcon-root": {
             display: "none",
         }
-    }
+    },
+    missingTooth: {
+        opacity: "0.1",
+    },
+    veneerTooth: {
+        background: "blue",
+    },
+    ponticsTooth: {
+        background: "yellow",
+    },
+    crownTooth: {
+        background: "green",
+    },
+    endotestsTooth: {
+        background: "black",
+    },
   });
   
   export default toothStyle;

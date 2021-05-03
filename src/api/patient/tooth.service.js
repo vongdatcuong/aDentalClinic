@@ -28,6 +28,23 @@ import {
         };
       }
     }
+    async getAllPatientTooth(patientID) {
+        try {
+          const result = await httpGet({
+            url: `${apiPath.tooth.tooth+apiPath.tooth.patient}/${patientID}`,
+          });
+          return {
+            success: true,
+            data: result.payload,
+          };
+        } catch (error) {
+          console.log("Failed to fetch patient tooth data:", error);
+          return {
+            success: false,
+            data: null,
+          };
+        }
+      }
   
     // async insert(data) {
     //   try {
@@ -61,6 +78,24 @@ import {
         };
       }
     }
+    async updateMultipleTooth(patientID, toothNumberArray, data) {   // update all tooth in array with the same data
+        toothNumberArray.forEach(async (toothNumber) => {
+            try {
+                const result = await httpPatch({
+                    url: `${apiPath.tooth.tooth+apiPath.tooth.patient}/${patientID}/${toothNumber}`,
+                    body: data,
+                });
+            return {
+                success: true,
+            };
+            } catch (error) {
+                console.log("Failed to update tooth: ", error);
+                return {
+                    success: false,
+                };
+            }
+        });
+      }
     // async delete(id,data) {
     //   try {
     //     const result = await httpDelete({

@@ -21,7 +21,7 @@ const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
   const classes = useStyles();
-  const { id, svgString, jaw, viewType,isSelectedTooth, ...other } = props;
+  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, ...other } = props;
   //const [isSelected, setIsSelected] = useState(false);
 
   function handlePickToothOverview() {}
@@ -70,7 +70,13 @@ const Tooth = function (props) {
             onClick={() => clickTooth()}
             className={clsx(
               classes.toothContainer,
-              isSelectedTooth ? classes.selectedTooth : classes.unSelectedTooth
+              isSelectedTooth ? classes.selectedTooth : classes.unSelectedTooth,
+              toothCondition === "MISSING" ? classes.missingTooth : 
+              toothCondition === "VENEER" ? classes.veneerTooth : 
+              toothCondition === "PONTICS" ? classes.ponticsTooth : 
+              toothCondition === "CROWN" ? classes.crownTooth : 
+              toothCondition === "ENDOTESTS" ? classes.endotestsTooth : 
+              classes.normalTooth
             )}
           >
             {svgString}
