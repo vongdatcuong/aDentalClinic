@@ -10,10 +10,20 @@ class ProcedureService{
                 url: apiPath.procedure.procedure,
             });
             console.log("Get procedure:",result.payload[0]);
-            return {
-                success: true,
-                data:result.payload,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                    data:result.payload
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                };  
+            }            
         }
         catch(error){
             console.log("Failed to fetch procedure:",error);
@@ -33,9 +43,18 @@ class ProcedureService{
                 body:data
             });
             console.log("insert procedure:",result);
-            return {
-                success: true,
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                };
+            }
+            else
+            {
+                return {
+                    success: false,
+                };
+            }      
         }
         catch(error){
             console.log("Failed to insert procedure:",error);

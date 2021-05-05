@@ -330,6 +330,11 @@ export default {
         "Name":"Tên",
         "Dispensed":"Pha chế",
         "Refill":"Đổ đầy",
+        //patient recall
+        "Treatment":"Điều trị",
+        "Interval":"Khoảng thời gian",
+        "Recall date":"Ngày nhắc nhở",
+        "Patient recall":"Nhắc nhở bệnh nhân",
         //table
         "Rows per page":"Số dòng mỗi trang",
         // Appointment

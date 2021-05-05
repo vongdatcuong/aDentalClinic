@@ -10,10 +10,20 @@ class PatientService{
                 url: apiPath.patient.patient,
             });
             console.log("Get patient:",result.payload[0]);
-            return {
-                success: true,
-                data:result.payload,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                    data:result.payload
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                };  
+            }          
         }
         catch(error){
             console.log("Failed to fetch patient:",error);
@@ -33,9 +43,18 @@ class PatientService{
                 body:data
             });
             console.log("insert patient:",result);
-            return {
-                success: true,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                }; 
+            }                
         }
         catch(error){
             console.log("Failed to fetch patient:",error);
@@ -53,10 +72,20 @@ class PatientService{
                 url: `${apiPath.patient.patient}/${id}`,
             });
             console.log("search patient:",result);
-            return {
-                success: true,
-                data:result,
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result,
+                };  
+            }
+            else
+            {
+                return {
+                    success:false,
+                    data:null
+                }
+            }             
         }
         catch(error){
             console.log("Failed to fetch patient:",error);

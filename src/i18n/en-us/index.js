@@ -329,6 +329,11 @@ export default {
         "Name":"Name",
         "Dispensed":"Dispensed",
         "Refill":"Refill",
+        //patient recall
+        "Treatment":"Treatment",
+        "Interval":"Interval",
+        "Recall date":"Recall date",
+        "Patient recall":"Patient recall",
         //table
         "Rows per page":"Rows per page",
         // Appointment

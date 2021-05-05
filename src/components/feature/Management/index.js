@@ -49,11 +49,12 @@ import AuthenticationImage from "../../../assets/images/authentication.png";
 import TemplatesImage from "../../../assets/images/templates.png";
 import DrugImage from "../../../assets/images/drug.png";
 import PortalImage from "../../../assets/images/portal.png";
+import RecallImage from '../../../assets/images/recall.jpg';
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
 import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
-
+import AccessAlarm from '@material-ui/icons/AccessAlarm';
 //import route
 import routePaths from '../../../routes/path';
 
@@ -73,7 +74,7 @@ import Template from "../Template";
 import TabPanel from "../../../layouts/TabPanel";
 import Footer from "../../../layouts/Footer";
 import InsertPerson from "../InsertPerson";
-
+import PatientRecall from "../PatientRecall";
 const useStyles = makeStyles(styles);
 function a11yProps(index) {
   return {
@@ -90,7 +91,7 @@ const Management = () => {
 
     const managements = ["providers", "staffs", "schedule", "procedure", "chairs", "referral",
                       "practices","authentication",
-                      "templates","drug"];
+                      "templates","drug","patientRecall"];
     let curManagement = managements.indexOf(management);
     if (curManagement == -1){
       history.push(routePaths.managementsPath + "/providers");
@@ -123,6 +124,7 @@ const Management = () => {
         t(strings.templates),
         t(strings.drug),
         //t(strings.portal),
+        t(strings.recall),
       ];
     const srcs=[
         DentalProvider,
@@ -135,6 +137,7 @@ const Management = () => {
         AuthenticationImage,
         TemplatesImage,
         DrugImage,
+        RecallImage,
         //PortalImage,
     ];
     const tablePanels=[
@@ -148,6 +151,7 @@ const Management = () => {
         <Authentication/>,
         <Template/>,
         <Drug />,
+        <PatientRecall />
         //<Portal/>,
     ];
     return (

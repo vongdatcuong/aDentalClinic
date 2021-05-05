@@ -10,10 +10,20 @@ class PrescriptionService{
                 url: apiPath.prescription.prescription,
             });
             console.log("Get prescription:",result.payload);
-            return {
-                success: true,
-                data:result.payload,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                    data:result.payload
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                };  
+            }            
         }
         catch(error){
             console.log("Failed to fetch prescription:",error);
@@ -33,10 +43,20 @@ class PrescriptionService{
                 body:data
             });
             console.log("insert prescription:",result);
-            return {
-                success: true,
-                data:result.payload
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result.payload
+                }; 
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null
+                }; 
+            }                      
         }
         catch(error){
             console.log("Failed to insert prescription:",error);
@@ -77,6 +97,7 @@ class PrescriptionService{
                 }
             });
             console.log("detail prescription:",result);
+           
             return {
                 success: true,
                 data:result,

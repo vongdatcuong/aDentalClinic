@@ -10,10 +10,20 @@ class ProviderService{
                 url: apiPath.staff.staff+apiPath.staff.provider,
             });
             console.log("Get provider:",result.payload[0]);
-            return {
-                success: true,
-                data:result.payload,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                    data:result.payload
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                };  
+            }           
         }
         catch(error){
             console.log("Failed to fetch providers:",error);
@@ -33,9 +43,18 @@ class ProviderService{
                 body:data
             });
             console.log("insert staff:",result);
-            return {
-                success: true,
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                }; 
+            }
+            else
+            {
+                return {
+                    success: false,
+                }; 
+            }        
         }
         catch(error){
             console.log("Failed to fetch providers:",error);
