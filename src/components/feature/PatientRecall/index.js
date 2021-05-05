@@ -54,18 +54,14 @@ const PatientRecall = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     //
-    const createData=(id,patient, treatment, appointment, procedure,recallDate,note)=>{
-        return {id,patient, treatment, appointment, procedure,recallDate,note};
+    const createData=(id,patient,recallDate,note)=>{
+        return {id,patient,recallDate,note};
     };
     
-    const dataColumnsName=["index","patient","treatment",
-        "appointment","procedure","recallDate","note"];
+    const dataColumnsName=["index","patient","recallDate","note"];
     const titles=[
         t(strings.index),
         t(strings.patient),
-        t(strings.treatment),
-        t(strings.appointment),
-        t(strings.procedure),
         t(strings.recallDate),
         t(strings.note),
     ];
@@ -127,7 +123,7 @@ const PatientRecall = () => {
         let temp=[];
         data.map((a,index)=>{
             
-            let newData=createData(a._id,a.patient.user.first_name+" "+a.patient.user.last_name,a.treatment,a.appointment,a.procedure,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
+            let newData=createData(a._id,a.patient.user.first_name+" "+a.patient.user.last_name,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
             temp=temp.concat(newData);
         })
         console.log("Check rows in change data:",temp);

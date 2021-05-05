@@ -214,7 +214,7 @@ const UpdateReferralSource = (props) => {
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        multiline
                                         /> 
                         </div>
                        

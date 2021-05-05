@@ -188,7 +188,7 @@ const InsertReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
-                                        
+                                        multiline
                                         /> 
                         </div>
                        

@@ -4,6 +4,7 @@ import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import PatientRecallService from "../../../api/patientRecall/patientRecall.service";
 import PatientService from "../../../api/patient/patient.service";
 import ProcedureService from "../../../api/procedure/procedure.service";
+import AppointmentService from "../../../api/appointment/appointment.service";
 
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
@@ -60,6 +61,7 @@ const InsertPatientRecall = (props) => {
 
     const [listPatient,setListPatient]=useState([]);
     const [listProcedure,setListProcedure]=useState([]);
+    const [listAppointment,setListAppointment]=useState([]);
     //handle change
     const handleChangePatient=(e)=>{
         setPatient(e.target.value);
@@ -83,13 +85,16 @@ const InsertPatientRecall = (props) => {
     
     const insertPatientRecall=async(e)=>{
         console.log("Insert recall");
+        console.log("Check patient:",patient);
             const data={
                patient:patient,
-               treatment:treatment,
-               appointment:appointment,
-               procedure:procedure,
+            //    treatment:null,
+            //    appointment:null,
+            //    procedure:null,
                recall_date:recallDate,
-               note:note
+               note:note,
+               is_active:true,
+
             };
             const result=await PatientRecallService.insert(data);
             if(result.success)
@@ -114,6 +119,11 @@ const InsertPatientRecall = (props) => {
             return <MenuItem key={index} value={procedure._id}>{procedure.description}</MenuItem>
         })
     }
+    const renderListAppointment=()=>{
+        return listAppointment.map((appointment,index)=>{
+            return <MenuItem key={index} value={appointment._id}>{appointment.description}</MenuItem>
+        })
+    }
     const getListPatient=async()=>{
         const res=await PatientService.getPatient();
         if(res.success)
@@ -128,15 +138,27 @@ const InsertPatientRecall = (props) => {
             setListProcedure(res.data);
         }
     }
+    const getListAppointment=async()=>{
+        const res=await AppointmentService.getAppointment();
+        if(res.success)
+        {
+            console.log("Check list appointment:",res.data[0]);
+            setListAppointment(res.data);
+        }
+    }
     useEffect(()=>{
         if(listPatient.length===0)
         {
             getListPatient();
         }
-        if(listProcedure.length===0)
-        {
-            getListProcedure();
-        }
+        // if(listProcedure.length===0)
+        // {
+        //     getListProcedure();
+        // }
+        // if(listAppointment.length===0)
+        // {
+        //     getListAppointment();
+        // }
     })
     return (
         <div className={classes.container}>  
@@ -161,20 +183,6 @@ const InsertPatientRecall = (props) => {
                         :
                         <div></div>
                         }
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={appointment}
-                                onChange={handleChangeAppointment}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.appointment)}>{t(strings.appointment)}</MenuItem>
-
-                            </Select>
-                    
-                        </div>
-                        
                         <div className={classes.itemDate}>
                             <KeyboardDatePicker
                                     margin="normal"
@@ -206,10 +214,27 @@ const InsertPatientRecall = (props) => {
                                 className={classes.inputControl} 
                             /> */}
                         </div>
-                       
+
+                        {/* <div className={classes.itemSelect}>
+                            <Select
+                                
+                                value={appointment}
+                                onChange={handleChangeAppointment}
+                                disableUnderline 
+                                className={classes.status}
+                                >
+                                <MenuItem value={t(strings.appointment)}>{t(strings.appointment)}</MenuItem>
+
+                            </Select>
+                    
+                        </div>
+                         */}
+                        
                         
                         </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
+                    
+{/*                        
                         <div className={classes.itemSelect}>
                             <Select
                                 
@@ -239,15 +264,15 @@ const InsertPatientRecall = (props) => {
                         </div>
                         :
                         <div></div>
-                        }
+                        } */}
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         
                                         placeholder={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        
+                                        multiline
                                         /> 
                         </div>
                     </Grid>

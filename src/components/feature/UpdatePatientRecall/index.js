@@ -21,7 +21,7 @@ import { Typography,
     TextField,
     Select,
     MenuItem,
- } from '@material-ui/core';
+} from '@material-ui/core';
 import {
     KeyboardDatePicker
 } from '@material-ui/pickers';
@@ -57,9 +57,8 @@ const UpdatePatientRecall = (props) => {
     const [procedure,setProcedure]=useState(t(strings.procedure));
     const [recallDate,setRecallDate]=useState(new Date());
     const [note,setNote]=useState(null);
-
+    const [isActive,setIsActive]=useState(true);
     const [listPatient,setListPatient]=useState([]);
-    const [listProcedure,setListProcedure]=useState([]);
     //handle change
     const handleChangePatient=(e)=>{
         setPatient(e.target.value);
@@ -79,27 +78,30 @@ const UpdatePatientRecall = (props) => {
     const handleChangeNote=(e)=>{
         setNote(e.target.value);
     }
-
+    const handleChangeIsActive=(e)=>{
+        setIsActive(!isActive);
+    }
     
     const updatePatientRecall=async(e)=>{
         console.log("Insert recall");
             const data={
                patient:patient,
-               treatment:treatment,
-               appointment:appointment,
-               procedure:procedure,
+            //    treatment:treatment,
+            //    appointment:appointment,
+            //    procedure:procedure,
                recall_date:recallDate,
-               note:note
+               note:note,
+               is_active:isActive,
             };
-            const result=await PatientRecallService.update(data);
+            const result=await PatientRecallService.update(props.id,data);
             if(result.success)
             {
-                toast.success(t(strings.insertSuccess));
-                props.handleChangeIsInsert();
+                toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
             }
             else
             {
-                toast.error(t(strings.insertFail));
+                toast.error(t(strings.updateFail));
             }
         
 
@@ -109,11 +111,7 @@ const UpdatePatientRecall = (props) => {
             return <MenuItem key={index} value={patient._id}>{patient.user.first_name} {patient.user.last_name}</MenuItem>
         })
     }
-    const renderListProcedure=()=>{
-        return listProcedure.map((procedure,index)=>{
-            return <MenuItem key={index} value={procedure._id}>{procedure.description}</MenuItem>
-        })
-    }
+    
     const getListPatient=async()=>{
         const res=await PatientService.getPatient();
         if(res.success)
@@ -121,11 +119,14 @@ const UpdatePatientRecall = (props) => {
             setListPatient(res.data);
         }
     }
-    const getListProcedure=async()=>{
-        const res=await ProcedureService.getProcedure();
+    const getRecall=async()=>{
+        const res=await PatientRecallService.search(props.id);
         if(res.success)
         {
-            setListProcedure(res.data);
+            setIsActive(res.data.payload.is_active);
+            setPatient(res.data.payload.patient);
+            setNote(res.data.payload.note);
+
         }
     }
     useEffect(()=>{
@@ -133,9 +134,9 @@ const UpdatePatientRecall = (props) => {
         {
             getListPatient();
         }
-        if(listProcedure.length===0)
+        if(note===null)
         {
-            getListProcedure();
+            getRecall();
         }
     })
     return (
@@ -151,6 +152,7 @@ const UpdatePatientRecall = (props) => {
                                 onChange={handleChangePatient}
                                 disableUnderline 
                                 className={classes.status}
+                                inputProps={{ readOnly: !props.editable }}
                                 >
                                 <MenuItem value={t(strings.patient)}>{t(strings.patient)}</MenuItem>
                                 {renderListPatient()}
@@ -161,19 +163,6 @@ const UpdatePatientRecall = (props) => {
                         :
                         <div></div>
                         }
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={appointment}
-                                onChange={handleChangeAppointment}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.appointment)}>{t(strings.appointment)}</MenuItem>
-
-                            </Select>
-                    
-                        </div>
                         
                         <div className={classes.itemDate}>
                             <KeyboardDatePicker
@@ -185,7 +174,7 @@ const UpdatePatientRecall = (props) => {
                                     onChange={handleChangeRecallDate}
                                     InputProps={{
                                         disableUnderline: true,
-                                        // readOnly: !editable
+                                        readOnly: !props.editable
                                     }}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -193,63 +182,56 @@ const UpdatePatientRecall = (props) => {
                                     
                                     className={classes.inputControlDate} 
                             />
-                            {/* <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                placeholder={t(strings.recallDate)}
-                                format={t(strings.apiDateFormat)}
-                                value={recallDate}
-                                onChange={handleChangeRecallDate}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                                className={classes.inputControl} 
-                            /> */}
+                            
                         </div>
                        
                         
                         </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={treatment}
-                                onChange={handleChangeTreatment}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.treatment)}>{t(strings.treatment)}</MenuItem>
-
-                            </Select>
-                    
-                        </div>
-                        {listProcedure.length!==0 ?
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={procedure}
-                                onChange={handleChangeProcedure}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.procedure)}>{t(strings.procedure)}</MenuItem>
-                                {renderListProcedure()}
-                            </Select>
-                    
-                        </div>
-                        :
-                        <div></div>
-                        }
+                        
+                      
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         
                                         placeholder={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        
+                                        inputProps={{ readOnly: !props.editable }}
+                                        multiline
                                         /> 
                         </div>
+                        <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={isActive}
+                                    onChange={handleChangeIsActive}
+                                    name={t(strings.active)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+                                    />
+                                }
+                                label={t(strings.active)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!isActive}
+                                    onChange={handleChangeIsActive}
+                                    name={t(strings.inactive)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
+                                />
+                                }
+                                label={t(strings.inactive)}
+                            />
+                        </div>
+                        
+                       
                     </Grid>
                 </Grid>
                 <div>

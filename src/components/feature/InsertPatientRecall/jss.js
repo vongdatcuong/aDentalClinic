@@ -117,6 +117,48 @@ const insertPatientRecallStyle = (theme) => ({
         // },
 
     },
+    inputControlBig:{
+        height:'110px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'110px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     inputControlSmall:{
         height:'35px',
         width:'10.2vw',
