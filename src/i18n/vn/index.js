@@ -52,6 +52,7 @@ export default {
         "Confirm": "Xác nhận",
         "Start Date": "Ngày BĐ",
         "End Date": "Ngày KT",
+        "Today": "Hôm nay",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",

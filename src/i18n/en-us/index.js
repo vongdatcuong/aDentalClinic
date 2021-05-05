@@ -52,6 +52,7 @@ export default {
         "Confirm": "Confirm",
         "Start Date": "Start Date",
         "End Date": "End Date",
+        "Today": "Today",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",

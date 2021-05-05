@@ -181,6 +181,9 @@ const Schedulerr = (
                   },
                 },
               }}
+              buttonText={{
+                today: t(strings.today)
+              }}
               resources={instances}
               eventDidMount={(info) => {
                 const props = info.event.extendedProps;
@@ -228,7 +231,7 @@ const Schedulerr = (
               dateClick={(info) => {
                 tableCellClick(info.resource._resource.id, info.date);
               }}
-              select={(info) => { console.log(info);
+              select={(info) => {
                 tableCellSelect(info.resource._resource.id, info.start, info.end);
               }}
               eventClick={(info) => {

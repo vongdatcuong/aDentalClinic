@@ -159,7 +159,7 @@ const RecallDialog = ({
               date: (recall.recall_date)? ConvertDateTimes.formatDate(new Date(recall.recall_date), strings.defaultDateFormat) : noneStr,
               code: recall.procedure || noneStr,
               note: recall.note || noneStr
-            }));
+            }));console.log(columnss);
             setRecalls(columnss);
             setSelectedRecalls(loadedRecallIDs);
           } else {

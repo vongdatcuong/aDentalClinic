@@ -91,7 +91,7 @@ const Schedule = () => {
                     url: apiPath.staff.staff + apiPath.staff.provider,
                     query: {
                       get_schedule: true,
-                      date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat)
+                      //date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat)
                     }
                 }),
             ];

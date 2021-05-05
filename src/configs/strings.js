@@ -153,6 +153,7 @@ const none = "None";
 const confirm = "Confirm";
 const startDate = "Start Date";
 const endDate = "End Date";
+const today = "Today";
 
 // Messages
 
@@ -442,6 +443,7 @@ export default {
     confirm,
     startDate,
     endDate,
+    today,
     // Messages
     // Success Messages
     updateAccountSuccess,
