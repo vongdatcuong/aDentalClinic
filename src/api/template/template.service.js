@@ -23,6 +23,20 @@ class TemplateService{
             };
         }
     }
+    async getMedicalAlertTemplate(){
+        try{   
+            const result = await httpGet({
+                url: apiPath.noteMacro.noteMacro + apiPath.noteMacro.medical_alert,
+            });
+            return result;            
+        }
+        catch(error){
+            return {
+                success: false,
+                data: null
+            };
+        }
+    }
 
     async insert(data)
     {
