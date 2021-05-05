@@ -346,6 +346,11 @@ const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
 
+//patient recall
+const treatment="Treatment";
+const interval="Interval";
+const recallDate="Recall date";
+const patientRecall="Patient recall";
 // Tooth
 const selectOneTooth = "S";
 const selectMultiTooth = "M";
@@ -726,5 +731,10 @@ export default {
     aboutUsContent,
     save,
     fileName,
-    image
+    image,
+    //patient recall
+    treatment,
+    interval,
+    recallDate,
+    patientRecall,
 };

@@ -94,6 +94,11 @@ const prescription={
     patient:'/patient',
 }
 
+//patient recall
+const patientRecall={
+    recall:'/recall',
+    patient:'/patient',
+}
 export {
     authorization,
 }
@@ -116,4 +121,5 @@ export default {
     noteMacro,
     image,
     prescription,
+    patientRecall
 };

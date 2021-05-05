@@ -44,10 +44,18 @@ class PracticeService{
                 body:data
             });
             console.log("insert procedure:",result);
-
-            return {
-                success: true,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                }; 
+            }             
         }
         catch(error){
             console.log("Failed to insert procedure:",error);
@@ -65,10 +73,20 @@ class PracticeService{
                 url: `${apiPath.practice.practice}/${id}`,
             });
             console.log("search practice:",result);
-            return {
-                success: true,
-                data:result,
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result,
+                };  
+            }
+            else
+            {
+                return {
+                    success:false,
+                    data:null
+                }
+            }              
         }
         catch(error){
             console.log("Failed to fetch practice:",error);

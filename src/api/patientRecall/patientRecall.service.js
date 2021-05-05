@@ -1,32 +1,39 @@
-import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
+import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpPut} from '../base-api';
 import apiPath from '../path';
 import strings from '../../configs/strings';
 
-class DrugService{
-    async getDrug(){
+class PatientRecallService{
+    async getPatientRecall(){
         try{
                     
             const result = await httpGet({
-                url: apiPath.drug.drug,
+                url: apiPath.patientRecall.recall,
+                query:{
+                    get_patient:true,
+                    get_treatment:true,
+                    get_appointment:true,
+                    get_procedure:true
+                }
             });
-            console.log("Get drug:",result.payload[0]);
+            console.log("Get patient recall:",result.payload[0]);
             if(result.success)
             {
                 return {
                     success:true,
-                    data:result.payload
+                    data:result.payload,
                 }
             }
             else
             {
                 return {
-                    success: false,
-                    data:null,
-                };  
-            }         
+                    success:false,
+                    data:null
+                }
+            }
+                      
         }
         catch(error){
-            console.log("Failed to fetch drug:",error);
+            console.log("Failed to fetch recall:",error);
             return {
                 success: false,
                 data: null
@@ -39,10 +46,10 @@ class DrugService{
         try{
                     
             const result = await httpPost({
-                url: apiPath.drug.drug,
+                url: apiPath.patientRecall.recall,
                 body:data
             });
-            console.log("insert drug:",result);
+            console.log("insert recall:",result);
             if(result.success)
             {
                 return {
@@ -54,10 +61,10 @@ class DrugService{
                 return {
                     success: false,
                 }; 
-            }           
+            }             
         }
         catch(error){
-            console.log("Failed to insert drug:",error);
+            console.log("Failed to insert recall:",error);
             return {
                 success: false,
             };
@@ -69,9 +76,9 @@ class DrugService{
         try{
                     
             const result = await httpGet({
-                url: `${apiPath.drug.drug}/${id}`,
+                url: `${apiPath.patientRecall.recall}/${id}`,
             });
-            console.log("search drug:",result);
+            console.log("search recall:",result);
             if(result.success)
             {
                 return {
@@ -85,29 +92,26 @@ class DrugService{
                     success:false,
                     data:null
                 }
-            }           
+            }             
         }
         catch(error){
-            console.log("Failed to fetch drug:",error);
+            console.log("Failed to fetch recall:",error);
             return {
                 success: false,
                 data:null,
             };
         }
     }
-    
-    
-    
     async update(id,data)
     {
         console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
-                url: `${apiPath.drug.drug}/${id}`,
+                url: `${apiPath.patientRecall.recall}/${id}`,
                 body:data
             });
-            console.log("update drug:",result);
+            console.log("update recall:",result);
             if(result.success)
             {
                 return {
@@ -126,46 +130,13 @@ class DrugService{
                      
         }
         catch(error){
-            console.log("Failed to update drug:",error);
+            console.log("Failed to update recall:",error);
             return {
                 success: false,
                 data:null
             };
         }
     }
-
-    async delete(id)
-    {
-        try{
-            
-            const result = await httpDelete({
-                url: `${apiPath.drug.drug}/${id}`,
-            });
-            console.log("delete drug:",result);
-            if(result.success)
-            {
-                return {
-                    success: true,
-                    message:result.message
-                };   
-            }
-            else
-            {
-                return {
-                    success: false,
-                    message:result.message,
-                };   
-            }
-                     
-        }
-        catch(error){
-            console.log("Failed to delete drug:",error);
-            return {
-                success: false,
-                message:error,
-            };
-        }
-    }
 }
 
-export default new DrugService();
+export default new PatientRecallService();

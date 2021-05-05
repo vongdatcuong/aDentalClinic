@@ -9,11 +9,22 @@ class ChairService{
             const result = await httpGet({
                 url: apiPath.appointment.appointment+apiPath.appointment.chair,
             });
-            console.log("Get chair:",result.payload[0]);
-            return {
-                success: true,
-                data:result.payload,
-            };            
+            console.log("Get chair:",result);
+            if(result.success)
+            {
+                return {
+                    success:true,
+                    data:result.payload
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                    data:null,
+                };  
+            }
+                     
         }
         catch(error){
             console.log("Failed to fetch chair:",error);
@@ -33,9 +44,19 @@ class ChairService{
                 body:data
             });
             console.log("insert chair:",result);
-            return {
-                success: true,
-            };            
+            if(result.success)
+            {
+                return {
+                    success:true,
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                }; 
+            }
+                       
         }
         catch(error){
             console.log("Failed to insert chair:",error);
@@ -53,10 +74,21 @@ class ChairService{
                 url: `${apiPath.appointment.appointment}${apiPath.appointment.chair}/${id}`,
             });
             console.log("search chair:",result);
-            return {
-                success: true,
-                data:result,
-            };            
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result,
+                };  
+            }
+            else
+            {
+                return {
+                    success:false,
+                    data:null
+                }
+            }
+                      
         }
         catch(error){
             console.log("Failed to fetch chair:",error);
