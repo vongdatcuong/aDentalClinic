@@ -355,6 +355,7 @@ const surface = "Surface";
 const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
+const onlyMine = "Only mine";
 
 // Tooth
 const selectOneTooth = "S";
@@ -710,6 +711,7 @@ export default {
     noRecall,
     noTreatment,
     nextAvailable,
+    onlyMine,
     // Date
     defaultTimeFormat,
     chartDateFormat,

@@ -32,6 +32,7 @@ import UpdateAppointmentTab from './UpdateAppointmentTab';
 // API
 import api from '../../../api/base-api';
 import apiPath from '../../../api/path';
+import AuthService from '../../../api/authentication/auth.service';
 
 // Utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
@@ -45,6 +46,8 @@ const DashBoard = () => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
     const history = useHistory();
+
+    const user = AuthService.getCurrentUser();
 
     // Context
     const {loadingState, dispatchLoading} = useContext(loadingStore);
@@ -72,6 +75,8 @@ const DashBoard = () => {
     // Filter Patient
     const [patientDisplayObj, setPatientDisplayObj] = useState({});
 
+    // Filter only mine
+    const [isOnlyMine, setIsOnlyMine] = useState(true);
 
     const [isWillMount, setIsWillMount] = useState(true);
 
@@ -279,7 +284,8 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
-                        backgroundColor: appointment.chair.color
+                        backgroundColor: appointment.chair.color,
+                        providerID: appointment.provider._id
                     }
                 });
                 setAppointments(appointmentss);
@@ -357,6 +363,11 @@ const DashBoard = () => {
 
     const handleSelectPatient = (patientDisplayObj) => {
         setPatientDisplayObj(patientDisplayObj);
+    }
+
+    // Filter only mine
+    const handeSelectOnlyMine = (val) => {
+        setIsOnlyMine(val);
     }
 
     // Right sidebar
@@ -475,6 +486,7 @@ const DashBoard = () => {
                         <Fade in={displayTab == 0}>
                             <Box p={0} m={0} style={{display: (displayTab == 0)? "block" : "none"}}>
                                 <Schedulerr
+                                    user={user}
                                     isImmutable={true}
                                     calendarRef={calendarRef}
                                     appointments={appointments}
@@ -485,11 +497,13 @@ const DashBoard = () => {
                                     startDayHour={startDayHour}
                                     endDayHour={endDayHour}
                                     patientDisplayObj={patientDisplayObj}
+                                    onlyMine={isOnlyMine}
                                     holidays={holidays}
                                     tableCellClick={handleTimeTableCellClick}
                                     tableCellSelect={handleTimeTableCellSelect}
                                     onSelectChair={handleSelectChair}
                                     onSelectPatient={handleSelectPatient}
+                                    onSelectOnlyMine={handeSelectOnlyMine}
                                     onSelectDate={handleSelectDate}
                                     onDeleteAppointment={() => {}}
                                     onUpdateAppointment={handleOpenUpdateAppointTab}

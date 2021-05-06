@@ -358,6 +358,7 @@ export default {
         "No Recall": "Không có lịch sử tái hẹn",
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
+        "Only mine": "Chỉ của tôi",
         //Files
         "File Name": "Tên tệp",
         // Schedule

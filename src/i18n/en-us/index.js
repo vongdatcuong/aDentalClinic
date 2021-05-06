@@ -357,6 +357,7 @@ export default {
         "No Recall": "No Recall",
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
+        "Only mine": "Only mine",
         //Files
         "File Name": "Tên tệp",
         // Schedule

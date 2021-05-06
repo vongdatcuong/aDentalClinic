@@ -18,6 +18,7 @@ import HolidayMsgView from './TimeTable/HolidayMsgView';
 // Toolbar
 import FilterChairPopover from './Toolbar/FilterChairPopover';
 import FilterPatientPopover from './Toolbar/FilterPatientPopover';
+import FilterOnlyMinePopover from './Toolbar/FilterOnlyMinePopover';
 
 // Utils
 
@@ -36,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedulerr = (
   { 
-    isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, holidays, 
-    openAppointTooltip, tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onToPatientProfile, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
+    user, isImmutable, calendarRef, appointments, blocks, chairs, selectedDate, cellDuration, startDayHour, endDayHour, patientDisplayObj, onlyMine, holidays, 
+    openAppointTooltip, tableCellClick, tableCellSelect, onSelectChair, onSelectDate, onSelectPatient, onSelectOnlyMine, onToPatientProfile, onUpdateAppointment, onDeleteAppointment, setOpenAppointTooltip
   }) => {
   const classes = useStyles();
   const [t, i18n] = useTranslation();
@@ -54,6 +55,11 @@ const Schedulerr = (
    const [openFilterPatientPopover, setOpenFilterPatientPopover] = useState(false);
    const [filterPatientAnchorEl, setFilterPatientAnchorEl] = useState(null);
    const filterPatientPopOverId = openFilterPatientPopover? "filter-patient-popover" : undefined;
+
+   // Filter Only mine
+   const [openFilterOnlyMinePopover, setOpenFilterOnlyMinePopover] = useState(false);
+   const [filterOnlyMineAnchorEl, setFilterOnlyMineAnchorEl] = useState(null);
+   const filterOnlyMinePopOverId = openFilterOnlyMinePopover? "filter-onlymine-popover" : undefined;
 
    // Appointment tooltip popover
    //const [openAppointTooltip, setOpenAppointTooltip] = useState(false);
@@ -73,6 +79,7 @@ const Schedulerr = (
   })
   let data = [];
   let filterBlocks = [];
+  let providerID = user?._id || "";
   if (patientDisplayObj && Object.keys(patientDisplayObj).length > 0){
     appointments.forEach((appoint) => {
       if (chairMap[appoint.resourceId] && patientDisplayObj[appoint.title]){
@@ -83,6 +90,16 @@ const Schedulerr = (
     })
   } else {
     data = appointments.filter((appoint) => chairMap[appoint.resourceId]);
+  }
+  if (onlyMine){
+    data = data.filter((appoint => {
+      if (appoint.providerID === providerID){
+        return true;
+      } else {
+        filterBlocks.push({...appoint, filter: true});
+        return false;
+      }
+    }));
   }
 
   // Holidays
@@ -124,6 +141,21 @@ const Schedulerr = (
     onSelectPatient(patientDisplayObj);
   }
 
+  // Filter only mine
+  const handleOpenFilterOnlyMine = (evt) => {
+    setFilterOnlyMineAnchorEl(evt.target);
+    setOpenFilterOnlyMinePopover(true);
+  }
+
+  const handleSelectOnlyMine = (val) => {
+    setOpenFilterOnlyMinePopover(false);
+    onSelectOnlyMine(val);
+  }
+
+  const handleCloseFilterOnlyMine = (evt) => {
+    setOpenFilterOnlyMinePopover(false);
+  }
+
   // Appointment Tooltip Popover
   const handleOpenAppointTooltip = (bound, appointment) => {
     setOpenAppointTooltip(true);
@@ -153,34 +185,42 @@ const Schedulerr = (
     onDeleteAppointment(popoverAppointID);
   }
 
+  const customBtns = {
+    filterChairButton: {
+      text: t(strings.chairs),
+      click: (evt) => {
+        handleOpenFilterChair(evt);
+      },
+    },
+    filterPatientButton: {
+      text: t(strings.patient),
+      click: (evt) => {
+        handleOpenFilterPatient(evt);
+      },
+    },
+    filterOnlyMine: {
+      text: t(strings.onlyMine),
+      click: (evt) => {
+        handleOpenFilterOnlyMine(evt);
+      }
+    }
+  }
+
   return (
     <React.Fragment>
       {(instances.length > 0 && holidays.length > 0)?
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} >
           <FullCalendar
               ref={calendarRef}
               schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
               plugins={[resourceTimeGridPlugin, interactionPlugin, HolidayMsgView]}
               initialView={currentView}
               headerToolbar={{
-                left: 'prev,next,today,filterChairButton,filterPatientButton',
+                left: 'prev,next,today,filterChairButton,filterPatientButton' + (isImmutable? ',filterOnlyMine' : ""),
                 center: 'title',
                 right: 'prevYear,nextYear',
               }}
-              customButtons={{
-                filterChairButton: {
-                    text: t(strings.chairs),
-                    click: (evt) => {
-                      handleOpenFilterChair(evt);
-                    },
-                },
-                filterPatientButton: {
-                  text: t(strings.patient),
-                  click: (evt) => {
-                    handleOpenFilterPatient(evt);
-                  },
-                },
-              }}
+              customButtons={customBtns}
               buttonText={{
                 today: t(strings.today)
               }}
@@ -240,7 +280,7 @@ const Schedulerr = (
                 const appointment = info.event.extendedProps;
                 const bound = el.getBoundingClientRect();
                 evt.preventDefault();
-                if (!appointment.block){
+                if (!appointment.block && !appointment.filter){
                   handleOpenAppointTooltip({left: bound.x, top: bound.y}, 
                     Object.assign({
                       id: info.event.id,
@@ -284,6 +324,14 @@ const Schedulerr = (
                 appointments={appointments}
                 patientDisplayObj={patientDisplayObj}
                 onApply={handleSelectPatient}
+            />
+            <FilterOnlyMinePopover
+                id={filterOnlyMinePopOverId}
+                open={openFilterOnlyMinePopover}
+                onClose={handleCloseFilterOnlyMine}
+                anchorEl={filterOnlyMineAnchorEl}
+                onlyMine={onlyMine}
+                onApply={handleSelectOnlyMine}
             />
             <AppointmentTooltipPopover
               isToProfile={true}

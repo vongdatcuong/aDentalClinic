@@ -641,6 +641,7 @@ const DashBoard = () => {
                         <Fade  in={displayTab == 0} >
                             <Box p={0} m={0} style={{display: (displayTab == 0)? "block" : "none"}}>
                                 <Schedulerr
+                                    user={{}}
                                     isImmutable={false}
                                     calendarRef={calendarRef}
                                     appointments={appointments}
@@ -651,6 +652,7 @@ const DashBoard = () => {
                                     startDayHour={startDayHour}
                                     endDayHour={endDayHour}
                                     patientDisplayObj={patientDisplayObj}
+                                    onlyMine={false}
                                     holidays={holidays}
                                     tableCellClick={handleTimeTableCellClick}
                                     tableCellSelect={handleTimeTableCellSelect}

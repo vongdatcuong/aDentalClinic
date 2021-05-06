@@ -421,13 +421,13 @@ const UpdateAppointmentTab = ({
                         }
                     });
                     // Set Patient default's Provider
-                    if (newPatientProviderIdx != -1){
+                    /*if (newPatientProviderIdx != -1){
                         setProvider({...options[newPatientProviderIdx]});
                     } else {
                         if (provider && provider.value){
                             setProvider(noneOption);
                         }
-                    }
+                    }*/
                 }
                 options.unshift({value: -1, label: t(strings.none)});
                 resolve(options);
