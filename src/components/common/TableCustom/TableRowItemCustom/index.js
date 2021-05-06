@@ -51,7 +51,7 @@ const TableRowItemCustom=(props)=>{
             // props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
             props.handleOpenDialog();
         }
-        console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+        // console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
         // props.handleChangeIsEdited();
         props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
     }

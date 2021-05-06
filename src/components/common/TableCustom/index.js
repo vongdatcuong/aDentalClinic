@@ -49,7 +49,7 @@ const TableCustom=(props)=>{
     useEffect(() => {
         if(rows!==props.data)
         {
-            console.log("Change rows");
+            // console.log("Change rows");
             setRows(props.data);
         }
         if(dataColumnsName!==props.dataColumnsName)

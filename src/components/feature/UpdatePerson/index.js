@@ -106,7 +106,7 @@ const UpdateChair = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        // console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -118,7 +118,7 @@ const UpdateChair = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        // console.log("Url:",reader); 
 
     };
 
@@ -168,7 +168,7 @@ const UpdateChair = (props) => {
             else
             {
                 toast.error(t(strings.updateFail));
-                console.log("Check update:",update);
+                // console.log("Check update:",update);
     
             }
         }
@@ -178,7 +178,7 @@ const UpdateChair = (props) => {
     useEffect(()=>{
         const searchProvider=async()=>{
             const result=await ProviderService.search(props.id);
-            console.log("Search provider in useEffect:",result.data.payload._id);
+            // console.log("Search provider in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setUserData(result.data.payload);
