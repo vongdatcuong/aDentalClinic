@@ -110,7 +110,7 @@ const Providers = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        ////console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
 
@@ -138,12 +138,12 @@ const Providers = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getProvider=async()=>{
         const result=await ProviderService.getProvider();
-        console.log("Get provider in useEffect:",result.data);
+        //console.log("Get provider in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -166,7 +166,7 @@ const Providers = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

@@ -1,19 +1,19 @@
 import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpPut,httpDelete} from '../base-api';
 import apiPath from '../path';
-import strings from '../../configs/strings';
+
 
 class ReferralSourceService{
     async getReferralSource(){
         const res = await httpGet({
             url: apiPath.referralSource.referralSource,
         });
-        console.log("Get referral Source:",res);
+        //console.log("Get referral Source:",res);
 
         try{
             const result = await httpGet({
                 url: apiPath.referralSource.referralSource,
             });
-            console.log("Get referral Source:",result);
+            //console.log("Get referral Source:",result);
             if(result.success)
             {
                 return {
@@ -31,7 +31,7 @@ class ReferralSourceService{
                       
         }
         catch(error){
-            console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to fetch referral Source:",error);
             return {
                 success: false,
                 data: null
@@ -47,7 +47,7 @@ class ReferralSourceService{
                 url: apiPath.referralSource.referralSource,
                 body:data
             });
-            console.log("insert referral Source:",result);
+            //console.log("insert referral Source:",result);
             if(result.success)
             {
                 return {
@@ -63,7 +63,7 @@ class ReferralSourceService{
                         
         }
         catch(error){
-            console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to fetch referral Source:",error);
             return {
                 success: false,
             };
@@ -77,14 +77,14 @@ class ReferralSourceService{
             const result = await httpGet({
                 url: `${apiPath.referralSource.referralSource}/${id}`,
             });
-            console.log("search referral Source:",result);
+            //console.log("search referral Source:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to fetch referral Source:",error);
             return {
                 success: false,
                 data:null,
@@ -93,14 +93,14 @@ class ReferralSourceService{
     }
     async update(id,data)
     {
-        console.log("Data for update:",data);
+        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.referralSource.referralSource}/${id}`,
                 body:data
             });
-            console.log("update referral Source:",result);
+            //console.log("update referral Source:",result);
             if(result.success)
             {
                 return {
@@ -119,7 +119,7 @@ class ReferralSourceService{
                      
         }
         catch(error){
-            console.log("Failed to update referral Source:",error);
+            //console.log("Failed to update referral Source:",error);
             return {
                 success: false,
                 data:null
@@ -133,7 +133,7 @@ class ReferralSourceService{
             const result = await httpDelete({
                 url: `${apiPath.referralSource.referralSource}/${id}`,
             });
-            console.log("delete referral source:",result);
+            //console.log("delete referral source:",result);
             if(result.success)
             {
                 return {
@@ -151,7 +151,7 @@ class ReferralSourceService{
                      
         }
         catch(error){
-            console.log("Failed to delete referralSource:",error);
+            //console.log("Failed to delete referralSource:",error);
             return {
                 success: false,
                 message:error,

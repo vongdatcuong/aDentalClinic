@@ -103,11 +103,11 @@ const InsertPatientPrescription = (props) => {
     }
     const handleChangeCurrentDrug=(e)=>{
         setCurrentDrug(e.target.value);
-        console.log("Check current drug:",e.target.value);
+        //console.log("Check current drug:",e.target.value);
         
     }
     const handleChangeProvider=(e)=>{
-        console.log("Check provider handle change:",e.target.value);
+        //console.log("Check provider handle change:",e.target.value);
         setProvider(e.target.value);
     }
     
@@ -125,7 +125,7 @@ const InsertPatientPrescription = (props) => {
         setDispensed(e.target.value);
     }
     const handleChangeExpired=(e,date)=>{
-        console.log("Handle change expired:",date);
+        //console.log("Handle change expired:",date);
         setExpired(date);
     }
 
@@ -143,7 +143,7 @@ const InsertPatientPrescription = (props) => {
 
            
             setDrug(temp);
-            console.log("Check after add drug:",temp);
+            //console.log("Check after add drug:",temp);
             setDescription(null);
             setDispensed(null);
             setExpired(new Date());
@@ -155,7 +155,7 @@ const InsertPatientPrescription = (props) => {
     }
     const deleteRow=(e)=>{
         handleCloseDialog2();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         
         drug.splice(selectedRow,1);
     }
@@ -167,12 +167,12 @@ const InsertPatientPrescription = (props) => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setListDrug(temp);
     }
 
     const insertPrescription=async(e)=>{
-        console.log("Drug :",drug);
+        //console.log("Drug :",drug);
         if(provider!==t(strings.provider) && drug.length!==0)
         {
             let details=[];
@@ -194,9 +194,9 @@ const InsertPatientPrescription = (props) => {
                 provider:provider,
                 details:details,
             };
-            console.log("Check data for insert pres:",data);
+            //console.log("Check data for insert pres:",data);
             const result=await PrescriptionService.insert(data);
-            console.log("Check result insert pres:",result);
+            //console.log("Check result insert pres:",result);
             if(result.success)
             {
                 toast.success(t(strings.insertSuccess));
@@ -227,7 +227,7 @@ const InsertPatientPrescription = (props) => {
         {
             const getListProvider=async()=>{
                 const result=await ProviderService.getProvider();
-                console.log("Check provider list:",result.data);
+                //console.log("Check provider list:",result.data);
                 if(result.success)
                 {
                     setListProvider(result.data);
@@ -240,7 +240,7 @@ const InsertPatientPrescription = (props) => {
         {
             const getListDrug=async()=>{
                 const result=await DrugService.getDrug();
-                console.log("Check drug list:",result.data);
+                //console.log("Check drug list:",result.data);
                 if(result.success)
                 {
                     changeDataDrug(result.data);
@@ -254,7 +254,7 @@ const InsertPatientPrescription = (props) => {
             {
 
                 setSelectedRowData(drug[selectedRow])
-                console.log("Check selected drug data:",drug[selectedRow]);
+                //console.log("Check selected drug data:",drug[selectedRow]);
             }
 
         }

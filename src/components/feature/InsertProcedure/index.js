@@ -85,7 +85,7 @@ const InsertProcedure = (props) => {
     
     const handleChangeCategory=(e)=>{
         setCategory(e.target.value);
-        console.log("Check choose category:",e.target.value);
+        //console.log("Check choose category:",e.target.value);
     }
 
 
@@ -160,7 +160,7 @@ const InsertProcedure = (props) => {
         {
             const getListCategory=async()=>{
                 const res=await ProcedureService.getProcedureCategory();
-                console.log("Get procedure category in useEffect:",res.data);
+                //console.log("Get procedure category in useEffect:",res.data);
                 setListCategory(res.data);
             }
             getListCategory();

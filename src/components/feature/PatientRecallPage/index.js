@@ -105,7 +105,7 @@ const PatientRecallPage = ({patientID}) => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        ////console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
 
@@ -128,12 +128,12 @@ const PatientRecallPage = ({patientID}) => {
             let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
             temp=temp.concat(newData);
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getPatientRecall=async()=>{
         const result=await PatientRecallService.getPatientRecallByID(patientID);
-        console.log("Get recall in useEffect:",result.data);
+        //console.log("Get recall in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -156,7 +156,7 @@ const PatientRecallPage = ({patientID}) => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

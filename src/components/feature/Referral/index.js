@@ -89,7 +89,7 @@ const Referral = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -124,7 +124,7 @@ const Referral = () => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -144,15 +144,15 @@ const Referral = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deleteReferralSource=async()=>{
             const res=await ReferralSourceService.delete(selectedRowData.id);
-            console.log("Delete referral source:",res);
+            //console.log("Delete referral source:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -172,7 +172,7 @@ const Referral = () => {
     }
     const getReferralSource=async()=>{
         const result=await ReferralSourceService.getReferralSource();
-        console.log("Get referral source in useEffect:",result.data);
+        //console.log("Get referral source in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -195,13 +195,13 @@ const Referral = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

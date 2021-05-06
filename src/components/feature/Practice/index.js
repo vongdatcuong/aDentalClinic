@@ -89,10 +89,10 @@ const Practice = () => {
         {
             setStartTime(date);
             
-            console.log("Start time:",moment(date).format("HH:mm"));
+            //console.log("Start time:",moment(date).format("HH:mm"));
             if(moment(date).format("HH:mm")<moment(endTime).format("HH:mm"))
             {
-                console.log("Nho hon roi do");
+                //console.log("Nho hon roi do");
             }
         }
     }
@@ -100,14 +100,14 @@ const Practice = () => {
         if(editable)
         {
             setEndTime(date);
-            console.log("End time:",date);
+            //console.log("End time:",date);
             if(date>startTime)
             {
-                console.log("Lon hon roi do");
+                //console.log("Lon hon roi do");
             }
             else
             {
-                console.log("nho hon hoac bang")
+                //console.log("nho hon hoac bang")
             }
         }
     }
@@ -118,7 +118,7 @@ const Practice = () => {
     
     const getPractice=async()=>{
         const res=await PracticeService.getPractice();
-        console.log("Check res after get practice:",res.data);
+        //console.log("Check res after get practice:",res.data);
         if(res.success)
         {
             let a=res.data;

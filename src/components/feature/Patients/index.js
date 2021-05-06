@@ -183,7 +183,7 @@ const Patients = () => {
         {
             setRows(rowsAll);
         }
-        console.log("Check status:",event.target.value);
+        //console.log("Check status:",event.target.value);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -197,7 +197,7 @@ const Patients = () => {
     };
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     };
 
@@ -256,7 +256,7 @@ const Patients = () => {
             }
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(tempActive);
         setRowsAll(temp);
         setRowsActive(tempActive);
@@ -264,7 +264,7 @@ const Patients = () => {
     }
     const getPatient=async()=>{
         const result=await PatientService.getPatient();
-        console.log("Get patient in useEffect:",result.data);
+        //console.log("Get patient in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -287,7 +287,7 @@ const Patients = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

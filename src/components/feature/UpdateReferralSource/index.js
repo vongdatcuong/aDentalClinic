@@ -104,7 +104,7 @@ const UpdateReferralSource = (props) => {
     useEffect(()=>{
         const searchReferralSource=async()=>{
             const result=await ReferralSourceService.search(props.id);
-            console.log("Search drug in useEffect:",result.data.payload._id);
+            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setName(result.data.payload.name);

@@ -87,7 +87,7 @@ const UpdateProcedure = (props) => {
     
     const handleChangeCategory=(e)=>{
         setCategory(e.target.value);
-        console.log("Check choose category:",e.target.value);
+        //console.log("Check choose category:",e.target.value);
     }
 
 
@@ -159,7 +159,7 @@ const UpdateProcedure = (props) => {
     useEffect(()=>{
         const searchProcedure=async()=>{
             const result=await ProcedureService.search(props.id);
-            console.log("Search procedure in useEffect:",result.data.payload);
+            //console.log("Search procedure in useEffect:",result.data.payload);
             if(result.success)
             {
                 setAbbreviation(result.data.payload.abbreviation);
@@ -185,7 +185,7 @@ const UpdateProcedure = (props) => {
         {
             const getListCategory=async()=>{
                 const res=await ProcedureService.getProcedureCategory();
-                console.log("Get procedure category in useEffect:",res.data);
+                //console.log("Get procedure category in useEffect:",res.data);
                 setListCategory(res.data);
             }
             getListCategory();

@@ -91,7 +91,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -113,7 +113,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         setInsertPatientPrescription(!insertPatientPrescription);
     }
     const handleChangeEditable=(e)=>{
-        console.log("Change editable:",!editable);
+        //console.log("Change editable:",!editable);
         setEditable(!editable);
     }
     const handleChangeSelectedRow=(value)=>{
@@ -126,7 +126,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -157,19 +157,19 @@ const PatientPrescriptionPage = ({patientID}) => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
    
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deletePrescription=async()=>{
             const data={
                 is_delete:true,
             };
             const res=await PrescriptionService.update(selectedRowData.id,data);
-            console.log("Delete prescription:",res);
+            //console.log("Delete prescription:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -191,9 +191,9 @@ const PatientPrescriptionPage = ({patientID}) => {
         {
            
             const getPrescription=async()=>{
-                console.log("Check patient ID:",patientID);
+                //console.log("Check patient ID:",patientID);
                 const result1=await PrescriptionService.searchByPatient(patientID);
-                console.log("result1:",result1.data);
+                //console.log("result1:",result1.data);
                 if(result1.success && result1.data.payload.length!==0)
                 {
                     changeData(result1.data.payload);
@@ -211,13 +211,13 @@ const PatientPrescriptionPage = ({patientID}) => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

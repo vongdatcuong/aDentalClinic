@@ -106,7 +106,7 @@ const UpdatePatient = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -118,7 +118,7 @@ const UpdatePatient = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        //console.log("Url:",reader); 
 
     };
 
@@ -174,12 +174,12 @@ const UpdatePatient = (props) => {
             {
                 toast.success(t(strings.updateSuccess));
                 props.handleChangeIsUpdate();
-                console.log("Check update:",update);
+                //console.log("Check update:",update);
             }
             else
             {
                 toast.error(t(strings.updateFail));
-                console.log("Check update:",update);
+                //console.log("Check update:",update);
 
             }
         }
@@ -189,7 +189,7 @@ const UpdatePatient = (props) => {
     useEffect(()=>{
         const searchPatient=async()=>{
             const result=await PatientService.search(props.id);
-            console.log("Search patient in useEffect:",result.data.payload);
+            //console.log("Search patient in useEffect:",result.data.payload);
             if(result.success)
             {
                 setUserData(result.data.payload);

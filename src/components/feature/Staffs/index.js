@@ -89,7 +89,7 @@ const Staffs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangePage = (event, newPage) => {
@@ -129,7 +129,7 @@ const Staffs = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const titles=[
@@ -142,7 +142,7 @@ const Staffs = () => {
 
     const getStaff=async()=>{
         const result=await StaffService.getStaff();
-        console.log("Get staff in useEffect:",result.data);
+        //console.log("Get staff in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -165,7 +165,7 @@ const Staffs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

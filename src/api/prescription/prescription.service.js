@@ -1,6 +1,6 @@
 import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
 import apiPath from '../path';
-import strings from '../../configs/strings';
+
 
 class PrescriptionService{
     async getPrescription(){
@@ -9,7 +9,7 @@ class PrescriptionService{
             const result = await httpGet({
                 url: apiPath.prescription.prescription,
             });
-            console.log("Get prescription:",result.payload);
+            //console.log("Get prescription:",result.payload);
             if(result.success)
             {
                 return {
@@ -26,7 +26,7 @@ class PrescriptionService{
             }            
         }
         catch(error){
-            console.log("Failed to fetch prescription:",error);
+            //console.log("Failed to fetch prescription:",error);
             return {
                 success: false,
                 data: null
@@ -42,7 +42,7 @@ class PrescriptionService{
                 url: apiPath.prescription.prescription,
                 body:data
             });
-            console.log("insert prescription:",result);
+            //console.log("insert prescription:",result);
             if(result.success)
             {
                 return {
@@ -59,7 +59,7 @@ class PrescriptionService{
             }                      
         }
         catch(error){
-            console.log("Failed to insert prescription:",error);
+            //console.log("Failed to insert prescription:",error);
             return {
                 success: false,
             };
@@ -73,13 +73,13 @@ class PrescriptionService{
     //             url: `${apiPath.prescription.prescription}/${id}${apiPath.prescription.detail}`,
     //             body:data
     //         });
-    //         console.log("insert detail prescription:",result);
+    //         //console.log("insert detail prescription:",result);
     //         return {
     //             success: true,
     //         };            
     //     }
     //     catch(error){
-    //         console.log("Failed to insert prescription:",error);
+    //         //console.log("Failed to insert prescription:",error);
     //         return {
     //             success: false,
     //         };
@@ -96,7 +96,7 @@ class PrescriptionService{
                     get_provider:true
                 }
             });
-            console.log("detail prescription:",result);
+            //console.log("detail prescription:",result);
            
             return {
                 success: true,
@@ -104,7 +104,7 @@ class PrescriptionService{
             };            
         }
         catch(error){
-            console.log("Failed to fetch prescription:",error);
+            //console.log("Failed to fetch prescription:",error);
             return {
                 success: false,
                 data:null,
@@ -118,14 +118,14 @@ class PrescriptionService{
             const result = await httpGet({
                 url: `${apiPath.prescription.prescription}/${id}`,
             });
-            console.log("search prescription:",result);
+            //console.log("search prescription:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            console.log("Failed to fetch prescription:",error);
+            //console.log("Failed to fetch prescription:",error);
             return {
                 success: false,
                 data:null,
@@ -143,14 +143,14 @@ class PrescriptionService{
                     get_details:true,
                 }
             });
-            console.log("search prescription:",result);
+            //console.log("search prescription:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            console.log("Failed to fetch prescription:",error);
+            //console.log("Failed to fetch prescription:",error);
             return {
                 success: false,
                 data:null,
@@ -161,14 +161,14 @@ class PrescriptionService{
     
     async update(id,data)
     {
-        console.log("Data for update:",data);
+        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.prescription.prescription}/${id}`,
                 body:data
             });
-            console.log("update prescription:",result);
+            //console.log("update prescription:",result);
             if(result.success)
             {
                 return {
@@ -187,7 +187,7 @@ class PrescriptionService{
                      
         }
         catch(error){
-            console.log("Failed to update prescription:",error);
+            //console.log("Failed to update prescription:",error);
             return {
                 success: false,
                 data:null
@@ -196,14 +196,14 @@ class PrescriptionService{
     }
     async updateDetail(id,data)
     {
-        console.log("Data for update:",data);
+        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.prescription.prescription}${apiPath.prescription.detail}/${id}`,
                 body:data
             });
-            console.log("update prescription detail:",result);
+            //console.log("update prescription detail:",result);
             if(result.success)
             {
                 return {
@@ -222,7 +222,7 @@ class PrescriptionService{
                      
         }
         catch(error){
-            console.log("Failed to update prescription detail:",error);
+            //console.log("Failed to update prescription detail:",error);
             return {
                 success: false,
                 data:null
@@ -236,7 +236,7 @@ class PrescriptionService{
             const result = await httpDelete({
                 url: `${apiPath.prescription.prescription}/${id}`,
             });
-            console.log("delete prescription:",result);
+            //console.log("delete prescription:",result);
             if(result.success)
             {
                 return {
@@ -254,7 +254,7 @@ class PrescriptionService{
                      
         }
         catch(error){
-            console.log("Failed to delete prescription:",error);
+            //console.log("Failed to delete prescription:",error);
             return {
                 success: false,
                 message:error,

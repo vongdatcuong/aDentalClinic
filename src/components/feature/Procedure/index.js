@@ -98,7 +98,7 @@ const Procedure = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleGoBack=(e)=>{
@@ -123,7 +123,7 @@ const Procedure = () => {
             // const searchCategory=async()=>{
             //     const res=await ProcedureService.searchCategory(a.category);
             //     categoryName=res.data.name;
-            //     console.log("Check search procedure category:",categoryName);
+            //     //console.log("Check search procedure category:",categoryName);
 
                 
             // }
@@ -132,13 +132,13 @@ const Procedure = () => {
             temp=temp.concat(newData);
             
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
        
     }
     const getProcedure=async()=>{
         const result=await ProcedureService.getProcedure();
-        console.log("Get procedure in useEffect:",result.data);
+        //console.log("Get procedure in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -161,7 +161,7 @@ const Procedure = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

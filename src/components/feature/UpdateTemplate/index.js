@@ -75,7 +75,7 @@ const UpdateTemplate = (props) => {
                 note_type:noteType
               
             };
-            console.log("Data check onclick:",data);
+            //console.log("Data check onclick:",data);
             const result=await TemplateService.update(props.id,data);
             if(result.success)
             {
@@ -97,7 +97,7 @@ const UpdateTemplate = (props) => {
     useEffect(()=>{
         const searchTemplate=async()=>{
             const result=await TemplateService.search(props.id);
-            console.log("Search drug in useEffect:",result.data.payload._id);
+            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setContent(result.data.payload.content);

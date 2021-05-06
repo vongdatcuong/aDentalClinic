@@ -104,7 +104,7 @@ const Template = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -141,7 +141,7 @@ const Template = () => {
         setRowsWithType(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangeChooseType=(value)=>{
@@ -151,12 +151,12 @@ const Template = () => {
     const changeData=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            console.log("Check item:",a);
+            //console.log("Check item:",a);
             let newData=createData(a._id,a.content,a.note_type);
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
         if(chooseType===1)
         {
@@ -207,7 +207,7 @@ const Template = () => {
     }
     const getTemplate=async()=>{
         const result=await TemplateService.getTemplate();
-        console.log("Get template in useEffect",result.data);
+        //console.log("Get template in useEffect",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -217,10 +217,10 @@ const Template = () => {
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deleteTemplate=async()=>{
             const res=await TemplateService.delete(selectedRowData.id);
-            console.log("Delete template:",res);
+            //console.log("Delete template:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -270,27 +270,27 @@ const Template = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                console.log("Check selected row data:",rowsWithType[selectedRow]);
+                //console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                console.log("Check selected row data:",rowsWithType[selectedRow]);
+                //console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
 
 
         }
         if(isInsert)
         {
-            console.log("Co vao day insert");
+            //console.log("Co vao day insert");
             getTemplate();
             
             setIsInsert(false);
         }
         if(isUpdate)
         {
-            console.log("Co vao day update:");
+            //console.log("Co vao day update:");
             getTemplate();
             
             setIsUpdate(false);

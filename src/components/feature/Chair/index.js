@@ -80,7 +80,7 @@ const Chairs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangePage = (event, newPage) => {
@@ -128,12 +128,12 @@ const Chairs = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getChair=async()=>{
         const result=await ChairService.getChair();
-        console.log("Get chair in useEffect:",result.data);
+        //console.log("Get chair in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -156,7 +156,7 @@ const Chairs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             
         }

@@ -86,7 +86,7 @@ const Drug = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -121,7 +121,7 @@ const Drug = () => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -141,15 +141,15 @@ const Drug = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deleteDrug=async()=>{
             const res=await DrugService.delete(selectedRowData.id);
-            console.log("Delete drug:",res);
+            //console.log("Delete drug:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -169,7 +169,7 @@ const Drug = () => {
     }
     const getDrug=async()=>{
         const result=await DrugService.getDrug();
-        console.log("Get drug in useEffect:",result.data);
+        //console.log("Get drug in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -192,13 +192,13 @@ const Drug = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
         }
         if(isInsert===true)

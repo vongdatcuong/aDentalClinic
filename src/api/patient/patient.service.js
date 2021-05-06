@@ -1,6 +1,6 @@
 import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpPut} from '../base-api';
 import apiPath from '../path';
-import strings from '../../configs/strings';
+
 
 class PatientService{
     async getPatient(){
@@ -9,7 +9,7 @@ class PatientService{
             const result = await httpGet({
                 url: apiPath.patient.patient,
             });
-            console.log("Get patient:",result.payload[0]);
+            //console.log("Get patient:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -26,7 +26,7 @@ class PatientService{
             }          
         }
         catch(error){
-            console.log("Failed to fetch patient:",error);
+            //console.log("Failed to fetch patient:",error);
             return {
                 success: false,
                 data: null
@@ -42,7 +42,7 @@ class PatientService{
                 url: apiPath.patient.patient,
                 body:data
             });
-            console.log("insert patient:",result);
+            //console.log("insert patient:",result);
             if(result.success)
             {
                 return {
@@ -57,7 +57,7 @@ class PatientService{
             }                
         }
         catch(error){
-            console.log("Failed to fetch patient:",error);
+            //console.log("Failed to fetch patient:",error);
             return {
                 success: false,
             };
@@ -71,7 +71,7 @@ class PatientService{
             const result = await httpGet({
                 url: `${apiPath.patient.patient}/${id}`,
             });
-            console.log("search patient:",result);
+            //console.log("search patient:",result);
             if(result.success)
             {
                 return {
@@ -88,7 +88,7 @@ class PatientService{
             }             
         }
         catch(error){
-            console.log("Failed to fetch patient:",error);
+            //console.log("Failed to fetch patient:",error);
             return {
                 success: false,
                 data:null,
@@ -97,14 +97,14 @@ class PatientService{
     }
     async update(id,data)
     {
-        console.log("Data for update:",data);
+        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.patient.patient}/${id}`,
                 body:data
             });
-            console.log("update patient:",result);
+            //console.log("update patient:",result);
             if(result.success)
             {
                 return {
@@ -123,7 +123,7 @@ class PatientService{
                      
         }
         catch(error){
-            console.log("Failed to update staff:",error);
+            //console.log("Failed to update staff:",error);
             return {
                 success: false,
                 data:null
@@ -143,7 +143,7 @@ class PatientService{
             };
         }
         catch(error){
-            console.log("Failed to fetch patient profile: ",error);
+            //console.log("Failed to fetch patient profile: ",error);
             return {
                 success: false,
                 data: null,

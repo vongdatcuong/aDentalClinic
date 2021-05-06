@@ -100,7 +100,7 @@ const UpdatePerson = (props) => {
     useEffect(()=>{
         const searchChair=async()=>{
             const result=await ChairService.search(props.id);
-            console.log("Search chair in useEffect:",result.data.payload._id);
+            //console.log("Search chair in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setName(result.data.payload.name);

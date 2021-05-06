@@ -112,7 +112,7 @@ const UpdateDrug = (props) => {
     useEffect(()=>{
         const searchDrug=async()=>{
             const result=await DrugService.search(props.id);
-            console.log("Search drug in useEffect:",result.data.payload._id);
+            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setName(result.data.payload.name);

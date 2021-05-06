@@ -103,7 +103,7 @@ const InsertPerson = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -115,7 +115,7 @@ const InsertPerson = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        //console.log("Url:",reader); 
 
     };
 
@@ -123,7 +123,7 @@ const InsertPerson = (props) => {
     const insertPerson=async(e)=>{
         if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
-            console.log("Insert person");
+            //console.log("Insert person");
             const data={
                 display_id: "",
                 is_active:active, 

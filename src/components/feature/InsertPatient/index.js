@@ -102,7 +102,7 @@ const InsertPatient = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -114,13 +114,13 @@ const InsertPatient = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        //console.log("Url:",reader); 
 
     };
 
     
     const insertPerson=async(e)=>{
-        console.log("Insert person");
+        //console.log("Insert person");
         let genderData;
         if(gender===true)
         {
