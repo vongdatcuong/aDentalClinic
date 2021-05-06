@@ -1,4 +1,4 @@
-const patientRecallStyle = (theme) => ({
+const patientRecallPageStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px"
@@ -35,6 +35,13 @@ const patientRecallStyle = (theme) => ({
         marginBottom: theme.spacing(1.5),
         
     },
+    containerTable:{
+        marginLeft:'10px',
+        '@media (min-width: 1280px)':{
+            maxWidth:'none',
+            width:'99%',
+        }
+    },
     goBack:{
         cursor:'pointer',
         color:theme.primaryColor[1],
@@ -52,4 +59,4 @@ const patientRecallStyle = (theme) => ({
 });
 
   
-export default patientRecallStyle;  
+export default patientRecallPageStyle;  

@@ -27,6 +27,7 @@ const drugPath="/drug";
 const portalPath="/portal";
 const toothChartPath = '/patient/:patientID/toothChart';
 const patientProfilePath = '/patient/:patientID/profile';
+const patientRecallPath='/patient/:patientID/recall';
 const patientPrescriptionPath = '/patient/:patientID/prescription';
 const patientNotePath = '/patient/:patientID/note';
 const patientXRayImagesPath = '/patient/:patientID/xRayImages';
@@ -58,6 +59,7 @@ const path = {
     //document,
     toothChartPath,
     patientProfilePath,
+    patientRecallPath,
     patientPrescriptionPath,
     patientNotePath,
     patientXRayImagesPath,

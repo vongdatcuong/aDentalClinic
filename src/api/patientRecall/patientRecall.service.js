@@ -137,6 +137,37 @@ class PatientRecallService{
             };
         }
     }
+    async getPatientRecallByID(id)
+    {
+        try{
+                    
+            const result = await httpGet({
+                url: `${apiPath.patientRecall.recall}${apiPath.patient.patient}/${id}`,
+            });
+            console.log("search recall of patient:",result);
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result.payload,
+                };  
+            }
+            else
+            {
+                return {
+                    success:false,
+                    data:null
+                }
+            }             
+        }
+        catch(error){
+            console.log("Failed to fetch recall:",error);
+            return {
+                success: false,
+                data:null,
+            };
+        }
+    }
 }
 
 export default new PatientRecallService();

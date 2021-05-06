@@ -45,7 +45,7 @@ const common = {
 
 // Recall
 const recall = {
-    recall: '/recall'
+    recall: '/recall',
 }
 
 // Treatment

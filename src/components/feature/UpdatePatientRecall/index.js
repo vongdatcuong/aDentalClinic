@@ -51,27 +51,27 @@ const UpdatePatientRecall = (props) => {
     const classes = useStyles();
     
     //state
-    const [patient,setPatient]=useState(t(strings.patient));
-    const [treatment,setTreatment]=useState(t(strings.treatment));
-    const [appointment,setAppointment]=useState(t(strings.appointment));
-    const [procedure,setProcedure]=useState(t(strings.procedure));
+    // const [patient,setPatient]=useState(t(strings.patient));
+    // const [treatment,setTreatment]=useState(t(strings.treatment));
+    // const [appointment,setAppointment]=useState(t(strings.appointment));
+    // const [procedure,setProcedure]=useState(t(strings.procedure));
     const [recallDate,setRecallDate]=useState(new Date());
     const [note,setNote]=useState(null);
     const [isActive,setIsActive]=useState(true);
-    const [listPatient,setListPatient]=useState([]);
+    // const [listPatient,setListPatient]=useState([]);
     //handle change
-    const handleChangePatient=(e)=>{
-        setPatient(e.target.value);
-    }
-    const handleChangeTreatment=(e)=>{
-        setTreatment(e.target.value);
-    }
-    const handleChangeAppointment=(e)=>{
-        setAppointment(e.target.value);
-    }
-    const handleChangeProcedure=(e)=>{
-        setProcedure(e.target.value);
-    }
+    // const handleChangePatient=(e)=>{
+    //     setPatient(e.target.value);
+    // }
+    // const handleChangeTreatment=(e)=>{
+    //     setTreatment(e.target.value);
+    // }
+    // const handleChangeAppointment=(e)=>{
+    //     setAppointment(e.target.value);
+    // }
+    // const handleChangeProcedure=(e)=>{
+    //     setProcedure(e.target.value);
+    // }
     const handleChangeRecallDate=(e,date)=>{
         setRecallDate(date);
     }
@@ -83,57 +83,49 @@ const UpdatePatientRecall = (props) => {
     }
     
     const updatePatientRecall=async(e)=>{
-        console.log("Insert recall");
+        if(note!==null && note!=="")
+        {
             const data={
-               patient:patient,
-            //    treatment:treatment,
-            //    appointment:appointment,
-            //    procedure:procedure,
-               recall_date:recallDate,
-               note:note,
-               is_active:isActive,
-            };
-            const result=await PatientRecallService.update(props.id,data);
-            if(result.success)
-            {
-                toast.success(t(strings.updateSuccess));
-                props.handleChangeIsUpdate();
-            }
-            else
-            {
-                toast.error(t(strings.updateFail));
-            }
+                patient:props.patientID,
+             //    treatment:treatment,
+             //    appointment:appointment,
+             //    procedure:procedure,
+                recall_date:recallDate,
+                note:note,
+                is_active:isActive,
+             };
+             const result=await PatientRecallService.update(props.id,data);
+             if(result.success)
+             {
+                 toast.success(t(strings.updateSuccess));
+                 props.handleChangeIsUpdate();
+             }
+             else
+             {
+                 toast.error(t(strings.updateFail));
+             }
+        }
+        else
+        {
+            toast.error(t(strings.errorInput));
+        }
+            
         
 
     }
-    const renderListPatient=()=>{
-        return listPatient.map((patient,index)=>{
-            return <MenuItem key={index} value={patient._id}>{patient.user.first_name} {patient.user.last_name}</MenuItem>
-        })
-    }
     
-    const getListPatient=async()=>{
-        const res=await PatientService.getPatient();
-        if(res.success)
-        {
-            setListPatient(res.data);
-        }
-    }
     const getRecall=async()=>{
         const res=await PatientRecallService.search(props.id);
         if(res.success)
         {
             setIsActive(res.data.payload.is_active);
-            setPatient(res.data.payload.patient);
+            // setPatient(res.data.payload.patient);
             setNote(res.data.payload.note);
-
+            setRecallDate(res.data.payload.recall_date);
         }
     }
     useEffect(()=>{
-        if(listPatient.length===0)
-        {
-            getListPatient();
-        }
+        
         if(note===null)
         {
             getRecall();
@@ -144,25 +136,7 @@ const UpdatePatientRecall = (props) => {
             <div className={classes.content}>
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        {listPatient.length!==0 ?
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={patient}
-                                onChange={handleChangePatient}
-                                disableUnderline 
-                                className={classes.status}
-                                inputProps={{ readOnly: !props.editable }}
-                                >
-                                <MenuItem value={t(strings.patient)}>{t(strings.patient)}</MenuItem>
-                                {renderListPatient()}
-
-                            </Select>
-                    
-                        </div>
-                        :
-                        <div></div>
-                        }
+                       
                         
                         <div className={classes.itemDate}>
                             <KeyboardDatePicker

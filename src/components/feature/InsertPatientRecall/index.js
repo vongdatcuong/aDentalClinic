@@ -52,29 +52,29 @@ const InsertPatientRecall = (props) => {
     const classes = useStyles();
     
     //state
-    const [patient,setPatient]=useState(t(strings.patient));
-    const [treatment,setTreatment]=useState(t(strings.treatment));
-    const [appointment,setAppointment]=useState(t(strings.appointment));
-    const [procedure,setProcedure]=useState(t(strings.procedure));
+    // const [treatment,setTreatment]=useState(t(strings.treatment));
+    // const [appointment,setAppointment]=useState(t(strings.appointment));
+    // const [procedure,setProcedure]=useState(t(strings.procedure));
     const [recallDate,setRecallDate]=useState(new Date());
     const [note,setNote]=useState(null);
 
-    const [listPatient,setListPatient]=useState([]);
-    const [listProcedure,setListProcedure]=useState([]);
-    const [listAppointment,setListAppointment]=useState([]);
+    // const [listPatient,setListPatient]=useState([]);
+    // const [listProcedure,setListProcedure]=useState([]);
+    // const [listAppointment,setListAppointment]=useState([]);
+
     //handle change
-    const handleChangePatient=(e)=>{
-        setPatient(e.target.value);
-    }
-    const handleChangeTreatment=(e)=>{
-        setTreatment(e.target.value);
-    }
-    const handleChangeAppointment=(e)=>{
-        setAppointment(e.target.value);
-    }
-    const handleChangeProcedure=(e)=>{
-        setProcedure(e.target.value);
-    }
+    // const handleChangePatient=(e)=>{
+    //     setPatient(e.target.value);
+    // }
+    // const handleChangeTreatment=(e)=>{
+    //     setTreatment(e.target.value);
+    // }
+    // const handleChangeAppointment=(e)=>{
+    //     setAppointment(e.target.value);
+    // }
+    // const handleChangeProcedure=(e)=>{
+    //     setProcedure(e.target.value);
+    // }
     const handleChangeRecallDate=(e,date)=>{
         setRecallDate(date);
     }
@@ -84,18 +84,18 @@ const InsertPatientRecall = (props) => {
 
     
     const insertPatientRecall=async(e)=>{
-        console.log("Insert recall");
-        console.log("Check patient:",patient);
+        if(note!==null && note!=="")
+        {
             const data={
-               patient:patient,
-            //    treatment:null,
-            //    appointment:null,
-            //    procedure:null,
-               recall_date:recallDate,
-               note:note,
-               is_active:true,
-
-            };
+                patient:props.patientID,
+             //    treatment:null,
+             //    appointment:null,
+             //    procedure:null,
+                recall_date:recallDate,
+                note:note,
+                is_active:true,
+    
+             };
             const result=await PatientRecallService.insert(data);
             if(result.success)
             {
@@ -105,52 +105,59 @@ const InsertPatientRecall = (props) => {
             else
             {
                 toast.error(t(strings.insertFail));
-            }
+            }     
+        }
+        else
+        {
+            toast.error(t(strings.errorInput))
+        }
+           
+            
         
 
     }
-    const renderListPatient=()=>{
-        return listPatient.map((patient,index)=>{
-            return <MenuItem key={index} value={patient._id}>{patient.user.first_name} {patient.user.last_name}</MenuItem>
-        })
-    }
-    const renderListProcedure=()=>{
-        return listProcedure.map((procedure,index)=>{
-            return <MenuItem key={index} value={procedure._id}>{procedure.description}</MenuItem>
-        })
-    }
-    const renderListAppointment=()=>{
-        return listAppointment.map((appointment,index)=>{
-            return <MenuItem key={index} value={appointment._id}>{appointment.description}</MenuItem>
-        })
-    }
-    const getListPatient=async()=>{
-        const res=await PatientService.getPatient();
-        if(res.success)
-        {
-            setListPatient(res.data);
-        }
-    }
-    const getListProcedure=async()=>{
-        const res=await ProcedureService.getProcedure();
-        if(res.success)
-        {
-            setListProcedure(res.data);
-        }
-    }
-    const getListAppointment=async()=>{
-        const res=await AppointmentService.getAppointment();
-        if(res.success)
-        {
-            console.log("Check list appointment:",res.data[0]);
-            setListAppointment(res.data);
-        }
-    }
+    // const renderListPatient=()=>{
+    //     return listPatient.map((patient,index)=>{
+    //         return <MenuItem key={index} value={patient._id}>{patient.user.first_name} {patient.user.last_name}</MenuItem>
+    //     })
+    // }
+    // const renderListProcedure=()=>{
+    //     return listProcedure.map((procedure,index)=>{
+    //         return <MenuItem key={index} value={procedure._id}>{procedure.description}</MenuItem>
+    //     })
+    // }
+    // const renderListAppointment=()=>{
+    //     return listAppointment.map((appointment,index)=>{
+    //         return <MenuItem key={index} value={appointment._id}>{appointment.description}</MenuItem>
+    //     })
+    // }
+    // const getListPatient=async()=>{
+    //     const res=await PatientService.getPatient();
+    //     if(res.success)
+    //     {
+    //         setListPatient(res.data);
+    //     }
+    // }
+    // const getListProcedure=async()=>{
+    //     const res=await ProcedureService.getProcedure();
+    //     if(res.success)
+    //     {
+    //         setListProcedure(res.data);
+    //     }
+    // }
+    // const getListAppointment=async()=>{
+    //     const res=await AppointmentService.getAppointment();
+    //     if(res.success)
+    //     {
+    //         console.log("Check list appointment:",res.data[0]);
+    //         setListAppointment(res.data);
+    //     }
+    // }
     useEffect(()=>{
-        if(listPatient.length===0)
-        {
-            getListPatient();
-        }
+        // if(listPatient.length===0)
+        // {
+        //     getListPatient();
+        // }
         // if(listProcedure.length===0)
         // {
         //     getListProcedure();
@@ -165,7 +172,7 @@ const InsertPatientRecall = (props) => {
             <div className={classes.content}>
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        {listPatient.length!==0 ?
+                        {/* {listPatient.length!==0 ?
                         <div className={classes.itemSelect}>
                             <Select
                                 
@@ -182,7 +189,7 @@ const InsertPatientRecall = (props) => {
                         </div>
                         :
                         <div></div>
-                        }
+                        } */}
                         <div className={classes.itemDate}>
                             <KeyboardDatePicker
                                     margin="normal"

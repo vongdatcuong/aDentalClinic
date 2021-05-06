@@ -46,22 +46,24 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 import InsertPatientRecall from "../InsertPatientRecall";
 import UpdatePatientRecall from "../UpdatePatientRecall";
+import TreatmentMenu from '../../../layouts/TreatmentMenu';
+import Footer from "../../../layouts/Footer";
+
 const useStyles = makeStyles(styles);
 
 
 
-const PatientRecall = () => {
+const PatientRecallPage = ({patientID}) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     //
-    const createData=(id,patient,recallDate,note)=>{
-        return {id,patient,recallDate,note};
+    const createData=(id,recallDate,note)=>{
+        return {id,recallDate,note};
     };
     
-    const dataColumnsName=["index","patient","recallDate","note"];
+    const dataColumnsName=["index","recallDate","note"];
     const titles=[
         t(strings.index),
-        t(strings.patient),
         t(strings.recallDate),
         t(strings.note),
     ];
@@ -123,14 +125,14 @@ const PatientRecall = () => {
         let temp=[];
         data.map((a,index)=>{
             
-            let newData=createData(a._id,a.patient.user.first_name+" "+a.patient.user.last_name,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
+            let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
             temp=temp.concat(newData);
         })
         console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getPatientRecall=async()=>{
-        const result=await PatientRecallService.getPatientRecall();
+        const result=await PatientRecallService.getPatientRecallByID(patientID);
         console.log("Get recall in useEffect:",result.data);
         if(result.success)
         {
@@ -170,9 +172,12 @@ const PatientRecall = () => {
         }
     })
     return (
-        <div className={classes.container}>
+        <React.Fragment>
+            <TreatmentMenu patientID = { patientID }/>
+
+            <div className={classes.container}>
             
-            <div className={classes.content}>
+                <div className={classes.content}>
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography className={classes.title} variant="h4">
@@ -233,11 +238,11 @@ const PatientRecall = () => {
                     
                     
                 
-                <Container style={{marginLeft:"10px"}}>
+                <Container className={classes.containerTable}>
                     {insertPatientRecall===true && isEdited=== false ?
                         <InsertPatientRecall
                                 handleChangeIsInsert={handleChangeIsInsert}
-
+                                patientID={patientID}
 
                         />
                         : isEdited===true &&selectedRowData!==null ?
@@ -245,6 +250,7 @@ const PatientRecall = () => {
                                         editable={editable}
                                         id={selectedRowData.id}
                                         handleChangeIsUpdate={handleChangeIsUpdate}
+                                        patientID={patientID}
 
                         />
                         :
@@ -264,9 +270,11 @@ const PatientRecall = () => {
                 </Container>
                 
             </div>
-            
+            <Footer/>
+
         </div>
+        </React.Fragment>
     )
 }
 
-export default PatientRecall;
+export default PatientRecallPage;

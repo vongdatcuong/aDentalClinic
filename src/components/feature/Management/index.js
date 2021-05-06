@@ -74,7 +74,7 @@ import Template from "../Template";
 import TabPanel from "../../../layouts/TabPanel";
 import Footer from "../../../layouts/Footer";
 import InsertPerson from "../InsertPerson";
-import PatientRecall from "../PatientRecall";
+// import PatientRecall from "../PatientRecallPage";
 const useStyles = makeStyles(styles);
 function a11yProps(index) {
   return {
@@ -91,7 +91,7 @@ const Management = () => {
 
     const managements = ["providers", "staffs", "schedule", "procedure", "chairs", "referral",
                       "practices","authentication",
-                      "templates","drug","patientRecall"];
+                      "templates","drug"];
     let curManagement = managements.indexOf(management);
     if (curManagement == -1){
       history.push(routePaths.managementsPath + "/providers");
@@ -124,7 +124,7 @@ const Management = () => {
         t(strings.templates),
         t(strings.drug),
         //t(strings.portal),
-        t(strings.recall),
+        // t(strings.recall),
       ];
     const srcs=[
         DentalProvider,
@@ -137,7 +137,7 @@ const Management = () => {
         AuthenticationImage,
         TemplatesImage,
         DrugImage,
-        RecallImage,
+        // RecallImage,
         //PortalImage,
     ];
     const tablePanels=[
@@ -151,7 +151,7 @@ const Management = () => {
         <Authentication/>,
         <Template/>,
         <Drug />,
-        <PatientRecall />
+        // <PatientRecall />
         //<Portal/>,
     ];
     return (

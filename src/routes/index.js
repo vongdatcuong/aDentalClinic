@@ -37,7 +37,7 @@ import PatientAddXRayImagesPage from "../components/feature/PatientAddXRayImages
 import PatientViewXRayImagesPage from "../components/feature/PatientViewXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import PatientPrescriptionPage from "../components/feature/PatientPrescriptionPage";
-
+import PatientRecallPage from '../components/feature/PatientRecallPage';
 import ToothOverviewInfoPage from "../components/feature/ToothOverviewInfoPage";
 import PatientInfoPage from '../components/feature/PatientInfoPage';
 import Report from '../components/feature/Report';
@@ -48,6 +48,10 @@ import { keys } from "@material-ui/core/styles/createBreakpoints";
 function PatientProfile() {
     let { patientID } = useParams();
     return <PatientProfilePage patientID={patientID}/>;
+}
+function PatientRecall() {
+  let { patientID } = useParams();
+  return <PatientRecallPage patientID={patientID}/>;
 }
 function PatientInfo() {
     let { patientID } = useParams();
@@ -207,6 +211,11 @@ function Routes() {
       <PrivateRoute path={path.patientProfilePath}>
         <PageContainer>
           <PatientProfile />
+        </PageContainer>
+      </PrivateRoute>
+      <PrivateRoute path={path.patientRecallPath}>
+        <PageContainer>
+          <PatientRecall />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientInfoPath}>

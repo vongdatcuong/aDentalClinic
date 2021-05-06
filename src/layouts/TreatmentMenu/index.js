@@ -23,7 +23,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
 import ListIcon from '@material-ui/icons/List';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
-
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import { FaTeeth, FaXRay } from "react-icons/fa";
 
 // Components
@@ -79,6 +79,11 @@ const TreatmentMenu = ({ patientID }) => {
       link: path.patientInfoPath.replace(':patientID', patientID),
       text: t(strings.info),
       icon: <ContactPhoneIcon />,
+    },
+    {
+      link: path.patientRecallPath.replace(':patientID', patientID),
+      text: t(strings.recall),
+      icon: <AccessAlarmIcon />,
     },
   ];
   const links = <LinkList links={pathList} />;
