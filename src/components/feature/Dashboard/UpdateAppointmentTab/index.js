@@ -100,6 +100,7 @@ const UpdateAppointmentTab = ({
 
     const [chairID, setChairID] = useState("");
     const [date, setDate] = useState(new Date());
+    const [oriDate, setOriDate] = useState(new Date());
 
     const [providerErrMsg, setProviderErrMsg] = useState("");
     const [dateErrMsg, setDateErrMsg] = useState("");
@@ -189,6 +190,7 @@ const UpdateAppointmentTab = ({
                     newDate.setHours(Number(appointTime.slice(0, 2)));
                     newDate.setMinutes(Number(appointTime.slice(2)));
                     setDate(newDate);
+                    setOriDate(newDate);
 
                     // Chair
                     setChairID(appointment.chair._id);
@@ -254,12 +256,16 @@ const UpdateAppointmentTab = ({
 
     const handleOnDateChange = (date) => {
         setDate(date._d);
-        setRecalls([]);
-        setTreatments([]);
+        if (date._d.getTime() == oriDate.getTime()){
+            setRecalls([...oriRecalls]);
+            setTreatments([...oriTreatments]);
+        } else {
+            setRecalls([]);
+            setTreatments([]);
+        }
 
         // Load provider
         setFakeTempProvi(fakeTempProvi + 1);
-        setProvider(noneOption);
     }
 
     const handleOnTimeChange = (date) => {
@@ -309,7 +315,7 @@ const UpdateAppointmentTab = ({
             // Update appointment
             const selectedAppointStartMoment = moment(date);
             if (selectedAppointStartMoment.isValid()){
-                // Patient Dât
+                // Patient Data
                 const patientData = {
                     first_name: firstNameRef.current.value,
                     last_name: lastNameRef.current.value,
@@ -400,36 +406,39 @@ const UpdateAppointmentTab = ({
         return new Promise(async (resolve) => {
             try {
                 let options = [];
-                const result = await api.httpGet({
-                    url: apiPath.staff.staff + apiPath.common.autocomplete,
-                    query: {
-                        data: inputValue,
-                        limit: figures.autocomplete.limit,
-                        staffType: lists.staff.staffType.provider,
-                        date: ConvertDateTimes.formatDate(date, strings.apiDateFormat)
-                    }
-                });
-                if (result.success){
-                    let newPatientProviderIdx = -1;
-                    options = result.payload.map((option, index) => {
-                        if (patient && option._id === patient.provider){
-                            newPatientProviderIdx = index;
-                        }
-                        return {
-                            value: option._id,
-                            label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                if (date){
+                    const result = await api.httpGet({
+                        url: apiPath.staff.staff + apiPath.common.autocomplete,
+                        query: {
+                            data: inputValue,
+                            limit: figures.autocomplete.limit,
+                            staffType: lists.staff.staffType.provider,
+                            date: ConvertDateTimes.formatDate(date, strings.apiDateFormat)
                         }
                     });
-                    // Set Patient default's Provider
-                    /*if (newPatientProviderIdx != -1){
-                        setProvider({...options[newPatientProviderIdx]});
-                    } else {
-                        if (provider && provider.value){
-                            setProvider(noneOption);
-                        }
-                    }*/
+                    if (result.success){
+                        let newPatientProviderIdx = -1;
+                        options = result.payload.map((option, index) => {
+                            if (patient && option._id === patient.provider){
+                                newPatientProviderIdx = index;
+                            }
+                            return {
+                                value: option._id,
+                                label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                            }
+                        });
+                        // Set Patient default's Provider
+                        /*if (newPatientProviderIdx != -1){
+                            setProvider({...options[newPatientProviderIdx]});
+                        } else {
+                            if (provider && provider.value){
+                                setProvider(noneOption);
+                            }
+                        }*/
+                    }
+                    options.unshift({...provider});
+                    options.unshift({value: -1, label: t(strings.none)});
                 }
-                options.unshift({value: -1, label: t(strings.none)});
                 resolve(options);
             } catch(err){
                 toast.error(err);

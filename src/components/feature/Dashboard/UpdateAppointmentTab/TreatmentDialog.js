@@ -190,7 +190,7 @@ const TreatmentDialog = ({
     setOriginalSelectedTreatments([...loadedTreatmentIDs]);
     if (patientID){
       const selectedDateStr = ConvertDateTimes.formatDate(selectedDate, strings.defaultDateFormat);
-      if (patientID != lastPatientID || selectedDateStr != lastSelectedDate){
+      if (1 || patientID != lastPatientID || selectedDateStr != lastSelectedDate){
         try {
           setIsLoading(true);
           const promises = [
@@ -204,8 +204,8 @@ const TreatmentDialog = ({
           ];
           const result = await Promise.all(promises);
           if (result[0].success){
-            setLastPatientID(patientID);
-            setLastSelectedDate(selectedDateStr);
+            //setLastPatientID(patientID);
+            //setLastSelectedDate(selectedDateStr);
             const columnss = result[0].payload.map((treatment) => {
               const assistant = treatment.assistant?.user;
               const provider = treatment.provider?.user;
@@ -228,16 +228,16 @@ const TreatmentDialog = ({
               setTreatments([]);
               setSelectedTreatments([]);
               setOriginalSelectedTreatments([]);
-              setLastPatientID("");
-              setLastSelectedDate("");
+              //setLastPatientID("");
+              //setLastSelectedDate("");
           }
         } catch(err){
             toast.error(t(strings.loadTreatmentErrMsg));
             setTreatments([]);
             setSelectedTreatments([]);
             setOriginalSelectedTreatments([]);
-            setLastPatientID("");
-            setLastSelectedDate("");
+            //setLastPatientID("");
+            //setLastSelectedDate("");
         } finally {
           setIsLoading(false);
         }
@@ -247,8 +247,8 @@ const TreatmentDialog = ({
       setTreatments([]);
       setSelectedTreatments([]);
       setOriginalSelectedTreatments([]);
-      setLastPatientID("");
-      setLastSelectedDate("");
+      //setLastPatientID("");
+      //setLastSelectedDate("");
     }
   }, [selectedTreatments, patientID, selectedDate, loadedTreatments]);
 

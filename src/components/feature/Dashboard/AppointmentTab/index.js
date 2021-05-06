@@ -290,7 +290,6 @@ const AppointmentTab = ({
 
         // Load provider
         setFakeTempProvi(fakeTempProvi + 1);
-        setProvider(noneOption);
     }
 
     const handleOnTimeChange = (date) => {
@@ -474,32 +473,34 @@ const AppointmentTab = ({
         return new Promise(async (resolve) => {
             try {
                 let options = [];
-                const result = await api.httpGet({
-                    url: apiPath.staff.staff + apiPath.common.autocomplete,
-                    query: {
-                        data: inputValue,
-                        limit: figures.autocomplete.limit,
-                        staffType: lists.staff.staffType.provider,
-                        date: ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat)
-                    }
-                });
-                if (result.success){
-                    let newPatientProviderIdx = -1;
-                    options = result.payload.map((option, index) => {
-                        if (patient && option._id === patient.provider){
-                            newPatientProviderIdx = index;
-                        }
-                        return {
-                            value: option._id,
-                            label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                if (selectedAppointStart){
+                    const result = await api.httpGet({
+                        url: apiPath.staff.staff + apiPath.common.autocomplete,
+                        query: {
+                            data: inputValue,
+                            limit: figures.autocomplete.limit,
+                            staffType: lists.staff.staffType.provider,
+                            date: ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat)
                         }
                     });
-                    // Set Patient default's Provider
-                    if (newPatientProviderIdx != -1){
-                        setProvider({...options[newPatientProviderIdx]});
-                    } else {
-                        if (provider && provider.value){
-                            setProvider(noneOption);
+                    if (result.success){
+                        let newPatientProviderIdx = -1;
+                        options = result.payload.map((option, index) => {
+                            if (patient && option._id === patient.provider){
+                                newPatientProviderIdx = index;
+                            }
+                            return {
+                                value: option._id,
+                                label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                            }
+                        });
+                        // Set Patient default's Provider
+                        if (newPatientProviderIdx != -1){
+                            setProvider({...options[newPatientProviderIdx]});
+                        } else {
+                            if (provider && provider.value){
+                                setProvider(noneOption);
+                            }
                         }
                     }
                 }

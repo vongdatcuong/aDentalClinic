@@ -267,7 +267,7 @@ const DashBoard = () => {
                     const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
 
                     // Appointment Patient Object
-                    newAppointPatientObj[appointment._id] = appointment.patient._id;
+                    newAppointPatientObj[appointment._id] = appointment.patient._id; console.log(appointment.provider)
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",
@@ -284,7 +284,7 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
-                        backgroundColor: appointment.chair.color,
+                        backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                         providerID: appointment.provider._id
                     }
                 });
@@ -434,7 +434,7 @@ const DashBoard = () => {
                             providerDisplay: (appointment.provider)? 
                                             appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                             : t(strings.no),
-                            backgroundColor: appointment.chair.color
+                            backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                         });
                     }
                 })
