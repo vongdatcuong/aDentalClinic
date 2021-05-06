@@ -37,6 +37,20 @@ class TemplateService{
             };
         }
     }
+    async getProgressNoteTemplate(){
+        try{   
+            const result = await httpGet({
+                url: apiPath.noteMacro.noteMacro + apiPath.noteMacro.progress_note,
+            });
+            return result;            
+        }
+        catch(error){
+            return {
+                success: false,
+                data: null
+            };
+        }
+    }
 
     async insert(data)
     {

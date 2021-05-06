@@ -77,7 +77,6 @@ export default function MacroCheckSelectDialog({
       medValueResult = medValueResult + "; " + medValueContent;
     }
     medValueResult = medValueResult.replace(/^;\s*|;\s*$/g, "");
-    console.log(medValueResult);
     onClose(medValueResult);
   };
 
@@ -137,10 +136,10 @@ export default function MacroCheckSelectDialog({
           color="primary"
           variant="outlined"
         >
-          Cancel
+          {t(strings.cancel)}
         </Button>
         <Button onClick={handleOk} color="primary" variant="contained">
-          Ok
+          {t(strings.ok)}
         </Button>
       </DialogActions>
     </Dialog>

@@ -18,9 +18,15 @@ const styles = (theme) => ({
     fontWeight: "bold",
     textTransform: "none",
   },
+  noteContentMacro: {
+    marginTop: theme.spacing(2),
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
   noteContentInput: {
-    marginTop: theme.spacing(5),
-  }
+    marginTop: theme.spacing(0),
+  },
 });
 
 export default styles;

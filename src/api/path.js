@@ -78,7 +78,8 @@ const referralSource={
 //note_macro
 const noteMacro={
     noteMacro:'/note-macro',
-    medical_alert: "/medical-alert"
+    medical_alert: "/medical-alert",
+    progress_note: "/progress-note",
 }
 //Images
 const image = {
