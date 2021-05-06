@@ -52,6 +52,7 @@ export default {
         "Confirm": "Confirm",
         "Start Date": "Start Date",
         "End Date": "End Date",
+        "Today": "Today",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -361,6 +362,7 @@ export default {
         "No Recall": "No Recall",
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
+        "Only mine": "Only mine",
         //Files
         "File Name": "Tên tệp",
         // Schedule

@@ -134,6 +134,9 @@ const UpdateAppointmentTab = ({
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
     //const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
+    // Temp
+    const [fakeTempProvi, setFakeTempProvi] = useState(1);
+
     useEffect(async () => {
         if (selectedAppointID){
             try {
@@ -157,7 +160,8 @@ const UpdateAppointmentTab = ({
 
                     setPatient({
                         value: patient._id,
-                        label: ""
+                        label: "",
+                        provider: appointProvider._id
                     });
                     patientIDRef.current.value = patient.patient_id;
                     firstNameRef.current.value = patientUser.first_name;
@@ -229,6 +233,7 @@ const UpdateAppointmentTab = ({
                 dispatchLoading({type: strings.setLoading, isLoading: false});
             }
         }
+        setFakeTempProvi(fakeTempProvi + 1);
     }, [selectedAppointID]);
 
     const handleOnAssistantChange = (option) => {
@@ -251,6 +256,10 @@ const UpdateAppointmentTab = ({
         setDate(date._d);
         setRecalls([]);
         setTreatments([]);
+
+        // Load provider
+        setFakeTempProvi(fakeTempProvi + 1);
+        setProvider(noneOption);
     }
 
     const handleOnTimeChange = (date) => {
@@ -396,14 +405,29 @@ const UpdateAppointmentTab = ({
                     query: {
                         data: inputValue,
                         limit: figures.autocomplete.limit,
-                        staffType: lists.staff.staffType.provider
+                        staffType: lists.staff.staffType.provider,
+                        date: ConvertDateTimes.formatDate(date, strings.apiDateFormat)
                     }
                 });
                 if (result.success){
-                    options = result.payload.map((option) => ({
-                        value: option._id,
-                        label: `${option.first_name} ${option.last_name} (${option.display_id})`
-                    }));
+                    let newPatientProviderIdx = -1;
+                    options = result.payload.map((option, index) => {
+                        if (patient && option._id === patient.provider){
+                            newPatientProviderIdx = index;
+                        }
+                        return {
+                            value: option._id,
+                            label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                        }
+                    });
+                    // Set Patient default's Provider
+                    /*if (newPatientProviderIdx != -1){
+                        setProvider({...options[newPatientProviderIdx]});
+                    } else {
+                        if (provider && provider.value){
+                            setProvider(noneOption);
+                        }
+                    }*/
                 }
                 options.unshift({value: -1, label: t(strings.none)});
                 resolve(options);
@@ -688,6 +712,7 @@ const UpdateAppointmentTab = ({
                                         value={provider || null}
                                         onChange={handleOnProviderChange}
                                         isDisabled={!isEditAppointAllowed}
+                                        key={`provider-select-${fakeTempProvi}`}
                                     />
                                     {Boolean(providerErrMsg) && 
                                         <FormHelperText
@@ -714,7 +739,7 @@ const UpdateAppointmentTab = ({
                                     fullWidth
                                     value={chairID || ""}
                                     onChange={handleOnChairChange}
-                                    disabled={!isEditAppointAllowed}
+                                    disabled
                                 >
                                 {(chairs.map((chair) => {
                                     return (

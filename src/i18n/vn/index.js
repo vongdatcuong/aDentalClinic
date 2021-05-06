@@ -52,6 +52,7 @@ export default {
         "Confirm": "Xác nhận",
         "Start Date": "Ngày BĐ",
         "End Date": "Ngày KT",
+        "Today": "Hôm nay",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -362,6 +363,7 @@ export default {
         "No Recall": "Không có lịch sử tái hẹn",
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
+        "Only mine": "Chỉ của tôi",
         //Files
         "File Name": "Tên tệp",
         // Schedule

@@ -141,9 +141,13 @@ const AppointmentTab = ({
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
     const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
+    // Temp
+    const [fakeTempProvi, setFakeTempProvi] = useState(1);
+
     useEffect(async () => {
         setDuration(selectedDuration);
-    }, [treatments, addedTreatments, patient, selectedDuration]);
+        setFakeTempProvi(fakeTempProvi + 1);
+    }, [/*treatments, addedTreatments, patient,*/ selectedDuration, selectedAppointStart]);
 
     const handleOnNewPatient = () => {
         setIsNewPatient(true);
@@ -154,6 +158,9 @@ const AppointmentTab = ({
         setHomePhone("");
         setMobile("");
         setEmail("");
+
+        setAssistant(noneOption);
+        setProvider(noneOption);
 
         setRecalls([]);
         setTreatments([]);
@@ -180,7 +187,10 @@ const AppointmentTab = ({
             dispatchLoading({ type: strings.setLoading, isLoading: true});
             const promises = [
                 api.httpGet({
-                    url: apiPath.patient.patient + '/' + option.value
+                    url: apiPath.patient.patient + '/' + option.value,
+                    query: {
+                        get_provider: true,
+                    }
                 }),
             ];
             const result = await Promise.all(promises);
@@ -189,7 +199,6 @@ const AppointmentTab = ({
                 const patient = result[0].payload;
                 const patientUser = patient?.user;
                 if (patient && patientUser){
-                    setPatient(option);
                     setIsNewPatient(false);
                     //setPatientID(patient._id || "");
                     setFirstName(patientUser.first_name || "");
@@ -205,6 +214,29 @@ const AppointmentTab = ({
                     homePhoneRef.current.value = patientUser.home_phone || noneStr;
                     mobileRef.current.value = patientUser.mobile_phone || noneStr;
                     emailRef.current.value = patientUser.email || noneStr;
+
+                    // Set Default Provider
+                    const provi = patient.provider;
+                    setPatient({...option, provider: provi._id});
+                    if (provi && provi._id){
+                        try {
+                            const res = await api.httpGet({
+                                url: apiPath.staff.schedule + apiPath.staff.provider + '/' + provi._id + '/' + ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat),
+                            })
+                            if (res.success && res.payload){
+                                const proviUser = provi.user;
+                                setProvider({
+                                    value: provi._id,
+                                    label: `${proviUser.first_name} ${proviUser.last_name} (${provi.display_id})`
+                                });
+                            } else {
+                                setProvider(noneOption);
+                            }
+                        } catch(err){
+                            console.log(err);
+                            setProvider(noneOption);
+                        }
+                    }
                 }
                 setRecalls([]);
                 setTreatments([]);
@@ -217,7 +249,7 @@ const AppointmentTab = ({
         } finally {
             dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
-    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef]);
+    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef, selectedAppointStart]);
 
     const handleOnFirstNameChange = (evt) => {
         setFirstName(evt.target.value);
@@ -255,6 +287,10 @@ const AppointmentTab = ({
         onSelectDate("date", date._d);
         setRecalls([]);
         setTreatments([]);
+
+        // Load provider
+        setFakeTempProvi(fakeTempProvi + 1);
+        setProvider(noneOption);
     }
 
     const handleOnTimeChange = (date) => {
@@ -395,7 +431,7 @@ const AppointmentTab = ({
                 if (result.success){
                     options = result.payload.map((option) => ({
                         value: option._id,
-                        label: option.first_name + " " + option.last_name
+                        label: option.first_name + " " + option.last_name,
                     }));
                 }
                 options.unshift({value: -1, label: t(strings.none)});
@@ -443,14 +479,29 @@ const AppointmentTab = ({
                     query: {
                         data: inputValue,
                         limit: figures.autocomplete.limit,
-                        staffType: lists.staff.staffType.provider
+                        staffType: lists.staff.staffType.provider,
+                        date: ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat)
                     }
                 });
                 if (result.success){
-                    options = result.payload.map((option) => ({
-                        value: option._id,
-                        label: `${option.first_name} ${option.last_name} (${option.display_id})`
-                    }));
+                    let newPatientProviderIdx = -1;
+                    options = result.payload.map((option, index) => {
+                        if (patient && option._id === patient.provider){
+                            newPatientProviderIdx = index;
+                        }
+                        return {
+                            value: option._id,
+                            label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                        }
+                    });
+                    // Set Patient default's Provider
+                    if (newPatientProviderIdx != -1){
+                        setProvider({...options[newPatientProviderIdx]});
+                    } else {
+                        if (provider && provider.value){
+                            setProvider(noneOption);
+                        }
+                    }
                 }
                 options.unshift({value: -1, label: t(strings.none)});
                 resolve(options);
@@ -794,6 +845,7 @@ const AppointmentTab = ({
                                         noOptionsMessage={() => t(strings.noOptions)}
                                         value={provider || null}
                                         onChange={handleOnProviderChange}
+                                        key={`provider-select-${fakeTempProvi}`}
                                     />
                                     {Boolean(providerErrMsg) && 
                                         <FormHelperText
@@ -820,6 +872,7 @@ const AppointmentTab = ({
                                     fullWidth
                                     value={selectedChairId || 0}
                                     onChange={onSelectChair}
+                                    disabled
                                 >
                                 {(chairs.map((chair) => {
                                     return (

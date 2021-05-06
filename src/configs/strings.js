@@ -153,6 +153,7 @@ const none = "None";
 const confirm = "Confirm";
 const startDate = "Start Date";
 const endDate = "End Date";
+const today = "Today";
 
 // Messages
 
@@ -354,6 +355,7 @@ const surface = "Surface";
 const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
+const onlyMine = "Only mine";
 
 //patient recall
 const treatment="Treatment";
@@ -447,6 +449,7 @@ export default {
     confirm,
     startDate,
     endDate,
+    today,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -713,6 +716,7 @@ export default {
     noRecall,
     noTreatment,
     nextAvailable,
+    onlyMine,
     // Date
     defaultTimeFormat,
     chartDateFormat,

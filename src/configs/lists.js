@@ -31,7 +31,8 @@ const appointment = {
 const staff = {
     staffType: {
         staff: "STAFF",
-        provider: "PROVIDER"
+        provider: "PROVIDER",
+        admin: "ADMIN"
     }
 }
 

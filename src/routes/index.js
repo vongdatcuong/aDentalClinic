@@ -124,7 +124,8 @@ function Routes() {
           <AuthorizedRoute
             components={{
               [lists.staff.staffType.staff]: <StaffDashboard/>,
-              [lists.staff.staffType.provider]: <ProviderDashboard/>
+              [lists.staff.staffType.provider]: <ProviderDashboard/>,
+              [lists.staff.staffType.admin]: <StaffDashboard/>
             }}
           />
         </PageContainer>
