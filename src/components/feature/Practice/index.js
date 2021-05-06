@@ -14,6 +14,7 @@ import {AccountBox,
         Assignment,
         Devices,
         ContactPhone,
+        TrafficRounded,
 } from "@material-ui/icons";
 //import image
 import Logo from "../../../assets/images/logo_iDental.png";
@@ -30,7 +31,7 @@ import {Grid,
     FormHelperText,
 } from '@material-ui/core';
 import {
-    KeyboardDatePicker
+    KeyboardTimePicker
 } from '@material-ui/pickers';
 import { toast } from 'react-toastify';
 
@@ -40,6 +41,7 @@ import darkTheme from "../../../themes/darkTheme";
 import strings from "../../../configs/strings";
 //import component
 import TableCustom from "../../common/TableCustom";
+import moment from 'moment';
 const useStyles = makeStyles(styles);
 
 const createData=(id,name,address,phone,fax,startTime,endTime)=>{
@@ -82,18 +84,31 @@ const Practice = () => {
     const handleChangeFax=(e)=>{
         setFax(e.target.value);
     }
-    const handleChangeStartTime=(e,date)=>{
+    const handleChangeStartTime=(date)=>{
         if(editable)
         {
             setStartTime(date);
-
+            
+            console.log("Start time:",moment(date).format("HH:mm"));
+            if(moment(date).format("HH:mm")<moment(endTime).format("HH:mm"))
+            {
+                console.log("Nho hon roi do");
+            }
         }
     }
-    const handleChangeEndTime=(e,date)=>{
+    const handleChangeEndTime=(date)=>{
         if(editable)
         {
             setEndTime(date);
-
+            console.log("End time:",date);
+            if(date>startTime)
+            {
+                console.log("Lon hon roi do");
+            }
+            else
+            {
+                console.log("nho hon hoac bang")
+            }
         }
     }
 
@@ -122,24 +137,34 @@ const Practice = () => {
     }
 
     const onClickUpdate=async()=>{
-        const data={
-            name:name,
-            address:address,
-            phone:phone,
-            fax:fax,
-            start_time:startTime,
-            end_time:endTime,
-
-        }
-        const res=await PracticeService.update(rows.id,data);
-        if(res.success)
+        let start=moment(startTime).format("HH:mm");
+        let end=moment(endTime).format("HH:mm");
+        if(start<end && editable===true)
         {
-            toast.success(t(strings.updateSuccess));
+            const data={
+                name:name,
+                address:address,
+                phone:phone,
+                fax:fax,
+                start_time:start,
+                end_time:end,
+    
+            }
+            const res=await PracticeService.update(rows.id,data);
+            if(res.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
         else
         {
-            toast.error(t(strings.updateFail));
+            toast.error(t(strings.errorStartEndTime))
         }
+        
     }
     useEffect(()=>{
         if(rows===null)
@@ -433,39 +458,39 @@ const Practice = () => {
                         
                         </div>
                         <div className={classes.inputDate}>
-                            <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label={t(strings.startTime)}
-                                    format={t(strings.apiDateFormat)}
-                                    value={startTime}
-                                    onChange={handleChangeStartTime}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        readOnly: !editable
-                                    }}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    
-                                    className={classes.inputControlSmall} 
+                            <KeyboardTimePicker
+                                margin="normal"
+                                id="time-picker"
+                                label={t(strings.startTime)}
+                                value={startTime}
+                                onChange={handleChangeStartTime}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change time',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    readOnly: !editable
+                                }}
+                                className={classes.inputControlSmall} 
+
                             />
-                            <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label={t(strings.endTime)}
-                                    format={t(strings.apiDateFormat)}
-                                    value={endTime}
-                                    onChange={handleChangeEndTime}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        readOnly: !editable,
-                                    }}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    className={classes.inputControlSmall} 
+                            <KeyboardTimePicker
+                                margin="normal"
+                                id="time-picker"
+                                label={t(strings.endTime)}
+                                value={endTime}
+                                onChange={handleChangeEndTime}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change time',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    readOnly: !editable
+                                }}
+                                className={classes.inputControlSmall} 
+
                             />
+                            
                         </div>
                         
                         {/* <div>
@@ -489,11 +514,16 @@ const Practice = () => {
                             
                         </div>
                          */}
+                        {editable===true ? 
                         <div>
                             <Button variant="contained" color="primary" className={classes.saveButton} onClick={onClickUpdate}>
                                     {t(strings.save)}
                             </Button>
                         </div>
+                        :
+                        <div></div>
+                        }
+                        
                         
                         
                     </Grid>

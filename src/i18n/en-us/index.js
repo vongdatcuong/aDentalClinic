@@ -68,6 +68,7 @@ export default {
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
+        "Time is invalid":"Time is invalid",
         "Cannot change in read mode":"Cannot change in read mode",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
