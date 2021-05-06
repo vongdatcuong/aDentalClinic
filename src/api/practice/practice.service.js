@@ -1,4 +1,4 @@
-import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
+import { httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
 import apiPath from '../path';
 
 

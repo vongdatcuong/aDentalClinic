@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+
 import TemplateService from "../../../api/template/template.service";
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -12,7 +11,6 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Dialog,
     DialogContentText,
@@ -24,14 +22,14 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTdarkTheme from "../../../themes/darkTheme";
+// import darkTdarkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -40,12 +38,12 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import GroupIcon from '@material-ui/icons/Group';
+// import GroupIcon from '@material-ui/icons/Group';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 //import component
@@ -53,7 +51,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertTemplate from "../InsertTemplate";
 import UpdateTemplate from "../UpdateTemplate";
-import { indigo } from '@material-ui/core/colors';
+// import { indigo } from '@material-ui/core/colors';
 const createData=(id,content,noteType)=>{
     return {id,content,noteType};
 };

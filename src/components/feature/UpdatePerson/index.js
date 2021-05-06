@@ -1,17 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import ProviderService from "../../../api/provider/provider.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
+import { 
     FormControlLabel,
     Checkbox,
     Button,

@@ -1,21 +1,15 @@
 import React,{useState} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    Table,
-    TableBody,
+  
     TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    TableHead,
+   
     TextField,
     InputAdornment,
-    Paper,
     Grid,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
@@ -23,7 +17,6 @@ import CreateIcon from "@material-ui/icons/Create";
 
 import styles from "./jss";
 //import configs
-import strings from "../../../../../configs/strings";
 const useStyles = makeStyles(styles);
 
 const TableCellCustom=(props)=>{

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 

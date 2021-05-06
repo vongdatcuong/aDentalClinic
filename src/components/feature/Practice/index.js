@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import PracticeService from "../../../api/practice/practice.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //import icon
 import {AccountBox,
         LocationCity,
@@ -18,7 +18,8 @@ import {AccountBox,
 } from "@material-ui/icons";
 //import image
 import Logo from "../../../assets/images/logo_iDental.png";
-import {Grid,
+import {
+    Grid,
     Typography,
     FormControl,
     OutlinedInput,
@@ -36,7 +37,7 @@ import {
 import { toast } from 'react-toastify';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import component

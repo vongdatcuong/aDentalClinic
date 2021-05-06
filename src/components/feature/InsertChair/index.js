@@ -1,27 +1,22 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import ChairService from "../../../api/chair/chair.service";
 //validators
-import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
+import { 
     FormControlLabel,
     Checkbox,
     Button,
     TextField
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs

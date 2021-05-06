@@ -1,37 +1,21 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 import {
     useParams,
     useHistory
   } from "react-router-dom";
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    TableHead,
-    Paper,
-    TextField,
-    InputLabel ,
-    InputAdornment,
-    FormControl,
-    FilledInput,
-    OutlinedInput,
+import { 
     Tabs,
     Tab,
 
  } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+// import Grid from '@material-ui/core/Grid';
+// import IconButton from '@material-ui/core/IconButton';
 
 
 import styles from "./jss";
@@ -48,13 +32,13 @@ import DentalSchedule from "../../../assets/images/calendar.png";
 import AuthenticationImage from "../../../assets/images/authentication.png";
 import TemplatesImage from "../../../assets/images/templates.png";
 import DrugImage from "../../../assets/images/drug.png";
-import PortalImage from "../../../assets/images/portal.png";
-import RecallImage from '../../../assets/images/recall.jpg';
+// import PortalImage from "../../../assets/images/portal.png";
+// import RecallImage from '../../../assets/images/recall.jpg';
 //import icons
-import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
-import AddBox from '@material-ui/icons/AddBox';
-import AccessAlarm from '@material-ui/icons/AccessAlarm';
+// import SearchIcon from '@material-ui/icons/Search';
+// import FilterList from '@material-ui/icons/FilterList';
+// import AddBox from '@material-ui/icons/AddBox';
+// import AccessAlarm from '@material-ui/icons/AccessAlarm';
 //import route
 import routePaths from '../../../routes/path';
 
@@ -63,7 +47,7 @@ import routePaths from '../../../routes/path';
 import Authentication from "../Authentication";
 import Chair from "../Chair";
 import Drug from "../Drug";
-import Portal from "../Portal";
+// import Portal from "../Portal";
 import Procedure from "../Procedure";
 import Providers from "../Providers";
 import Referral from "../Referral";
@@ -73,7 +57,7 @@ import Practice from "../Practice";
 import Template from "../Template"; 
 import TabPanel from "../../../layouts/TabPanel";
 import Footer from "../../../layouts/Footer";
-import InsertPerson from "../InsertPerson";
+// import InsertPerson from "../InsertPerson";
 // import PatientRecall from "../PatientRecallPage";
 const useStyles = makeStyles(styles);
 function a11yProps(index) {

@@ -13,20 +13,11 @@ import { useTranslation, Trans } from 'react-i18next';
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TablePagination,
-    TableRow,
-    TableHead,
-    TableFooter,
-    Paper,
+   
     InputAdornment,
     FormControl,
     OutlinedInput,
     Divider,
-    Tooltip,
     Select,
     MenuItem,
     Button,
@@ -42,14 +33,13 @@ import PropTypes from 'prop-types';
 import styles from "./jss";
 
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+
 import PatientService from "../../../api/patient/patient.service";
 //import image
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
