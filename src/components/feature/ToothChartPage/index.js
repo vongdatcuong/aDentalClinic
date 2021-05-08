@@ -62,7 +62,7 @@ const ToothChartPage = ({ patientID }) => {
 
   useEffect(() => {
     fetchToothCondition();
-  }, []);
+  }, [toothCondition]);
   const fetchToothCondition = async () => {
     try {
       const result = await ToothService.getAllPatientTooth(patientID);
