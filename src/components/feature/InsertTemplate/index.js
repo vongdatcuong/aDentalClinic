@@ -101,13 +101,13 @@ const InsertTemplate = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                          
                                         placeholder={t(strings.content)}  
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
-                                       
+                                        multiline
                                         /> 
                         </div>
                         <div className={classes.item}>

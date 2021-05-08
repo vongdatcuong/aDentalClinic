@@ -172,7 +172,7 @@ const Template = () => {
     const chooseMedicalAlert=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            if(a.noteType==="MEDICAL_ALERT")
+            if(a.noteType==="MEDICAL_ALERT" || a.noteType==="MEDICAL ALERT")
             temp=temp.concat(a);
         })
         setRowsMedicalAlert(temp);
@@ -205,7 +205,7 @@ const Template = () => {
     }
     const getTemplate=async()=>{
         const result=await TemplateService.getTemplate();
-        //console.log("Get template in useEffect",result.data);
+        console.log("Get template in useEffect",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -268,13 +268,13 @@ const Template = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                //console.log("Check selected row data:",rowsWithType[selectedRow]);
+                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                //console.log("Check selected row data:",rowsWithType[selectedRow]);
+                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
 
 
@@ -401,6 +401,7 @@ const Template = () => {
                                 id={selectedRowData.id}
                                 editable={editable}
                                 handleChangeIsUpdate={handleChangeIsUpdate}
+                                contentBig={selectedRowData.noteType === "MEDICAL ALERT" ? false:true}
                             />
                             :
     

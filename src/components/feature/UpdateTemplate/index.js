@@ -43,32 +43,32 @@ const UpdateTemplate = (props) => {
     //state
    
     const [content,setContent]=useState(null);
-    const [noteType,setNoteType]=useState(null);
-    const [listTypeTemplate,setListTypeTemplate]=useState([
-        "TREATMENT",
-        "MEDICAL ALERT",
-        "PROGRESS",
-    ]);
+    // const [noteType,setNoteType]=useState(null);
+    // const [listTypeTemplate,setListTypeTemplate]=useState([
+    //     "TREATMENT",
+    //     "MEDICAL ALERT",
+    //     "PROGRESS",
+    // ]);
 
     const handleChangeContent=(e)=>{
         setContent(e.target.value);
     }
-    const handleChangeNoteType=(e)=>{
-        setNoteType(e.target.value);
-    }
+    // const handleChangeNoteType=(e)=>{
+    //     setNoteType(e.target.value);
+    // }
 
-    const renderListTypeTemplate=()=>{
-        return listTypeTemplate.map((item,index)=>{
-            return  <MenuItem value={item}>{item}</MenuItem>
+    // const renderListTypeTemplate=()=>{
+    //     return listTypeTemplate.map((item,index)=>{
+    //         return  <MenuItem value={item}>{item}</MenuItem>
 
-        })
-    }
+    //     })
+    // }
     const onClickUpdate=async()=>{
-        if(props.editable===true && content!==null && content !=='' && noteType!==null)
+        if(props.editable===true && content!==null && content !=='' )
         {
             const data={
                 content:content,
-                note_type:noteType
+                // note_type:noteType
               
             };
             //console.log("Data check onclick:",data);
@@ -97,7 +97,7 @@ const UpdateTemplate = (props) => {
             if(result.success)
             {
                 setContent(result.data.payload.content);
-                setNoteType(result.data.payload.note_type);
+                // setNoteType(result.data.payload.note_type);
             }
         }
         if(props.id && content===null)
@@ -117,13 +117,14 @@ const UpdateTemplate = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={props.contentBig===true ? classes.inputControlBig : classes.inputControl} 
                                          
                                         placeholder={t(strings.content)}  
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
                                         inputProps={{ readOnly: !props.editable }}
+                                        multiline={props.contentBig}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -135,7 +136,7 @@ const UpdateTemplate = (props) => {
                                         value={noteType}
                                         
                                         />  */}
-                            {listTypeTemplate.length!==0 ?
+                            {/* {listTypeTemplate.length!==0 ?
 
                             <Select
                                 value={noteType}
@@ -153,7 +154,7 @@ const UpdateTemplate = (props) => {
                             </Select>
                             :
                             <div></div>
-                            }
+                            } */}
                         </div>
                        
                         
