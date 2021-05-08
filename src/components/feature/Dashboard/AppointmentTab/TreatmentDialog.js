@@ -199,6 +199,7 @@ const TreatmentDialog = ({
                   query: {
                     get_staff: true,
                     query_date: ConvertDateTimes.formatDate(selectedDate, strings.apiDateFormat),
+                    link: true,
                   }
               }),
           ];

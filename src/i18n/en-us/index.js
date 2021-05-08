@@ -53,6 +53,7 @@ export default {
         "Start Date": "Start Date",
         "End Date": "End Date",
         "Today": "Today",
+        "Next S": "Next",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -121,6 +122,8 @@ export default {
         "This is a holiday": "This is a holiday",
         "Add Appointment fail": "Add Appointment fail",
         "Update Appointment fail": "Update Appointment fail",
+        "Get Next Available Date fail": "Get Next Available Date fail",
+        "Provider not working in the near future": "Provider not working in the near future",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",
@@ -363,6 +366,7 @@ export default {
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
         "Only mine": "Only mine",
+        "Next Available date for default provider": "Next available Date for default provider",
         //Files
         "File Name": "Tên tệp",
         // Schedule

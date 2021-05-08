@@ -88,6 +88,10 @@ const appointmentTabStyle = (theme) => ({
     },
     autocompleteLabel: {
         fontSize: '12px'
+    },
+    nextBtn: {
+        top: theme.spacing(1),
+        height: 40
     }
 });
   

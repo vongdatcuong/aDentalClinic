@@ -53,6 +53,7 @@ export default {
         "Start Date": "Ngày BĐ",
         "End Date": "Ngày KT",
         "Today": "Hôm nay",
+        "Next S": "T.THEO",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -120,6 +121,8 @@ export default {
         "This is a holiday": "Đây là ngày nghỉ",
         "Add Appointment fail": "Thêm cuộc hẹn thất bại",
         "Update Appointment fail": "Cập nhật cuộc hẹn thất bại",
+        "Get Next Available Date fail": "Lấy ngày khả dụng tiếp theo thất bại",
+        "Provider not working in the near future": "Bác sỹ không có lịch làm việc sắp tới",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",
@@ -364,6 +367,7 @@ export default {
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
         "Only mine": "Chỉ của tôi",
+        "Next Available date for default provider": "Ngày hẹn có thể cho bác sỹ mặc định",
         //Files
         "File Name": "Tên tệp",
         // Schedule

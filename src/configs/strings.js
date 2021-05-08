@@ -154,6 +154,7 @@ const confirm = "Confirm";
 const startDate = "Start Date";
 const endDate = "End Date";
 const today = "Today";
+const nextS = "Next S";
 
 // Messages
 
@@ -221,6 +222,8 @@ const deleteAppointmentErrMsg = "Delete Appointment fail";
 const thisIsAHolidayErrMsg = "This is a holiday";
 const addAppointmentErrMsg = "Add Appointment fail";
 const updateAppointmentErrMsg = "Update Appointment fail";
+const nextAvaiDateErrMsg = "Get Next Available Date fail";
+const providerNotWorkingErrMsg = "Provider not working in the near future";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -356,6 +359,7 @@ const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
 const onlyMine = "Only mine";
+const nextDateProvider = "Next Available date for default provider";
 
 //patient recall
 const treatment="Treatment";
@@ -450,6 +454,7 @@ export default {
     startDate,
     endDate,
     today,
+    nextS,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -515,6 +520,8 @@ export default {
     addAppointmentErrMsg,
     updateAppointmentErrMsg,
     changePwdErrMsg,
+    nextAvaiDateErrMsg,
+    providerNotWorkingErrMsg,
     // Settings Error Messages
     changeLanguageErrMsg,
     changeThemeErrMsg,
@@ -717,6 +724,7 @@ export default {
     noTreatment,
     nextAvailable,
     onlyMine,
+    nextDateProvider,
     // Date
     defaultTimeFormat,
     chartDateFormat,

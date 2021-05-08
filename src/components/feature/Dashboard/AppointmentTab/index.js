@@ -32,6 +32,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // @material-ui/core Datepicker
 import { DatePicker, TimePicker  } from "@material-ui/pickers";
@@ -50,6 +51,7 @@ import AddTreatmentDialog from './AddTreatmentDialog';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import AddIcon from '@material-ui/icons/Add';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 // Utils
 import ConvertDateTimes from '../../../../utils/datetimes/convertDateTimes';
@@ -598,6 +600,42 @@ const AppointmentTab = ({
         noteRef.current.value = "";
     }
 
+    // Next available date
+    const handleGetNextAvailableDate = useCallback(async () => {
+        if (!patient?.provider){
+            return;
+        }
+        try {
+            dispatchLoading({ type: strings.setLoading, isLoading: true});
+            const prevDate = selectedAppointStart;
+            const promises = [
+                api.httpGet({
+                    url: apiPath.staff.schedule + apiPath.staff.provider + apiPath.staff.nextAvailableDate + '/' + patient.provider,
+                    query: {
+                        date: ConvertDateTimes.formatDate(selectedAppointStart || new Date(), strings.apiDateFormat)
+                    }
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                if (result[0].payload){
+                    const newDate = new Date(result[0].payload);
+                    newDate.setHours(prevDate.getHours());
+                    newDate.setMinutes(prevDate.getMinutes());
+                    handleOnDateChange(moment(newDate));
+                } else {
+                    toast.error(t(strings.providerNotWorkingErrMsg));
+                }
+            } else {
+                toast.error(result.message);
+            }
+        } catch(err){
+            toast.error(t(strings.nextAvaiDateErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
+        }
+    }, [selectedAppointStart, patient]);
+
     return (
         <Paper p={2} className={classes.paper}>
             <IconButton aria-label="back" className={classes.backBtn} onClick={handleOnCloseTab}>
@@ -906,7 +944,7 @@ const AppointmentTab = ({
                                 </Select>
                             </Grid>
                             {/* Schedule Date */}
-                            <Grid item md={6} sm={6} xs={6}>
+                            <Grid item md={4} sm={4} xs={4}>
                                 <DatePicker
                                     label={t(strings.date)}
                                     id="schedule-date"
@@ -926,8 +964,23 @@ const AppointmentTab = ({
                                     error={Boolean(dateErrMsg)}
                                 />
                             </Grid>
+                            <Grid item md={3} sm={3} xs={3}>
+                                <FormControl>
+                                    <Tooltip title={t(strings.nextDateProvider)} aria-label="next-date">
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            className={classes.nextBtn}
+                                            endIcon={<DateRangeIcon></DateRangeIcon>}
+                                            onClick={handleGetNextAvailableDate}
+                                        >
+                                            {t(strings.nextS)}
+                                        </Button>
+                                    </Tooltip>
+                                </FormControl>
+                            </Grid>
                             {/* Schedule Time */}
-                            <Grid item md={6} sm={6} xs={6}>
+                            <Grid item md={5} sm={5} xs={5}>
                                 <TimePicker 
                                     label={`${t(strings.time)} (${startDayHour}h -- ${endDayHour}h)`}
                                     id="schedule-time"
