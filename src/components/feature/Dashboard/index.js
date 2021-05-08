@@ -164,7 +164,7 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
-                        backgroundColor: appointment.chair.color,
+                        backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                     }
                 });
                 setAppointments(appointmentss);
@@ -287,7 +287,7 @@ const DashBoard = () => {
                         providerDisplay: (appointment.provider)? 
                                         appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                         : t(strings.no),
-                        backgroundColor: appointment.chair.color
+                        backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                     }
                 });
                 setAppointments(appointmentss);
@@ -503,7 +503,7 @@ const DashBoard = () => {
                     providerDisplay: (appointment.provider)? 
                                     appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                     : t(strings.no),
-                    backgroundColor: appointment.chair.color
+                    backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                 });
                 setAppointments(newAppointments);
                 resetFieldsFunc();
@@ -572,7 +572,7 @@ const DashBoard = () => {
                             providerDisplay: (appointment.provider)? 
                                             appointment.provider.user.first_name + " " + appointment.provider.user.last_name + " (" + appointment.provider.display_id + ")"
                                             : t(strings.no),
-                            backgroundColor: appointment.chair.color
+                            backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                         });
                     }
                 })

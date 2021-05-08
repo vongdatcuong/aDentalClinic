@@ -18,6 +18,7 @@ const staff={
     staff:'/staff',
     provider:'/provider',
     schedule: '/schedule',
+    nextAvailableDate: '/next_available_date'
 }
 //patient
 const patient={
