@@ -88,6 +88,7 @@ import {hexToRgb} from '../utils/colors';
   const scheduleMonthlyItemColor = "#8c8daf";
   const scheduleWeeklyItemColor = "#ba9187";
   const scheduleAutoItemColor = "#639f88";
+  const pageBackgroundColor = "#fafafa";
 
   // Google map
   const mapMinWidth = 500;
@@ -271,6 +272,7 @@ export default {
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,
+  pageBackgroundColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

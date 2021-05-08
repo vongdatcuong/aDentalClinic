@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState,useEffect} from 'react';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import clsx from 'clsx';
 
@@ -24,6 +24,10 @@ import { AiFillThunderbolt } from "react-icons/ai";
 // Component
 import PopupChat from "../../../common/Messenger/PopupChat";
 import TabPanel from "../../../common/TabPanel";
+// Toast
+import { toast } from 'react-toastify';
+
+import ToothService from "../../../../api/patient/tooth.service";
 
 function a11yProps(index) {
   return {
@@ -50,9 +54,42 @@ const EndodonticItem = (props) => {
 
 const useStyles = makeStyles(styles);
 const ToothOverviewInfoTab = (props) => {
+  const toothNumber = props.toothID ? parseInt(props.toothID.replace("Tooth","")) : 0;    // parse Tooth1 to 1
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [toothNote, setToothNote] = useState(null);
+  const [toothCold, setToothCold] = useState(-1);
+  const [toothPercussion, setToothPercussion] = useState(-1);
+  const [toothPalpation, setToothPalpation] = useState(-1);
+  const [toothHeat, setToothHeat] = useState(-1);
+  const [toothEletricity, setToothEletricity] = useState(-1);
+
+  useEffect(() => {
+    fetchToothData();
+  }, []);
+
+  const fetchToothData = async () => {
+    try {
+      const result = await ToothService.getSinglePatientTooth(
+        props.patientID,toothNumber
+      );
+      if (result.success) {
+        setToothNote(result.data[0].tooth_note);
+        setToothCold(result.data[0].cold);
+        setToothPercussion(result.data[0].percussion);
+        setToothPalpation(result.data[0].palpation);
+        setToothHeat(result.data[0].heat);
+        setToothEletricity(result.data[0].electricity);
+        return true;
+      }
+      toast.error(result.message);
+      return false;
+    } catch (err) {
+      toast.error(t(strings.errorLoadData));
+      return false;
+    }
+  };
 
   const endodonticList = [
     {
@@ -84,6 +121,42 @@ const ToothOverviewInfoTab = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  async function updateTooth(toothCold,toothPercussion,toothPalpation,toothHeat,toothEletricity) {
+    try {
+      const result = await ToothService.update(props.patientID,toothNumber, {
+        cold: toothCold,
+        percussion: toothPercussion,
+        palpation: toothPalpation,
+        heat: toothHeat,
+        electricity: toothEletricity,
+      });
+      if (result.success) {
+        //fetchNotes();
+        return true;
+      }
+      toast.error(result.message);
+      return false;
+    } catch (err) {
+      toast.error(t(strings.updateFail));
+      return false;
+    }
+  };
+  useEffect(() => { // apply when change status
+    updateTooth(toothCold,toothPercussion,toothPalpation,toothHeat,toothEletricity);
+  }, [toothCold,toothPercussion,toothPalpation,toothHeat,toothEletricity]);
+//   useEffect(() => {
+//     console.log("toothPercussion: ", toothPercussion);
+//   }, [toothPercussion]);
+//   useEffect(() => {
+//     console.log("toothPalpation: ", toothPalpation);
+//   }, [toothPalpation]);
+//   useEffect(() => {
+//     console.log("toothHeat: ", toothHeat);
+//   }, [toothHeat]);
+//   useEffect(() => {
+//     console.log("toothEletricity: ", toothEletricity);
+//   }, [toothEletricity]);
 
   return (
     <TabPanel
@@ -169,19 +242,19 @@ const ToothOverviewInfoTab = (props) => {
                 <div className={classes.testTitle}>
                     <div>{t(strings.cold)} {t(strings.test)}</div>
                     <div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothCold(1)}} variant="contained" size="large" className={clsx(classes.testBtns, toothCold === 1 ? classes.selectedBtn : "")}>
                         {t(strings.positive)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothCold(2)}} variant="contained" size="large" className={clsx(classes.testBtns, toothCold === 2 ? classes.selectedBtn : "")}>
                         {t(strings.uncertain)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothCold(3)}} variant="contained" size="large" className={clsx(classes.testBtns, toothCold === 3 ? classes.selectedBtn : "")}>
                         {t(strings.negative)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothCold(0)}} variant="contained" size="large" className={clsx(classes.testBtns, toothCold === 0 ? classes.selectedBtn : "")}>
                         {t(strings.notApplicable)}
                         </Button></div>
-                        <div><Button size="large" className={classes.clearBtn}>
+                        <div><Button onClick={()=>{setToothCold(-1)}} size="large" className={classes.clearBtn}>
                         {t(strings.clear)}
                         </Button></div>
                     </div>
@@ -191,19 +264,19 @@ const ToothOverviewInfoTab = (props) => {
                 <div className={classes.testTitle}>
                   {t(strings.percussion)} {t(strings.test)}
                   <div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPercussion(1)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPercussion === 1 ? classes.selectedBtn : "")}>
                         {t(strings.positive)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPercussion(2)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPercussion === 2 ? classes.selectedBtn : "")}>
                         {t(strings.uncertain)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPercussion(3)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPercussion === 3 ? classes.selectedBtn : "")}>
                         {t(strings.negative)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPercussion(0)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPercussion === 0 ? classes.selectedBtn : "")}>
                         {t(strings.notApplicable)}
                         </Button></div>
-                        <div><Button size="large" className={classes.clearBtn}>
+                        <div><Button onClick={()=>{setToothPercussion(-1)}} size="large" className={classes.clearBtn}>
                         {t(strings.clear)}
                         </Button></div>
                     </div>
@@ -213,19 +286,19 @@ const ToothOverviewInfoTab = (props) => {
                 <div className={classes.testTitle}>
                   {t(strings.palpation)} {t(strings.test)}
                   <div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPalpation(1)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPalpation === 1 ? classes.selectedBtn : "")}>
                         {t(strings.positive)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPalpation(2)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPalpation === 2 ? classes.selectedBtn : "")}>
                         {t(strings.uncertain)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPalpation(3)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPalpation === 3 ? classes.selectedBtn : "")}>
                         {t(strings.negative)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothPalpation(0)}} variant="contained" size="large" className={clsx(classes.testBtns, toothPalpation === 0 ? classes.selectedBtn : "")}>
                         {t(strings.notApplicable)}
                         </Button></div>
-                        <div><Button size="large" className={classes.clearBtn}>
+                        <div><Button onClick={()=>{setToothPalpation(-1)}} size="large" className={classes.clearBtn}>
                         {t(strings.clear)}
                         </Button></div>
                     </div>
@@ -235,19 +308,19 @@ const ToothOverviewInfoTab = (props) => {
                 <div className={classes.testTitle}>
                   {t(strings.heat)} {t(strings.test)}
                   <div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothHeat(1)}} variant="contained" size="large" className={clsx(classes.testBtns, toothHeat === 1 ? classes.selectedBtn : "")}>
                         {t(strings.positive)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothHeat(2)}} variant="contained" size="large" className={clsx(classes.testBtns, toothHeat === 2 ? classes.selectedBtn : "")}>
                         {t(strings.uncertain)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothHeat(3)}} variant="contained" size="large" className={clsx(classes.testBtns, toothHeat === 3 ? classes.selectedBtn : "")}>
                         {t(strings.negative)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothHeat(0)}} variant="contained" size="large" className={clsx(classes.testBtns, toothHeat === 0 ? classes.selectedBtn : "")}>
                         {t(strings.notApplicable)}
                         </Button></div>
-                        <div><Button size="large" className={classes.clearBtn}>
+                        <div><Button onClick={()=>{setToothHeat(-1)}} size="large" className={classes.clearBtn}>
                         {t(strings.clear)}
                         </Button></div>
                     </div>
@@ -257,19 +330,19 @@ const ToothOverviewInfoTab = (props) => {
                 <div className={classes.testTitle}>
                   {t(strings.electricity)} {t(strings.test)}
                   <div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothEletricity(1)}} variant="contained" size="large" className={clsx(classes.testBtns, toothEletricity === 1 ? classes.selectedBtn : "")}>
                         {t(strings.positive)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothEletricity(2)}} variant="contained" size="large" className={clsx(classes.testBtns, toothEletricity === 2 ? classes.selectedBtn : "")}>
                         {t(strings.uncertain)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothEletricity(3)}} variant="contained" size="large" className={clsx(classes.testBtns, toothEletricity === 3 ? classes.selectedBtn : "")}>
                         {t(strings.negative)}
                         </Button></div>
-                        <div><Button variant="contained" size="large" className={classes.testBtns}>
+                        <div><Button onClick={()=>{setToothEletricity(0)}} variant="contained" size="large" className={clsx(classes.testBtns, toothEletricity === 0 ? classes.selectedBtn : "")}>
                         {t(strings.notApplicable)}
                         </Button></div>
-                        <div><Button size="large" className={classes.clearBtn}>
+                        <div><Button onClick={()=>{setToothEletricity(-1)}} size="large" className={classes.clearBtn}>
                         {t(strings.clear)}
                         </Button></div>
                     </div>

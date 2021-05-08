@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState,useEffect} from 'react';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {useParams, useHistory} from "react-router-dom";
 // @material-ui/core Component
@@ -43,6 +43,11 @@ import AdultToothChart from "../../common/ToothChart/AdultToothChart.js";
 import path from "../../../routes/path";
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 
+// Toast
+import { toast } from 'react-toastify';
+
+import ToothService from "../../../api/patient/tooth.service";
+
 const useStyles = makeStyles(styles);
 
 const ToothChartPage = ({ patientID }) => {
@@ -53,6 +58,29 @@ const ToothChartPage = ({ patientID }) => {
   const [disabledOverviewUndoBtn, setDisabledOverviewUndoBtn] = React.useState(true);
 
   const [selectedTooth, setSelectedTooth] = React.useState([]);
+  const [toothCondition, setToothCondition] = React.useState([]);
+
+  useEffect(() => {
+    fetchToothCondition();
+  }, [toothCondition]);
+  const fetchToothCondition = async () => {
+    try {
+      const result = await ToothService.getAllPatientTooth(patientID);
+      if (result.success) {
+        let tempArray = [];
+        result.data.forEach(tooth => {
+            tempArray[tooth.tooth_number - 1] = tooth.condition || "NONE";
+        });
+        setToothCondition(tempArray);
+        return true;
+      }
+      toast.error(result.message);
+      return false;
+    } catch (err) {
+      toast.error(t(strings.errorLoadData));
+      return false;
+    }
+  };
 
   const handleClickToothOverview = (toothID) => {
     history.push(path.toothOverviewInfoPath.replace(':patientID', patientID) + `?toothID=${toothID}`);
@@ -60,49 +88,80 @@ const ToothChartPage = ({ patientID }) => {
   }
 
   const handleSelectToothQuickselect = (toothID) => {
-    // push tooth ID
-    selectedTooth.push(toothID);
-    if (!showQuickselectMenu) {
-        setShowQuickselectMenu(true);
+    if (selectedTooth.includes(toothID)) {  // selected
+        // pop tooth ID
+        let pos = selectedTooth.indexOf(toothID);
+        let removedItem = selectedTooth.splice(pos, 1);
+        setSelectedTooth(selectedTooth.slice());
+        if (selectedTooth.length === 0) {
+            setShowQuickselectMenu(false);
+        }
     }
-  }
-  const handleDeselectToothQuickselect = (toothID) => {
-    // pop tooth ID
-    let pos = selectedTooth.indexOf(toothID);
-    let removedItem = selectedTooth.splice(pos, 1);
-    if (selectedTooth.length === 0) {
-        setShowQuickselectMenu(false);
+    else {                                  // unselected
+        // push tooth ID
+        selectedTooth.push(toothID);
+        setSelectedTooth(selectedTooth.slice());
+        if (!showQuickselectMenu) {
+            setShowQuickselectMenu(true);
+        }
     }
   }
 
+  const updateSelectedToothCondition = async (condition) => { // cập nhật trạng thái răng cho phần quickselect
+    let toothNumberArray = [];
+    selectedTooth.forEach(tooth => {
+        toothNumberArray.push(parseInt(tooth.replace("Tooth","")));   // chuyển mảng có dạng ["Tooth1", "Tooth2"] thành [1,2]
+    });
+    try {
+      const result = await ToothService.updateMultipleTooth(
+        patientID,
+        toothNumberArray, 
+        {
+            condition: condition,
+        }
+      );
+      if (result.success) {
+          // rerender lại toothCondition
+        //   let tempCondition = toothCondition.slice();
+        //   toothNumberArray.forEach(toothNumber => {
+        //     tempCondition[toothNumber-1] = condition;
+        //     setToothCondition(tempCondition);
+        //   });
+        return true;
+      }
+      //toast.error(result.message);
+      return false;
+    } catch (err) {
+      //toast.error(t(strings.errorLoadData));
+      return false;
+    }
+  };
+
   const handleClickToothMissing = () => {
-    // Todo: update tooth status and rerender
-    console.log("selected: " + selectedTooth);
-    console.log("Missing");
+    updateSelectedToothCondition("MISSING");
     clearSelectedTooth();
   }
   const handleClickToothVeneer = () => {
-    // Todo: update tooth status and rerender
+    updateSelectedToothCondition("VENEER");
     clearSelectedTooth();
   }
   const handleClickToothPontics = () => {
-    // Todo: update tooth status and rerender
+    updateSelectedToothCondition("PONTICS");
     clearSelectedTooth();
   }
   const handleClickToothCrown = () => {
-    // Todo: update tooth status and rerender
+    updateSelectedToothCondition("CROWN");
     clearSelectedTooth();
   }
   const handleClickToothEndoTests = () => {
-    // Todo: update tooth status and rerender
+    updateSelectedToothCondition("ENDOTESTS");
     clearSelectedTooth();
   }
   const handleClickToothClear = () => {
-    // Todo: update tooth status and rerender
+    updateSelectedToothCondition("NONE");
     clearSelectedTooth();
   }
   function clearSelectedTooth() {
-      /// Todo: bỏ trạng thái select của từng răng
     setShowQuickselectMenu(false);
     setSelectedTooth([]);
   }
@@ -128,7 +187,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onSelectTooth={handleClickToothOverview} onDeselectTooth={()=>{}} viewType="overview"></AdultToothChart>
+                      <AdultToothChart toothCondition={toothCondition} selectedTooth={selectedTooth} onSelectTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
                     </span>
                     <Fab aria-label="Undo" className={classes.fabUndo} disabled={disabledOverviewUndoBtn}>
                       <MdSettingsBackupRestore />
@@ -141,7 +200,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart onSelectTooth={handleSelectToothQuickselect} onDeselectTooth={handleDeselectToothQuickselect} viewType="quickselect"></AdultToothChart>
+                      <AdultToothChart toothCondition={toothCondition} selectedTooth={selectedTooth} onSelectTooth={handleSelectToothQuickselect} viewType="quickselect"></AdultToothChart>
                     </span>
                     <span className={classes.quickselectMenuContainer}>
                         <Grow in={showQuickselectMenu}>

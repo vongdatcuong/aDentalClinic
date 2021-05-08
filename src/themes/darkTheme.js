@@ -53,6 +53,8 @@ import {hexToRgb} from '../utils/colors';
   const blackColor = "#000000";
   const whiteColor = "#ffffff";
   
+  const pageBackgroundColor = "#fafafa";
+
   const boxShadow = {
     boxShadow:
       "0 10px 30px -12px rgba(" +
@@ -197,6 +199,7 @@ export default {
   whiteColor,
   hoverBrightColor,
   hoverDarkColor,
+  pageBackgroundColor,
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,

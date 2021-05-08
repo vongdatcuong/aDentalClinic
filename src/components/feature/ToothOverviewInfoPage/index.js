@@ -31,11 +31,14 @@ const useStyles = makeStyles(styles);
 const ToothOverviewInfoPage = ({ patientID }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  let currURL = window.location.href;
+  let toothNumber = parseInt(currURL.substring(currURL.lastIndexOf("=Tooth")+6));
+  const [value, setValue] = React.useState(toothNumber-1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  //alert(toothNumber);
 
   return (  <React.Fragment>
     <TreatmentMenu patientID = { patientID }/>
@@ -94,7 +97,8 @@ const ToothOverviewInfoPage = ({ patientID }) => {
                 value={value}
                 index={index}
                 key={index}
-                id={tooth.fullTooth.id}
+                toothID={tooth.fullTooth.id}
+                patientID={patientID}
                 // onSelectTooth={props.onSelectTooth}
                 toothSvgString={tooth.fullTooth.svgString}
               ></ToothOverviewInfoTab>
