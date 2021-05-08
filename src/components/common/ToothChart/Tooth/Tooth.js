@@ -85,6 +85,10 @@ const Tooth = function (props) {
             ) : (
               ""
             )}
+            <svg height="20" width="20" className="conditionLayer">
+            </svg> 
+            <svg height="20" width="20" className="maskLayer">
+            </svg> 
           </span>
         </span>
       </HtmlTooltip>

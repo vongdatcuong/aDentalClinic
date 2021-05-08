@@ -82,6 +82,8 @@ import {hexToRgb} from '../utils/colors';
   const tableInsertLinkIconColor = "#bb001b";
   const tableAddIconColor = "#34a853";
 
+  const pageBackgroundColor = "#fafafa";
+
   // Google map
   const mapMinWidth = 500;
   const mapMinHeight = 500;
@@ -257,6 +259,7 @@ export default {
   hoverDarkColor,
   tableInsertLinkIconColor,
   tableAddIconColor,
+  pageBackgroundColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

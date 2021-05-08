@@ -2,11 +2,20 @@ const toothStyle = (theme) => ({
     upperJawTooth: {
         "& .MuiSvgIcon-root": {
             bottom: theme.spacing(11),
+        },
+        "& .conditionLayer": {
+            bottom: theme.spacing(11),
         }
     },
     lowerJawTooth: {
         "& .MuiSvgIcon-root": {
             bottom: theme.spacing(17),
+        },
+        "& .conditionLayer": {
+            bottom: theme.spacing(16),
+        },
+        "& .maskLayer": {
+            bottom: 0,
         }
     },
     toothContainer: {
@@ -15,7 +24,13 @@ const toothStyle = (theme) => ({
             "@media (max-width: 1280px)": {
                 maxWidth: "6%",
             },
-        }
+        },
+        "& .conditionLayer": {
+            display: "none",
+        },
+        "& .maskLayer": {
+            display: "none",
+        },
     },
     selectedTooth: {
         position: "relative",
@@ -36,13 +51,39 @@ const toothStyle = (theme) => ({
         opacity: "0.1",
     },
     veneerTooth: {
-        background: "blue",
+        "& .conditionLayer": {
+            display: "unset",
+            background: "#FEF8D8",
+            zIndex: theme.selectedToothZIndex-1,
+            position: "absolute",
+            borderRadius: theme.spacing(3),
+            width: theme.spacing(5),
+            height: theme.spacing(5),
+            left: theme.spacing(1.5),
+        },
     },
     ponticsTooth: {
-        background: "yellow",
+        "& .maskLayer": {
+            display: "unset",
+            background: theme.pageBackgroundColor,
+            zIndex: theme.selectedToothZIndex-1,
+            position: "absolute",
+            width: theme.spacing(8),
+            height: theme.spacing(14),
+            left: 0,
+        },
     },
     crownTooth: {
-        background: "green",
+        "& .conditionLayer": {
+            display: "unset",
+            background: "#E1EEEB",
+            zIndex: theme.selectedToothZIndex-1,
+            position: "absolute",
+            borderRadius: theme.spacing(3),
+            width: theme.spacing(5),
+            height: theme.spacing(5),
+            left: theme.spacing(1.5),
+        },
     },
     endotestsTooth: {
         background: "black",
