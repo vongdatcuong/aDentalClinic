@@ -18,6 +18,8 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import BackspaceIcon from "@material-ui/icons/Backspace";
@@ -28,6 +30,8 @@ import NoteItem from "./NoteItem.js";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
 
 import ProgressNoteService from "../../../api/patient/progress-note.service";
+import MacroSelectDialog from "./MacroSelectDialog";
+import { FaScroll } from "react-icons/fa";
 
 const useStyles = makeStyles(styles);
 
@@ -39,6 +43,7 @@ const PatientNotePage = ({ patientID }) => {
   const [openInsertDialog, setOpenInsertDialog] = React.useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [openMacro, setOpenMacro] = React.useState(false);
   const [insertNoteTitle, setInsertNoteTitle] = React.useState("");
   const [insertNoteTooth, setInsertNoteTooth] = React.useState("");
   const [insertNoteSurface, setInsertNoteSurface] = React.useState("");
@@ -73,10 +78,27 @@ const PatientNotePage = ({ patientID }) => {
   const handleChangeUpdateNoteContent = (e) => {
     setUpdateNoteContent(e.target.value);
   };
-
+  const handleMacroClose = (value) => {
+    setOpenMacro(false);
+    if (value == null) {
+      return;
+    }
+    if (openInsertDialog === true) {
+      setInsertNoteContent(value);
+    }
+    else if (openUpdateDialog === true) {
+      setUpdateNoteContent(value);
+    }
+  }
   useEffect(() => {
     fetchNotes();
   }, []);
+  useEffect(() => {
+    setInsertNoteContent("");
+    setInsertNoteSurface("");
+    setInsertNoteTooth("");
+    setInsertNoteTitle("");
+  }, [openInsertDialog]);
 
   const fetchNotes = async () => {
     try {
@@ -294,6 +316,13 @@ const PatientNotePage = ({ patientID }) => {
               id="surface"
               label={t(strings.surface)}
             />
+            <div className={classes.noteContentMacro}>
+              <Tooltip title="Macro" aria-label="Macro">
+                <IconButton size="small" onClick={() => setOpenMacro(true)}>
+                  <FaScroll />
+                </IconButton>
+              </Tooltip>
+            </div>
             <TextField
               required
               value={insertNoteContent}
@@ -354,6 +383,13 @@ const PatientNotePage = ({ patientID }) => {
               id="surface"
               label={t(strings.surface)}
             />
+            <div className={classes.noteContentMacro}>
+              <Tooltip title="Macro" aria-label="Macro">
+                <IconButton size="small" onClick={() => setOpenMacro(true)}>
+                  <FaScroll />
+                </IconButton>
+              </Tooltip>
+            </div>
             <TextField
               required
               value={updateNoteContent}
@@ -400,6 +436,12 @@ const PatientNotePage = ({ patientID }) => {
             </Button>
           </DialogActions>
         </Dialog>
+        <MacroSelectDialog
+          onClose={handleMacroClose}
+          open={openMacro}
+          title={t(strings.templateProgress)}
+          currentContent={openInsertDialog ? insertNoteContent : updateNoteContent}
+        />
       </Container>
     </React.Fragment>
   );
