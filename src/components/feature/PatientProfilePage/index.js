@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 
 // @material-ui/core Component
@@ -34,11 +35,13 @@ import Footer from "../../../layouts/Footer";
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
 import MacroCheckSelectDialog from './MacroCheckSelectDialog';
+import path from "../../../routes/path";
 import { FaScroll } from 'react-icons/fa';
 
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = ({ patientID }) => {
+    const history = useHistory();
     const {t, i18n } = useTranslation();
     const classes = useStyles();
 
@@ -193,6 +196,12 @@ const PatientProfilePage = ({ patientID }) => {
                   <Grid item>
                     <TabPanel value={curTab} index={0}>
                       {t(strings.noTreatmentsPending)}
+                        <div className={classes.containerAddRecord}>
+                            <Button simple className={classes.btnAddRecord} onClick={() => history.push(path.addTreatmentPath.replace(':patientID', patientID))}>
+                                <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
+                                {t(strings.add)}
+                            </Button>
+                        </div>
                     </TabPanel>
                     <TabPanel value={curTab} index={1}>
                       <TreatmentHistory></TreatmentHistory>

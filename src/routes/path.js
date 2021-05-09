@@ -37,6 +37,7 @@ const patientImagesPath = '/patient/:patientID/images';
 const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
 const patientInfoPath = '/patient/:patientID/info';
 const profilePath = '/profile';
+const addTreatmentPath = '/patient/:patientID/addTreatment';
 
 const path = {
     defaultPath,
@@ -73,6 +74,7 @@ const path = {
     managementsPath,
     managementsWithManagementPath,
     profilePath,
+    addTreatmentPath,
     //insert
     insertPersonPath,
     
