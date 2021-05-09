@@ -52,6 +52,9 @@ const style = (theme) => ({
       textAlign: "center",
     },
   },
+  editToothArea: {
+    width: "100%",
+  },
   bottomContainer: {
     borderTop: "solid black 0.05rem",
     //minHeight: "20vh",

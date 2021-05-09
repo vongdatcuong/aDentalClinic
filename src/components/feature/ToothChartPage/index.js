@@ -59,6 +59,7 @@ const ToothChartPage = ({ patientID }) => {
 
   const [selectedTooth, setSelectedTooth] = React.useState([]);
   const [toothCondition, setToothCondition] = React.useState([]);
+  const [toothNotes, setToothNotes] = React.useState([]);
 
   useEffect(() => {
     fetchToothCondition();
@@ -68,10 +69,13 @@ const ToothChartPage = ({ patientID }) => {
       const result = await ToothService.getAllPatientTooth(patientID);
       if (result.success) {
         let tempArray = [];
+        let tempNote = [];
         result.data.forEach(tooth => {
             tempArray[tooth.tooth_number - 1] = tooth.condition || "NONE";
+            tempNote[tooth.tooth_number - 1] = tooth.tooth_note || "No note here.";
         });
         setToothCondition(tempArray);
+        setToothNotes(tempNote);
         return true;
       }
       toast.error(result.message);
@@ -187,7 +191,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart toothCondition={toothCondition} selectedTooth={selectedTooth} onSelectTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
+                      <AdultToothChart toothCondition={toothCondition} toothNotes={toothNotes} selectedTooth={selectedTooth} onSelectTooth={handleClickToothOverview} viewType="overview"></AdultToothChart>
                     </span>
                     <Fab aria-label="Undo" className={classes.fabUndo} disabled={disabledOverviewUndoBtn}>
                       <MdSettingsBackupRestore />
@@ -200,7 +204,7 @@ const ToothChartPage = ({ patientID }) => {
                 tabContent: (
                   <React.Fragment>
                     <span className={classes.toothChartContainer}>
-                      <AdultToothChart toothCondition={toothCondition} selectedTooth={selectedTooth} onSelectTooth={handleSelectToothQuickselect} viewType="quickselect"></AdultToothChart>
+                      <AdultToothChart toothCondition={toothCondition} toothNotes={toothNotes} selectedTooth={selectedTooth} onSelectTooth={handleSelectToothQuickselect} viewType="quickselect"></AdultToothChart>
                     </span>
                     <span className={classes.quickselectMenuContainer}>
                         <Grow in={showQuickselectMenu}>

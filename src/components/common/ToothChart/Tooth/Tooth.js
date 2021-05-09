@@ -21,7 +21,7 @@ const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
   const classes = useStyles();
-  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, ...other } = props;
+  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, toothNote, ...other } = props;
   //const [isSelected, setIsSelected] = useState(false);
 
   function handlePickToothOverview() {}
@@ -50,8 +50,9 @@ const Tooth = function (props) {
         title={
           <React.Fragment>
             <Typography color="inherit">{id}</Typography>
-            <em>{"And here's"}</em> <b>{"some"}</b> <u>{"amazing content"}</u>.{" "}
-            {"It's very engaging. Right?"}
+            {/* <em>{"And here's"}</em> <b>{"some"}</b> <u>{"amazing content"}</u>.{" "}
+            {"It's very engaging. Right?"} */}
+            <div className="note" dangerouslySetInnerHTML={{__html: toothNote}}></div>
           </React.Fragment>
         }
         aria-label={id}
