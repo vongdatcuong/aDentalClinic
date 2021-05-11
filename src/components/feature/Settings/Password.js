@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 // use i18next
 import { useTranslation } from 'react-i18next';
@@ -93,7 +93,7 @@ const Password = () => {
     setConfirmPwd(evt.target.value);
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
     let isValid = true;
@@ -133,13 +133,14 @@ const Password = () => {
     if (isValid){
       try {
         dispatchLoading({type: strings.setLoading, isLoading: true});
-        const result = {}/*await api.httpPatch({
-          url: apiPath.staff.staff + '/' + user.staff_id,
+        const result = await api.httpPost({
+          url: apiPath.authorization.authorization + apiPath.authorization.changePassword,
           body: {
-            
+            old_password: oldPwd,
+            password: newPwd,
           }
-        })*/
-        if (1){
+        })
+        if (result.success){
           setIsSuccess(true);
           setResultMsg(t(strings.changePwdSuccess));
         } else {

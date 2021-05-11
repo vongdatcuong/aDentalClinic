@@ -4,8 +4,6 @@
 // // // Example: input = #999 => output = 153, 153, 153
 // // // Example: input = 999 => output = 153, 153, 153
 
-import { FormHelperText } from "@material-ui/core";
-
 // #############################
 const hexToRgb = input => {
     input = input + "";

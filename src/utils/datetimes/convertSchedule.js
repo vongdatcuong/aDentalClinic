@@ -3,7 +3,7 @@ import lists from '../../configs/lists';
 import ConvertDateTimes from './convertDateTimes';
 
 const formatScheduleMode = (mode, value, days) => {
-    if (typeof value != "string" || value.length == 0){
+    if (typeof value !== "string" || value.length === 0){
         return "";
     }
     switch(mode){
@@ -14,11 +14,13 @@ const formatScheduleMode = (mode, value, days) => {
         case lists.schedule.mode.auto:
             return value.split(",")
                 .map((val) => new Date(val));
+        default:
+            return [];
     }
 }
 
 const scheduleModeToString = (mode, value, days) => {
-    if (typeof value != "string" || value.length == 0){
+    if (typeof value !== "string" || value.length === 0){
         return "";
     }
     let res = "", ch;
@@ -62,7 +64,7 @@ const generateNoteForSchedule = (scheduleObj) =>{
     if (scheduleObj.auto.length > 0){
         let autoStr = "AUTO: \n+ ";
         scheduleObj.auto.forEach((auto, index) => {
-            if (index != 0){
+            if (index !== 0){
                 autoStr += ", ";
             }
             autoStr += auto.valueStr;

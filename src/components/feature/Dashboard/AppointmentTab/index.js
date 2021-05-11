@@ -69,8 +69,8 @@ import apiPath from '../../../../api/path';
 const useStyles = makeStyles(styles);
 
 const AppointmentTab = ({
-    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays,
-    onClose, onSelectChair, onSelectDate, onAddAppointment
+    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays, appointRequest,
+    onClose, onSelectChair, onSelectDate, onAddAppointment, setSelectedAppointReqIdx
 }) => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
@@ -146,12 +146,35 @@ const AppointmentTab = ({
     // Temp
     const [fakeTempProvi, setFakeTempProvi] = useState(1);
 
+    const [lastAppointRequest, setLastAppointRequest] = useState(null);
+
     useEffect(async () => {
         setDuration(selectedDuration);
         setFakeTempProvi(fakeTempProvi + 1);
-    }, [/*treatments, addedTreatments, patient,*/ selectedDuration, selectedAppointStart]);
+
+        // Appointment Request
+        if (appointRequest == lastAppointRequest){
+            return;
+        }        
+        if (appointRequest){
+            handleOnSelectPatient({
+                value: appointRequest.patient,
+                label: appointRequest.first_name + " " + appointRequest.last_name,
+            });
+            noteRef.current.value = appointRequest.note;
+        } else {
+            resetPatientInfoFields();
+        }
+        setLastAppointRequest(appointRequest);
+    }, [/*treatments, addedTreatments, patient,*/ selectedDuration, selectedAppointStart, appointRequest, lastAppointRequest]);
 
     const handleOnNewPatient = () => {
+        // Appointment Requests
+        setSelectedAppointReqIdx(-1);
+        resetPatientInfoFields();
+    }
+
+    const resetPatientInfoFields = useCallback(() => {
         setIsNewPatient(true);
         setPatient({...noneOption});
         //setPatientID("");
@@ -176,7 +199,7 @@ const AppointmentTab = ({
         mobileRef.current.value = "";
         emailRef.current.value = "";
         noteRef.current.value = "";
-    }
+    }, []);
 
     const handleOnSelectPatient = useCallback(async (option) => {
         if (option.value == -1){
@@ -486,10 +509,13 @@ const AppointmentTab = ({
                         }
                     });
                     if (result.success){
-                        let newPatientProviderIdx = -1;
+                        let newPatientProviderIdx = -1, selectedProviderIdx = -1;
                         options = result.payload.map((option, index) => {
                             if (patient && option._id === patient.provider){
                                 newPatientProviderIdx = index;
+                            }
+                            if (provider && option._id === provider.value){
+                                selectedProviderIdx = index;
                             }
                             return {
                                 value: option._id,
@@ -500,7 +526,7 @@ const AppointmentTab = ({
                         if (newPatientProviderIdx != -1){
                             setProvider({...options[newPatientProviderIdx]});
                         } else {
-                            if (provider && provider.value){
+                            if (selectedProviderIdx === -1){
                                 setProvider(noneOption);
                             }
                         }
@@ -911,7 +937,6 @@ const AppointmentTab = ({
                                     fullWidth
                                     value={selectedChairId || 0}
                                     onChange={onSelectChair}
-                                    disabled
                                 >
                                 {(chairs.map((chair) => {
                                     return (
@@ -1044,6 +1069,9 @@ const AppointmentTab = ({
                                 rows={4}
                                 onBlur={handleOnNoteChange}
                                 inputRef={noteRef}
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
                             />
                         </Grid>
                     </Grid>

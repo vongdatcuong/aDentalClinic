@@ -267,7 +267,7 @@ const DashBoard = () => {
                     const endDate = moment(aDate).add(Number(appointment.duration), "minutes");
 
                     // Appointment Patient Object
-                    newAppointPatientObj[appointment._id] = appointment.patient._id; console.log(appointment.provider)
+                    newAppointPatientObj[appointment._id] = appointment.patient._id;
                     return {
                         id: appointment._id,
                         title: (appointment.patient?.user?.first_name + " " + appointment.patient?.user?.last_name) || appointment.note || "",

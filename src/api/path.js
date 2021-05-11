@@ -2,7 +2,8 @@
 const authorization = {
     authorization: '/authorization',
     logIn: "/signin",
-    refreshToken: "/refresh-token"
+    refreshToken: "/refresh-token",
+    changePassword: "/change-password"
 }
 
 // Appointment
@@ -10,7 +11,8 @@ const appointment = {
     appointment: '/appointment',
     block: '/block',
     chair: '/chair',
-    delete: '/delete'
+    delete: '/delete',
+    appointRequest: '/appointment-request'
 }
 
 //staffs
@@ -102,6 +104,12 @@ const patientRecall={
     recall:'/recall',
     patient:'/patient',
 }
+
+// report
+const report = {
+    report: '/report'
+}
+
 export {
     authorization,
 }
@@ -124,5 +132,6 @@ export default {
     noteMacro,
     image,
     prescription,
-    patientRecall
+    patientRecall,
+    report
 };

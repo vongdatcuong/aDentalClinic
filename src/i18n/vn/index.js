@@ -13,6 +13,7 @@ export default {
         "Appointment holder": "Người hẹn",
         "Today's Appoinment": "Cuộc hẹn hôm nay",
         "Go back": "Trở về",
+        "No Appointment Requests to display yet": "Không có yêu cầu lịch hẹn nào để hiển thị",
         //treatment menu
         "Tooth chart": "Biểu đồ nha chu",
         "Patient profile": "Hồ sơ bệnh nhân",
@@ -55,6 +56,8 @@ export default {
         "End Date": "Ngày KT",
         "Today": "Hôm nay",
         "Next S": "T.THEO",
+        "Request": "Yêu cầu",
+        "At time": "Lúc",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -124,6 +127,7 @@ export default {
         "Update Appointment fail": "Cập nhật cuộc hẹn thất bại",
         "Get Next Available Date fail": "Lấy ngày khả dụng tiếp theo thất bại",
         "Provider not working in the near future": "Bác sỹ không có lịch làm việc sắp tới",
+        "Delete Appointment Request fail": "Xóa yêu cầu hẹn thất bại",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",
@@ -383,6 +387,7 @@ export default {
         "Next Available": "Ngày hợp lệ tiếp theo",
         "Only mine": "Chỉ của tôi",
         "Next Available date for default provider": "Ngày hẹn có thể cho bác sỹ mặc định",
+        "Appointment Date": "Ngày hẹn",
         //Files
         "File Name": "Tên tệp",
         // Schedule

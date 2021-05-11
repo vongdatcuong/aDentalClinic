@@ -13,6 +13,7 @@ export default {
         "Appointment holder": "Appointment holder",
         "Today's Appoinment": "Today's Appoinment",
         "Go back": "Go back",
+        "No Appointment Requests to display yet": "No Appointment Requests to display yet",
         //treatment menu
         "Tooth chart": "Tooth chart",
         "Patient profile": "Patient profile",
@@ -55,6 +56,8 @@ export default {
         "End Date": "End Date",
         "Today": "Today",
         "Next S": "Next",
+        "Request": "Request",
+        "At time": "At",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -125,6 +128,7 @@ export default {
         "Update Appointment fail": "Update Appointment fail",
         "Get Next Available Date fail": "Get Next Available Date fail",
         "Provider not working in the near future": "Provider not working in the near future",
+        "Delete Appointment Request fail": "Delete Appointment Request fail",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",
@@ -383,6 +387,7 @@ export default {
         "Next Available": "Next Available",
         "Only mine": "Only mine",
         "Next Available date for default provider": "Next available Date for default provider",
+        "Appointment Date": "Appointment Date",
         //Files
         "File Name": "Tên tệp",
         // Schedule

@@ -11,6 +11,8 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
+const noAppointRequestToDisplay = "No Appointment Requests to display yet";
+
 //treatment menu
 const toothChart = "Tooth chart";
 const patientProfile = "Patient profile";
@@ -155,6 +157,8 @@ const startDate = "Start Date";
 const endDate = "End Date";
 const today = "Today";
 const nextS = "Next S";
+const request = "Request";
+const atTime = "At time";
 
 // Messages
 
@@ -224,6 +228,7 @@ const addAppointmentErrMsg = "Add Appointment fail";
 const updateAppointmentErrMsg = "Update Appointment fail";
 const nextAvaiDateErrMsg = "Get Next Available Date fail";
 const providerNotWorkingErrMsg = "Provider not working in the near future";
+const deleteAppointReqErrMsg = "Delete Appointment Request fail";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -360,6 +365,7 @@ const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
 const onlyMine = "Only mine";
 const nextDateProvider = "Next Available date for default provider";
+const appointDate = "Appointment Date";
 
 //patient recall
 const treatment="Treatment";
@@ -430,6 +436,7 @@ export default {
     notifications,
     removeNotification,
     noNotificationToDisplay,
+    noAppointRequestToDisplay,
     appointmentHolder,
     todayAppointment,
     goBack,
@@ -471,6 +478,8 @@ export default {
     endDate,
     today,
     nextS,
+    request,
+    atTime,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -484,6 +493,7 @@ export default {
     deleteAppointmentErrMsg,
     addAppointmentSuccess,
     updateAppointmentSuccess,
+    deleteAppointReqErrMsg,
     // Success Messages Settings
     updateUserProfileSuccess,
     changePwdSuccess,
@@ -741,6 +751,7 @@ export default {
     nextAvailable,
     onlyMine,
     nextDateProvider,
+    appointDate,
     // Date
     defaultTimeFormat,
     chartDateFormat,

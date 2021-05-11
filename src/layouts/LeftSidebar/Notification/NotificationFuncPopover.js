@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import strings from '../../../configs/strings';
 // @material-ui/core 

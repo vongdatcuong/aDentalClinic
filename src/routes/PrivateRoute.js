@@ -6,9 +6,6 @@ import strings from '../configs/strings';
 // i18next
 import i18n from '../i18n';
 
-// @material-ui/core
-import { makeStyles} from "@material-ui/core/styles";
-
 // Context
 import { themeStore } from '../contexts/theme-context';
 
@@ -19,10 +16,6 @@ import AuthService from '../api/authentication/auth.service';
 import LoadingPage from '../layouts/LoadingPage';
 
 // Utils
-
-const useStyles = makeStyles((theme) => ({
-
-}));
 
 const PrivateRoute = ({children, ...rest}) => {
   //const classes = useStyles();
@@ -38,10 +31,10 @@ const PrivateRoute = ({children, ...rest}) => {
       setIsLoading(false);
       if (isAuthen){
         const user = AuthService.getCurrentUser();
-        if (user.language && i18n.language != user.language.toLowerCase()){
+        if (user.language && i18n.language !== user.language.toLowerCase()){
           i18n.changeLanguage(user.language);
         }
-        if (themeState && user.theme != undefined && themeState.type != user.theme){
+        if (themeState && user.theme !== undefined && themeState.type !== user.theme){
           dispatchTheme({
             type: strings.setTheme,
             theme: user.theme

@@ -786,7 +786,7 @@ const UpdateAppointmentTab = ({
                                     fullWidth
                                     value={chairID || ""}
                                     onChange={handleOnChairChange}
-                                    disabled
+                                    disabled={!isEditAppointAllowed}
                                 >
                                 {(chairs.map((chair) => {
                                     return (

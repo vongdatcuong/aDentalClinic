@@ -98,7 +98,7 @@ const AppointmentTooltipContent = memo(({children, appointmentData,...restProps 
       {listItems.map((item, index) => {
         return (
           <ListItem key={index}>
-            <ListItemIcon className={classes.listItemIcon} style={{color: appointmentData.chair?.color || ""}}>
+            <ListItemIcon className={classes.listItemIcon} style={{color: appointmentData.backgroundColor || ""}}>
               {item.icon}
             </ListItemIcon>
             <ListItemIcon className={classes.listItemLabel}>
