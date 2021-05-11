@@ -46,6 +46,7 @@ export default {
         "Loading": "Đang tải",
         "No options": "Không có lựa chọn",
         "select": "Chọn",
+        "unselect": "Bỏ chọn",
         "MALE": "NAM",
         "FEMALE": "NỮ",
         "None": "Không",
@@ -162,6 +163,20 @@ export default {
         "Agree":"Đồng ý",
         "Info":"Info",
         "Expired date":"Ngày hết hạn",
+        // Treatment
+        "back": "Trước",
+        "next": "Sau",
+        "finish": "Hoàn thành",
+        "All steps completed - you are finished": "Bạn đã hoàn thành",
+        "Select Treatment": "Chọn liệu trình",
+        "Select Tooth": "Chọn răng",
+        "Preview Treatment Information": "Kiểm tra lại thông tin điều trị",
+        "Facial": "Mặt ngoài",
+        "Lingual": "Mặt trong",
+        "Mesial": "Mặt gần",
+        "Distal": "Mặt xa",
+        "Top": "Mặt nhai",
+        "Root": "Chân răng",
 
         // Tooth chart page
         "Overview": "Tổng quan",

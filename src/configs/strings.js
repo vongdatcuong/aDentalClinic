@@ -378,6 +378,7 @@ const apiDateFormat = "YYYY-MM-DD";
 const forward = "forward";
 const back = "back";
 const select = "select";
+const unselect = "unselect";
 const defaultDateFormat = "DD-MM-YYYY";
 const holidayDormat = "DD/MM";
 const defaultDateTimeFormat = "DD/MM/YYYY HH:mm";
@@ -403,6 +404,21 @@ const mode = "Mode";
 const monthly = "Monthly";
 const weekly = "Weekly";
 const auto = "Auto";
+
+// Treatment 
+const next = "next";
+const finish = "finish";
+const allStepsCompleted = "All steps completed - you are finished";
+const selectTreatment = "Select Treatment";
+const selectTooth = "Select Tooth";
+const previewTreatmentInfo = "Preview Treatment Information";
+
+const facial = "Facial";
+const lingual = "Lingual";
+const mesial = "Mesial";
+const distal = "Distal";
+const top = "Top";
+const root = "Root";
 
 export default {
     appointment,
@@ -732,6 +748,7 @@ export default {
     forward,
     back,
     select,
+    unselect,
     defaultDateFormat,
     holidayDormat,
     defaultDateTimeFormat,
@@ -777,4 +794,17 @@ export default {
     interval,
     recallDate,
     patientRecall,
+    // Treatment
+    next,
+    finish,
+    allStepsCompleted,
+    selectTreatment,
+    selectTooth,
+    previewTreatmentInfo,
+    facial,
+    lingual,
+    mesial,
+    distal,
+    top,
+    root,
 };
