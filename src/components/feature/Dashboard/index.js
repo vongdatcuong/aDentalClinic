@@ -341,6 +341,23 @@ const DashBoard = () => {
         }
     }, [selectedDate]);
 
+    const handleLoadAppointRequests = useCallback(async () => {
+        try {
+            const result = await api.httpGet({
+                url: apiPath.appointment.appointRequest,
+            });
+            if (result.success){
+                setAppointRequests(result.payload);
+            } else {
+                toast.error(result.message);
+            }
+        } catch {
+
+        } finally {
+
+        }
+    }, []);
+
     // Use effect
     useEffect(async () => {
         try {
@@ -350,8 +367,15 @@ const DashBoard = () => {
             } else {
                 handleDidUpdate();
             }   
+            // Inverval Appointment Request
         } catch (err){
 
+        }
+        const interval = setInterval(() => {
+            handleLoadAppointRequests();
+        }, figures.loadAppointReqIntervalTime)
+        return () => {
+            clearInterval(interval);
         }
     }, [selectedDate]);
 
