@@ -31,7 +31,7 @@ const emailSchema = Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'vn'] } })
     .required();
 const phoneSchema = Joi.string()
-    .pattern(new RegExp('^[\-0-9]*$'))
+    .pattern(new RegExp('^[-0-9]*$'))
     .min(10)
     .max(15)
     .required();

@@ -23,6 +23,10 @@ import { toast } from 'react-toastify';
 import Container from '@material-ui/core/Container';
 import Fade from '@material-ui/core/Fade';
 import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+
 import styles from "./jss";
 
 // Components
@@ -32,6 +36,7 @@ import RightSidebar from '../../../layouts/RightSidebar';
 import AppoinmentTab from './AppointmentTab';
 import UpdateAppointmentTab from './UpdateAppointmentTab';
 import ConfirmDialog from '../../dialogs/ConfirmDialog';
+import AppointmentRequestPopover from './AppointmentRequestPopover';
 
 // API
 import api from '../../../api/base-api';
@@ -91,6 +96,11 @@ const DashBoard = () => {
    // Update appointment
    const [selectedAppointID, setSelectedAppointmentID] = useState("");
 
+   // Appoint Request Popover
+   const [appointReqAnchor, setAppointReqAnchor] = useState(null);
+   const [appointRequests, setAppointRequests] = useState([]);
+   const [selectedAppointReqIdx, setSelectedAppointReqIdx] = useState(-1);
+
     // Will mount
     const handleWillMount = useCallback(async () => {
         try {
@@ -126,6 +136,9 @@ const DashBoard = () => {
                     query: {
 
                     }
+                }),
+                api.httpGet({
+                    url: apiPath.appointment.appointRequest,
                 })
             ];
             const result = await Promise.all(promiseAll);
@@ -230,6 +243,10 @@ const DashBoard = () => {
                 })
                 setHolidays(holidayss);
 
+                // Appointment request
+                if (result[5].success){
+                    setAppointRequests(result[5].payload);
+                }
                 setIsLoadingPage(false);
             } else {
                 toast.error(t(strings.loadAppointmentFailMsg));    
@@ -365,6 +382,7 @@ const DashBoard = () => {
     const handleCloseAppointmentTab = useCallback(() => {
         setDisplayTab(0);
         setSelectedChairId(null);
+        setSelectedAppointReqIdx(-1);
     },[]);
 
     // Appointment Tab
@@ -469,6 +487,12 @@ const DashBoard = () => {
                 }
             }
 
+            // Appointment Request
+            const appointRequest = (selectedAppointReqIdx != -1)? appointRequests[selectedAppointReqIdx] : null;
+            if (appointRequest){
+                appointData.request_id = appointRequest._id;
+            }
+
             const promiseAll = [
                 api.httpPost({
                     url: apiPath.appointment.appointment,
@@ -505,6 +529,11 @@ const DashBoard = () => {
                                     : t(strings.no),
                     backgroundColor: (appointment.provider)? appointment.provider.provider_color : appointment.chair.color,
                 });
+
+                // Appointment Request
+                if (appointRequest){
+                    setAppointRequests([...appointRequests.slice(0, selectedAppointReqIdx), ...appointRequests.slice(selectedAppointReqIdx + 1)])
+                }
                 setAppointments(newAppointments);
                 resetFieldsFunc();
                 handleCloseAppointmentTab();
@@ -518,7 +547,7 @@ const DashBoard = () => {
         } finally {
             dispatchLoading({type: strings.setLoading, isLoading: false});
         }
-    }, [appointments]);
+    }, [appointments, selectedAppointReqIdx, appointRequests]);
     
     // Update appointment
     const handleOpenUpdateAppointTab = (appointID) => {
@@ -598,6 +627,26 @@ const DashBoard = () => {
         }
     }, [appointPatientObj]);
 
+    // Appoint Request Popover
+    const handleOpenAppointReqPop = useCallback((evt) => {
+        setAppointReqAnchor(evt.currentTarget);
+    }, []);
+
+    const handleCloseAppointReqPop = useCallback(() => {
+        setAppointReqAnchor(null);
+    }, []);
+
+    const handleSelectAppointReq = useCallback((index) => {
+        if (displayTab != 1){
+            return;
+        }
+        if (index === selectedAppointReqIdx){
+            setSelectedAppointReqIdx(-1);
+        } else {
+            setSelectedAppointReqIdx(index);
+        }
+    }, [selectedAppointReqIdx, displayTab]);
+
     return (
         <React.Fragment>
             <Container className={classes.container}>
@@ -616,10 +665,12 @@ const DashBoard = () => {
                                     startDayHour={startDayHour}
                                     endDayHour={endDayHour}
                                     holidays={holidays}
+                                    appointRequest={(selectedAppointReqIdx !== -1)? appointRequests[selectedAppointReqIdx] : null}
                                     onClose={handleCloseAppointmentTab}
                                     onSelectChair={handleOnAppointTabSelectChair}
                                     onSelectDate={handleOnAppointTabSelectDate}
                                     onAddAppointment={handleAddAppointment}
+                                    setSelectedAppointReqIdx={setSelectedAppointReqIdx}
                                 />
                             </Box>
                         </Fade>
@@ -670,6 +721,27 @@ const DashBoard = () => {
                     </React.Fragment>
                 }
             </Container>
+            {/* FAB: Appointment Request */}
+            <Fab
+                variant="extended"
+                size="small"
+                color="secondary"
+                aria-label="open-appointment-request-popover"
+                className={classes.fabAppointRequest}
+                onClick={handleOpenAppointReqPop}
+            >
+                <Badge badgeContent={appointRequests.length} color="secondary">
+                    <NotificationsIcon/>
+                </Badge>
+                &nbsp;{t(strings.request)}
+            </Fab>
+            <AppointmentRequestPopover
+                selectedAppointReqIdx={selectedAppointReqIdx}
+                anchorEl={appointReqAnchor}
+                appointRequest={appointRequests}
+                onClose={handleCloseAppointReqPop}
+                onSelect={handleSelectAppointReq}
+            />
             {/* Confirm Delete appointment */}
             <ConfirmDialog
                 open={openConfirmDialog}

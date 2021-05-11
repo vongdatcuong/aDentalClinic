@@ -11,6 +11,8 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
+const noAppointRequestToDisplay = "No Appointment Requests to display yet";
+
 //treatment menu
 const toothChart = "Tooth chart";
 const patientProfile = "Patient profile";
@@ -155,6 +157,8 @@ const startDate = "Start Date";
 const endDate = "End Date";
 const today = "Today";
 const nextS = "Next S";
+const request = "Request";
+const atTime = "At time";
 
 // Messages
 
@@ -360,6 +364,7 @@ const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
 const onlyMine = "Only mine";
 const nextDateProvider = "Next Available date for default provider";
+const appointDate = "Appointment Date";
 
 //patient recall
 const treatment="Treatment";
@@ -414,6 +419,7 @@ export default {
     notifications,
     removeNotification,
     noNotificationToDisplay,
+    noAppointRequestToDisplay,
     appointmentHolder,
     todayAppointment,
     goBack,
@@ -455,6 +461,8 @@ export default {
     endDate,
     today,
     nextS,
+    request,
+    atTime,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -725,6 +733,7 @@ export default {
     nextAvailable,
     onlyMine,
     nextDateProvider,
+    appointDate,
     // Date
     defaultTimeFormat,
     chartDateFormat,

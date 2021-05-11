@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // Toast
 import { toast } from 'react-toastify';
@@ -18,7 +18,6 @@ import { Typography,
     MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 
 import styles from "./jss";
 //import configs
@@ -28,8 +27,6 @@ import lists from "../../../configs/lists";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
-import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
@@ -47,13 +44,13 @@ import ConvertSchedule from '../../../utils/datetimes/convertSchedule';
 
 
 const useStyles = makeStyles(styles);
-const createData=(id, provider, startDate, endDate, note)=>{
-    return {id, provider, startDate, endDate, note};
-};
 
 const Schedule = () => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
+
+    const user = AuthService.getCurrentUser();
+    const isAdmin = (user?.user_type === lists.staff.staffType.admin);
 
     const dataColumnsName=["index","id","provider", "note"];
     const titles=[
@@ -182,7 +179,7 @@ const Schedule = () => {
         let value = event.target.value.toLowerCase();
         setSearchText(value);
 
-        const newData = originalData.filter((row) => row.provider.toLowerCase().indexOf(value) != -1);
+        const newData = originalData.filter((row) => row.provider.toLowerCase().indexOf(value) !== -1);
         setData(newData);
     };
 
@@ -227,7 +224,7 @@ const Schedule = () => {
                             </Typography>
                         </Grid>
                         
-                        {(selectedRow != -1)?
+                        {(selectedRow !== -1)?
                             <Grid item xs={4}>
                                 <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
                                     {t(strings.goBack)}
@@ -250,21 +247,23 @@ const Schedule = () => {
                                         }
                                     />
                                 </FormControl>
-                                <Select
-                                    value={editable}
-                                    onChange={handleChangeEditable}
-                                    disableUnderline 
-                                    className={classes.status}
-                                >
-                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-                                </Select>
+                                {(isAdmin) && 
+                                    <Select
+                                        value={editable}
+                                        onChange={handleChangeEditable}
+                                        disableUnderline 
+                                        className={classes.status}
+                                    >
+                                        <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                        <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    </Select>
+                                }
                             </Grid>
                         }
                     </Grid>
                     <Divider className={classes.titleDivider}/>
                     <Container className={classes.tableContainer}>
-                        {(selectedRow != -1)?
+                        {(selectedRow !== -1)?
                             <UpdateSchedule 
                                 data={selectedRowData}
                                 setData={setSelectedRowData}

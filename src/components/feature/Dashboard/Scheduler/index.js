@@ -218,7 +218,7 @@ const Schedulerr = (
               headerToolbar={{
                 left: 'prev,next,today,filterChairButton,filterPatientButton' + (isImmutable? ',filterOnlyMine' : ""),
                 center: 'title',
-                right: 'prevYear,nextYear',
+                right: '',
               }}
               customButtons={customBtns}
               buttonText={{
@@ -286,7 +286,8 @@ const Schedulerr = (
                       id: info.event.id,
                       title: info.event._def.title,
                       start: info.event.start,
-                      end: info.event.end
+                      end: info.event.end,
+                      backgroundColor: info.event.backgroundColor
                     }, info.event.extendedProps));
                 }
               }}
