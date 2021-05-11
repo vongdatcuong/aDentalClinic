@@ -78,10 +78,14 @@ const useStyles = makeStyles((theme) => ({
 
 const AppointmentRequestPopover = ({
   selectedAppointReqIdx, anchorEl, appointRequest,
-  onClose, onSelect
+  onClose, onSelect, onRejectReq
 }) => {
   const classes = useStyles();
   const {t, i18n } = useTranslation();
+
+  const handleRejectAppointReq = (reqID) => {
+    onRejectReq(reqID);    
+  }
 
   return (
     <Popover
@@ -143,6 +147,7 @@ const AppointmentRequestPopover = ({
                             aria-label="reject"
                             variant="contained"
                             color="secondary"
+                            onClick={() => handleRejectAppointReq(request._id)}
                         >
                             <BackspaceIcon />
                         </IconButton>

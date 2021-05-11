@@ -127,6 +127,7 @@ export default {
         "Update Appointment fail": "Update Appointment fail",
         "Get Next Available Date fail": "Get Next Available Date fail",
         "Provider not working in the near future": "Provider not working in the near future",
+        "Delete Appointment Request fail": "Delete Appointment Request fail",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",

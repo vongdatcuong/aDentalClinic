@@ -86,6 +86,8 @@ const DashBoard = () => {
     // Dialogs
     const [selectedAppoint, setSelectedAppoint] = useState(null);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [confirmType, setConfirmType] = useState(0);  // 0: Delete appointment, 1: Reject Appointment Request
+    const [confirmDialogMsg, setConfirmDialogMsg] = useState("");
 
     const [isWillMount, setIsWillMount] = useState(true);
 
@@ -428,14 +430,60 @@ const DashBoard = () => {
     }
 
     // DELETE
-    const handleOpenConfirmDelete = (appointID) => {
-        setSelectedAppoint(appointID);
+    const handleOpenConfirmDeleteAppoint = (appointID) => {
         setOpenConfirmDialog(true);
+        setSelectedAppoint(appointID);
+        setConfirmDialogMsg(t(strings.appointment));
+        setConfirmType(0);
+    }
+
+    const handleOpenConfirmRejectReq = (requestID) => {
+        setOpenConfirmDialog(true);
+        // Action Type
+        // Make use of selectedAppoint useState
+        setSelectedAppoint(requestID);
+        setConfirmType(1);
+        setConfirmDialogMsg(t(strings.request));
     }
 
     const handleCloseConfirmDialog = () => {
         setOpenConfirmDialog(false);
     }
+
+    const handleConfirmDialogAction = () => {
+        if (confirmType === 0){
+            handleDeleteAppointment();
+        } else {
+            handleRejectAppointReq();
+        }
+    }
+    // Make use of selectedAppoint useState
+    const handleRejectAppointReq = useCallback(async () => {
+        try {
+            dispatchLoading({ type: strings.setLoading, isLoading: true});
+            const promises = [
+                api.httpDelete({
+                    // Make use of selectedAppoint useState
+                    url: apiPath.appointment.appointRequest + '/' + selectedAppoint
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                //
+                const newAppointmentReqs = appointRequests.filter((request) => request._id != selectedAppoint);
+                setAppointRequests(newAppointmentReqs);
+                setSelectedAppoint(null);
+                setSelectedAppointReqIdx(-1);
+            } else {
+                toast.error(result.message);
+            }
+        } catch(err){
+            toast.error(t(strings.deleteAppointReqErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
+        }
+        setOpenConfirmDialog(false);
+    }, [selectedAppoint, appointRequests]);
 
     const handleDeleteAppointment = useCallback(async () => {
         try {
@@ -710,7 +758,7 @@ const DashBoard = () => {
                                     onSelectChair={handleSelectChair}
                                     onSelectPatient={handleSelectPatient}
                                     onSelectDate={handleSelectDate}
-                                    onDeleteAppointment={handleOpenConfirmDelete}
+                                    onDeleteAppointment={handleOpenConfirmDeleteAppoint}
                                     openAppointTooltip={openAppointTooltip}
                                     setOpenAppointTooltip={setOpenAppointTooltip}
                                     onUpdateAppointment={handleOpenUpdateAppointTab}
@@ -741,14 +789,15 @@ const DashBoard = () => {
                 appointRequest={appointRequests}
                 onClose={handleCloseAppointReqPop}
                 onSelect={handleSelectAppointReq}
+                onRejectReq={handleOpenConfirmRejectReq}
             />
             {/* Confirm Delete appointment */}
             <ConfirmDialog
                 open={openConfirmDialog}
                 onClose={handleCloseConfirmDialog}
-                action={handleDeleteAppointment}
+                action={handleConfirmDialogAction}
             >
-                {t(strings.areYouSureWantTo) + " " + t(strings.btnDelete) + " " + t(strings.appointment)} 
+                {t(strings.areYouSureWantTo) + " " + t(strings.btnDelete) + " " + confirmDialogMsg} 
             </ConfirmDialog>
             <RightSidebar handleSelectDate={handleSelectDateRightSidebar}/>
         </React.Fragment>

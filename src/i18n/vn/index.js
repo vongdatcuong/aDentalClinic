@@ -126,6 +126,7 @@ export default {
         "Update Appointment fail": "Cập nhật cuộc hẹn thất bại",
         "Get Next Available Date fail": "Lấy ngày khả dụng tiếp theo thất bại",
         "Provider not working in the near future": "Bác sỹ không có lịch làm việc sắp tới",
+        "Delete Appointment Request fail": "Xóa yêu cầu hẹn thất bại",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",

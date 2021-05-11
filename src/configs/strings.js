@@ -228,6 +228,7 @@ const addAppointmentErrMsg = "Add Appointment fail";
 const updateAppointmentErrMsg = "Update Appointment fail";
 const nextAvaiDateErrMsg = "Get Next Available Date fail";
 const providerNotWorkingErrMsg = "Provider not working in the near future";
+const deleteAppointReqErrMsg = "Delete Appointment Request fail";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -476,6 +477,7 @@ export default {
     deleteAppointmentErrMsg,
     addAppointmentSuccess,
     updateAppointmentSuccess,
+    deleteAppointReqErrMsg,
     // Success Messages Settings
     updateUserProfileSuccess,
     changePwdSuccess,
