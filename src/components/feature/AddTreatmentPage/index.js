@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useParams, useHistory } from "react-router-dom";
 // @material-ui/core Component
@@ -14,7 +14,13 @@ import { MdSettingsBackupRestore } from "react-icons/md";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 import Fab from "@material-ui/core/Fab";
-import {InputLabel, Select, MenuItem, FormHelperText} from "@material-ui/core";
+import {
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  TextField,
+} from "@material-ui/core";
 import Grow from "@material-ui/core/Grow";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import NavPills from "../../common/NavPills/NavPills.js";
@@ -43,10 +49,10 @@ import StepConnector from "@material-ui/core/StepConnector";
 import Typography from "@material-ui/core/Typography";
 
 // API
-import api from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import api from "../../../api/base-api";
+import apiPath from "../../../api/path";
 // Context
-import { loadingStore } from '../../../contexts/loading-context';
+import { loadingStore } from "../../../contexts/loading-context";
 
 const ColorlibConnector = withStyles(style.colorlibConnector)(StepConnector);
 
@@ -99,6 +105,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const [procedures, setProcedures] = useState([]);
   const [selectedProcedureCate, setselectedProcedureCate] = useState(null);
   const [selectedProcedure, setSelectedProcedure] = useState(null);
+  const [treatmentNote, setTreatmentNote] = useState("");
   //
   const [procedureErrMsg, setProcedureErrMsg] = useState("");
 
@@ -107,137 +114,145 @@ const AddTreatmentPage = ({ patientID }) => {
   const [toothCondition, setToothCondition] = React.useState([]);
   const [toothNotes, setToothNotes] = React.useState([]);
 
-    // fetch category
-    useEffect(async () => {
-        try {
-          dispatchLoading({ type: strings.setLoading, isLoading: true});
-          const promises = [
-              api.httpGet({
-                  url: apiPath.procedure.procedure + apiPath.procedure.category
-              }),
-          ];
-          const result = await Promise.all(promises);
-          if (result[0].success){
-              const categories = result[0].payload.map((cate) => ({
-                  id: cate._id,
-                  name: cate.name
-              }));
-              setProcedureCates(categories);
-          } else {
-              toast.error(result.message);
-          }
-        } catch(err){
-            toast.error(t(strings.loadProcedureCateErrMsg));
-        } finally {
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
-        }
-      }, [selectedProcedureCate, procedures]);
-    const handleOnProcedureCateChange = async (evt) => {
-    const newSelectedCate = evt.target.value;
-        try {
-            dispatchLoading({ type: strings.setLoading, isLoading: true});
-            const promises = [
-                api.httpGet({
-                    url: apiPath.procedure.procedure + apiPath.procedure.category + '/' + newSelectedCate,
-                    query: {
-                        get_codes: true
-                    }
-                }),
-            ];
-            const result = await Promise.all(promises);
-            if (result[0].success){
-                setselectedProcedureCate(newSelectedCate);
-                const codes = result[0].payload.procedure_code.map((code) => ({
-                    id: code._id,
-                    procedure_code: code.procedure_code,
-                    description: code.description
-                }));
-                setProcedures(codes);
-                setSelectedProcedure(null);
-            //   setSelectedTooth(null);
-            //   setSelectedTeeth([]);
-            //   setSelectedSurface(null);
-            //   setAllowMultipleTooth(false);
-            //   setAllowNoTooth(false);
-            //   setAllowedTeeth({});
-            //   setSurfaces([]);
-            } else {
-                toast.error(result.message);
-            }
-        } catch(err){
-            toast.error(t(strings.loadProcedureCodeErrMsg));
-        } finally {
-            dispatchLoading({ type: strings.setLoading, isLoading: false});
-        }
+  // fetch category
+  useEffect(async () => {
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      const promises = [
+        api.httpGet({
+          url: apiPath.procedure.procedure + apiPath.procedure.category,
+        }),
+      ];
+      const result = await Promise.all(promises);
+      if (result[0].success) {
+        const categories = result[0].payload.map((cate) => ({
+          id: cate._id,
+          name: cate.name,
+        }));
+        setProcedureCates(categories);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      toast.error(t(strings.loadProcedureCateErrMsg));
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
     }
-    const handleOnProcedureChange = async (evt) => {
-        const newSelectedProcedure = evt.target.value;
-            try {
-                dispatchLoading({ type: strings.setLoading, isLoading: true});
-                const promises = [
-                    api.httpGet({
-                        url: apiPath.procedure.procedure + '/' + newSelectedProcedure.id,
-                    }),
-                ];
-                const result = await Promise.all(promises);
-                if (result[0].success){
-                    setSelectedProcedure(newSelectedProcedure);
-                    // const selectedTooth = result[0].payload.tooth_select;
-                    // if (selectedTooth){
-                    // const tokens = selectedTooth.split(":");
-                    // if (tokens[0] == strings.selectNoneTooth){
-                    //     setAllowNoTooth(true);
-                    //     setAllowMultipleTooth(false);
-                    //     setAllowedTeeth({});
-                    // } else {
-                    //     if (tokens[0] == strings.selectMultiTooth){
-                    //     setAllowMultipleTooth(true);
-                    //     } else {
-                    //     setAllowMultipleTooth(false);
-                    //     }
-                    //     let isOpt = false;
-                    //     if (tokens[tokens.length - 1] == "opt"){
-                    //     setAllowNoTooth(true);
-                    //     isOpt = true;
-                    //     } else {
-                    //     setAllowNoTooth(false);
-                    //     }
-                    //     // Allowed teeth
-                    //     let newAllowedTeeth = {};
-                    //     let toks;
-                    //     for (let i = 1; i < tokens.length - isOpt; i++){
-                    //     if (tokens[i].indexOf("-") != -1){
-                    //         toks = tokens[i].split("-");
-                    //         for (let j = Number(toks[0]); j <= Number(toks[1]); j++){
-                    //         newAllowedTeeth[j] = true;
-                    //         }
-                    //     } else {
-                    //         toks = tokens[i].split(",");
-                    //         for (let j = 0; j < toks.length; j++){
-                    //         newAllowedTeeth[toks[j]] = true;
-                    //         }
-                    //     }
-                    //     }
-                    //     setAllowedTeeth(newAllowedTeeth);
-                    // }
-                    // } else {
-                    // setAllowMultipleTooth(false);
-                    // setAllowNoTooth(false);
-                    // setAllowedTeeth({});
-                    // }
-                    // setSelectedTooth(null);
-                    // setSelectedTeeth([]);
-                    // setSelectedSurface(null);
-                    // setSurfaces([]);
-                } else {
-                    toast.error(result.message);
-                }
-            } catch(err){
-                toast.error(t(strings.loadProcedureCodeErrMsg));
-            } finally {
-                dispatchLoading({ type: strings.setLoading, isLoading: false});
-            }
-        }
+  }, [selectedProcedureCate, procedures]);
+  const handleOnProcedureCateChange = async (evt) => {
+    const newSelectedCate = evt.target.value;
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      const promises = [
+        api.httpGet({
+          url:
+            apiPath.procedure.procedure +
+            apiPath.procedure.category +
+            "/" +
+            newSelectedCate,
+          query: {
+            get_codes: true,
+          },
+        }),
+      ];
+      const result = await Promise.all(promises);
+      if (result[0].success) {
+        setselectedProcedureCate(newSelectedCate);
+        const codes = result[0].payload.procedure_code.map((code) => ({
+          id: code._id,
+          procedure_code: code.procedure_code,
+          description: code.description,
+        }));
+        setProcedures(codes);
+        setSelectedProcedure(null);
+        //   setSelectedTooth(null);
+        //   setSelectedTeeth([]);
+        //   setSelectedSurface(null);
+        //   setAllowMultipleTooth(false);
+        //   setAllowNoTooth(false);
+        //   setAllowedTeeth({});
+        //   setSurfaces([]);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      toast.error(t(strings.loadProcedureCodeErrMsg));
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
+  const handleOnProcedureChange = async (evt) => {
+    const newSelectedProcedure = evt.target.value;
+    try {
+      dispatchLoading({ type: strings.setLoading, isLoading: true });
+      const promises = [
+        api.httpGet({
+          url: apiPath.procedure.procedure + "/" + newSelectedProcedure.id,
+        }),
+      ];
+      const result = await Promise.all(promises);
+      if (result[0].success) {
+        setSelectedProcedure(newSelectedProcedure);
+        // const selectedTooth = result[0].payload.tooth_select;
+        // if (selectedTooth){
+        // const tokens = selectedTooth.split(":");
+        // if (tokens[0] == strings.selectNoneTooth){
+        //     setAllowNoTooth(true);
+        //     setAllowMultipleTooth(false);
+        //     setAllowedTeeth({});
+        // } else {
+        //     if (tokens[0] == strings.selectMultiTooth){
+        //     setAllowMultipleTooth(true);
+        //     } else {
+        //     setAllowMultipleTooth(false);
+        //     }
+        //     let isOpt = false;
+        //     if (tokens[tokens.length - 1] == "opt"){
+        //     setAllowNoTooth(true);
+        //     isOpt = true;
+        //     } else {
+        //     setAllowNoTooth(false);
+        //     }
+        //     // Allowed teeth
+        //     let newAllowedTeeth = {};
+        //     let toks;
+        //     for (let i = 1; i < tokens.length - isOpt; i++){
+        //     if (tokens[i].indexOf("-") != -1){
+        //         toks = tokens[i].split("-");
+        //         for (let j = Number(toks[0]); j <= Number(toks[1]); j++){
+        //         newAllowedTeeth[j] = true;
+        //         }
+        //     } else {
+        //         toks = tokens[i].split(",");
+        //         for (let j = 0; j < toks.length; j++){
+        //         newAllowedTeeth[toks[j]] = true;
+        //         }
+        //     }
+        //     }
+        //     setAllowedTeeth(newAllowedTeeth);
+        // }
+        // } else {
+        // setAllowMultipleTooth(false);
+        // setAllowNoTooth(false);
+        // setAllowedTeeth({});
+        // }
+        // setSelectedTooth(null);
+        // setSelectedTeeth([]);
+        // setSelectedSurface(null);
+        // setSurfaces([]);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      toast.error(t(strings.loadProcedureCodeErrMsg));
+    } finally {
+      dispatchLoading({ type: strings.setLoading, isLoading: false });
+    }
+  };
+
+  const handleChangeNote = (e) => {console.log(treatmentNote);
+    setTreatmentNote(e.target.value);
+  };
 
   useEffect(() => {
     fetchToothCondition();
@@ -331,64 +346,97 @@ const AddTreatmentPage = ({ patientID }) => {
     switch (step) {
       case 0:
         return (
-            <div className={classes.stepContent}>
-                <h1>{t(strings.selectTreatment)}</h1>
-                <Grid item md={4} sm={6} xs={12}>
-                    <InputLabel shrink id="treatment-category">
-                        {t(strings.category)}
-                    </InputLabel>
-                    <Select
-                        labelId="treatment-category"
-                        id="treatment-category"
-                        className={classes.select}
-                        margin="dense"
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                        value={selectedProcedureCate || 0}
-                        onChange={handleOnProcedureCateChange}
-                    >
-                    {(procedureCates.map((cate) => {
-                        return (
-                            <MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
-                        )
-                    }))}
-                    </Select>
-                </Grid>
-                {/* Select Procedure */}
-                <Grid item md={8} sm={6} xs={12}>
-                    <InputLabel shrink id="treatment-procedure">
-                        {t(strings.procedure)}
-                    </InputLabel>
-                    <Select
-                        labelId="treatment-procedure"
-                        id="treatment-procedure"
-                        className={classes.select}
-                        margin="dense"
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                        value={selectedProcedure || 0}
-                        onChange={handleOnProcedureChange}
-                        error={Boolean(procedureErrMsg)}
-                        helperText={procedureErrMsg}
-                    >
-                    {(procedures.map((code) => {
-                        return (
-                            <MenuItem key={code.id} value={code}>{code.procedure_code} ({code.description})</MenuItem>
-                        )
-                    }))}
-                    </Select>
-                    {Boolean(procedureErrMsg) && 
-                      <FormHelperText
-                          className={classes.formMessageFail}
-                          error={true}
-                      >
-                          {procedureErrMsg}
-                      </FormHelperText>
-                    }
-                </Grid>
-            </div>
+          <div className={classes.stepContent}>
+            <h1>{t(strings.selectTreatment)}</h1>
+            <Grid item md={8} sm={6} xs={12}>
+              <InputLabel shrink id="treatment-category">
+                {t(strings.category)}
+              </InputLabel>
+              <Select
+                labelId="treatment-category"
+                id="treatment-category"
+                className={classes.select}
+                margin="dense"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={selectedProcedureCate || 0}
+                onChange={handleOnProcedureCateChange}
+              >
+                {procedureCates.map((cate) => {
+                  return (
+                    <MenuItem key={cate.id} value={cate.id}>
+                      {cate.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </Grid>
+            {/* Select Procedure */}
+            <Grid
+              item
+              md={8}
+              sm={6}
+              xs={12}
+              className={classes.selectProcedure}
+            >
+              <InputLabel shrink id="treatment-procedure">
+                {t(strings.procedure)}
+              </InputLabel>
+              <Select
+                labelId="treatment-procedure"
+                id="treatment-procedure"
+                className={classes.select}
+                margin="dense"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={selectedProcedure || 0}
+                onChange={handleOnProcedureChange}
+                error={Boolean(procedureErrMsg)}
+                helperText={procedureErrMsg}
+              >
+                {procedures.map((code) => {
+                  return (
+                    <MenuItem key={code.id} value={code}>
+                      {code.procedure_code} ({code.description})
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              {Boolean(procedureErrMsg) && (
+                <FormHelperText
+                  className={classes.formMessageFail}
+                  error={true}
+                >
+                  {procedureErrMsg}
+                </FormHelperText>
+              )}
+            </Grid>
+            <Grid
+              item
+              md={8}
+              sm={6}
+              xs={12}
+              className={classes.selectProcedure}
+            >
+              <TextField
+                onChange={handleChangeNote}
+                label={t(strings.note)}
+                className={classes.textField}
+                margin="dense"
+                variant="outlined"
+                size="small"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  placeholder: t(strings.note),
+                }}
+              />
+            </Grid>
+          </div>
         );
       case 1:
         return (
@@ -441,9 +489,9 @@ const AddTreatmentPage = ({ patientID }) => {
         );
       case 2:
         return (
-            <div className={classes.stepContent}>
-                <h1>This is the bit I really care about!</h1>
-            </div>
+          <div className={classes.stepContent}>
+            <h1>This is the bit I really care about!</h1>
+          </div>
         );
       default:
         return "Unknown step";
