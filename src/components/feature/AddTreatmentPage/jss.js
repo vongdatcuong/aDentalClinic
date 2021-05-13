@@ -67,6 +67,9 @@ const styles = (theme) => ({
       top: 0,
       marginTop: theme.spacing(4),
       marginRight: theme.spacing(5),
+  },
+  selectProcedure: {
+    marginTop: theme.spacing(4),
   }
 });
 
