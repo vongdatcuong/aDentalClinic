@@ -159,6 +159,7 @@ const today = "Today";
 const nextS = "Next S";
 const request = "Request";
 const atTime = "At time";
+const exportStr = "Export";
 
 // Messages
 
@@ -229,6 +230,7 @@ const updateAppointmentErrMsg = "Update Appointment fail";
 const nextAvaiDateErrMsg = "Get Next Available Date fail";
 const providerNotWorkingErrMsg = "Provider not working in the near future";
 const deleteAppointReqErrMsg = "Delete Appointment Request fail";
+const patientErrMsg = "Patient is required";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -239,6 +241,11 @@ const startDateErrMsg = "Start day is required";
 const datesErrMsg = "Dates are quired";
 const addScheduleErrMsg = "Add Schedule fail";
 const updateScheduleErrMsg = "Update Schedule fail";
+    // Error Messages Report
+const loadStatisticsErrMsg = "Load Report fail";
+const loadAppointDocErrMsg = "Load Appointment Document fail";
+const loadPatientDocErrMsg = "Load Patient Document fail";
+const loadAppointPatientDocErrMsg = "Load Appointment of Patient Document fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -366,6 +373,7 @@ const nextAvailable = "Next Available";
 const onlyMine = "Only mine";
 const nextDateProvider = "Next Available date for default provider";
 const appointDate = "Appointment Date";
+const appointRequest = "Appointment Request";
 
 //patient recall
 const treatment="Treatment";
@@ -426,6 +434,13 @@ const distal = "Distal";
 const top = "Top";
 const root = "Root";
 
+// Report
+const patientsShort = "Patients Short";
+const viewPatientDocument = "View patient document";
+const viewAppointDocument = "View appointments document";
+const viewAppointOfPatientDocument = "View appointments of patient document";
+const noPatientLoadAllAppoints = "If no patient is provided, all appointments will be loaded";
+
 export default {
     appointment,
     patient,
@@ -480,6 +495,7 @@ export default {
     nextS,
     request,
     atTime,
+    exportStr,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -494,6 +510,7 @@ export default {
     addAppointmentSuccess,
     updateAppointmentSuccess,
     deleteAppointReqErrMsg,
+    patientErrMsg,
     // Success Messages Settings
     updateUserProfileSuccess,
     changePwdSuccess,
@@ -557,6 +574,11 @@ export default {
     datesErrMsg,
     addScheduleErrMsg,
     updateScheduleErrMsg,
+        // Error Messages Report
+    loadStatisticsErrMsg,
+    loadAppointDocErrMsg,
+    loadPatientDocErrMsg,
+    loadAppointPatientDocErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
@@ -752,6 +774,7 @@ export default {
     onlyMine,
     nextDateProvider,
     appointDate,
+    appointRequest,
     // Date
     defaultTimeFormat,
     chartDateFormat,
@@ -818,4 +841,10 @@ export default {
     distal,
     top,
     root,
+    // Report
+    patientsShort,
+    viewPatientDocument,
+    viewAppointDocument,
+    viewAppointOfPatientDocument,
+    noPatientLoadAllAppoints,
 };

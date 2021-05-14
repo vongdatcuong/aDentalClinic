@@ -33,11 +33,16 @@ import {hexToRgb} from '../utils/colors';
   const appointRecallDialogWidth = '70%';
   const appointTreatmentDialogWidth = '80%';
   const appointAddTreatmentDialogWidth = '50%';
+  const appointRecallDialogMaxHeight = 600;
+  const appointTreatmentDialogMaxHeight = 600;
   const confirmDialogMinWidth = 350;
   const appointTooltipMaxWidth = 450;
   const scheduleAutoItemMinWidth = 150;
   const addScheduleMonthlyWidth = 600;
   const addScheduleMonthlyHeight = 500;
+  const appointExportDialogWidth = '40%';
+  const appointExportDialogWidthSm = '70%';
+  const appointExportDialogMaxHeight = 300;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
@@ -240,11 +245,16 @@ export default {
   appointRecallDialogWidth,
   appointTreatmentDialogWidth,
   appointAddTreatmentDialogWidth,
+  appointRecallDialogMaxHeight,
+  appointTreatmentDialogMaxHeight,
   confirmDialogMinWidth,
   appointTooltipMaxWidth,
   scheduleAutoItemMinWidth,
   addScheduleMonthlyWidth,
   addScheduleMonthlyHeight,
+  appointExportDialogWidth,
+  appointExportDialogWidthSm,
+  appointExportDialogMaxHeight,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,

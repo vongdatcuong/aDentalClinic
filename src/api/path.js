@@ -107,7 +107,9 @@ const patientRecall={
 
 // report
 const report = {
-    report: '/report'
+    report: '/report',
+    appointment: '/appointment',
+    treatmentHistory: '/treatment-history'
 }
 
 export {

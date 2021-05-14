@@ -58,6 +58,7 @@ export default {
         "Next S": "Next",
         "Request": "Request",
         "At time": "At",
+        "Export": "Export",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -129,6 +130,7 @@ export default {
         "Get Next Available Date fail": "Get Next Available Date fail",
         "Provider not working in the near future": "Provider not working in the near future",
         "Delete Appointment Request fail": "Delete Appointment Request fail",
+        "Patient is required": "Patient is required",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",
@@ -139,6 +141,11 @@ export default {
         "Dates are quired": "Dates are quired",
         "Add Schedule fail": "Add Schedule fail",
         "Update Schedule fail": "Update Schedule fail",
+        // Error Messages Report
+        "Load Statistics fail": "Load Report fail",
+        "Load Appointment Document fail": "Load Appointment Document fail",
+        "Load Patient Document fail": "Load Patient Document fail",
+        "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -388,6 +395,7 @@ export default {
         "Only mine": "Only mine",
         "Next Available date for default provider": "Next available Date for default provider",
         "Appointment Date": "Appointment Date",
+        "Appointment Request": "Appointment Request",
         //Files
         "File Name": "Tên tệp",
         // Schedule
@@ -402,5 +410,11 @@ export default {
         "Friday": "Friday",
         "Saturday": "Saturday",
         "Sunday": "Sunday",
+        // Report
+        "Patients Short": "Patients",
+        "View patient document": "View patient document",
+        "View appointments document": "View appointment document",
+        "View appointments of patient document": "View appointment of patient document",
+        "If no patient is provided, all appointments will be loaded": "If no patient is provided, all appointments will be loaded"
     }
 }

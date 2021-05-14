@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: theme.appointRecallDialogWidth,
     maxWidth: '100%',
+    maxHeight: theme.appointRecallDialogMaxHeight
   },
   dialogTitle: {
     fontWeight: 700,

@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: theme.appointTreatmentDialogWidth,
     maxWidth: '100%',
+    maxHeight: theme.appointTreatmentDialogMaxHeight
   },
   dialogTitle: {
     fontWeight: 700,

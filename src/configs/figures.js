@@ -3,7 +3,7 @@ const defaultCellDuration = 30;
 const defaultStartDayHour = "07:00";
 const defaultEndDayHour = "18:00";
 const maxAppointmentDuration = 240;
-const loadAppointReqIntervalTime = 1000 * 60 * 3;
+const loadAppointReqIntervalTime = 1000 * 60 * 1;
 
 // Toast
 const toastTimeout = 5000;

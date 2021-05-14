@@ -108,7 +108,7 @@ const AppointmentRequestPopover = ({
           component="h5"
           className={classes.title}
           >
-          {t(strings.request)}
+          {t(strings.appointRequest)}
         </Typography>
         <List className={classes.list}>
           {(appointRequest.length > 0)? 
