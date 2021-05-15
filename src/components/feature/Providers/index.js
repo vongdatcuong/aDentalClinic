@@ -1,35 +1,33 @@
 import React,{useEffect, useState} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+
 import ProviderService from "../../../api/provider/provider.service";
+import AuthService from "../../../api/authentication/auth.service";
+
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
     Divider,
-    TextField,
-    InputLabel ,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Select,
     MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 //import configs
 import strings from "../../../configs/strings";
@@ -37,13 +35,14 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertPerson from "../InsertPerson";
 import UpdatePerson from "../UpdatePerson";
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 
 
@@ -78,6 +77,8 @@ const Providers = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -110,7 +111,7 @@ const Providers = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        ////console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
 
@@ -138,27 +139,34 @@ const Providers = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getProvider=async()=>{
         const result=await ProviderService.getProvider();
-        console.log("Get provider in useEffect:",result.data);
+        //console.log("Get provider in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getProvider();
-            
         }
-
+        if(user===null)
+        {
+            getUser();
+            setIsLoading(false);
+        }
         if(selectedRow!==-1)
         {
             if(selectedRowData!==rows[selectedRow] && isEdited===false)
@@ -166,7 +174,7 @@ const Providers = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -219,22 +227,27 @@ const Providers = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPerson}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPerson}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
+                            
                         </Grid>
                     
                     }
@@ -245,49 +258,52 @@ const Providers = () => {
 
                     
                     
-                
+                {isLoading===false ?
                 <Container className={classes.containerTable}>
-                    {insertPerson===true && isEdited=== false ?
-                        <InsertPerson 
-                                        staffType={t(strings.staffTypeProvider)}
-                                        userType={t(strings.userTypePatient)}
-                                        handleChangeIsInsert={handleChangeIsInsert}
-                        />
-                        : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePerson 
-                                        editable={editable}
-                                        id={selectedRowData.id}
-                                        handleChangeIsUpdate={handleChangeIsUpdate}
-
-                        />
-                        :
-                        // rows.length!==0 && dataColumnsName.length!==0?
-                        //     <TableCustom titles={titles}
-                        //             data={rows}
-                        //             dataColumnsName={dataColumnsName}
-                        //             editable={editable}
-                        //             handleChangeIsEdited={handleChangeIsEdited}
-                        //             changeToEditPage={true}
-                        //             handleChangeSelectedRow={handleChangeSelectedRow}
-                        //             numberColumn={dataColumnsName.length}
-                                    
-                        //             />
-                        // :
-                        // <div></div>
-                        <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
+                {insertPerson===true && isEdited=== false ?
+                    <InsertPerson 
+                                    staffType={t(strings.staffTypeProvider)}
+                                    userType={t(strings.userTypePatient)}
+                                    handleChangeIsInsert={handleChangeIsInsert}
+                    />
+                    : isEdited===true &&selectedRowData!==null ?
+                    <UpdatePerson 
                                     editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                    }
-                   
-                   
+                                    id={selectedRowData.id}
+                                    handleChangeIsUpdate={handleChangeIsUpdate}
+
+                    />
+                    :
+                    // rows.length!==0 && dataColumnsName.length!==0?
+                    //     <TableCustom titles={titles}
+                    //             data={rows}
+                    //             dataColumnsName={dataColumnsName}
+                    //             editable={editable}
+                    //             handleChangeIsEdited={handleChangeIsEdited}
+                    //             changeToEditPage={true}
+                    //             handleChangeSelectedRow={handleChangeSelectedRow}
+                    //             numberColumn={dataColumnsName.length}
+                                
+                    //             />
+                    // :
+                    // <div></div>
+                    <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                
+                                />
+                }
+               
+               
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
             </div>
             

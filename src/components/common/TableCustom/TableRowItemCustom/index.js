@@ -1,24 +1,15 @@
-import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import React,{useState} from 'react';
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TablePagination,
+    
     TableRow,
-    TableHead,
-    TextField,
-    InputAdornment,
-    Paper,
+    
     
 } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
 
 import styles from "./jss";
 //import configs
@@ -29,7 +20,7 @@ import TableCellCustom from "./TableCellCustom";
 const useStyles = makeStyles(styles);
 
 const TableRowItemCustom=(props)=>{
-    const {t, i18n } = useTranslation();
+    // const {t, i18n } = useTranslation();
     const classes = useStyles();
 
     // const [editable,setEditable]=useState(props.editable);
@@ -51,7 +42,7 @@ const TableRowItemCustom=(props)=>{
             // props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
             props.handleOpenDialog();
         }
-        console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
+        // console.log("Selected Row:",props.index+props.page*props.rowsPerPage);
         // props.handleChangeIsEdited();
         props.handleChangeSelectedRow(props.index+props.page*props.rowsPerPage);
     }

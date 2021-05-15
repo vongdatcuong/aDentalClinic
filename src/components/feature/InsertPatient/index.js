@@ -1,27 +1,38 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import PatientService from "../../../api/patient/patient.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
+// import Container from '@material-ui/core/Container';
+import { 
     FormControlLabel,
     Checkbox,
     Button,
-    TextField
+    TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    Radio,
+    RadioGroup,
+    Select,
+    InputAdornment,
+    Input,
+    FilledInput,
+    FormControl,
+    OutlinedInput,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-
+import EditIcon from '@material-ui/icons/Edit';
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -32,7 +43,7 @@ import strings from "../../../configs/strings";
 
 
 //import component
-
+import DialogReferral from '../DialogReferral';
 const useStyles = makeStyles(styles);
 
 
@@ -56,14 +67,20 @@ const InsertPatient = (props) => {
     const [gender,setGender]=useState(true);
     const [active,setActive]=useState(true);
     const [staffPhoto,setStaffPhoto]=useState(null);
+    const [otherInfo,setOtherInfo]=useState(null);
     const [firstNameError,setFirstNameError]=useState(null);
     const [lastNameError,setLastNameError]=useState(null);
     const [usernameError,setUsernameError]=useState(null);
     const [passwordError,setPasswordError]=useState(null);
     const [emailError,setEmailError]=useState(null);
-
+    const [referredBy,setReferredBy]=useState(null);
+    const [referredTo,setReferredTo]=useState(null);
+    const [referralType,setReferralType]=useState(null);
+    const [openDialog,setOpenDialog]=useState(false);
     const [selectedFile,setSelectedFile]=useState(null);
 
+    //handle
+    
     const handleChangeActive=(e)=>{
         setActive(!active);
     }
@@ -100,9 +117,32 @@ const InsertPatient = (props) => {
     const handleChangeGender=(e)=>{
         setGender(!gender);
     }
-
+    const handleChangeOtherInfo=(e)=>{
+        setOtherInfo(e.target.value);
+    }
+    const handleChangeCloseDialog=(e)=>{
+        setOpenDialog(false);
+    }
+    const handleChangeOpenDialog=(e)=>{
+        setOpenDialog(true);
+        console.log("Open dialog:",true);
+    }
+    const handleChangeReferredTo=(e)=>{
+        setReferredTo(e.target.value);
+    }
+    const handleChangeReferredBy=(e)=>{
+        setReferredBy(e.target.value);
+    }
+    const handleChangeOpenReferredBy=(e)=>{
+        setOpenDialog(true);
+        setReferralType("FROM");
+    }
+    const handleChangeOpenReferredTo=(e)=>{
+        setOpenDialog(true);
+        setReferralType("TO");
+    }
     const handleUploadClick = event => {
-        console.log();
+        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -114,13 +154,13 @@ const InsertPatient = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        //console.log("Url:",reader); 
 
     };
 
     
     const insertPerson=async(e)=>{
-        console.log("Insert person");
+        //console.log("Insert person");
         let genderData;
         if(gender===true)
         {
@@ -155,12 +195,13 @@ const InsertPatient = (props) => {
             home_phone: homePhone,
             staff_photo: staffPhoto,
             address: address,
-
+            other_info:otherInfo,
 		    //yeu cau
             first_name: firstName,
             last_name: lastName,
             username: username,
             password: password,
+
         };
         const result=await PatientService.insert(data);
         if(result.success)
@@ -329,6 +370,34 @@ const InsertPatient = (props) => {
                                 label={t(strings.female)}
                             />
                         </div>
+                        <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.active)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                                }
+                                label={t(strings.active)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.inactive)}
+                                    color="primary"
+                                    className={classes.checkbox}
+
+                                />
+                                }
+                                label={t(strings.inactive)}
+                            />
+                        </div>
+                        
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
@@ -374,37 +443,72 @@ const InsertPatient = (props) => {
                                         value={address}
                                         /> 
                         </div>
-                        <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={active}
-                                    onChange={handleChangeActive}
-                                    name={t(strings.active)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                label={t(strings.active)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!active}
-                                    onChange={handleChangeActive}
-                                    name={t(strings.inactive)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.inactive)}
-                            />
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControlBig} 
+                                         
+                                        placeholder={t(strings.additionalInfo)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeOtherInfo}
+                                        value={otherInfo}
+                                        multiline
+                                        /> 
                         </div>
+                        {/* <div className={classes.item}>
+                            <FormControl variant="filled">
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        type={'text'}
+                                        onChange={handleChangeReferredBy}
+                                        value={referredBy}
+                                        placeholder={t(strings.referredBy)}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredBy}/>
+
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                  
+                                   
+                            </FormControl>   
                         
+                        </div>
+                        <div >
+                            <FormControl variant="filled">
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        type={'text'}
+                                        onChange={handleChangeReferredBy}
+                                        value={referredTo}
+                                        placeholder={t(strings.referredTo)}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredTo}/>
+
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                    
+                            </FormControl>   
                         
+                       
+                        </div>
+                     */}
                     </Grid>
                 </Grid>
+                
+                <DialogReferral 
+                            isOpen={openDialog}
+                            close={handleChangeCloseDialog}
+                            open={handleChangeOpenDialog}
+                            type={referralType}
+                />
                 <div>
                     <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertPerson}>
                         {t(strings.insert)}

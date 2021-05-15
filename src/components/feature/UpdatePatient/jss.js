@@ -8,7 +8,7 @@ const updatePatientStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            color:theme.primaryColor[2],
+            //color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -66,7 +66,7 @@ const updatePatientStyle = (theme) => ({
         //marginLeft:'20px',
     },
     rightContentTitle:{
-        color:theme.primaryColor[1],
+        //color:theme.primaryColor[1],
         marginLeft:'20px',
     },
     rightContentText:{
@@ -78,7 +78,7 @@ const updatePatientStyle = (theme) => ({
     },
     inputControl:{
         height:'35px',
-        width:'35vw',
+        width:'36vw',
         marginLeft:'30px',
         marginTop:'10px',
         // display:'flex',
@@ -99,7 +99,6 @@ const updatePatientStyle = (theme) => ({
             height:'35px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
-            //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
@@ -115,6 +114,83 @@ const updatePatientStyle = (theme) => ({
         //         borderColor: theme.primaryColor[0],
         //     },
         // },
+        
+    
+
+    },
+    inputControlBig:{
+        minHeight:'98px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            minHeight:'98px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
+    inputControlMedium:{
+        height:'35px',
+        width:'15vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        display:'flex',
+        flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        color:theme.primaryColor[3],
+        '& .MuiInputBase-root':{
+            width:'15vw',
+
+        },
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        }
 
     },
     inputControlSmall:{
@@ -143,7 +219,7 @@ const updatePatientStyle = (theme) => ({
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            border:`1px solid ${theme.primaryColor[0]}`,
+            //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
@@ -171,12 +247,16 @@ const updatePatientStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        
+    },
+    itemMedium:{
+        flexDirection:'row',
+        marginTop:'15px',
     },
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'20px',
+        marginTop:'25px',
     },
     input:{
         marginTop:'10px',
@@ -201,6 +281,9 @@ const updatePatientStyle = (theme) => ({
     inputAvatarDisplay:{
         display:'none',
 
+    },
+    dialog:{
+        
     }
 
 });

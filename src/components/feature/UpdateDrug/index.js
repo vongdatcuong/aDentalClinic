@@ -1,27 +1,23 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import DrugService from "../../../api/drug/drug.service";
 //validators
-import validators, {isPropValid} from '../../../utils/validators';
+// import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
-    FormControlLabel,
-    Checkbox,
+import { 
     Button,
     TextField
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+// import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 import { toast } from 'react-toastify';
@@ -112,7 +108,7 @@ const UpdateDrug = (props) => {
     useEffect(()=>{
         const searchDrug=async()=>{
             const result=await DrugService.search(props.id);
-            console.log("Search drug in useEffect:",result.data.payload._id);
+            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setName(result.data.payload.name);

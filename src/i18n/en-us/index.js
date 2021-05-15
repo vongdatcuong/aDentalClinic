@@ -75,6 +75,7 @@ export default {
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
+        "Time is invalid":"Time is invalid",
         "Cannot change in read mode":"Cannot change in read mode",
         "Update Fail":"Update Fail",
         "Insert Fail":"Insert Fail",
@@ -273,6 +274,10 @@ export default {
         "Drug":"Drug",
         //referral
         "Additional information":"Additional information",
+        "New referral":"New referral",
+        "Existed referral":"Existed referral",
+        "Referred by":"Referred by",
+        "Referred to":"Referred to",
         //template
         "Template":"Template",
         "Recent":"Recent",

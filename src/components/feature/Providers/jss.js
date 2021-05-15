@@ -15,7 +15,11 @@ const providerStyle = (theme) => ({
     serviceControl:{
         display:'flex',
         flexDirection:'row',
+        justifyContent:'flex-end',
+        '& .MuiFormControl-root':{
+            marginRight:'2vw',
 
+        }
     },
     iconButton:{
         cursor:'pointer',
@@ -43,8 +47,7 @@ const providerStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
-        marginLeft:'20px',
-        marginRight:'10px',
+        marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },

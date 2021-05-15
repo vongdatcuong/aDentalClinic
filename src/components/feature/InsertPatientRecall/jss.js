@@ -118,7 +118,7 @@ const insertPatientRecallStyle = (theme) => ({
 
     },
     inputControlBig:{
-        height:'110px',
+        minHeight:'110px',
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
@@ -137,7 +137,7 @@ const insertPatientRecallStyle = (theme) => ({
 
         },
         '& .MuiInputBase-root':{
-            height:'110px',
+            minHeight:'110px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
         },

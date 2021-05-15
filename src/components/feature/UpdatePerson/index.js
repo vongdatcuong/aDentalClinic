@@ -1,17 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import ProviderService from "../../../api/provider/provider.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
+import { 
     FormControlLabel,
     Checkbox,
     Button,
@@ -106,7 +104,7 @@ const UpdateChair = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        // console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -118,7 +116,7 @@ const UpdateChair = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        // console.log("Url:",reader); 
 
     };
 
@@ -168,7 +166,7 @@ const UpdateChair = (props) => {
             else
             {
                 toast.error(t(strings.updateFail));
-                console.log("Check update:",update);
+                // console.log("Check update:",update);
     
             }
         }
@@ -178,7 +176,7 @@ const UpdateChair = (props) => {
     useEffect(()=>{
         const searchProvider=async()=>{
             const result=await ProviderService.search(props.id);
-            console.log("Search provider in useEffect:",result.data.payload._id);
+            // console.log("Search provider in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setUserData(result.data.payload);

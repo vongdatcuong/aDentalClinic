@@ -1,6 +1,6 @@
-import {secretKey, initializeAPIService, httpPost,httpGet,httpPatch,httpPut} from '../base-api';
+import { httpPost,httpGet,httpPatch} from '../base-api';
 import apiPath from '../path';
-import strings from '../../configs/strings';
+
 
 class ProviderService{
     async getProvider(){
@@ -9,7 +9,7 @@ class ProviderService{
             const result = await httpGet({
                 url: apiPath.staff.staff+apiPath.staff.provider,
             });
-            console.log("Get provider:",result.payload[0]);
+            //console.log("Get provider:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -26,7 +26,7 @@ class ProviderService{
             }           
         }
         catch(error){
-            console.log("Failed to fetch providers:",error);
+            //console.log("Failed to fetch providers:",error);
             return {
                 success: false,
                 data: null
@@ -42,7 +42,7 @@ class ProviderService{
                 url: apiPath.staff.staff,
                 body:data
             });
-            console.log("insert staff:",result);
+            //console.log("insert staff:",result);
             if(result.success)
             {
                 return {
@@ -57,7 +57,7 @@ class ProviderService{
             }        
         }
         catch(error){
-            console.log("Failed to fetch providers:",error);
+            //console.log("Failed to fetch providers:",error);
             return {
                 success: false,
             };
@@ -71,14 +71,14 @@ class ProviderService{
             const result = await httpGet({
                 url: `${apiPath.staff.staff}/${id}`,
             });
-            console.log("search staff:",result);
+            //console.log("search staff:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            console.log("Failed to fetch providers:",error);
+            //console.log("Failed to fetch providers:",error);
             return {
                 success: false,
                 data:null,
@@ -87,14 +87,14 @@ class ProviderService{
     }
     async update(id,data)
     {
-        console.log("Data for update:",data);
+        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.staff.staff}/${id}`,
                 body:data
             });
-            console.log("update staff:",result);
+            //console.log("update staff:",result);
             if(result.success)
             {
                 return {
@@ -113,7 +113,7 @@ class ProviderService{
                      
         }
         catch(error){
-            console.log("Failed to update staff:",error);
+            //console.log("Failed to update staff:",error);
             return {
                 success: false,
                 data:null

@@ -104,6 +104,11 @@ const patientRecall={
     recall:'/recall',
     patient:'/patient',
 }
+//referral
+const referral={
+    referral:'/referral',
+
+}
 
 // report
 const report = {
@@ -135,5 +140,6 @@ export default {
     image,
     prescription,
     patientRecall,
+    referral,
     report
 };

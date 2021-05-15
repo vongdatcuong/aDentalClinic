@@ -217,7 +217,7 @@ const updateProcedureStyle = (theme) => ({
 
     },
     inputControlBig:{
-        height:'105px',
+        minHeight:'105px',
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
@@ -236,7 +236,7 @@ const updateProcedureStyle = (theme) => ({
 
         },
         '& .MuiInputBase-root':{
-            height:'105px',
+            minHeight:'105px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
             //color:theme.primaryColor[2],

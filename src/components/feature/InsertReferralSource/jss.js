@@ -119,7 +119,7 @@ const insertReferralStyle = (theme) => ({
 
     },
     inputControlBig:{
-        height:'100px',
+        minHeight:'100px',
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
@@ -138,7 +138,7 @@ const insertReferralStyle = (theme) => ({
 
         },
         '& .MuiInputBase-root':{
-            height:'80px',
+            minHeight:'80px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
         },

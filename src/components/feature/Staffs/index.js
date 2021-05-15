@@ -1,11 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
 import StaffService from "../../../api/staff/staff.service";
+import AuthService from "../../../api/authentication/auth.service";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -13,22 +12,21 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Select,
     MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
-import { toast } from 'react-toastify';
+// import darkTheme from "../../../themes/darkTheme";
+// import { toast } from 'react-toastify';
 
 //import configs
 import strings from "../../../configs/strings";
@@ -36,14 +34,14 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertPerson from "../InsertPerson";
 import UpdatePerson from "../UpdatePerson";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 
 const useStyles = makeStyles(styles);
 const createData=(id,fullname, email, phone, status)=>{
@@ -72,6 +70,8 @@ const Staffs = () => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -89,7 +89,7 @@ const Staffs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangePage = (event, newPage) => {
@@ -129,7 +129,7 @@ const Staffs = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const titles=[
@@ -142,20 +142,25 @@ const Staffs = () => {
 
     const getStaff=async()=>{
         const result=await StaffService.getStaff();
-        console.log("Get staff in useEffect:",result.data);
+        //console.log("Get staff in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getStaff();
-            
+            getUser();
+            setIsLoading(false);
         }
 
         if(selectedRow!==-1)
@@ -165,7 +170,7 @@ const Staffs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -217,22 +222,26 @@ const Staffs = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPerson}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPerson}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                         </Grid>
 
                         }
@@ -240,7 +249,8 @@ const Staffs = () => {
                     
                     </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertPerson===true && isEdited=== false ?
                         <InsertPerson staffType={t(strings.staffTypeStaff)}
                                         userType={t(strings.userTypeStaff)}
@@ -267,6 +277,9 @@ const Staffs = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 

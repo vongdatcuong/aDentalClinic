@@ -13,20 +13,11 @@ import { useTranslation, Trans } from 'react-i18next';
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TablePagination,
-    TableRow,
-    TableHead,
-    TableFooter,
-    Paper,
+   
     InputAdornment,
     FormControl,
     OutlinedInput,
     Divider,
-    Tooltip,
     Select,
     MenuItem,
     Button,
@@ -42,14 +33,13 @@ import PropTypes from 'prop-types';
 import styles from "./jss";
 
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import AuthService from "../../../api/authentication/auth.service";
 import PatientService from "../../../api/patient/patient.service";
 //import image
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
@@ -57,6 +47,7 @@ import Footer from '../../../layouts/Footer';
 import TableCustom from "../../common/TableCustom";
 import InsertPatient from "../InsertPatient";
 import UpdatePatient from "../UpdatePatient";
+import LoadingPage from '../../../layouts/LoadingPage';
 
 const useStyles = makeStyles(styles);
 const createData=(id,fullname, email, phone,gender, status, action)=>{
@@ -150,6 +141,8 @@ const Patients = () => {
     const listStatus=[t(strings.active),t(strings.inactive),t(strings.all)];
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -183,7 +176,7 @@ const Patients = () => {
         {
             setRows(rowsAll);
         }
-        console.log("Check status:",event.target.value);
+        //console.log("Check status:",event.target.value);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -197,7 +190,7 @@ const Patients = () => {
     };
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     };
 
@@ -256,28 +249,33 @@ const Patients = () => {
             }
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(tempActive);
         setRowsAll(temp);
         setRowsActive(tempActive);
         setRowsInactive(tempInactive);
+        setIsLoading(false);
     }
     const getPatient=async()=>{
         const result=await PatientService.getPatient();
-        console.log("Get patient in useEffect:",result.data);
+        //console.log("Get patient in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getPatient();
-            
+            getUser();
         }
 
         if(selectedRow!==-1)
@@ -287,7 +285,7 @@ const Patients = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -352,22 +350,26 @@ const Patients = () => {
                                 <MenuItem value={listStatus[2]}>{listStatus[2]}</MenuItem>
 
                             </Select>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPerson}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPerson}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                         </Grid>
                     
                     }
@@ -378,70 +380,73 @@ const Patients = () => {
 
                     
                     
-                
+                {isLoading===false ?
                 <Container className={classes.containerTable}>
-                    {insertPerson===true ?
-                        <InsertPatient 
-                                        userType={t(strings.userTypePatient)}
-                                        handleChangeIsInsert={handleChangeIsInsert}
-                        />
-                        : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePatient
-                                        id={selectedRowData.id}
-                                        editable={editable}
-                                        handleChangeIsUpdate={handleChangeIsUpdate}
-                        />
-                        :
-                        rows.length!==0 && dataColumnsName.length!==0?
-                        <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
+                {insertPerson===true ?
+                    <InsertPatient 
+                                    userType={t(strings.userTypePatient)}
+                                    handleChangeIsInsert={handleChangeIsInsert}
+                    />
+                    : isEdited===true &&selectedRowData!==null ?
+                    <UpdatePatient
+                                    id={selectedRowData.id}
                                     editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                        />
-                        :
-                        <div></div>
-                            // status===t(strings.active)?
-                            // <TableCustom titles={titles}
-                            //         data={rowsActive}
-                            //         dataColumnsName={dataColumnsName}
-                            //         editable={editable}
-                            //         handleChangeIsEdited={handleChangeIsEdited}
-                            //         changeToEditPage={true}
-                            //         handleChangeSelectedRow={handleChangeSelectedRow}
-                            //         numberColumn={dataColumnsName.length}
-                                    
-                            //         />
-                            //         :
-                            // status===t(strings.inactive)?
-                            // <TableCustom titles={titles}
-                            //         data={rowsInactive}
-                            //         dataColumnsName={dataColumnsName}
-                            //         editable={editable}
-                            //         handleChangeIsEdited={handleChangeIsEdited}
-                            //         changeToEditPage={true}
-                            //         handleChangeSelectedRow={handleChangeSelectedRow}
-                            //         numberColumn={dataColumnsName.length}
-                                    
-                            //         />
-                            //         :
-                            // <TableCustom titles={titles}
-                            //         data={rows}
-                            //         dataColumnsName={dataColumnsName}
-                            //         editable={editable}
-                            //         handleChangeIsEdited={handleChangeIsEdited}
-                            //         changeToEditPage={true}
-                            //         handleChangeSelectedRow={handleChangeSelectedRow}
-                            //         numberColumn={dataColumnsName.length}
-                                    
-                            //         />        
-                    }
-                   
-                   
+                                    handleChangeIsUpdate={handleChangeIsUpdate}
+                    />
+                    :
+                    rows.length!==0 && dataColumnsName.length!==0?
+                    <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                    />
+                    :
+                    <div></div>
+                        // status===t(strings.active)?
+                        // <TableCustom titles={titles}
+                        //         data={rowsActive}
+                        //         dataColumnsName={dataColumnsName}
+                        //         editable={editable}
+                        //         handleChangeIsEdited={handleChangeIsEdited}
+                        //         changeToEditPage={true}
+                        //         handleChangeSelectedRow={handleChangeSelectedRow}
+                        //         numberColumn={dataColumnsName.length}
+                                
+                        //         />
+                        //         :
+                        // status===t(strings.inactive)?
+                        // <TableCustom titles={titles}
+                        //         data={rowsInactive}
+                        //         dataColumnsName={dataColumnsName}
+                        //         editable={editable}
+                        //         handleChangeIsEdited={handleChangeIsEdited}
+                        //         changeToEditPage={true}
+                        //         handleChangeSelectedRow={handleChangeSelectedRow}
+                        //         numberColumn={dataColumnsName.length}
+                                
+                        //         />
+                        //         :
+                        // <TableCustom titles={titles}
+                        //         data={rows}
+                        //         dataColumnsName={dataColumnsName}
+                        //         editable={editable}
+                        //         handleChangeIsEdited={handleChangeIsEdited}
+                        //         changeToEditPage={true}
+                        //         handleChangeSelectedRow={handleChangeSelectedRow}
+                        //         numberColumn={dataColumnsName.length}
+                                
+                        //         />        
+                }
+               
+               
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
             </div>
             <Footer/>

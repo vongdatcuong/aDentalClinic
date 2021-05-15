@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import AuthService from "../../../api/authentication/auth.service";
 import ChairService from "../../../api/chair/chair.service";
+
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
@@ -19,11 +19,11 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
@@ -40,7 +40,7 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 import InsertChair from "../InsertChair";
 import UpdateChair from "../UpdateChair";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 const createData=(id,name,order,status)=>{
     return {id,name,order,status};
@@ -63,6 +63,8 @@ const Chairs = () => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -80,7 +82,7 @@ const Chairs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangePage = (event, newPage) => {
@@ -128,12 +130,12 @@ const Chairs = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getChair=async()=>{
         const result=await ChairService.getChair();
-        console.log("Get chair in useEffect:",result.data);
+        //console.log("Get chair in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -142,12 +144,17 @@ const Chairs = () => {
         
 
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getChair();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -156,7 +163,7 @@ const Chairs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             
         }
@@ -208,29 +215,35 @@ const Chairs = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertChair}>
-                                <AddBox />            
+                                </Select>
+                                <IconButton onClick={handleChangeInsertChair}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
 
-                            </IconButton>
                         </Grid>
 
                     }
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertChair===true && isEdited=== false ?
                         <InsertChair 
                                     handleChangeIsInsert={handleChangeIsInsert}
@@ -256,6 +269,9 @@ const Chairs = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 

@@ -1,14 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
-import DrugService from "../../../api/drug/drug.service";
-import ProviderService from "../../../api/provider/provider.service";
-
+import AuthService from "../../../api/authentication/auth.service";
 import PrescriptionService from "../../../api/prescription/prescription.service";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -16,7 +12,6 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Select,
     MenuItem,
@@ -28,14 +23,14 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 // moment
 import moment from 'moment';
@@ -45,17 +40,18 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertPatientPrescription from "../InsertPatientPrescription";
 import UpdatePatientPrescription from "../UpdatePatientPrescription";
-import PopupChat from '../../common/Messenger/PopupChat';
+import LoadingPage from '../../../layouts/LoadingPage';
+// import PopupChat from '../../common/Messenger/PopupChat';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import Footer from "../../../layouts/Footer";
-import { TrainRounded } from '@material-ui/icons';
+// import { TrainRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 const createData=(id,date,status)=>{
@@ -83,6 +79,9 @@ const PatientPrescriptionPage = ({patientID}) => {
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isDelete,setIsDelete]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
    
@@ -91,7 +90,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -113,7 +112,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         setInsertPatientPrescription(!insertPatientPrescription);
     }
     const handleChangeEditable=(e)=>{
-        console.log("Change editable:",!editable);
+        //console.log("Change editable:",!editable);
         setEditable(!editable);
     }
     const handleChangeSelectedRow=(value)=>{
@@ -126,7 +125,7 @@ const PatientPrescriptionPage = ({patientID}) => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -157,19 +156,19 @@ const PatientPrescriptionPage = ({patientID}) => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
    
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deletePrescription=async()=>{
             const data={
                 is_delete:true,
             };
             const res=await PrescriptionService.update(selectedRowData.id,data);
-            console.log("Delete prescription:",res);
+            //console.log("Delete prescription:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -185,15 +184,19 @@ const PatientPrescriptionPage = ({patientID}) => {
         deletePrescription();
        
     }
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
            
             const getPrescription=async()=>{
-                console.log("Check patient ID:",patientID);
+                //console.log("Check patient ID:",patientID);
                 const result1=await PrescriptionService.searchByPatient(patientID);
-                console.log("result1:",result1.data);
+                // console.log("result1:",result1.data);
                 if(result1.success && result1.data.payload.length!==0)
                 {
                     changeData(result1.data.payload);
@@ -202,7 +205,9 @@ const PatientPrescriptionPage = ({patientID}) => {
             };
             
             getPrescription();
-            
+            getUser();
+            setIsLoading(false);
+
         }
         if(selectedRow!==-1)
         {
@@ -211,38 +216,38 @@ const PatientPrescriptionPage = ({patientID}) => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
     })
     return (  <React.Fragment>
         <TreatmentMenu patientID = { patientID }/>
-        <Container className={classes.container}>
+        <Container className={classes.containerTable}>
           
             <div>
             <div >
                 <Grid container>
-                    <Grid item xs={8}>
+                    <Grid item xs={7}>
                         <Typography className={classes.title} variant="h4">
                             {t(strings.prescription)}
                         </Typography>
                     </Grid>
                     {insertPatientPrescription===true || isEdited===true ?
 
-                        <Grid item xs={4}>
+                        <Grid item xs={5}>
                             <Typography variant="h6" onClick={handleGoBack} className={classes.goBack}>
                                 {t(strings.goBack)}
                             </Typography>
                         </Grid>
                         :
-                        <Grid item xs={4} className={classes.serviceControl}>
+                        <Grid item xs={5} className={classes.serviceControl}>
 
                             <FormControl variant="filled">
 
@@ -261,71 +266,75 @@ const PatientPrescriptionPage = ({patientID}) => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPrescription}>
-                                <AddBox />            
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPrescription}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
+                                    <DeleteIcon />            
 
-                            </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
-                                <DeleteIcon />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
 
-                            </IconButton>
+                           
                         </Grid>
 
                     }
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container style={{marginLeft:"10px"}}>
-                    {insertPatientPrescription===true && isEdited=== false  ?
-                        <InsertPatientPrescription
-                                     patientID={patientID}
-                        />
-                        : 
-                        // isEdited===true &&selectedRowData!==null && isDelete===false && editable===true?
-                        // <UpdatePatientPrescription
-                        //                 id={selectedRowData.id}
-                        //                 patientID={patientID}
-
-
-                        // />
-                        selectedRowData!==null && isDelete===false ?
-                        <UpdatePatientPrescription
-                                            id={selectedRowData.id}
-                                            patientID={patientID}
-                                            editable={editable}
-                        />
-                        :
-                        rows.length!==0 ?
-                            <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
-                                    editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    isDelete={isDelete}
-                                    handleOpenDialog={handleOpenDialog}
-                                    handleCloseDialog={handleCloseDialog}
-                                    />
-                        :
-                        <div></div>
-                    }
-                   
-                   
+                {isLoading === false ?
+                <Container style={{marginLeft:'10px'}}>
+                {insertPatientPrescription===true && isEdited=== false  ?
+                    <InsertPatientPrescription
+                                 patientID={patientID}
+                    />
+                    : 
+                    
+                    selectedRowData!==null && isDelete===false ?
+                    <UpdatePatientPrescription
+                                        id={selectedRowData.id}
+                                        patientID={patientID}
+                                        editable={editable}
+                    />
+                    :
+                    rows.length!==0 ?
+                        <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                isDelete={isDelete}
+                                handleOpenDialog={handleOpenDialog}
+                                handleCloseDialog={handleCloseDialog}
+                                />
+                    :
+                    <div></div>
+                }
+               
+               
                 </Container>
-                
+            
+                :
+                <LoadingPage/>
+                }
                 
                 
                 <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>

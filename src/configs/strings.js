@@ -39,7 +39,10 @@ const status="Status";
 const read="Read";
 //referral
 const additionalInfo="Additional information";
-
+const newReferral="New referral";
+const existedReferral="Existed referral";
+const referredBy="Referred by";
+const referredTo="Referred to";
 //provider
 const index="#";
 const id="ID";
@@ -91,6 +94,7 @@ const organization="Organization";
 const hotline="Hotline";
 const startTime="Start time";
 const endTime="End time";
+
 //chair
 const number="Number";
 const room="Room";
@@ -180,6 +184,7 @@ const updateUserProfileSuccess = "Update Profile successfully";
 const changePwdSuccess = "Change Password successfully";
     // Error Messages
 const errorNoDrug="You can't insert prescription if it don't have drug";
+const errorStartEndTime="Time is invalid";
 const confirmChangeInReadMode="Cannot change in read mode";
 const updateAccountFail = "Update Account Fail";
 const updateFail = "Update Fail";
@@ -380,6 +385,7 @@ const treatment="Treatment";
 const interval="Interval";
 const recallDate="Recall date";
 const patientRecall="Patient recall";
+
 // Tooth
 const selectOneTooth = "S";
 const selectMultiTooth = "M";
@@ -516,6 +522,7 @@ export default {
     changePwdSuccess,
     // Error Messages
     errorNoDrug,
+    errorStartEndTime,
     confirmChangeInReadMode,
     updateFail,
     insertFail,
@@ -702,6 +709,10 @@ export default {
     dispensed,
     refill,
     additionalInfo,
+    newReferral,
+    existedReferral,
+    referredBy,
+    referredTo,
     content,
     noteType,
     abbreviation,

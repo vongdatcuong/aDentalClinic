@@ -1,4 +1,4 @@
-const staffStyle = (theme) => ({
+const patientReferralStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px"
@@ -17,8 +17,10 @@ const staffStyle = (theme) => ({
         flexDirection:'row',
         justifyContent:'flex-end',
         '& .MuiFormControl-root':{
-            marginRight:'2vw',
-
+            marginRight:'1vw',
+        },
+        '& .MuiIconButton-root':{
+            padding:'5px',
         }
     },
     iconButton:{
@@ -36,7 +38,8 @@ const staffStyle = (theme) => ({
     titleDivider: {
         marginLeft: theme.spacing(4),
         marginRight: theme.spacing(2),
-        marginBottom: theme.spacing(1.5)
+        marginBottom: theme.spacing(1.5),
+        
     },
     goBack:{
         cursor:'pointer',
@@ -46,10 +49,29 @@ const staffStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
-        marginRight:'1vw',
+        // marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
+    },
+    dialog:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    dialogMessage:{
+        padding:'20px'
+    },
+    dialogButtons:{
+        marginTop:'15px',
+        marginRight:'10px',
+        marginBottom:'15px',
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'flex-end',
+    },
+    dialogButton:{
+        marginLeft:'15px',
     },
     containerTable:{
         marginLeft:'10px',
@@ -58,6 +80,17 @@ const staffStyle = (theme) => ({
             width:'99%',
         }
     },
+    dialogContainer:{
+        minWidth:'93vw',
+        minHeight:'600px',
+        justifyContent:'center',
+        alignItems:'center',
+        '& .MuiDialog-paperWidthSm':{
+            minWidth:'93vw',
+            minHeight:'600px',
+
+        }
+    },
 });
   
-export default staffStyle;  
+export default patientReferralStyle;  

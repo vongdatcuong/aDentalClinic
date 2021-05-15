@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
+import AuthService from "../../../api/authentication/auth.service";
 import PracticeService from "../../../api/practice/practice.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //import icon
 import {AccountBox,
         LocationCity,
@@ -14,10 +15,12 @@ import {AccountBox,
         Assignment,
         Devices,
         ContactPhone,
+        TrafficRounded,
 } from "@material-ui/icons";
 //import image
 import Logo from "../../../assets/images/logo_iDental.png";
-import {Grid,
+import {
+    Grid,
     Typography,
     FormControl,
     OutlinedInput,
@@ -30,16 +33,19 @@ import {Grid,
     FormHelperText,
 } from '@material-ui/core';
 import {
-    KeyboardDatePicker
+    KeyboardTimePicker
 } from '@material-ui/pickers';
 import { toast } from 'react-toastify';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import component
 import TableCustom from "../../common/TableCustom";
+import LoadingPage from '../../../layouts/LoadingPage';
+
+import moment from 'moment';
 const useStyles = makeStyles(styles);
 
 const createData=(id,name,address,phone,fax,startTime,endTime)=>{
@@ -68,7 +74,8 @@ const Practice = () => {
     const [endTime,setEndTime]=useState(null);
     const [nameErrorMessage,setNameErrorMessage]=useState(null);
     const [phoneErrorMessage,setPhoneErrorMessage]=useState(null);
-    
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     //handle
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -82,18 +89,31 @@ const Practice = () => {
     const handleChangeFax=(e)=>{
         setFax(e.target.value);
     }
-    const handleChangeStartTime=(e,date)=>{
+    const handleChangeStartTime=(date)=>{
         if(editable)
         {
             setStartTime(date);
-
+            
+            //console.log("Start time:",moment(date).format("HH:mm"));
+            if(moment(date).format("HH:mm")<moment(endTime).format("HH:mm"))
+            {
+                //console.log("Nho hon roi do");
+            }
         }
     }
-    const handleChangeEndTime=(e,date)=>{
+    const handleChangeEndTime=(date)=>{
         if(editable)
         {
             setEndTime(date);
-
+            //console.log("End time:",date);
+            if(date>startTime)
+            {
+                //console.log("Lon hon roi do");
+            }
+            else
+            {
+                //console.log("nho hon hoac bang")
+            }
         }
     }
 
@@ -103,7 +123,7 @@ const Practice = () => {
     
     const getPractice=async()=>{
         const res=await PracticeService.getPractice();
-        console.log("Check res after get practice:",res.data);
+        //console.log("Check res after get practice:",res.data);
         if(res.success)
         {
             let a=res.data;
@@ -116,35 +136,51 @@ const Practice = () => {
             setStartTime(a.start_time);
             setEndTime(a.end_time);
             setRows(newData);
-
+            
         }
 
     }
 
     const onClickUpdate=async()=>{
-        const data={
-            name:name,
-            address:address,
-            phone:phone,
-            fax:fax,
-            start_time:startTime,
-            end_time:endTime,
-
-        }
-        const res=await PracticeService.update(rows.id,data);
-        if(res.success)
+        let start=moment(startTime).format("HH:mm");
+        let end=moment(endTime).format("HH:mm");
+        if(start<end && editable===true)
         {
-            toast.success(t(strings.updateSuccess));
+            const data={
+                name:name,
+                address:address,
+                phone:phone,
+                fax:fax,
+                start_time:start,
+                end_time:end,
+    
+            }
+            const res=await PracticeService.update(rows.id,data);
+            if(res.success)
+            {
+                toast.success(t(strings.updateSuccess));
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
         else
         {
-            toast.error(t(strings.updateFail));
+            toast.error(t(strings.errorStartEndTime))
         }
+        
+    }
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
     }
     useEffect(()=>{
         if(rows===null)
         {
             getPractice();
+            getUser();
+            setIsLoading(false);
         }
         if(!isPropValid(validators.properties.name, name))
         {
@@ -176,18 +212,25 @@ const Practice = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={2}>
-                        <Select
-                            
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                        >
+                    {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
                         
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </Select>
+                                </Select>
+                                
+                            </div>
+                            :
+                            <div></div>
+                            }
+
                     </Grid>
                 </Grid>
                 <Divider className={classes.titleDivider}/>
@@ -433,39 +476,39 @@ const Practice = () => {
                         
                         </div>
                         <div className={classes.inputDate}>
-                            <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label={t(strings.startTime)}
-                                    format={t(strings.apiDateFormat)}
-                                    value={startTime}
-                                    onChange={handleChangeStartTime}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        readOnly: !editable
-                                    }}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    
-                                    className={classes.inputControlSmall} 
+                            <KeyboardTimePicker
+                                margin="normal"
+                                id="time-picker"
+                                label={t(strings.startTime)}
+                                value={startTime}
+                                onChange={handleChangeStartTime}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change time',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    readOnly: !editable
+                                }}
+                                className={classes.inputControlSmall} 
+
                             />
-                            <KeyboardDatePicker
-                                    margin="normal"
-                                    id="date-picker-dialog"
-                                    label={t(strings.endTime)}
-                                    format={t(strings.apiDateFormat)}
-                                    value={endTime}
-                                    onChange={handleChangeEndTime}
-                                    InputProps={{
-                                        disableUnderline: true,
-                                        readOnly: !editable,
-                                    }}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    className={classes.inputControlSmall} 
+                            <KeyboardTimePicker
+                                margin="normal"
+                                id="time-picker"
+                                label={t(strings.endTime)}
+                                value={endTime}
+                                onChange={handleChangeEndTime}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change time',
+                                }}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    readOnly: !editable
+                                }}
+                                className={classes.inputControlSmall} 
+
                             />
+                            
                         </div>
                         
                         {/* <div>
@@ -489,11 +532,16 @@ const Practice = () => {
                             
                         </div>
                          */}
+                        {editable===true ? 
                         <div>
                             <Button variant="contained" color="primary" className={classes.saveButton} onClick={onClickUpdate}>
                                     {t(strings.save)}
                             </Button>
                         </div>
+                        :
+                        <div></div>
+                        }
+                        
                         
                         
                     </Grid>

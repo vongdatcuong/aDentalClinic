@@ -1,19 +1,15 @@
-import { httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
+import {httpPost,httpGet,httpPatch,httpDelete} from '../base-api';
 import apiPath from '../path';
 
 
-class ReferralSourceService{
-    async getReferralSource(){
-        const res = await httpGet({
-            url: apiPath.referralSource.referralSource,
-        });
-        //console.log("Get referral Source:",res);
-
+class PatientReferralService{
+    async getPatientReferral(){
         try{
+                    
             const result = await httpGet({
-                url: apiPath.referralSource.referralSource,
+                url: apiPath.referral.referral,
             });
-            //console.log("Get referral Source:",result);
+            //console.log("Get procedure:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -27,11 +23,10 @@ class ReferralSourceService{
                     success: false,
                     data:null,
                 };  
-            }                 
-                      
+            }            
         }
         catch(error){
-            //console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data: null
@@ -44,10 +39,10 @@ class ReferralSourceService{
         try{
                     
             const result = await httpPost({
-                url: apiPath.referralSource.referralSource,
+                url: apiPath.referral.referral,
                 body:data
             });
-            //console.log("insert referral Source:",result);
+            //console.log("insert procedure:",result);
             if(result.success)
             {
                 return {
@@ -58,17 +53,14 @@ class ReferralSourceService{
             else
             {
                 return {
-                    success:false,
-                    data:null
-                }
-            }
-                        
+                    success: false,
+                };
+            }      
         }
         catch(error){
-            //console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to insert procedure:",error);
             return {
                 success: false,
-                data:null,
             };
         }
     }
@@ -78,32 +70,66 @@ class ReferralSourceService{
         try{
                     
             const result = await httpGet({
-                url: `${apiPath.referralSource.referralSource}/${id}`,
+                url: `${apiPath.referral.referral}/${id}`,
+                query:{
+                    get_patient:true,
+                    get_source:true,
+                    get_ref_patient:true,
+                    get_staff:true,
+                }
             });
-            //console.log("search referral Source:",result);
+            //console.log("search procedure:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch referral Source:",error);
+            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data:null,
             };
         }
     }
+    async searchByPatient(patientID)
+    {
+        try{
+                    
+            const result = await httpGet({
+                url: `${apiPath.referral.referral}${apiPath.patient.patient}/${patientID}`,
+                query:{
+                    get_patient:true,
+                    get_source:true,
+                    get_ref_patient:true,
+                    get_staff:true,
+                }
+            });
+            //console.log("search procedure:",result);
+            return {
+                success: true,
+                data:result.payload,
+            };            
+        }
+        catch(error){
+            //console.log("Failed to fetch procedure:",error);
+            return {
+                success: false,
+                data:null,
+            };
+        }
+    }
+    
     async update(id,data)
     {
         //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
-                url: `${apiPath.referralSource.referralSource}/${id}`,
+                url: `${apiPath.referral.referral}/${id}`,
                 body:data
             });
-            //console.log("update referral Source:",result);
+            //console.log("update procedure:",result);
             if(result.success)
             {
                 return {
@@ -122,7 +148,7 @@ class ReferralSourceService{
                      
         }
         catch(error){
-            //console.log("Failed to update referral Source:",error);
+            //console.log("Failed to update procedure:",error);
             return {
                 success: false,
                 data:null
@@ -134,7 +160,7 @@ class ReferralSourceService{
         try{
             
             const result = await httpDelete({
-                url: `${apiPath.referralSource.referralSource}/${id}`,
+                url: `${apiPath.referral.referral}/${id}`,
             });
             //console.log("delete referral source:",result);
             if(result.success)
@@ -163,4 +189,4 @@ class ReferralSourceService{
     }
 }
 
-export default new ReferralSourceService();
+export default new PatientReferralService();

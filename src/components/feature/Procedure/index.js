@@ -1,49 +1,45 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import AuthService from "../../../api/authentication/auth.service";
 import ProcedureService from "../../../api/procedure/procedure.service";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
     Divider,
-    TextField,
-    InputLabel ,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Select,
     MenuItem
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
 import InsertProcedure from "../InsertProcedure";
 import UpdateProcedure from "../UpdateProcedure";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 const createData=(id,abbreviation,code,description,toothSelect,toothType)=>{
     return {id,abbreviation,code,description,toothSelect,toothType};
@@ -67,6 +63,8 @@ const Procedure = () => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -98,7 +96,7 @@ const Procedure = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleGoBack=(e)=>{
@@ -123,7 +121,7 @@ const Procedure = () => {
             // const searchCategory=async()=>{
             //     const res=await ProcedureService.searchCategory(a.category);
             //     categoryName=res.data.name;
-            //     console.log("Check search procedure category:",categoryName);
+            //     //console.log("Check search procedure category:",categoryName);
 
                 
             // }
@@ -132,27 +130,30 @@ const Procedure = () => {
             temp=temp.concat(newData);
             
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
        
     }
     const getProcedure=async()=>{
         const result=await ProcedureService.getProcedure();
-        console.log("Get procedure in useEffect:",result.data);
+        //console.log("Get procedure in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
 
         }
-        
-
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getProcedure();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -161,7 +162,7 @@ const Procedure = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -212,29 +213,34 @@ const Procedure = () => {
                                 }
                             />
                         </FormControl>
-                        <Select
+                        {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
                         
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                        >
-                        
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </Select>
-                        <IconButton onClick={handleChangeInsertProcedure}>
-                            <AddBox />            
-
-                        </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertProcedure}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                     </Grid>
                 
                     }
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertProcedure===true  ?
                         <InsertProcedure 
                         handleChangeIsInsert={handleChangeIsInsert}
@@ -259,6 +265,9 @@ const Procedure = () => {
                                     />
                     }
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
             </div>

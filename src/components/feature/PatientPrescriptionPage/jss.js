@@ -3,7 +3,13 @@ const patientPrescriptionPageStyle = (theme) => ({
         flexGrow: 1,
         margin:"0px"
     },
-
+    containerTable:{
+        // marginLeft:'10px',
+        '@media (min-width: 1280px)':{
+            maxWidth:'none',
+            width:'99%',
+        }
+    },
     searchControl:{
         height:40,
         width:'100%',
@@ -15,7 +21,14 @@ const patientPrescriptionPageStyle = (theme) => ({
     serviceControl:{
         display:'flex',
         flexDirection:'row',
+        justifyContent:'flex-end',
+        '& .MuiFormControl-root':{
+            marginRight:'1vw',
 
+        },
+        '& .MuiIconButton-root':{
+            padding:'8px',
+        }
     },
     iconButton:{
         cursor:'pointer',
@@ -43,8 +56,7 @@ const patientPrescriptionPageStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
-        marginLeft:'20px',
-        marginRight:'10px',
+        // marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },

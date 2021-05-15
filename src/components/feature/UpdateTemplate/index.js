@@ -1,29 +1,25 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import TemplateService from "../../../api/template/template.service";
 //validators
-import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
-    FormControlLabel,
-    Checkbox,
+import { 
+    
     Button,
     TextField,
     Select,
     MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+// import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -47,35 +43,35 @@ const UpdateTemplate = (props) => {
     //state
    
     const [content,setContent]=useState(null);
-    const [noteType,setNoteType]=useState(null);
-    const [listTypeTemplate,setListTypeTemplate]=useState([
-        "TREATMENT",
-        "MEDICAL ALERT",
-        "PROGRESS",
-    ]);
+    // const [noteType,setNoteType]=useState(null);
+    // const [listTypeTemplate,setListTypeTemplate]=useState([
+    //     "TREATMENT",
+    //     "MEDICAL ALERT",
+    //     "PROGRESS",
+    // ]);
 
     const handleChangeContent=(e)=>{
         setContent(e.target.value);
     }
-    const handleChangeNoteType=(e)=>{
-        setNoteType(e.target.value);
-    }
+    // const handleChangeNoteType=(e)=>{
+    //     setNoteType(e.target.value);
+    // }
 
-    const renderListTypeTemplate=()=>{
-        return listTypeTemplate.map((item,index)=>{
-            return  <MenuItem value={item}>{item}</MenuItem>
+    // const renderListTypeTemplate=()=>{
+    //     return listTypeTemplate.map((item,index)=>{
+    //         return  <MenuItem value={item}>{item}</MenuItem>
 
-        })
-    }
+    //     })
+    // }
     const onClickUpdate=async()=>{
-        if(props.editable===true && content!==null && content !=='' && noteType!==null)
+        if(props.editable===true && content!==null && content !=='' )
         {
             const data={
                 content:content,
-                note_type:noteType
+                // note_type:noteType
               
             };
-            console.log("Data check onclick:",data);
+            //console.log("Data check onclick:",data);
             const result=await TemplateService.update(props.id,data);
             if(result.success)
             {
@@ -97,11 +93,11 @@ const UpdateTemplate = (props) => {
     useEffect(()=>{
         const searchTemplate=async()=>{
             const result=await TemplateService.search(props.id);
-            console.log("Search drug in useEffect:",result.data.payload._id);
+            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setContent(result.data.payload.content);
-                setNoteType(result.data.payload.note_type);
+                // setNoteType(result.data.payload.note_type);
             }
         }
         if(props.id && content===null)
@@ -121,13 +117,14 @@ const UpdateTemplate = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={props.contentBig===true ? classes.inputControlBig : classes.inputControl} 
                                          
                                         placeholder={t(strings.content)}  
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
                                         inputProps={{ readOnly: !props.editable }}
+                                        multiline={props.contentBig}
                                         /> 
                         </div>
                         <div className={classes.item}>
@@ -139,7 +136,7 @@ const UpdateTemplate = (props) => {
                                         value={noteType}
                                         
                                         />  */}
-                            {listTypeTemplate.length!==0 ?
+                            {/* {listTypeTemplate.length!==0 ?
 
                             <Select
                                 value={noteType}
@@ -157,7 +154,7 @@ const UpdateTemplate = (props) => {
                             </Select>
                             :
                             <div></div>
-                            }
+                            } */}
                         </div>
                        
                         

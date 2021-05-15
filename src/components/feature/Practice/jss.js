@@ -135,11 +135,9 @@ const practiceStyle=(theme)=>({
             paddingBottom: theme.spacing(1),
         },
         '& .MuiSvgIcon-root': {
-            paddingBottom: '15px',
-            // paddingTop:'7px',
+            padding: '7px',
             width:'1.6em',
             height:'1.6em',
-            marginTop:'5px',
         },
         '& .MuiInputBase-root':{
             height:'60px',

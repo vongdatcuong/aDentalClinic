@@ -1,17 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //api
 import ProviderService from "../../../api/provider/provider.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
-import { Typography,
-    Fab,
+import { 
     FormControlLabel,
     Checkbox,
     Button,
@@ -21,7 +19,7 @@ import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -103,7 +101,7 @@ const InsertPerson = (props) => {
     }
 
     const handleUploadClick = event => {
-        console.log();
+        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -115,7 +113,7 @@ const InsertPerson = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        console.log("Url:",reader); 
+        //console.log("Url:",reader); 
 
     };
 
@@ -123,7 +121,7 @@ const InsertPerson = (props) => {
     const insertPerson=async(e)=>{
         if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
-            console.log("Insert person");
+            //console.log("Insert person");
             const data={
                 display_id: "",
                 is_active:active, 

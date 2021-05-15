@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import AuthService from "../../../api/authentication/auth.service";
 import ReferralSourceService from "../../../api/referralSource/referralSource.service";
 
 // @material-ui/core Component
@@ -13,7 +12,6 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Select,
     MenuItem,
@@ -25,14 +23,14 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
+// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -41,7 +39,6 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -49,7 +46,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertReferralSource from "../InsertReferralSource";
 import UpdateReferralSource from "../UpdateReferralSource";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 const createData=(id,name,address,phone,fax,email,additionalInfo)=>{
     return {id,name,address,phone,fax,email,additionalInfo};
@@ -75,6 +72,8 @@ const Referral = () => {
     const [isDelete,setIsDelete]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -89,7 +88,7 @@ const Referral = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -124,7 +123,7 @@ const Referral = () => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -144,15 +143,15 @@ const Referral = () => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deleteReferralSource=async()=>{
             const res=await ReferralSourceService.delete(selectedRowData.id);
-            console.log("Delete referral source:",res);
+            //console.log("Delete referral source:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -172,7 +171,7 @@ const Referral = () => {
     }
     const getReferralSource=async()=>{
         const result=await ReferralSourceService.getReferralSource();
-        console.log("Get referral source in useEffect:",result.data);
+        //console.log("Get referral source in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -181,12 +180,17 @@ const Referral = () => {
         
 
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getReferralSource();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -195,13 +199,13 @@ const Referral = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Check selected row data:",rows[selectedRow]);
+                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -254,26 +258,29 @@ const Referral = () => {
                                 }
                             />
                         </FormControl>
-                        <Select
+                        {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
                         
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                        >
-                        
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </Select>
-                        <IconButton onClick={handleChangeInsertReferralSource}>
-                            <AddBox />            
-
-                        </IconButton>
-                        <IconButton onClick={handleChangeIsDelete}>
-                            <DeleteIcon />            
-
-                        </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertReferralSource}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
+                                    <DeleteIcon />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                     </Grid>
 
                     }
@@ -281,7 +288,8 @@ const Referral = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertReferralSource===true && isEdited=== false  ?
                         <InsertReferralSource
                                 handleChangeIsInsert={handleChangeIsInsert}
@@ -312,6 +320,9 @@ const Referral = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 

@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 //translation
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 //api
-import {secretKey, initializeAPIService, httpPost,httpGet} from '../../../api/base-api';
-import apiPath from '../../../api/path';
+import AuthService from "../../../api/authentication/auth.service";
 import TemplateService from "../../../api/template/template.service";
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -12,7 +11,6 @@ import { Typography,
     Divider,
     InputAdornment,
     FormControl,
-    FilledInput,
     OutlinedInput,
     Dialog,
     DialogContentText,
@@ -24,14 +22,14 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import PropTypes from 'prop-types';
+// import FirstPageIcon from '@material-ui/icons/FirstPage';
+// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+// import LastPageIcon from '@material-ui/icons/LastPage';
+// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTdarkTheme from "../../../themes/darkTheme";
+// import darkTdarkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -40,12 +38,12 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
+// import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import GroupIcon from '@material-ui/icons/Group';
+// import GroupIcon from '@material-ui/icons/Group';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 //import component
@@ -53,7 +51,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertTemplate from "../InsertTemplate";
 import UpdateTemplate from "../UpdateTemplate";
-import { indigo } from '@material-ui/core/colors';
+import LoadingPage from '../../../layouts/LoadingPage';
+
+import { getSuggestedQuery } from '@testing-library/dom';
+// import { indigo } from '@material-ui/core/colors';
 const createData=(id,content,noteType)=>{
     return {id,content,noteType};
 };
@@ -85,7 +86,8 @@ const Template = () => {
     const [isDelete,setIsDelete]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
-
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const titles=[
         t(strings.index),
         t(strings.content),
@@ -104,7 +106,7 @@ const Template = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        console.log("Close dialog");
+        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -141,7 +143,7 @@ const Template = () => {
         setRowsWithType(null);
     }
     const handleChangeIsEdited=(e)=>{
-        console.log("Handle change edit");
+        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangeChooseType=(value)=>{
@@ -151,12 +153,12 @@ const Template = () => {
     const changeData=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            console.log("Check item:",a);
+            //console.log("Check item:",a);
             let newData=createData(a._id,a.content,a.note_type);
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
+        //console.log("Check rows in change data:",temp);
         setRows(temp);
         if(chooseType===1)
         {
@@ -174,7 +176,7 @@ const Template = () => {
     const chooseMedicalAlert=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            if(a.noteType==="MEDICAL_ALERT")
+            if(a.noteType==="MEDICAL_ALERT" || a.noteType==="MEDICAL ALERT")
             temp=temp.concat(a);
         })
         setRowsMedicalAlert(temp);
@@ -217,10 +219,10 @@ const Template = () => {
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        console.log("Delete now:",selectedRowData);
+        //console.log("Delete now:",selectedRowData);
         const deleteTemplate=async()=>{
             const res=await TemplateService.delete(selectedRowData.id);
-            console.log("Delete template:",res);
+            //console.log("Delete template:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -257,11 +259,17 @@ const Template = () => {
         deleteTemplate();
        
     }
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getTemplate();  
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -283,14 +291,14 @@ const Template = () => {
         }
         if(isInsert)
         {
-            console.log("Co vao day insert");
+            //console.log("Co vao day insert");
             getTemplate();
             
             setIsInsert(false);
         }
         if(isUpdate)
         {
-            console.log("Co vao day update:");
+            //console.log("Co vao day update:");
             getTemplate();
             
             setIsUpdate(false);
@@ -363,35 +371,38 @@ const Template = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-    
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                            >
-    
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-    
-                            </Select>
-                            <IconButton onClick={handleChangeInsertTemplate}>
-                            <AddBox />            
-    
-                            </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
-                            <DeleteIcon />            
-    
-                            </IconButton>
-                            
-                            
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+
+                                </Select>
+                                <IconButton onClick={handleChangeInsertTemplate}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
+                                    <DeleteIcon />      
+                                </IconButton>
+
+                            </div>
+                            :
+                            <div></div>
+                            }
+
                         </div>
                         :
                         <div/>
                     }
                     
-                    
-                    <Container className={classes.containerTable}>
+                    {isLoading === false ?
+                        <Container className={classes.containerTable}>
                         {
                             insertTemplate===true && isEdited=== false  ?
                             <InsertTemplate 
@@ -403,6 +414,7 @@ const Template = () => {
                                 id={selectedRowData.id}
                                 editable={editable}
                                 handleChangeIsUpdate={handleChangeIsUpdate}
+                                contentBig={selectedRowData.noteType === "MEDICAL ALERT" ? false:true}
                             />
                             :
     
@@ -465,6 +477,9 @@ const Template = () => {
                         
                     
                     </Container>
+                    :
+                    <LoadingPage/>
+                    }
                     <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>
                         
                         <DialogContent>
