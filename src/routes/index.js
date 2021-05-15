@@ -43,6 +43,7 @@ import PatientInfoPage from '../components/feature/PatientInfoPage';
 import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
+import AddTreatmentPage from '../components/feature/AddTreatmentPage';
 import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 function PatientProfile() {
@@ -107,6 +108,11 @@ function ToothChart() {
     return <ToothChartPage patientID={patientID}/>;
 }
 
+function AddTreatment() {
+    let { patientID } = useParams();
+    return <AddTreatmentPage patientID={patientID}/>;
+}
+
 
 function Routes() {
   return (
@@ -124,7 +130,8 @@ function Routes() {
           <AuthorizedRoute
             components={{
               [lists.staff.staffType.staff]: <StaffDashboard/>,
-              [lists.staff.staffType.provider]: <ProviderDashboard/>
+              [lists.staff.staffType.provider]: <ProviderDashboard/>,
+              [lists.staff.staffType.admin]: <StaffDashboard/>
             }}
           />
         </PageContainer>
@@ -211,6 +218,11 @@ function Routes() {
       <PrivateRoute path={path.patientProfilePath}>
         <PageContainer>
           <PatientProfile />
+        </PageContainer>
+      </PrivateRoute>
+      <PrivateRoute path={path.addTreatmentPath}>
+        <PageContainer>
+          <AddTreatment />
         </PageContainer>
       </PrivateRoute>
       <PrivateRoute path={path.patientRecallPath}>

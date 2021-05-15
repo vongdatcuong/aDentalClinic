@@ -13,6 +13,7 @@ export default {
         "Appointment holder": "Người hẹn",
         "Today's Appoinment": "Cuộc hẹn hôm nay",
         "Go back": "Trở về",
+        "No Appointment Requests to display yet": "Không có yêu cầu lịch hẹn nào để hiển thị",
         //treatment menu
         "Tooth chart": "Biểu đồ nha chu",
         "Patient profile": "Hồ sơ bệnh nhân",
@@ -46,12 +47,18 @@ export default {
         "Loading": "Đang tải",
         "No options": "Không có lựa chọn",
         "select": "Chọn",
+        "unselect": "Bỏ chọn",
         "MALE": "NAM",
         "FEMALE": "NỮ",
         "None": "Không",
         "Confirm": "Xác nhận",
         "Start Date": "Ngày BĐ",
         "End Date": "Ngày KT",
+        "Today": "Hôm nay",
+        "Next S": "T.THEO",
+        "Request": "Yêu cầu",
+        "At time": "Lúc",
+        "Export": "Xuất",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -120,6 +127,10 @@ export default {
         "This is a holiday": "Đây là ngày nghỉ",
         "Add Appointment fail": "Thêm cuộc hẹn thất bại",
         "Update Appointment fail": "Cập nhật cuộc hẹn thất bại",
+        "Get Next Available Date fail": "Lấy ngày khả dụng tiếp theo thất bại",
+        "Provider not working in the near future": "Bác sỹ không có lịch làm việc sắp tới",
+        "Delete Appointment Request fail": "Xóa yêu cầu hẹn thất bại",
+        "Patient is required": "Bệnh nhân không được để trống",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",
@@ -130,6 +141,11 @@ export default {
         "Dates are quired": "Các ngày không được để trống",
         "Add Schedule fail": "Thêm lịch thất bại",
         "Update Schedule fail": "Cập nhật lịch thất bại",
+        // Error Messages Report
+        "Load Statistics fail": "Tải thống kê thất bại",
+        "Load Appointment Document fail": "Tải tài liệu cuộc hẹn thất bại",
+        "Load Patient Document fail": "Tải tài liệu bệnh nhân thất bại",
+        "Load Appointment of Patient Document fail": "Tải tài liệu cuộc hẹn của bệnh nhân thất bại",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",
@@ -159,6 +175,20 @@ export default {
         "Agree":"Đồng ý",
         "Info":"Info",
         "Expired date":"Ngày hết hạn",
+        // Treatment
+        "back": "Trước",
+        "next": "Sau",
+        "finish": "Hoàn thành",
+        "All steps completed - you are finished": "Bạn đã hoàn thành",
+        "Select Treatment": "Chọn liệu trình",
+        "Select Tooth": "Chọn răng",
+        "Preview Treatment Information": "Kiểm tra lại thông tin điều trị",
+        "Facial": "Mặt ngoài",
+        "Lingual": "Mặt trong",
+        "Mesial": "Mặt gần",
+        "Distal": "Mặt xa",
+        "Top": "Mặt nhai",
+        "Root": "Chân răng",
 
         // Tooth chart page
         "Overview": "Tổng quan",
@@ -367,6 +397,10 @@ export default {
         "No Recall": "Không có lịch sử tái hẹn",
         "No Treatment": "Không có lịch sử điều trị",
         "Next Available": "Ngày hợp lệ tiếp theo",
+        "Only mine": "Chỉ của tôi",
+        "Next Available date for default provider": "Ngày hẹn có thể cho bác sỹ mặc định",
+        "Appointment Date": "Ngày hẹn",
+        "Appointment Request": "Yêu cầu hẹn",
         //Files
         "File Name": "Tên tệp",
         // Schedule
@@ -381,5 +415,11 @@ export default {
         "Friday": "Thứ 6",
         "Saturday": "Thứ 7",
         "Sunday": "Chủ nhật",
+        // Report
+        "Patients Short": "B.Nhân",
+        "View patient document": "Xem tài liệu bệnh nhân",
+        "View appointments document": "Xem tài liệu các cuộc hẹn",
+        "View appointments of patient document": "Xem tài liệu các cuộc hẹn của bệnh nhân",
+        "If no patient is provided, all appointments will be loaded": "Nếu không có bệnh nhân nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên"
     }
 }

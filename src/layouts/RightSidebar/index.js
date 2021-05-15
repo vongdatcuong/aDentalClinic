@@ -1,12 +1,11 @@
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
 import clsx from "clsx";
 import { useTranslation } from 'react-i18next';
-import {moment} from 'moment';
 import strings from '../../configs/strings';
 // Routes
-import path from "../../routes/path";
+
 // @material-ui/core components
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
@@ -35,7 +34,6 @@ const RightSidebar = ({ handleSelectDate }) => {
 
     // States
     const [rightSidebarOpen, setRightSidebarOpen] = useState(true);
-    const [calendarDate, setCalendarDate] = useState(new Date());
 
     const toggleDrawer = () => {
       setRightSidebarOpen(!rightSidebarOpen);

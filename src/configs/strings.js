@@ -11,6 +11,8 @@ const noNotificationToDisplay = "No notifications to display yet";
 const appointmentHolder = "Appointment holder";
 const todayAppointment = "Today's Appoinment";
 const goBack = "Go back";
+const noAppointRequestToDisplay = "No Appointment Requests to display yet";
+
 //treatment menu
 const toothChart = "Tooth chart";
 const patientProfile = "Patient profile";
@@ -157,6 +159,11 @@ const none = "None";
 const confirm = "Confirm";
 const startDate = "Start Date";
 const endDate = "End Date";
+const today = "Today";
+const nextS = "Next S";
+const request = "Request";
+const atTime = "At time";
+const exportStr = "Export";
 
 // Messages
 
@@ -225,6 +232,10 @@ const deleteAppointmentErrMsg = "Delete Appointment fail";
 const thisIsAHolidayErrMsg = "This is a holiday";
 const addAppointmentErrMsg = "Add Appointment fail";
 const updateAppointmentErrMsg = "Update Appointment fail";
+const nextAvaiDateErrMsg = "Get Next Available Date fail";
+const providerNotWorkingErrMsg = "Provider not working in the near future";
+const deleteAppointReqErrMsg = "Delete Appointment Request fail";
+const patientErrMsg = "Patient is required";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -235,6 +246,11 @@ const startDateErrMsg = "Start day is required";
 const datesErrMsg = "Dates are quired";
 const addScheduleErrMsg = "Add Schedule fail";
 const updateScheduleErrMsg = "Update Schedule fail";
+    // Error Messages Report
+const loadStatisticsErrMsg = "Load Report fail";
+const loadAppointDocErrMsg = "Load Appointment Document fail";
+const loadPatientDocErrMsg = "Load Patient Document fail";
+const loadAppointPatientDocErrMsg = "Load Appointment of Patient Document fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -359,6 +375,10 @@ const surface = "Surface";
 const noRecall = "No Recall";
 const noTreatment = "No Treatment"
 const nextAvailable = "Next Available";
+const onlyMine = "Only mine";
+const nextDateProvider = "Next Available date for default provider";
+const appointDate = "Appointment Date";
+const appointRequest = "Appointment Request";
 
 //patient recall
 const treatment="Treatment";
@@ -378,6 +398,7 @@ const apiDateFormat = "YYYY-MM-DD";
 const forward = "forward";
 const back = "back";
 const select = "select";
+const unselect = "unselect";
 const defaultDateFormat = "DD-MM-YYYY";
 const holidayDormat = "DD/MM";
 const defaultDateTimeFormat = "DD/MM/YYYY HH:mm";
@@ -404,6 +425,28 @@ const monthly = "Monthly";
 const weekly = "Weekly";
 const auto = "Auto";
 
+// Treatment 
+const next = "next";
+const finish = "finish";
+const allStepsCompleted = "All steps completed - you are finished";
+const selectTreatment = "Select Treatment";
+const selectTooth = "Select Tooth";
+const previewTreatmentInfo = "Preview Treatment Information";
+
+const facial = "Facial";
+const lingual = "Lingual";
+const mesial = "Mesial";
+const distal = "Distal";
+const top = "Top";
+const root = "Root";
+
+// Report
+const patientsShort = "Patients Short";
+const viewPatientDocument = "View patient document";
+const viewAppointDocument = "View appointments document";
+const viewAppointOfPatientDocument = "View appointments of patient document";
+const noPatientLoadAllAppoints = "If no patient is provided, all appointments will be loaded";
+
 export default {
     appointment,
     patient,
@@ -414,6 +457,7 @@ export default {
     notifications,
     removeNotification,
     noNotificationToDisplay,
+    noAppointRequestToDisplay,
     appointmentHolder,
     todayAppointment,
     goBack,
@@ -453,6 +497,11 @@ export default {
     confirm,
     startDate,
     endDate,
+    today,
+    nextS,
+    request,
+    atTime,
+    exportStr,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -466,6 +515,8 @@ export default {
     deleteAppointmentErrMsg,
     addAppointmentSuccess,
     updateAppointmentSuccess,
+    deleteAppointReqErrMsg,
+    patientErrMsg,
     // Success Messages Settings
     updateUserProfileSuccess,
     changePwdSuccess,
@@ -519,6 +570,8 @@ export default {
     addAppointmentErrMsg,
     updateAppointmentErrMsg,
     changePwdErrMsg,
+    nextAvaiDateErrMsg,
+    providerNotWorkingErrMsg,
     // Settings Error Messages
     changeLanguageErrMsg,
     changeThemeErrMsg,
@@ -528,6 +581,11 @@ export default {
     datesErrMsg,
     addScheduleErrMsg,
     updateScheduleErrMsg,
+        // Error Messages Report
+    loadStatisticsErrMsg,
+    loadAppointDocErrMsg,
+    loadPatientDocErrMsg,
+    loadAppointPatientDocErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
@@ -724,6 +782,10 @@ export default {
     noRecall,
     noTreatment,
     nextAvailable,
+    onlyMine,
+    nextDateProvider,
+    appointDate,
+    appointRequest,
     // Date
     defaultTimeFormat,
     chartDateFormat,
@@ -731,6 +793,7 @@ export default {
     forward,
     back,
     select,
+    unselect,
     defaultDateFormat,
     holidayDormat,
     defaultDateTimeFormat,
@@ -776,4 +839,23 @@ export default {
     interval,
     recallDate,
     patientRecall,
+    // Treatment
+    next,
+    finish,
+    allStepsCompleted,
+    selectTreatment,
+    selectTooth,
+    previewTreatmentInfo,
+    facial,
+    lingual,
+    mesial,
+    distal,
+    top,
+    root,
+    // Report
+    patientsShort,
+    viewPatientDocument,
+    viewAppointDocument,
+    viewAppointOfPatientDocument,
+    noPatientLoadAllAppoints,
 };

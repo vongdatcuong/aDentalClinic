@@ -14,6 +14,13 @@ const dashboardStyle = (theme) => ({
         width: '100%',
         height: '100%',
     },
+    fabAppointRequest: {
+        position: 'fixed',
+        right: 150,
+        bottom: 100,
+        zIndex: theme.fabZIndex,
+        backgroundColor: theme.infoColor[0]
+    }
 });
   
 export default dashboardStyle;  

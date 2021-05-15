@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: theme.appointRecallDialogWidth,
     maxWidth: '100%',
+    maxHeight: theme.appointRecallDialogMaxHeight
   },
   dialogTitle: {
     fontWeight: 700,
@@ -139,7 +140,7 @@ const RecallDialog = ({
     setOriginalSelectedRecalls([...loadedRecallIDs]);
     if (patientID){
       const selectedDateStr = ConvertDateTimes.formatDate(selectedDate, strings.defaultDateFormat);
-      if (patientID != lastPatientID || selectedDateStr != lastSelectedDate){
+      if (1 || patientID != lastPatientID || selectedDateStr != lastSelectedDate){
         try {
           setIsLoading(true);
           const promises = [
@@ -152,8 +153,8 @@ const RecallDialog = ({
           ];
           const result = await Promise.all(promises);
           if (result[0].success){
-            setLastPatientID(patientID);
-            setLastSelectedDate(selectedDateStr);
+            //setLastPatientID(patientID);
+            //setLastSelectedDate(selectedDateStr);
             const columnss = result[0].payload.map((recall) => ({
               id: recall._id,
               date: (recall.recall_date)? ConvertDateTimes.formatDate(new Date(recall.recall_date), strings.defaultDateFormat) : noneStr,
@@ -167,16 +168,16 @@ const RecallDialog = ({
               setRecalls([]);
               setSelectedRecalls([]);
               setOriginalSelectedRecalls([]);
-              setLastPatientID("");
-              setLastSelectedDate("");
+              //setLastPatientID("");
+              //setLastSelectedDate("");
           }
         } catch(err){
             toast.error(t(strings.loadRecallErrMsg));
             setRecalls([]);
             setSelectedRecalls([]);
             setOriginalSelectedRecalls([]);
-            setLastPatientID("");
-            setLastSelectedDate("");
+            //setLastPatientID("");
+            //setLastSelectedDate("");
         } finally {
           setIsLoading(false);
         }
@@ -186,8 +187,8 @@ const RecallDialog = ({
       setRecalls([]);
       setSelectedRecalls([]);
       setOriginalSelectedRecalls([]);
-      setLastPatientID("");
-      setLastSelectedDate("");
+      //setLastPatientID("");
+      //setLastSelectedDate("");
     }
   }, [selectedRecalls, patientID, selectedDate, loadedRecalls])
 

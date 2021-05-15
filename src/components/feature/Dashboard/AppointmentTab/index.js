@@ -32,6 +32,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // @material-ui/core Datepicker
 import { DatePicker, TimePicker  } from "@material-ui/pickers";
@@ -50,6 +51,7 @@ import AddTreatmentDialog from './AddTreatmentDialog';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import AddIcon from '@material-ui/icons/Add';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 // Utils
 import ConvertDateTimes from '../../../../utils/datetimes/convertDateTimes';
@@ -67,8 +69,8 @@ import apiPath from '../../../../api/path';
 const useStyles = makeStyles(styles);
 
 const AppointmentTab = ({
-    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays,
-    onClose, onSelectChair, onSelectDate, onAddAppointment
+    selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays, appointRequest,
+    onClose, onSelectChair, onSelectDate, onAddAppointment, setSelectedAppointReqIdx
 }) => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
@@ -141,11 +143,38 @@ const AppointmentTab = ({
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
     const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
+    // Temp
+    const [fakeTempProvi, setFakeTempProvi] = useState(1);
+
+    const [lastAppointRequest, setLastAppointRequest] = useState(null);
+
     useEffect(async () => {
         setDuration(selectedDuration);
-    }, [treatments, addedTreatments, patient, selectedDuration]);
+        setFakeTempProvi(fakeTempProvi + 1);
+
+        // Appointment Request
+        if (appointRequest == lastAppointRequest){
+            return;
+        }        
+        if (appointRequest){
+            handleOnSelectPatient({
+                value: appointRequest.patient,
+                label: appointRequest.first_name + " " + appointRequest.last_name,
+            });
+            noteRef.current.value = appointRequest.note;
+        } else {
+            resetPatientInfoFields();
+        }
+        setLastAppointRequest(appointRequest);
+    }, [/*treatments, addedTreatments, patient,*/ selectedDuration, selectedAppointStart, appointRequest, lastAppointRequest]);
 
     const handleOnNewPatient = () => {
+        // Appointment Requests
+        setSelectedAppointReqIdx(-1);
+        resetPatientInfoFields();
+    }
+
+    const resetPatientInfoFields = useCallback(() => {
         setIsNewPatient(true);
         setPatient({...noneOption});
         //setPatientID("");
@@ -154,6 +183,9 @@ const AppointmentTab = ({
         setHomePhone("");
         setMobile("");
         setEmail("");
+
+        setAssistant(noneOption);
+        setProvider(noneOption);
 
         setRecalls([]);
         setTreatments([]);
@@ -167,7 +199,7 @@ const AppointmentTab = ({
         mobileRef.current.value = "";
         emailRef.current.value = "";
         noteRef.current.value = "";
-    }
+    }, []);
 
     const handleOnSelectPatient = useCallback(async (option) => {
         if (option.value == -1){
@@ -180,7 +212,10 @@ const AppointmentTab = ({
             dispatchLoading({ type: strings.setLoading, isLoading: true});
             const promises = [
                 api.httpGet({
-                    url: apiPath.patient.patient + '/' + option.value
+                    url: apiPath.patient.patient + '/' + option.value,
+                    query: {
+                        get_provider: true,
+                    }
                 }),
             ];
             const result = await Promise.all(promises);
@@ -189,7 +224,6 @@ const AppointmentTab = ({
                 const patient = result[0].payload;
                 const patientUser = patient?.user;
                 if (patient && patientUser){
-                    setPatient(option);
                     setIsNewPatient(false);
                     //setPatientID(patient._id || "");
                     setFirstName(patientUser.first_name || "");
@@ -205,6 +239,29 @@ const AppointmentTab = ({
                     homePhoneRef.current.value = patientUser.home_phone || noneStr;
                     mobileRef.current.value = patientUser.mobile_phone || noneStr;
                     emailRef.current.value = patientUser.email || noneStr;
+
+                    // Set Default Provider
+                    const provi = patient.provider;
+                    setPatient({...option, provider: provi._id});
+                    if (provi && provi._id){
+                        try {
+                            const res = await api.httpGet({
+                                url: apiPath.staff.schedule + apiPath.staff.provider + '/' + provi._id + '/' + ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat),
+                            })
+                            if (res.success && res.payload){
+                                const proviUser = provi.user;
+                                setProvider({
+                                    value: provi._id,
+                                    label: `${proviUser.first_name} ${proviUser.last_name} (${provi.display_id})`
+                                });
+                            } else {
+                                setProvider(noneOption);
+                            }
+                        } catch(err){
+                            console.log(err);
+                            setProvider(noneOption);
+                        }
+                    }
                 }
                 setRecalls([]);
                 setTreatments([]);
@@ -217,7 +274,7 @@ const AppointmentTab = ({
         } finally {
             dispatchLoading({ type: strings.setLoading, isLoading: false});
         }
-    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef]);
+    }, [patient, patientIDRef, firstNameRef, lastNameRef, homePhoneRef, mobileRef, emailRef, selectedAppointStart]);
 
     const handleOnFirstNameChange = (evt) => {
         setFirstName(evt.target.value);
@@ -255,6 +312,9 @@ const AppointmentTab = ({
         onSelectDate("date", date._d);
         setRecalls([]);
         setTreatments([]);
+
+        // Load provider
+        setFakeTempProvi(fakeTempProvi + 1);
     }
 
     const handleOnTimeChange = (date) => {
@@ -395,7 +455,7 @@ const AppointmentTab = ({
                 if (result.success){
                     options = result.payload.map((option) => ({
                         value: option._id,
-                        label: option.first_name + " " + option.last_name
+                        label: option.first_name + " " + option.last_name,
                     }));
                 }
                 options.unshift({value: -1, label: t(strings.none)});
@@ -438,19 +498,39 @@ const AppointmentTab = ({
         return new Promise(async (resolve) => {
             try {
                 let options = [];
-                const result = await api.httpGet({
-                    url: apiPath.staff.staff + apiPath.common.autocomplete,
-                    query: {
-                        data: inputValue,
-                        limit: figures.autocomplete.limit,
-                        staffType: lists.staff.staffType.provider
+                if (selectedAppointStart){
+                    const result = await api.httpGet({
+                        url: apiPath.staff.staff + apiPath.common.autocomplete,
+                        query: {
+                            data: inputValue,
+                            limit: figures.autocomplete.limit,
+                            staffType: lists.staff.staffType.provider,
+                            date: ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat)
+                        }
+                    });
+                    if (result.success){
+                        let newPatientProviderIdx = -1, selectedProviderIdx = -1;
+                        options = result.payload.map((option, index) => {
+                            if (patient && option._id === patient.provider){
+                                newPatientProviderIdx = index;
+                            }
+                            if (provider && option._id === provider.value){
+                                selectedProviderIdx = index;
+                            }
+                            return {
+                                value: option._id,
+                                label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                            }
+                        });
+                        // Set Patient default's Provider
+                        if (newPatientProviderIdx != -1){
+                            setProvider({...options[newPatientProviderIdx]});
+                        } else {
+                            if (selectedProviderIdx === -1){
+                                setProvider(noneOption);
+                            }
+                        }
                     }
-                });
-                if (result.success){
-                    options = result.payload.map((option) => ({
-                        value: option._id,
-                        label: `${option.first_name} ${option.last_name} (${option.display_id})`
-                    }));
                 }
                 options.unshift({value: -1, label: t(strings.none)});
                 resolve(options);
@@ -545,6 +625,42 @@ const AppointmentTab = ({
         emailRef.current.value = "";
         noteRef.current.value = "";
     }
+
+    // Next available date
+    const handleGetNextAvailableDate = useCallback(async () => {
+        if (!patient?.provider){
+            return;
+        }
+        try {
+            dispatchLoading({ type: strings.setLoading, isLoading: true});
+            const prevDate = selectedAppointStart;
+            const promises = [
+                api.httpGet({
+                    url: apiPath.staff.schedule + apiPath.staff.provider + apiPath.staff.nextAvailableDate + '/' + patient.provider,
+                    query: {
+                        date: ConvertDateTimes.formatDate(selectedAppointStart || new Date(), strings.apiDateFormat)
+                    }
+                }),
+            ];
+            const result = await Promise.all(promises);
+            if (result[0].success){
+                if (result[0].payload){
+                    const newDate = new Date(result[0].payload);
+                    newDate.setHours(prevDate.getHours());
+                    newDate.setMinutes(prevDate.getMinutes());
+                    handleOnDateChange(moment(newDate));
+                } else {
+                    toast.error(t(strings.providerNotWorkingErrMsg));
+                }
+            } else {
+                toast.error(result.message);
+            }
+        } catch(err){
+            toast.error(t(strings.nextAvaiDateErrMsg));
+        } finally {
+            dispatchLoading({ type: strings.setLoading, isLoading: false});
+        }
+    }, [selectedAppointStart, patient]);
 
     return (
         <Paper p={2} className={classes.paper}>
@@ -794,6 +910,7 @@ const AppointmentTab = ({
                                         noOptionsMessage={() => t(strings.noOptions)}
                                         value={provider || null}
                                         onChange={handleOnProviderChange}
+                                        key={`provider-select-${fakeTempProvi}`}
                                     />
                                     {Boolean(providerErrMsg) && 
                                         <FormHelperText
@@ -852,7 +969,7 @@ const AppointmentTab = ({
                                 </Select>
                             </Grid>
                             {/* Schedule Date */}
-                            <Grid item md={6} sm={6} xs={6}>
+                            <Grid item md={4} sm={4} xs={4}>
                                 <DatePicker
                                     label={t(strings.date)}
                                     id="schedule-date"
@@ -872,8 +989,23 @@ const AppointmentTab = ({
                                     error={Boolean(dateErrMsg)}
                                 />
                             </Grid>
+                            <Grid item md={3} sm={3} xs={3}>
+                                <FormControl>
+                                    <Tooltip title={t(strings.nextDateProvider)} aria-label="next-date">
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            className={classes.nextBtn}
+                                            endIcon={<DateRangeIcon></DateRangeIcon>}
+                                            onClick={handleGetNextAvailableDate}
+                                        >
+                                            {t(strings.nextS)}
+                                        </Button>
+                                    </Tooltip>
+                                </FormControl>
+                            </Grid>
                             {/* Schedule Time */}
-                            <Grid item md={6} sm={6} xs={6}>
+                            <Grid item md={5} sm={5} xs={5}>
                                 <TimePicker 
                                     label={`${t(strings.time)} (${startDayHour}h -- ${endDayHour}h)`}
                                     id="schedule-time"
@@ -937,6 +1069,9 @@ const AppointmentTab = ({
                                 rows={4}
                                 onBlur={handleOnNoteChange}
                                 inputRef={noteRef}
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
                             />
                         </Grid>
                     </Grid>

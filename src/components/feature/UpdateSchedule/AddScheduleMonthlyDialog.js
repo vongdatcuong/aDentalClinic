@@ -1,16 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback} from 'react';
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import React, { useState, useEffect, useRef} from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import lists from '../../../configs/lists';
 
 // i18next
 import { useTranslation } from 'react-i18next';
-
-// Toast
-import { toast } from 'react-toastify';
-
-// moment
-import moment from 'moment';
 
 // React-day-picker
 import DayPickerInput from 'react-day-picker/DayPickerInput';

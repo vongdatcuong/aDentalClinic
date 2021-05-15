@@ -33,6 +33,34 @@ class TemplateService{
             };
         }
     }
+    async getMedicalAlertTemplate(){
+        try{   
+            const result = await httpGet({
+                url: apiPath.noteMacro.noteMacro + apiPath.noteMacro.medical_alert,
+            });
+            return result;            
+        }
+        catch(error){
+            return {
+                success: false,
+                data: null
+            };
+        }
+    }
+    async getProgressNoteTemplate(){
+        try{   
+            const result = await httpGet({
+                url: apiPath.noteMacro.noteMacro + apiPath.noteMacro.progress_note,
+            });
+            return result;            
+        }
+        catch(error){
+            return {
+                success: false,
+                data: null
+            };
+        }
+    }
 
     async insert(data)
     {

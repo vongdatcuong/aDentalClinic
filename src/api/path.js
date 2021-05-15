@@ -2,7 +2,8 @@
 const authorization = {
     authorization: '/authorization',
     logIn: "/signin",
-    refreshToken: "/refresh-token"
+    refreshToken: "/refresh-token",
+    changePassword: "/change-password"
 }
 
 // Appointment
@@ -10,14 +11,16 @@ const appointment = {
     appointment: '/appointment',
     block: '/block',
     chair: '/chair',
-    delete: '/delete'
+    delete: '/delete',
+    appointRequest: '/appointment-request'
 }
 
 //staffs
 const staff={
     staff:'/staff',
     provider:'/provider',
-    schedule: '/schedule'
+    schedule: '/schedule',
+    nextAvailableDate: '/next_available_date'
 }
 //patient
 const patient={
@@ -78,7 +81,8 @@ const referralSource={
 //note_macro
 const noteMacro={
     noteMacro:'/note-macro',
-
+    medical_alert: "/medical-alert",
+    progress_note: "/progress-note",
 }
 //Images
 const image = {
@@ -105,6 +109,14 @@ const referral={
     referral:'/referral',
 
 }
+
+// report
+const report = {
+    report: '/report',
+    appointment: '/appointment',
+    treatmentHistory: '/treatment-history'
+}
+
 export {
     authorization,
 }
@@ -128,5 +140,6 @@ export default {
     image,
     prescription,
     patientRecall,
-    referral
+    referral,
+    report
 };

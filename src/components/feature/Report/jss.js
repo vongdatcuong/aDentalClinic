@@ -2,7 +2,7 @@ const reportStyle = (theme) => ({
     dummyContainer: {
         padding: 0,
         margin: 0,
-        maxWidth: 'none'
+        maxWidth: 'none',
     },
     container: {
         flexGrow: 1,
@@ -12,8 +12,10 @@ const reportStyle = (theme) => ({
         marginRight: theme.spacing(1),
         maxWidth: 'none',
     },
-    title: {
-        fontWeight: 600,
+    reportWrapper: {
+        display: 'inline'
+    },
+    titleGrid: {
         position: 'fixed',
         width: '100%',
         paddingTop: theme.spacing(2),
@@ -26,6 +28,9 @@ const reportStyle = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             textAlign: 'center'
         }
+    },
+    title: {
+        fontWeight: 600,
     },
     calendarIcon: {
         color: theme.primaryColor[0],
@@ -84,6 +89,11 @@ const reportStyle = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(1.5)
         },
+    },
+    actionWrapper: {
+        '& .MuiButtonBase-root': {
+            fontSize: '1.2em'
+        }
     },
     cardReport: {
         marginTop: theme.spacing(9),
@@ -160,7 +170,7 @@ const reportStyle = (theme) => ({
         paddingTop: '5px',
         fontWeight: 550,
         fontSize: '0.9em'
-    }
+    },
 });
   
 export default reportStyle;  

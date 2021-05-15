@@ -31,7 +31,8 @@ const appointment = {
 const staff = {
     staffType: {
         staff: "STAFF",
-        provider: "PROVIDER"
+        provider: "PROVIDER",
+        admin: "ADMIN"
     }
 }
 
@@ -51,11 +52,20 @@ const schedule = {
     }
 }
 
+// Report
+const exportObj = {
+    type: {
+        appointment: 0,
+        patient: 1
+    }
+}
+
 export default {
     languages,
     themes,
     appointment,
     staff,
     schedule,
-    date
+    date,
+    exportObj
 }

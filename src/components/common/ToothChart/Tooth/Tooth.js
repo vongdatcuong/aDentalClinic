@@ -21,21 +21,22 @@ const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
   const classes = useStyles();
-  const { id, svgString, jaw, viewType, ...other } = props;
-  const [isSelected, setIsSelected] = useState(false);
+  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, toothNote, ...other } = props;
+  //const [isSelected, setIsSelected] = useState(false);
 
   function handlePickToothOverview() {}
 
   function handlePickToothQuickselect() {
-    setIsSelected(!isSelected);
+    //setIsSelected(!isSelected);
   }
 
   function clickTooth() {
-    if (isSelected) {
-      props.onDeselectTooth(id);
-    } else {
-      props.onSelectTooth(id);
-    }
+    // if (isSelectedTooth) {
+    //   props.onDeselectTooth(id);
+    // } else {
+    //   props.onSelectTooth(id);
+    // }
+    props.onSelectTooth(id);
     if (viewType === "overview") {
       handlePickToothOverview();
     } else if (viewType === "quickselect") {
@@ -49,8 +50,9 @@ const Tooth = function (props) {
         title={
           <React.Fragment>
             <Typography color="inherit">{id}</Typography>
-            <em>{"And here's"}</em> <b>{"some"}</b> <u>{"amazing content"}</u>.{" "}
-            {"It's very engaging. Right?"}
+            {/* <em>{"And here's"}</em> <b>{"some"}</b> <u>{"amazing content"}</u>.{" "}
+            {"It's very engaging. Right?"} */}
+            <div className="note" dangerouslySetInnerHTML={{__html: toothNote}}></div>
           </React.Fragment>
         }
         aria-label={id}
@@ -69,7 +71,13 @@ const Tooth = function (props) {
             onClick={() => clickTooth()}
             className={clsx(
               classes.toothContainer,
-              isSelected ? classes.selectedTooth : classes.unSelectedTooth
+              isSelectedTooth ? classes.selectedTooth : classes.unSelectedTooth,
+              toothCondition === "MISSING" ? classes.missingTooth : 
+              toothCondition === "VENEER" ? classes.veneerTooth : 
+              toothCondition === "PONTICS" ? classes.ponticsTooth : 
+              toothCondition === "CROWN" ? classes.crownTooth : 
+              toothCondition === "ENDOTESTS" ? classes.endotestsTooth : 
+              classes.normalTooth
             )}
           >
             {svgString}
@@ -78,6 +86,10 @@ const Tooth = function (props) {
             ) : (
               ""
             )}
+            <svg height="20" width="20" className="conditionLayer">
+            </svg> 
+            <svg height="20" width="20" className="maskLayer">
+            </svg> 
           </span>
         </span>
       </HtmlTooltip>

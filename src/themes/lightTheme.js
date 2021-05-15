@@ -33,17 +33,23 @@ import {hexToRgb} from '../utils/colors';
   const appointRecallDialogWidth = '70%';
   const appointTreatmentDialogWidth = '80%';
   const appointAddTreatmentDialogWidth = '50%';
+  const appointRecallDialogMaxHeight = 600;
+  const appointTreatmentDialogMaxHeight = 600;
   const confirmDialogMinWidth = 350;
   const appointTooltipMaxWidth = 450;
   const scheduleAutoItemMinWidth = 150;
   const addScheduleMonthlyWidth = 600;
   const addScheduleMonthlyHeight = 500;
+  const appointExportDialogWidth = '40%';
+  const appointExportDialogWidthSm = '70%';
+  const appointExportDialogMaxHeight = 300;
 
   // Z-index
   const miniLeftSidebarZIndex = 999;
   const loadingZIndex = 9999;
   const menuBarZIndex = 998;
   const selectedToothZIndex = 900;
+  const fabZIndex = 99999;
 
   const transition = {
     transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
@@ -88,6 +94,7 @@ import {hexToRgb} from '../utils/colors';
   const scheduleMonthlyItemColor = "#8c8daf";
   const scheduleWeeklyItemColor = "#ba9187";
   const scheduleAutoItemColor = "#639f88";
+  const pageBackgroundColor = "#fafafa";
 
   // Google map
   const mapMinWidth = 500;
@@ -238,16 +245,22 @@ export default {
   appointRecallDialogWidth,
   appointTreatmentDialogWidth,
   appointAddTreatmentDialogWidth,
+  appointRecallDialogMaxHeight,
+  appointTreatmentDialogMaxHeight,
   confirmDialogMinWidth,
   appointTooltipMaxWidth,
   scheduleAutoItemMinWidth,
   addScheduleMonthlyWidth,
   addScheduleMonthlyHeight,
+  appointExportDialogWidth,
+  appointExportDialogWidthSm,
+  appointExportDialogMaxHeight,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,
   menuBarZIndex,
   selectedToothZIndex,
+  fabZIndex,
   // ???
   transition,
   boxShadow,
@@ -271,6 +284,7 @@ export default {
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,
+  pageBackgroundColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

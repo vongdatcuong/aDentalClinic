@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
     return (
         <div className={classes.loadingPageWrapper}>
-            <img src={LoadingPageIcon}/>
+            <img src={LoadingPageIcon} alt=""/>
         </div>
     );
 }

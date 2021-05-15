@@ -84,6 +84,18 @@ const loginStyle = (theme) => ({
     width: "100%",
     maxWidth: theme.spacing(30),
   },
+  containerAddRecord:{
+      display:'flex',
+      justifyContent:'flex-end',
+      marginRight:'30px',
+      marginTop:'30px',
+  },
+  btnAddRecord: {
+
+      color: theme.primaryColor[0],
+      fontWeight: "bold",
+      textTransform: "none",
+  },
 });
 
 export default loginStyle;

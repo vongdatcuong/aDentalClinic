@@ -19,8 +19,10 @@ const AdultToothChart = function (props) {
                 key={index}
                 id={tooth.fullTooth.id}
                 onSelectTooth={props.onSelectTooth}
-                onDeselectTooth={props.onDeselectTooth}
                 svgString={tooth.fullTooth.svgString}
+                isSelectedTooth={props.selectedTooth.includes(tooth.fullTooth.id) ? true : false}
+                toothCondition={props.toothCondition[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
+                toothNote={props.toothNotes[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
               ></Tooth>
             );
           })}
@@ -35,8 +37,10 @@ const AdultToothChart = function (props) {
               key={index}
               id={tooth.fullTooth.id}
               onSelectTooth={props.onSelectTooth}
-              onDeselectTooth={props.onDeselectTooth}
               svgString={tooth.fullTooth.svgString}
+              isSelectedTooth={props.selectedTooth.includes(tooth.fullTooth.id) ? true : false}
+              toothCondition={props.toothCondition[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
+              toothNote={props.toothNotes[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
             ></Tooth>
           );
         })}

@@ -276,7 +276,52 @@ const httpDelete = async (requestModel) => {
   }
 };
 
-export { secretKey, initializeAPIService, httpGet, httpPost, httpPut, httpPatch, httpDelete };
+//GET PDF METHOD
+const httpGetPdf = async (requestModel) => {
+  requestModel = requestModel || {};
+  requestModel.url = requestModel.url || "";
+  requestModel.option = requestModel.option || {};
+  requestModel.query = requestModel.query || {};
+  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.body = requestModel.body || {};
+  let tokens = AuthService.getToken();
+  try {
+    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
+      method: "GET",
+      ...requestModel.option,
+      headers: {
+        "Content-Type": "application/pdf",
+        Authorization: "Bearer " + tokens.token,
+      },
+    });
+    if (response.status === figures.apiStatus.unauthorized){
+      if (await AuthService.refreshToken()){
+        try {
+          tokens = AuthService.getToken();
+          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
+            method: "GET",
+            ...requestModel.option,
+            headers: {
+              "Content-Type": "application/pdf",
+              Authorization: "Bearer " + tokens.token,
+            },
+          });
+        } catch(err){
+          throw err;
+        }
+      } else {
+        toast.error(strings.refreshTokenFailMsg);
+        AuthService.logOut();
+        window.location.reload();
+      }
+    }
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { secretKey, initializeAPIService, httpGet, httpPost, httpPut, httpPatch, httpDelete, httpGetPdf };
 
 export default {
   secretKey,
@@ -286,4 +331,5 @@ export default {
   httpPut,
   httpPatch,
   httpDelete,
+  httpGetPdf
 }

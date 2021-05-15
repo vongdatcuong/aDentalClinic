@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import { makeStyles,  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import lists from '../../../configs/lists';
@@ -14,7 +14,6 @@ import { loadingStore } from '../../../contexts/loading-context';
 import { themeStore } from '../../../contexts/theme-context';
 
 // @material-ui/core Component
-import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -87,13 +86,12 @@ const General = () => {
     }
   });
 
-  const themes = Object.keys(lists.themes).map((theme) => {{
+  const themes = Object.keys(lists.themes).map((theme) => {
     return {
       text: t(lists.themes[theme]),
       value: theme
     }
-  }
-});
+  });
 
   const themePopoverId = 'theme-popover-id';
 
@@ -133,7 +131,7 @@ const General = () => {
     } finally {
       dispatchLoading({type: strings.setLoading, isLoading: false});
     }
-  }, [user]);
+  }, [user, language]);
 
   const handleOpenThemePopover = (event) => {
     setOpenThemePopover(true);

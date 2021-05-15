@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 
 // @material-ui/core Component
@@ -19,7 +20,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { Tabs, Tab, TextareaAutosize, TextField } from '@material-ui/core';
+import { Tabs, Tab, TextareaAutosize, TextField, IconButton, Tooltip } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -33,10 +34,14 @@ import Footer from "../../../layouts/Footer";
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
+import MacroCheckSelectDialog from './MacroCheckSelectDialog';
+import path from "../../../routes/path";
+import { FaScroll } from 'react-icons/fa';
 
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = ({ patientID }) => {
+    const history = useHistory();
     const {t, i18n } = useTranslation();
     const classes = useStyles();
 
@@ -50,7 +55,7 @@ const PatientProfilePage = ({ patientID }) => {
     const [halitosis, setHalitosis] = useState(0);
     const [editMedicalIssues, setEditMedicalIssues] = useState(false);
     const [editOralHeath, setEditOralHeath] = useState(false);
-
+    const [medOpen, setMedOpen] = useState(false);
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
     };
@@ -144,85 +149,192 @@ const PatientProfilePage = ({ patientID }) => {
     const handleChangeHalitosis = (event) => {
         setHalitosis(event.target.value);
     }
+    const onCloseMedAlertDialog = (newMedValue) => {
+      setMedOpen(false);  
+      if (newMedValue == null) {
+        return;
+      }
+      setMedicalIssues(newMedValue);
+    }
 
-
-    return (  <React.Fragment>
-        <TreatmentMenu patientID = { patientID }/>
+    return (
+      <React.Fragment>
+        <TreatmentMenu patientID={patientID} />
         <Container className={classes.container}>
-            <PopupChat></PopupChat>
-            <Grid container>
-                <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
-                    <Grid container className={classes.headerInfo}>
-                        <Typography component="h1" variant="h5" className={classes.patientName}>
-                            {fullname}
-                        </Typography>
-                        <div className={classes.patientAgeGender}>
-                            {gender}, {age}y
+          <PopupChat></PopupChat>
+          <Grid container>
+            <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
+              <Grid container className={classes.headerInfo}>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  className={classes.patientName}
+                >
+                  {fullname}
+                </Typography>
+                <div className={classes.patientAgeGender}>
+                  {gender}, {age}y
+                </div>
+              </Grid>
+              <Grid container className={classes.detailProfileContainer}>
+                <Grid item>
+                  <Tabs
+                    value={curTab}
+                    onChange={handleChangeTab}
+                    indicatorColor="primary"
+                    textColor="primary"
+                  >
+                    <Tab
+                      label={t(strings.treatmentPlan).toUpperCase()}
+                      {...a11yProps(0)}
+                    />
+                    <Tab
+                      label={t(strings.history).toUpperCase()}
+                      {...a11yProps(1)}
+                    />
+                  </Tabs>
+                  <Grid item>
+                    <TabPanel value={curTab} index={0}>
+                      {t(strings.noTreatmentsPending)}
+                        <div className={classes.containerAddRecord}>
+                            <Button simple className={classes.btnAddRecord} onClick={() => history.push(path.addTreatmentPath.replace(':patientID', patientID))}>
+                                <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
+                                {t(strings.add)}
+                            </Button>
                         </div>
-                    </Grid>
-                    <Grid container className={classes.detailProfileContainer}>
-                        <Grid item>
-                            <Tabs value={curTab} onChange={handleChangeTab} indicatorColor="primary" textColor="primary">
-                                    <Tab label={t(strings.treatmentPlan).toUpperCase()} {...a11yProps(0)} />
-                                    <Tab label={t(strings.history).toUpperCase()} {...a11yProps(1)} />
-                            </Tabs>
-                            <Grid item>
-                                <TabPanel value={curTab} index={0}>
-                                    {t(strings.noTreatmentsPending)}
-                                </TabPanel>
-                                <TabPanel value={curTab} index={1}>
-                                    <TreatmentHistory></TreatmentHistory>
-                                </TabPanel>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    </TabPanel>
+                    <TabPanel value={curTab} index={1}>
+                      <TreatmentHistory></TreatmentHistory>
+                    </TabPanel>
+                  </Grid>
                 </Grid>
-                <Grid item xs={3} sm={3} md={3} className={classes.rightGrid}>
-                    <Grid container className={classes.oralHeathContainer}>
-                        <Typography component="h1" variant="h6" className={classes.oralHeathHeader}>
-                            {t(strings.oralHealth)} 
-                            <Button color="primary" onClick={handleClickEditOralHeath} className={classes.btnEdit} simple>{editOralHeath ? t(strings.save) : t(strings.edit)}</Button>
-                        </Typography>
-                        <span>{t(strings.plaqueIndex).toUpperCase()}: 
-                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={plaqueIndex} onChange={handleChangePlaqueIndex} disabled={!editOralHeath} /></span>
-                        <br></br>
-                        <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={plaqueIndex*20} className={classes.linearProgressBar}></LinearProgress>
-                        </span>
-                        
-                        <span>{t(strings.bleedingIndex).toUpperCase()}: 
-                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={bleedingIndex} onChange={handleChangeBleedingIndex} disabled={!editOralHeath} /></span>
-                        <br></br>
-                        <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={bleedingIndex*20} className={classes.linearProgressBar}></LinearProgress>
-                        </span>
-                        
-                        <span>{t(strings.halitosis).toUpperCase()}: 
-                            <input type="number" min="0" max="5" className={classes.inputOralHeath} value={halitosis} onChange={handleChangeHalitosis} disabled={!editOralHeath} /></span>
-                        <br></br>
-                        <span className={classes.linearProgressBarContainer}>
-                            <LinearProgress variant="determinate" value={halitosis*20} className={classes.linearProgressBar}></LinearProgress>
-                        </span>
-                    </Grid>
-                    <Grid container className={classes.medicalIssuesContainer}>
-                        <Typography component="h1" variant="h6" className={classes.medicalIssuesHeader}>
-                            {t(strings.medicalIssues)} <Button color="primary" onClick={handleClickEditMedicalIssues} className={classes.btnEdit} simple>{editMedicalIssues ? t(strings.save) : t(strings.edit)}</Button>
-                        </Typography>
-                        <TextField
-                            id="outlined-multiline-static"
-                            multiline
-                            rows={15}
-                            value={medicalIssues}
-                            onChange={handleChangeMedicalIssues}
-                            variant="outlined"
-                            disabled={!editMedicalIssues}
-                            />
-                    </Grid>
-                </Grid>
+              </Grid>
             </Grid>
+            <Grid item xs={3} sm={3} md={3} className={classes.rightGrid}>
+              <Grid container className={classes.oralHeathContainer}>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  className={classes.oralHeathHeader}
+                >
+                  {t(strings.oralHealth)}
+                  <Button
+                    color="primary"
+                    onClick={handleClickEditOralHeath}
+                    className={classes.btnEdit}
+                    simple
+                  >
+                    {editOralHeath ? t(strings.save) : t(strings.edit)}
+                  </Button>
+                </Typography>
+                <span>
+                  {t(strings.plaqueIndex).toUpperCase()}:
+                  <input
+                    type="number"
+                    min="0"
+                    max="5"
+                    className={classes.inputOralHeath}
+                    value={plaqueIndex}
+                    onChange={handleChangePlaqueIndex}
+                    disabled={!editOralHeath}
+                  />
+                </span>
+                <br></br>
+                <span className={classes.linearProgressBarContainer}>
+                  <LinearProgress
+                    variant="determinate"
+                    value={plaqueIndex * 20}
+                    className={classes.linearProgressBar}
+                  ></LinearProgress>
+                </span>
 
-        </Container></React.Fragment>
-    )
+                <span>
+                  {t(strings.bleedingIndex).toUpperCase()}:
+                  <input
+                    type="number"
+                    min="0"
+                    max="5"
+                    className={classes.inputOralHeath}
+                    value={bleedingIndex}
+                    onChange={handleChangeBleedingIndex}
+                    disabled={!editOralHeath}
+                  />
+                </span>
+                <br></br>
+                <span className={classes.linearProgressBarContainer}>
+                  <LinearProgress
+                    variant="determinate"
+                    value={bleedingIndex * 20}
+                    className={classes.linearProgressBar}
+                  ></LinearProgress>
+                </span>
+
+                <span>
+                  {t(strings.halitosis).toUpperCase()}:
+                  <input
+                    type="number"
+                    min="0"
+                    max="5"
+                    className={classes.inputOralHeath}
+                    value={halitosis}
+                    onChange={handleChangeHalitosis}
+                    disabled={!editOralHeath}
+                  />
+                </span>
+                <br></br>
+                <span className={classes.linearProgressBarContainer}>
+                  <LinearProgress
+                    variant="determinate"
+                    value={halitosis * 20}
+                    className={classes.linearProgressBar}
+                  ></LinearProgress>
+                </span>
+              </Grid>
+              <Grid container className={classes.medicalIssuesContainer}>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  className={classes.medicalIssuesHeader}
+                >
+                  {t(strings.medicalIssues)}{" "}
+                  {editMedicalIssues ? (
+                    <Tooltip title="Macro" aria-label="Macro">
+                      <IconButton size="small" onClick={() => setMedOpen(true)}>
+                        <FaScroll />
+                      </IconButton>
+                    </Tooltip>
+                  ) : null}
+                  <Button
+                    color="primary"
+                    onClick={handleClickEditMedicalIssues}
+                    className={classes.btnEdit}
+                    simple
+                  >
+                    {editMedicalIssues ? t(strings.save) : t(strings.edit)}
+                  </Button>
+                </Typography>
+                <TextField
+                  id="outlined-multiline-static"
+                  multiline
+                  rows={15}
+                  rowsMax={20}
+                  value={medicalIssues}
+                  onChange={handleChangeMedicalIssues}
+                  variant="outlined"
+                  disabled={!editMedicalIssues}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <MacroCheckSelectDialog
+            onClose={onCloseMedAlertDialog}
+            open={medOpen}
+            title={t(strings.medicalIssues)}
+            selected={medicalIssues}
+          />
+        </Container>
+      </React.Fragment>
+    );
 }
 
 export default PatientProfilePage;

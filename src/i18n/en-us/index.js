@@ -13,6 +13,7 @@ export default {
         "Appointment holder": "Appointment holder",
         "Today's Appoinment": "Today's Appoinment",
         "Go back": "Go back",
+        "No Appointment Requests to display yet": "No Appointment Requests to display yet",
         //treatment menu
         "Tooth chart": "Tooth chart",
         "Patient profile": "Patient profile",
@@ -46,12 +47,18 @@ export default {
         "Loading": "Loading",
         "No options": "No options",
         "select": "Select",
+        "unselect": "Unselect",
         "MALE": "MALE",
         "FEMALE": "FEMALE",
         "None": "None",
         "Confirm": "Confirm",
         "Start Date": "Start Date",
         "End Date": "End Date",
+        "Today": "Today",
+        "Next S": "Next",
+        "Request": "Request",
+        "At time": "At",
+        "Export": "Export",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -121,6 +128,10 @@ export default {
         "This is a holiday": "This is a holiday",
         "Add Appointment fail": "Add Appointment fail",
         "Update Appointment fail": "Update Appointment fail",
+        "Get Next Available Date fail": "Get Next Available Date fail",
+        "Provider not working in the near future": "Provider not working in the near future",
+        "Delete Appointment Request fail": "Delete Appointment Request fail",
+        "Patient is required": "Patient is required",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",
@@ -131,6 +142,11 @@ export default {
         "Dates are quired": "Dates are quired",
         "Add Schedule fail": "Add Schedule fail",
         "Update Schedule fail": "Update Schedule fail",
+        // Error Messages Report
+        "Load Statistics fail": "Load Report fail",
+        "Load Appointment Document fail": "Load Appointment Document fail",
+        "Load Patient Document fail": "Load Patient Document fail",
+        "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -160,6 +176,21 @@ export default {
         "Expired date":"Expired date",
         "Agree":"Agree",
         "Info":"Info",
+        // Treatment
+        "back": "back",
+        "next": "next",
+        "finish": "finish",
+        "All steps completed - you are finished": "All steps completed - you are finished",
+        "Select Treatment": "Select Treatment",
+        "Select Tooth": "Select Tooth",
+        "Preview Treatment Information": "Preview Treatment Information",
+        "Facial": "Facial",
+        "Lingual": "Lingual",
+        "Mesial": "Mesial",
+        "Distal": "Distal",
+        "Top": "Top",
+        "Root": "Root",
+
         // Tooth chart page
         "Overview": "Overview",
         "Quickselect": "Quickselect",
@@ -366,6 +397,10 @@ export default {
         "No Recall": "No Recall",
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
+        "Only mine": "Only mine",
+        "Next Available date for default provider": "Next available Date for default provider",
+        "Appointment Date": "Appointment Date",
+        "Appointment Request": "Appointment Request",
         //Files
         "File Name": "Tên tệp",
         // Schedule
@@ -380,5 +415,11 @@ export default {
         "Friday": "Friday",
         "Saturday": "Saturday",
         "Sunday": "Sunday",
+        // Report
+        "Patients Short": "Patients",
+        "View patient document": "View patient document",
+        "View appointments document": "View appointment document",
+        "View appointments of patient document": "View appointment of patient document",
+        "If no patient is provided, all appointments will be loaded": "If no patient is provided, all appointments will be loaded"
     }
 }

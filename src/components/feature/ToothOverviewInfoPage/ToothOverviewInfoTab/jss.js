@@ -52,6 +52,9 @@ const style = (theme) => ({
       textAlign: "center",
     },
   },
+  editToothArea: {
+    width: "100%",
+  },
   bottomContainer: {
     borderTop: "solid black 0.05rem",
     //minHeight: "20vh",
@@ -133,6 +136,9 @@ const style = (theme) => ({
     color: theme.primaryColor[0],
     fontWeight: "bold",
     width: "90%",
+  },
+  selectedBtn: {
+      border: "solid",
   },
 });
 
