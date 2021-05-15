@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
 import StaffService from "../../../api/staff/staff.service";
+import AuthService from "../../../api/authentication/auth.service";
 //translation
 import { useTranslation } from 'react-i18next';
 
@@ -40,7 +41,7 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 import InsertPerson from "../InsertPerson";
 import UpdatePerson from "../UpdatePerson";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 
 const useStyles = makeStyles(styles);
 const createData=(id,fullname, email, phone, status)=>{
@@ -69,6 +70,8 @@ const Staffs = () => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -146,13 +149,18 @@ const Staffs = () => {
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getStaff();
-            
+            getUser();
+            setIsLoading(false);
         }
 
         if(selectedRow!==-1)
@@ -214,22 +222,26 @@ const Staffs = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPerson}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPerson}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                         </Grid>
 
                         }
@@ -237,7 +249,8 @@ const Staffs = () => {
                     
                     </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertPerson===true && isEdited=== false ?
                         <InsertPerson staffType={t(strings.staffTypeStaff)}
                                         userType={t(strings.userTypeStaff)}
@@ -264,6 +277,9 @@ const Staffs = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 

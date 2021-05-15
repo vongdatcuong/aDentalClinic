@@ -3,6 +3,8 @@ import { makeStyles  } from "@material-ui/core/styles";
 //api
 
 import ProviderService from "../../../api/provider/provider.service";
+import AuthService from "../../../api/authentication/auth.service";
+
 //translation
 import { useTranslation } from 'react-i18next';
 
@@ -40,6 +42,7 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 import InsertPerson from "../InsertPerson";
 import UpdatePerson from "../UpdatePerson";
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 
 
@@ -74,6 +77,8 @@ const Providers = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -146,15 +151,22 @@ const Providers = () => {
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getProvider();
-            
         }
-
+        if(user===null)
+        {
+            getUser();
+            setIsLoading(false);
+        }
         if(selectedRow!==-1)
         {
             if(selectedRowData!==rows[selectedRow] && isEdited===false)
@@ -215,22 +227,27 @@ const Providers = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPerson}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPerson}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
+                            
                         </Grid>
                     
                     }
@@ -241,49 +258,52 @@ const Providers = () => {
 
                     
                     
-                
+                {isLoading===false ?
                 <Container className={classes.containerTable}>
-                    {insertPerson===true && isEdited=== false ?
-                        <InsertPerson 
-                                        staffType={t(strings.staffTypeProvider)}
-                                        userType={t(strings.userTypePatient)}
-                                        handleChangeIsInsert={handleChangeIsInsert}
-                        />
-                        : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePerson 
-                                        editable={editable}
-                                        id={selectedRowData.id}
-                                        handleChangeIsUpdate={handleChangeIsUpdate}
-
-                        />
-                        :
-                        // rows.length!==0 && dataColumnsName.length!==0?
-                        //     <TableCustom titles={titles}
-                        //             data={rows}
-                        //             dataColumnsName={dataColumnsName}
-                        //             editable={editable}
-                        //             handleChangeIsEdited={handleChangeIsEdited}
-                        //             changeToEditPage={true}
-                        //             handleChangeSelectedRow={handleChangeSelectedRow}
-                        //             numberColumn={dataColumnsName.length}
-                                    
-                        //             />
-                        // :
-                        // <div></div>
-                        <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
+                {insertPerson===true && isEdited=== false ?
+                    <InsertPerson 
+                                    staffType={t(strings.staffTypeProvider)}
+                                    userType={t(strings.userTypePatient)}
+                                    handleChangeIsInsert={handleChangeIsInsert}
+                    />
+                    : isEdited===true &&selectedRowData!==null ?
+                    <UpdatePerson 
                                     editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                    }
-                   
-                   
+                                    id={selectedRowData.id}
+                                    handleChangeIsUpdate={handleChangeIsUpdate}
+
+                    />
+                    :
+                    // rows.length!==0 && dataColumnsName.length!==0?
+                    //     <TableCustom titles={titles}
+                    //             data={rows}
+                    //             dataColumnsName={dataColumnsName}
+                    //             editable={editable}
+                    //             handleChangeIsEdited={handleChangeIsEdited}
+                    //             changeToEditPage={true}
+                    //             handleChangeSelectedRow={handleChangeSelectedRow}
+                    //             numberColumn={dataColumnsName.length}
+                                
+                    //             />
+                    // :
+                    // <div></div>
+                    <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                
+                                />
+                }
+               
+               
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
             </div>
             

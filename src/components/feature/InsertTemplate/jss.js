@@ -119,7 +119,7 @@ const insertTemplateStyle = (theme) => ({
 
     },
     inputControlBig:{
-        height:'100px',
+        minHeight:'100px',
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
@@ -138,7 +138,7 @@ const insertTemplateStyle = (theme) => ({
 
         },
         '& .MuiInputBase-root':{
-            height:'100px',
+            minHeight:'100px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
         },

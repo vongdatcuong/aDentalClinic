@@ -243,6 +243,10 @@ export default {
         "Drug":"Drug",
         //referral
         "Additional information":"Additional information",
+        "New referral":"New referral",
+        "Existed referral":"Existed referral",
+        "Referred by":"Referred by",
+        "Referred to":"Referred to",
         //template
         "Template":"Template",
         "Recent":"Recent",

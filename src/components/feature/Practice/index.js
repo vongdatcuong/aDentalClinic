@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
+import AuthService from "../../../api/authentication/auth.service";
 import PracticeService from "../../../api/practice/practice.service";
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
@@ -42,6 +43,8 @@ import styles from "./jss";
 import strings from "../../../configs/strings";
 //import component
 import TableCustom from "../../common/TableCustom";
+import LoadingPage from '../../../layouts/LoadingPage';
+
 import moment from 'moment';
 const useStyles = makeStyles(styles);
 
@@ -71,7 +74,8 @@ const Practice = () => {
     const [endTime,setEndTime]=useState(null);
     const [nameErrorMessage,setNameErrorMessage]=useState(null);
     const [phoneErrorMessage,setPhoneErrorMessage]=useState(null);
-    
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     //handle
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -132,7 +136,7 @@ const Practice = () => {
             setStartTime(a.start_time);
             setEndTime(a.end_time);
             setRows(newData);
-
+            
         }
 
     }
@@ -167,10 +171,16 @@ const Practice = () => {
         }
         
     }
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows===null)
         {
             getPractice();
+            getUser();
+            setIsLoading(false);
         }
         if(!isPropValid(validators.properties.name, name))
         {
@@ -202,18 +212,25 @@ const Practice = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={2}>
-                        <Select
-                            
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                        >
+                    {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
                         
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </Select>
+                                </Select>
+                                
+                            </div>
+                            :
+                            <div></div>
+                            }
+
                     </Grid>
                 </Grid>
                 <Divider className={classes.titleDivider}/>

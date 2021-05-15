@@ -1,8 +1,9 @@
 import React,{useEffect, useState} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
-
+import AuthService from "../../../api/authentication/auth.service";
 import PatientRecallService from "../../../api/patientRecall/patientRecall.service";
+import LoadingPage from '../../../layouts/LoadingPage';
 //translation
 import { useTranslation } from 'react-i18next';
 
@@ -47,6 +48,7 @@ import InsertPatientRecall from "../InsertPatientRecall";
 import UpdatePatientRecall from "../UpdatePatientRecall";
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import Footer from "../../../layouts/Footer";
+import { SignalCellularNull } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -56,15 +58,17 @@ const PatientRecallPage = ({patientID}) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     //
-    const createData=(id,recallDate,note)=>{
-        return {id,recallDate,note};
+    const createData=(id,recallDate,appointment,note,procedure)=>{
+        return {id,recallDate,appointment,note,procedure};
     };
     
-    const dataColumnsName=["index","recallDate","note"];
+    const dataColumnsName=["index","recallDate","appointment","note","procedure"];
     const titles=[
         t(strings.index),
         t(strings.recallDate),
+        t(strings.appointment),
         t(strings.note),
+        t(strings.procedure),
     ];
     
     //state
@@ -79,6 +83,8 @@ const PatientRecallPage = ({patientID}) => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangeSelectedRow=(value)=>{
@@ -124,7 +130,7 @@ const PatientRecallPage = ({patientID}) => {
         let temp=[];
         data.map((a,index)=>{
             
-            let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.note);
+            let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.appointment? moment(a.appointment.appointment_date).format("DD/MM/YYYY") : null,a.note,a.procedure ? a.procedure.procedure_code : null);
             temp=temp.concat(newData);
         })
         //console.log("Check rows in change data:",temp);
@@ -132,20 +138,25 @@ const PatientRecallPage = ({patientID}) => {
     }
     const getPatientRecall=async()=>{
         const result=await PatientRecallService.getPatientRecallByID(patientID);
-        //console.log("Get recall in useEffect:",result.data);
+        // console.log("Get recall in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
 
         }
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         
         if(rows.length===0)
         {
             
             getPatientRecall();
-            
+            getUser();
+            setIsLoading(false);
         }
 
         if(selectedRow!==-1)
@@ -210,22 +221,26 @@ const PatientRecallPage = ({patientID}) => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertPatientRecall}>
-                                <AddBox />            
-
-                            </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertPatientRecall}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                         </Grid>
                     
                     }
@@ -236,37 +251,40 @@ const PatientRecallPage = ({patientID}) => {
 
                     
                     
-                
+                {isLoading===false ?
                 <Container className={classes.containerTable}>
-                    {insertPatientRecall===true && isEdited=== false ?
-                        <InsertPatientRecall
-                                handleChangeIsInsert={handleChangeIsInsert}
-                                patientID={patientID}
+                {insertPatientRecall===true && isEdited=== false ?
+                    <InsertPatientRecall
+                            handleChangeIsInsert={handleChangeIsInsert}
+                            patientID={patientID}
 
-                        />
-                        : isEdited===true &&selectedRowData!==null ?
-                        <UpdatePatientRecall
-                                        editable={editable}
-                                        id={selectedRowData.id}
-                                        handleChangeIsUpdate={handleChangeIsUpdate}
-                                        patientID={patientID}
-
-                        />
-                        :
-                            <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
+                    />
+                    : isEdited===true &&selectedRowData!==null ?
+                    <UpdatePatientRecall
                                     editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    
-                                    />
-                    }
-                   
-                   
+                                    id={selectedRowData.id}
+                                    handleChangeIsUpdate={handleChangeIsUpdate}
+                                    patientID={patientID}
+
+                    />
+                    :
+                        <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                
+                                />
+                }
+               
+               
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
             </div>
             <Footer/>

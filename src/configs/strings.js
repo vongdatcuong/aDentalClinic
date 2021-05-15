@@ -37,7 +37,10 @@ const status="Status";
 const read="Read";
 //referral
 const additionalInfo="Additional information";
-
+const newReferral="New referral";
+const existedReferral="Existed referral";
+const referredBy="Referred by";
+const referredTo="Referred to";
 //provider
 const index="#";
 const id="ID";
@@ -362,6 +365,7 @@ const treatment="Treatment";
 const interval="Interval";
 const recallDate="Recall date";
 const patientRecall="Patient recall";
+
 // Tooth
 const selectOneTooth = "S";
 const selectMultiTooth = "M";
@@ -647,6 +651,10 @@ export default {
     dispensed,
     refill,
     additionalInfo,
+    newReferral,
+    existedReferral,
+    referredBy,
+    referredTo,
     content,
     noteType,
     abbreviation,

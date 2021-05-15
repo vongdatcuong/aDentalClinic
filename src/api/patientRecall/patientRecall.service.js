@@ -77,6 +77,7 @@ class PatientRecallService{
                     
             const result = await httpGet({
                 url: `${apiPath.patientRecall.recall}/${id}`,
+                
             });
             //console.log("search recall:",result);
             if(result.success)
@@ -143,6 +144,12 @@ class PatientRecallService{
                     
             const result = await httpGet({
                 url: `${apiPath.patientRecall.recall}${apiPath.patient.patient}/${id}`,
+                query:{
+                    get_patient:true,
+                    get_treatment:true,
+                    get_appointment:true,
+                    get_procedure:true
+                }
             });
             //console.log("search recall of patient:",result);
             if(result.success)

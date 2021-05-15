@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
-
+import AuthService from "../../../api/authentication/auth.service";
 import DrugService from "../../../api/drug/drug.service";
 //translation
 import { useTranslation } from 'react-i18next';
@@ -46,6 +46,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertDrug from "../InsertDrug";
 import UpdateDrug from "../UpdateDrug";
+import LoadingPage from '../../../layouts/LoadingPage';
 
 const useStyles = makeStyles(styles);
 const createData=(id,name,dispensed,quantity,descripton,note)=>{
@@ -70,6 +71,8 @@ const Drug = () => {
     const [isDelete,setIsDelete]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -176,12 +179,17 @@ const Drug = () => {
         
 
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getDrug();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -248,60 +256,68 @@ const Drug = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertDrug}>
-                                <AddBox />            
-
-                            </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertDrug}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
                                 <DeleteIcon />            
 
                             </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                         </Grid>
 
                     }
                 </Grid>
                 <Divider className={classes.titleDivider}/>
+                {isLoading === false ?
                 <Container className={classes.containerTable}>
-                    {insertDrug===true && isEdited=== false  ?
-                        <InsertDrug 
-                                        handleChangeIsInsert={handleChangeIsInsert}
-                        />
-                        : isEdited===true &&selectedRowData!==null && isDelete===false?
-                        <UpdateDrug
-                                        id={selectedRowData.id}
-                                        editable={editable}
-                                        handleChangeIsUpdate={handleChangeIsUpdate}
-                        />
-                        :
-                            <TableCustom titles={titles}
-                                    data={rows}
-                                    dataColumnsName={dataColumnsName}
+                {insertDrug===true && isEdited=== false  ?
+                    <InsertDrug 
+                                    handleChangeIsInsert={handleChangeIsInsert}
+                    />
+                    : isEdited===true &&selectedRowData!==null && isDelete===false?
+                    <UpdateDrug
+                                    id={selectedRowData.id}
                                     editable={editable}
-                                    handleChangeIsEdited={handleChangeIsEdited}
-                                    changeToEditPage={true}
-                                    handleChangeSelectedRow={handleChangeSelectedRow}
-                                    numberColumn={dataColumnsName.length}
-                                    isDelete={isDelete}
-                                    handleOpenDialog={handleOpenDialog}
-                                    handleCloseDialog={handleCloseDialog}
-                                    />
-                    }
-                   
-                   
+                                    handleChangeIsUpdate={handleChangeIsUpdate}
+                    />
+                    :
+                        <TableCustom titles={titles}
+                                data={rows}
+                                dataColumnsName={dataColumnsName}
+                                editable={editable}
+                                handleChangeIsEdited={handleChangeIsEdited}
+                                changeToEditPage={true}
+                                handleChangeSelectedRow={handleChangeSelectedRow}
+                                numberColumn={dataColumnsName.length}
+                                isDelete={isDelete}
+                                handleOpenDialog={handleOpenDialog}
+                                handleCloseDialog={handleCloseDialog}
+                                />
+                }
+               
+               
                 </Container>
-                
+                :
+                <LoadingPage/>
+                }
+
                 
                 
                 <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>

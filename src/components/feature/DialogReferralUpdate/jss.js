@@ -1,4 +1,4 @@
-const updatePatientRecallStyle = (theme) => ({
+const DialogReferralUpdate = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -8,7 +8,7 @@ const updatePatientRecallStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            //color:theme.primaryColor[2],
+            color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -54,7 +54,7 @@ const updatePatientRecallStyle = (theme) => ({
 
     },
     leftContent:{
-        color:theme.primaryColor[0],
+        //color:theme.primaryColor[0],
         // borderRight:'1px solid blue',
 
     },
@@ -84,7 +84,7 @@ const updatePatientRecallStyle = (theme) => ({
         // display:'flex',
         // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
-        color:theme.primaryColor[2],
+        //color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -102,7 +102,7 @@ const updatePatientRecallStyle = (theme) => ({
             //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            // marginLeft:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -117,8 +117,118 @@ const updatePatientRecallStyle = (theme) => ({
         // },
 
     },
+    inputControlDate:{
+        height:'35px',
+        width:'36vw',
+        // marginLeft:'30px',
+        marginBottom:'20px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            padding: '7px',
+            // paddingTop:'7px',
+            width:'1.6em',
+            height:'1.6em',
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'3px',
+            
+        },
+        '& .MuiInputBase-input':{
+            marginLeft:'15px',
+            
+        },
+        // '& .MuiInputLabel-outlined':{
+        //     marginLeft:'10px',
+        // },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'10x',
+            
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
+    inputControlDateSmall:{
+        height:'35px',
+        width:'16vw',
+        // marginLeft:'20px',
+        marginBottom:'20px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            padding: '7px',
+            // paddingTop:'7px',
+            width:'1.6em',
+            height:'1.6em',
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'16vw',
+            border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'3px',
+            
+        },
+        
+        '& .MuiInputBase-input':{
+            marginLeft:'10px',
+        },
+        // '& .MuiInputLabel-outlined':{
+        //     marginLeft:'10px',
+        // },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'10x',
+            
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     inputControlBig:{
-        minHeight:'110px',
+        minHeight:'100px',
         width:'35vw',
         marginLeft:'30px',
         marginTop:'10px',
@@ -137,9 +247,10 @@ const updatePatientRecallStyle = (theme) => ({
 
         },
         '& .MuiInputBase-root':{
-            minHeight:'110px',
+            minHeight:'80px',
             width:'36vw',
             //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
@@ -155,8 +266,6 @@ const updatePatientRecallStyle = (theme) => ({
         //         borderColor: theme.primaryColor[0],
         //     },
         // },
-        
-    
 
     },
     inputControlSmall:{
@@ -215,24 +324,10 @@ const updatePatientRecallStyle = (theme) => ({
         marginTop:'15px',
 
     },
-    itemSelect:{
-        marginTop:'30px',
-        marginLeft:'30px',
-        // border:`1px solid ${theme.primaryColor[0]}`,
-        // minWidth:'100%'
-        '& .MuiInputBase-root':{
-            border:`1px solid ${theme.grayColor[0]}`,
-            width:'36vw',
-            borderRadius:'5px',
-        },
-        '& .MuiSelect-select':{
-            paddingLeft:'15px',
-        },
-    },
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'25px',
+        marginTop:'20px',
     },
     input:{
         marginTop:'10px',
@@ -258,71 +353,21 @@ const updatePatientRecallStyle = (theme) => ({
         display:'none',
 
     },
-    itemDate:{
-        marginTop:'5px',
-    },
-    inputControlDate:{
-        height:'50px',
-        width:'36vw',
-        marginLeft:'30px',
-        marginTop:'5px',
-        // display:'flex',
-        // flexDirection:'row',
-        // border:`1px solid ${theme.primaryColor[0]}`,
-        //color:theme.primaryColor[2],
-        '& .MuiOutlinedInput-input': {
-            paddingTop: theme.spacing(1),
-            paddingBottom: theme.spacing(1),
-        },
-        '& .MuiSvgIcon-root': {
-            paddingBottom: '15px',
-            // paddingTop:'7px',
-            width:'1.6em',
-            height:'1.6em',
-            marginTop:'5px',
-        },
-        '& .MuiInputBase-root':{
-            height:'60px',
-            width:'36vw',
-            border:`1px solid ${theme.grayColor[0]}`,
-            borderRadius:'3px',
-        },
-        '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
-            marginTop:'-7px',
-        },
-        '& .MuiInputBase-input.Mui-disabled':{
-            color:theme.grayColor[0],
+    status:{
+        marginRight:'1vw',
+        minWidth:'36vw',
+        border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'5px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
         },
         '& .MuiInputBase-input':{
-            marginLeft:'20px',
-        },
-        '& .MuiButtonBase-root':{
-            marginTop:'10px',
-            
-        },
-        '& .MuiInputLabel-formControl':{
-            marginLeft:'15px',
-            marginTop:'10px',
+            marginLeft:'10px',
         },
         
-        // '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&:hover fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        // },
-        
-    
-
     },
 
 });
 
   
-export default updatePatientRecallStyle;  
+export default DialogReferralUpdate;  

@@ -3,8 +3,9 @@ import { makeStyles  } from "@material-ui/core/styles";
 //translation
 import { useTranslation } from 'react-i18next';
 //api
-
+import AuthService from "../../../api/authentication/auth.service";
 import ChairService from "../../../api/chair/chair.service";
+
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
 import { Typography,
@@ -39,7 +40,7 @@ import AddBox from '@material-ui/icons/AddBox';
 import TableCustom from "../../common/TableCustom";
 import InsertChair from "../InsertChair";
 import UpdateChair from "../UpdateChair";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 const createData=(id,name,order,status)=>{
     return {id,name,order,status};
@@ -62,6 +63,8 @@ const Chairs = () => {
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -141,12 +144,17 @@ const Chairs = () => {
         
 
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getChair();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -207,29 +215,35 @@ const Chairs = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-                            
-                                value={editable}
-                                onChange={handleChangeEditable}
-                                disableUnderline 
-                                className={classes.status}
-                            >
-                            
-                                <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                            </Select>
-                            <IconButton onClick={handleChangeInsertChair}>
-                                <AddBox />            
+                                </Select>
+                                <IconButton onClick={handleChangeInsertChair}>
+                                    <AddBox />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
 
-                            </IconButton>
                         </Grid>
 
                     }
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertChair===true && isEdited=== false ?
                         <InsertChair 
                                     handleChangeIsInsert={handleChangeIsInsert}
@@ -255,6 +269,9 @@ const Chairs = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 

@@ -3,7 +3,7 @@ import { makeStyles  } from "@material-ui/core/styles";
 //translation
 import { useTranslation } from 'react-i18next';
 //api
-
+import AuthService from "../../../api/authentication/auth.service";
 import TemplateService from "../../../api/template/template.service";
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -51,6 +51,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertTemplate from "../InsertTemplate";
 import UpdateTemplate from "../UpdateTemplate";
+import LoadingPage from '../../../layouts/LoadingPage';
+
+import { getSuggestedQuery } from '@testing-library/dom';
 // import { indigo } from '@material-ui/core/colors';
 const createData=(id,content,noteType)=>{
     return {id,content,noteType};
@@ -83,7 +86,8 @@ const Template = () => {
     const [isDelete,setIsDelete]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
-
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const titles=[
         t(strings.index),
         t(strings.content),
@@ -255,11 +259,17 @@ const Template = () => {
         deleteTemplate();
        
     }
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getTemplate();  
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -361,35 +371,38 @@ const Template = () => {
                                     }
                                 />
                             </FormControl>
-                            <Select
-    
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                            >
-    
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-    
-                            </Select>
-                            <IconButton onClick={handleChangeInsertTemplate}>
-                            <AddBox />            
-    
-                            </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
-                            <DeleteIcon />            
-    
-                            </IconButton>
-                            
-                            
+                            {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
+                        
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+
+                                </Select>
+                                <IconButton onClick={handleChangeInsertTemplate}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
+                                    <DeleteIcon />      
+                                </IconButton>
+
+                            </div>
+                            :
+                            <div></div>
+                            }
+
                         </div>
                         :
                         <div/>
                     }
                     
-                    
-                    <Container className={classes.containerTable}>
+                    {isLoading === false ?
+                        <Container className={classes.containerTable}>
                         {
                             insertTemplate===true && isEdited=== false  ?
                             <InsertTemplate 
@@ -464,6 +477,9 @@ const Template = () => {
                         
                     
                     </Container>
+                    :
+                    <LoadingPage/>
+                    }
                     <Dialog onClose={handleCloseDialog} open={openDialog} className={classes.dialog}>
                         
                         <DialogContent>

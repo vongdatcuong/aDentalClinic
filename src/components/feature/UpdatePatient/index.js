@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
 import PatientService from "../../../api/patient/patient.service";
+import PatientReferralService from "../../../api/patientReferral/patientReferral.service";
+
 //validators
 import validators, {isPropValid} from '../../../utils/validators';
 
@@ -14,10 +16,23 @@ import {
     FormControlLabel,
     Checkbox,
     Button,
-    TextField
+    TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    Radio,
+    RadioGroup,
+    Select,
+    InputAdornment,
+    Input,
+    FilledInput,
+    FormControl,
+    OutlinedInput,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import EditIcon from '@material-ui/icons/Edit';
 
 import styles from "./jss";
 // import darkTheme from "../../../themes/darkTheme";
@@ -31,6 +46,7 @@ import strings from "../../../configs/strings";
 
 
 //import component
+import DialogReferral from '../DialogReferral';
 
 const useStyles = makeStyles(styles);
 
@@ -63,10 +79,25 @@ const UpdatePatient = (props) => {
     const [gender,setGender]=useState(true);
     const [active,setActive]=useState(true);
     const [staffPhoto,setStaffPhoto]=useState(null);
-
-
+    const [otherInfo,setOtherInfo]=useState(null);
+    const [referredBy,setReferredBy]=useState(null);
+    const [referredTo,setReferredTo]=useState(null);
+    const [displayBy,setDisplayBy]=useState(null);
+    const [displayTo,setDisplayTo]=useState(null);
+    const [referralType,setReferralType]=useState(null);
+    const [openDialog,setOpenDialog]=useState(false);
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const [selectedFile,setSelectedFile]=useState(null);
-
+    //handle change
+    
+    const handleChangeCloseDialog=(e)=>{
+        setReferralType(null);
+        setOpenDialog(false);
+    }
+    const handleChangeOpenDialog=(e)=>{
+        setOpenDialog(true);
+    }
     const handleChangeActive=(e)=>{
         setActive(!active);
     }
@@ -103,7 +134,38 @@ const UpdatePatient = (props) => {
     const handleChangeGender=(e)=>{
         setGender(!gender);
     }
-
+    const handleChangeOtherInfo=(e)=>{
+        setOtherInfo(e.target.value);
+    }
+    
+    const handleChangeOpenReferredBy=(e)=>{
+        if(props.editable)
+        {
+            setReferralType("FROM");
+            setOpenDialog(true);
+        }
+        
+    }
+    const handleChangeOpenReferredTo=(e)=>{
+        if(props.editable)
+        {
+            setReferralType("TO");
+            setOpenDialog(true);
+        }
+        
+    }
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    }
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
+    }
+    const handleChangeDisplayBy=(value)=>{
+        setDisplayBy(value);
+    }
+    const handleChangeDisplayTo=(value)=>{
+        setDisplayTo(value);
+    }
     const handleUploadClick = event => {
         //console.log();
         var file = event.target.files[0];
@@ -134,22 +196,6 @@ const UpdatePatient = (props) => {
                 genderData="FEMALE";
             }
             const data={
-                // display_id: userData.display_id,
-                // provider_color:userData.provider_color,
-                // staff_type: userData.staff_type,
-                // drug_lic: userData.drug_lic,
-                // npi: userData.npi,
-                // specialty: userData.specialty, 
-                // access_group: userData.access_group, 
-            
-                // notify_staff_msg: userData.notify_staff_msg, 
-                // notify_patient_msg: userData.notify_patient_msg, 
-                // notify_meeting: userData.notify_meeting,
-                // user_type: userData.user_type,
-                // theme:userData.theme,
-                // language:userData.language,
-
-            
                 //change
                 gender:genderData,
                 facebook: facebook,
@@ -160,7 +206,7 @@ const UpdatePatient = (props) => {
                 //staff_photo: staffPhoto,
                 address: address,
                 is_active:active, 
-
+                other_info:otherInfo,
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
@@ -185,33 +231,98 @@ const UpdatePatient = (props) => {
         
         
     }
-    useEffect(()=>{
-        const searchPatient=async()=>{
-            const result=await PatientService.search(props.id);
-            //console.log("Search patient in useEffect:",result.data.payload);
-            if(result.success)
+    const searchPatient=async()=>{
+        const result=await PatientService.search(props.id);
+        // console.log("Search patient in useEffect:",result.data.payload);
+        if(result.success)
+        {
+            setUserData(result.data.payload);
+            setFirstName(result.data.payload.user.first_name);
+            setLastName(result.data.payload.user.last_name);
+            setUsername(result.data.payload.user.username);
+            setPassword(result.data.payload.user.password);
+            setFacebook(result.data.payload.user.facebook);
+            setEmail(result.data.payload.user.email);
+            setFax(result.data.payload.user.fax);
+            setActive(result.data.payload.is_active);
+            setAddress(result.data.payload.user.address);
+            setMobile(result.data.payload.user.mobile_phone);
+            setHomePhone(result.data.payload.user.home_phone);
+            setOtherInfo(result.data.payload.user.other_info);
+            if(result.data.payload.gender==="FEMALE")
             {
-                setUserData(result.data.payload);
-                setFirstName(result.data.payload.user.first_name);
-                setLastName(result.data.payload.user.last_name);
-                setUsername(result.data.payload.user.username);
-                setPassword(result.data.payload.user.password);
-                setFacebook(result.data.payload.user.facebook);
-                setEmail(result.data.payload.user.email);
-                setFax(result.data.payload.user.fax);
-                setActive(result.data.payload.is_active);
-                setAddress(result.data.payload.user.address);
-                setMobile(result.data.payload.user.mobile_phone);
-                setHomePhone(result.data.payload.user.home_phone);
-                if(result.data.payload.gender==="FEMALE")
-                {
-                    setGender(false);
-                }
-                else
-                {
-                    setGender(true);
-                }
+                setGender(false);
             }
+            else
+            {
+                setGender(true);
+            }
+        }
+    }
+    const getReferredBy=(data)=>{
+        let temp=[];
+        data.map((a,index)=>{
+            if(a.referral_type==="FROM")
+            {
+                temp=temp.concat(a);
+            }
+        })
+
+        if(temp.length>0)
+        {
+            if(temp[temp.length-1].ref_patient!==null)
+            {
+                setDisplayBy(temp[temp.length-1].ref_patient.user.first_name + " " + temp[temp.length-1].ref_patient.user.last_name)
+            }
+            if(temp[temp.length-1].ref_staff!==null)
+            {
+                setDisplayBy(temp[temp.length-1].ref_staff.user.first_name + " " + temp[temp.length-1].ref_staff.user.last_name)
+            }
+            if(temp[temp.length-1].referral_source!==null)
+            {
+                setDisplayBy(temp[temp.length-1].referral_source.name)
+            }
+            setReferredBy(temp);
+        }
+        
+    }
+    const getReferredTo=(data)=>{
+        let temp=[];
+        data.map((a,index)=>{
+            if(a.referral_type==="TO")
+            {
+                temp=temp.concat(a);
+            }
+        })
+        if(temp.length>0)
+        {
+            if(temp[temp.length-1].ref_patient!==null)
+            {
+                setDisplayTo(temp[temp.length-1].ref_patient.user.first_name + " " + temp[temp.length-1].ref_patient.user.last_name)
+            }
+            if(temp[temp.length-1].ref_staff!==null)
+            {
+                setDisplayTo(temp[temp.length-1].ref_staff.user.first_name + " " + temp[temp.length-1].ref_staff.user.last_name)
+            }
+            if(temp[temp.length-1].referral_source!==null)
+            {
+                setDisplayTo(temp[temp.length-1].referral_source.name)
+            }
+            setReferredTo(temp);
+        }
+        
+    }
+    const searchPatientReferral=async()=>{
+        const res=await PatientReferralService.searchByPatient(userData.id);
+        getReferredBy(res.data);
+        getReferredTo(res.data);
+
+    }
+    
+    useEffect(()=>{
+        if(referredBy===null && referredTo===null && userData!==null)
+        {
+            searchPatientReferral();
         }
         if(props.id && username===null)
         {
@@ -257,6 +368,16 @@ const UpdatePatient = (props) => {
         if(emailError!==null && isPropValid(validators.properties.email, email))
         {
             setEmailError(null)
+        }
+        if(isInsert===true)
+        {
+            searchPatientReferral();
+            setIsInsert(false);
+        }
+        if(isUpdate===true)
+        {
+            searchPatientReferral();
+            setIsUpdate(false);
         }
     })
     
@@ -339,7 +460,68 @@ const UpdatePatient = (props) => {
 
                                         /> 
                     </div>
+                    <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.active)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
+                                />
+                                }
+                                label={t(strings.active)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!active}
+                                    onChange={handleChangeActive}
+                                    name={t(strings.inactive)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
+                                />
+                                }
+                                label={t(strings.inactive)}
+                            />
+                        </div>
                         
+                        <div className={classes.itemSmall}>
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.male)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
+                                />
+                                }
+                                label={t(strings.male)}
+                            />
+                            <FormControlLabel
+                                control={
+                                <Checkbox
+                                    checked={!gender}
+                                    onChange={handleChangeGender}
+                                    name={t(strings.female)}
+                                    color="primary"
+                                    className={classes.checkbox}
+                                    inputProps={{ readOnly: !props.editable }}
+
+                                />
+                                }
+                                label={t(strings.female)}
+                            />
+                        </div>
+                    
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
                         <div className={classes.item}>
@@ -374,72 +556,63 @@ const UpdatePatient = (props) => {
 
                                         /> 
                         </div>
-                        
-                        
-                        <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
+                        <div className={classes.item}>
+                            <TextField className={classes.inputControlBig} 
+                                         
+                                        placeholder={t(strings.additionalInfo)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeOtherInfo}
+                                        value={otherInfo}
+                                        multiline
+                                        /> 
+                        </div>
+                        <div className={classes.item}>
+                            <FormControl variant="filled">
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        type={'text'}
+                                        // onChange={handleChangeReferredBy}
+                                        value={displayBy}
+                                        placeholder={t(strings.referredBy)}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredBy}/>
 
-                                />
-                                }
-                                label={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                  
+                                   
+                            </FormControl>   
+                        
+                        </div>
+                        <div >
+                            <FormControl variant="filled">
+                                    <OutlinedInput
+                                        className={classes.inputControl}
+                                        type={'text'}
+                                        // onChange={handleChangeReferredBy}
+                                        value={displayTo}
+                                        placeholder={t(strings.referredTo)}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredTo}/>
 
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                    
+                            </FormControl>   
+                        
+                       
                         </div>
                     
-                        <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={active}
-                                    onChange={handleChangeActive}
-                                    name={t(strings.active)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
-
-                                />
-                                }
-                                label={t(strings.active)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!active}
-                                    onChange={handleChangeActive}
-                                    name={t(strings.inactive)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
-
-                                />
-                                }
-                                label={t(strings.inactive)}
-                            />
-                        </div>
-                        
-                        
-                        
                     </Grid>
                 </Grid>
                     {props.editable ?
@@ -451,7 +624,25 @@ const UpdatePatient = (props) => {
                     :
                     <div></div>                   
                     }
+                {referralType!==null ? 
+                <DialogReferral 
+                    isOpen={openDialog}
+                    close={handleChangeCloseDialog}
+                    open={handleChangeOpenDialog}
+                    type={referralType}
+                    patientID={props.id}
+                    referredBy={referredBy}
+                    referredTo={referredTo}
+                    handleChangeIsInsert={handleChangeIsInsert}
+                    handleChangeIsUpdate={handleChangeIsUpdate}
+                    editable={props.editable}
+                    
+                />
+                :
+                <div></div>
+                }
 
+                
         </div>  
     </div>
     )

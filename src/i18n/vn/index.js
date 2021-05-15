@@ -243,6 +243,10 @@ export default {
         "Drug":"Thuốc",
         //referral
         "Additional information":"Thông tin thêm",
+        "New referral":"Giới thiệu mới",
+        "Existed referral":"Giới thiệu đã tồn tại",
+        "Referred by":"Giới thiệu bởi",
+        "Referred to":"Giới thiệu tới",
         //template
         "Template":"Mẫu",
         "Recent":"Gần đây",

@@ -100,6 +100,11 @@ const patientRecall={
     recall:'/recall',
     patient:'/patient',
 }
+//referral
+const referral={
+    referral:'/referral',
+
+}
 export {
     authorization,
 }
@@ -122,5 +127,6 @@ export default {
     noteMacro,
     image,
     prescription,
-    patientRecall
+    patientRecall,
+    referral
 };

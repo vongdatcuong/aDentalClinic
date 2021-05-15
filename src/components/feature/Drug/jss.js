@@ -15,7 +15,13 @@ const drugStyle = (theme) => ({
     serviceControl:{
         display:'flex',
         flexDirection:'row',
-
+        justifyContent:'flex-end',
+        '& .MuiFormControl-root':{
+            marginRight:'1vw',
+        },
+        '& .MuiIconButton-root':{
+            padding:'8px',
+        }
     },
     iconButton:{
         cursor:'pointer',
@@ -43,8 +49,6 @@ const drugStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
-        marginLeft:'20px',
-        marginRight:'10px',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },

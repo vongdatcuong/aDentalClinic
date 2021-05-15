@@ -3,7 +3,7 @@ import { makeStyles  } from "@material-ui/core/styles";
 //translation
 import { useTranslation } from 'react-i18next';
 //api
-
+import AuthService from "../../../api/authentication/auth.service";
 import ReferralSourceService from "../../../api/referralSource/referralSource.service";
 
 // @material-ui/core Component
@@ -46,7 +46,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TableCustom from "../../common/TableCustom";
 import InsertReferralSource from "../InsertReferralSource";
 import UpdateReferralSource from "../UpdateReferralSource";
-
+import LoadingPage from '../../../layouts/LoadingPage';
 const useStyles = makeStyles(styles);
 const createData=(id,name,address,phone,fax,email,additionalInfo)=>{
     return {id,name,address,phone,fax,email,additionalInfo};
@@ -72,6 +72,8 @@ const Referral = () => {
     const [isDelete,setIsDelete]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [user,setUser]=useState(null);
+    const [isLoading,setIsLoading]=useState(true);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
@@ -178,12 +180,17 @@ const Referral = () => {
         
 
     };
+    const getUser=async()=>{
+        const result=await AuthService.getCurrentUser();
+        setUser(result);
+    }
     useEffect(()=>{
         if(rows.length===0)
         {
             
             getReferralSource();
-            
+            getUser();
+            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -251,26 +258,29 @@ const Referral = () => {
                                 }
                             />
                         </FormControl>
-                        <Select
+                        {user!==null && user.user_type==="ADMIN" ? 
+                            <div>
+                                <Select 
+                                    value={editable}
+                                    onChange={handleChangeEditable}
+                                    disableUnderline 
+                                    className={classes.status}
+                                >
                         
-                            value={editable}
-                            onChange={handleChangeEditable}
-                            disableUnderline 
-                            className={classes.status}
-                        >
-                        
-                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                    <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                    <MenuItem value={true}>{t(strings.edit)}</MenuItem>
 
-                        </Select>
-                        <IconButton onClick={handleChangeInsertReferralSource}>
-                            <AddBox />            
-
-                        </IconButton>
-                        <IconButton onClick={handleChangeIsDelete}>
-                            <DeleteIcon />            
-
-                        </IconButton>
+                                </Select>
+                                <IconButton onClick={handleChangeInsertReferralSource}>
+                                    <AddBox />            
+                                </IconButton>
+                                <IconButton onClick={handleChangeIsDelete}>
+                                    <DeleteIcon />            
+                                </IconButton>
+                            </div>
+                            :
+                            <div></div>
+                            }
                     </Grid>
 
                     }
@@ -278,7 +288,8 @@ const Referral = () => {
                     
                 </Grid>
                 <Divider className={classes.titleDivider}/>
-                <Container className={classes.containerTable}>
+                {isLoading === false ?
+                    <Container className={classes.containerTable}>
                     {insertReferralSource===true && isEdited=== false  ?
                         <InsertReferralSource
                                 handleChangeIsInsert={handleChangeIsInsert}
@@ -309,6 +320,9 @@ const Referral = () => {
                    
                    
                 </Container>
+                :
+                <LoadingPage/>
+                }
                 
                 
                 
