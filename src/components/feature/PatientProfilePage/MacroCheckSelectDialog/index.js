@@ -133,7 +133,7 @@ export default function MacroCheckSelectDialog({
         <Button
           autoFocus
           onClick={handleCancel}
-          color="primary"
+          color="secondary"
           variant="outlined"
         >
           {t(strings.cancel)}

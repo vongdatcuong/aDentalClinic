@@ -337,10 +337,10 @@ const PatientNotePage = ({ patientID }) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseInsertDialog} color="secondary">
+            <Button onClick={handleCloseInsertDialog} color="secondary" variant="outlined">
               {t(strings.cancel)}
             </Button>
-            <Button onClick={handleSaveInsertDialog} color="primary">
+            <Button onClick={handleSaveInsertDialog} color="primary" variant="contained">
               {t(strings.save)}
             </Button>
           </DialogActions>
@@ -404,10 +404,10 @@ const PatientNotePage = ({ patientID }) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseUpdateDialog} color="secondary">
+            <Button onClick={handleCloseUpdateDialog} color="secondary" variant="outlined">
               {t(strings.cancel)}
             </Button>
-            <Button onClick={handleSaveUpdateDialog} color="primary">
+            <Button onClick={handleSaveUpdateDialog} color="primary" variant="contained">
               {t(strings.save)}
             </Button>
           </DialogActions>
@@ -424,13 +424,14 @@ const PatientNotePage = ({ patientID }) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDeleteDialog} color="secondary">
+            <Button onClick={handleCloseDeleteDialog} color="secondary" variant="outlined">
               {t(strings.no)}
             </Button>
             <Button
               onClick={() => approveDeleteNote()}
               color="primary"
               autoFocus
+              variant="contained"
             >
               {t(strings.yes)}
             </Button>

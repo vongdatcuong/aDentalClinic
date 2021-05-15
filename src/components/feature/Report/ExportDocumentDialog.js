@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 const ExportDocumentDialog = ({
-  open,
+  open, fromDate, toDate,
   onClose, onExport
 }) => {
   const classes = useStyles();
@@ -116,7 +116,7 @@ const ExportDocumentDialog = ({
   // use effect
   useEffect(async () => {
     
-  }, [])
+  }, [fromDate, toDate])
 
   const handleOnClose = () => {
     onClose();
@@ -167,9 +167,9 @@ const ExportDocumentDialog = ({
             setPatientErrMsg("");
         }
         if (isValid){
-            onExport(exportType, patient);
+            onExport(exportType, patient, fromDate, toDate);
         }
-    }, [patient, exportType])
+    }, [patient, exportType, fromDate, toDate])
 
   return (
     <Paper className={classes.paper}>
@@ -182,7 +182,7 @@ const ExportDocumentDialog = ({
           paper: classes.paper,
         }}
       >
-        <DialogTitle id="export-dialog-title" className={classes.dialogTitle}>{t(strings.select) + " " + t(strings.recall)}</DialogTitle>
+        <DialogTitle id="export-dialog-title" className={classes.dialogTitle}>{t(strings.select) + " " + t(strings.document)}</DialogTitle>
         <DialogContent className={classes.dialogContent}>
             <DialogContentText>
                 <FormControl component="fieldset" className={classes.radioBtnFormControl}>

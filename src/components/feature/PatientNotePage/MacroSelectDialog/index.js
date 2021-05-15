@@ -95,7 +95,7 @@ export default function MacroSelectDialog({ onClose, open, title, currentContent
         <Button
           autoFocus
           onClick={handleCancel}
-          color="primary"
+          color="secondary"
           variant="outlined"
         >
           {t(strings.cancel)}

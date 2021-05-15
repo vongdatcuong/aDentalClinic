@@ -414,16 +414,16 @@ const Report = () => {
       setOpenExportDialog(false);
     }, []);
 
-    const handleOnExport = useCallback((type, patient) => {
+    const handleOnExport = (type, patient, fromDate, toDate) => {
       if (type === lists.exportObj.type.appointment){
-        handleViewAppointDocument(patient.value || "");
-      } else if (type === lists.exportObj.type.patient && patient){
+        handleViewAppointDocument(patient.value || "", fromDate, toDate);
+      } else if (type === lists.exportObj.type.patient && patient, fromDate, toDate){
         handleViewPatientDocument(patient.value);
       }
-    }, []);
+    };
 
     // View appointment document
-    const handleViewAppointDocument = useCallback(async (patientID) => {
+    const handleViewAppointDocument = useCallback(async (patientID, fromDate, toDate) => {
       try {
         dispatchLoading({type: strings.setLoading, isLoading: true});
         let query = {
@@ -453,10 +453,10 @@ const Report = () => {
       } finally {
         dispatchLoading({type: strings.setLoading, isLoading: false});
       }
-    }, [fromDate, toDate]);
+    }, []);
 
     // View appointment document
-    const handleViewPatientDocument = useCallback(async (patientID) => {
+    const handleViewPatientDocument = useCallback(async (patientID, fromDate, toDate) => {
       try {
         dispatchLoading({type: strings.setLoading, isLoading: true});
         const result = await api.httpGet({
@@ -482,7 +482,7 @@ const Report = () => {
       } finally {
         dispatchLoading({type: strings.setLoading, isLoading: false});
       }
-    }, [fromDate, toDate]);
+    }, []);
 
     return (
       <Container className={classes.dummyContainer}>
@@ -549,7 +549,7 @@ const Report = () => {
                 <div className={classes.actionWrapper}>
                   <Tooltip title={t(strings.viewAppointDocument)} aria-label="view-appointment-document">
                     <IconButton color="primary" aria-label="appointment-pdf" onClick={handleOpenExportDialog}>
-                      <SystemUpdateAltIcon /> &nbsp;{t(strings.appointment)}
+                      <SystemUpdateAltIcon /> &nbsp;{t(strings.documents)}
                     </IconButton>
                   </Tooltip>
                 </div>
@@ -656,6 +656,8 @@ const Report = () => {
           {/* Dialogs */}
           <ExportDocumentDialog
               open={openExportDialog}
+              fromDate={applyFromDate}
+              toDate={applyToDate}
               onClose={handleCloseExportDialog}
               onExport={handleOnExport}
           />
