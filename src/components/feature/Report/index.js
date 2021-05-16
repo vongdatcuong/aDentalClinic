@@ -305,6 +305,10 @@ const Report = () => {
         });
         if (result.success){
           const dat = result.payload;
+          let totalAppointReq = 0;
+          dat.appointment_request?.forEach((req) => {
+            totalAppointReq+= req.count || 0;
+          });
           // Card Reports
           const newCardValues = [
             // Payment
@@ -318,7 +322,7 @@ const Report = () => {
             // Patient
             Number(dat.patient?.patient_total) || 0,
             // Bookings
-            Number(dat.appointment_request?.reduce((sum, req) => sum.count + req.count)) || 0
+            totalAppointReq
           ];
           setCardValues(newCardValues);
 
