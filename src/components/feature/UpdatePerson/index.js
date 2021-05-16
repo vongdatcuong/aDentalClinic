@@ -104,7 +104,6 @@ const UpdateChair = (props) => {
     }
 
     const handleUploadClick = event => {
-        // console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -116,7 +115,6 @@ const UpdateChair = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        // console.log("Url:",reader); 
 
     };
 
@@ -124,21 +122,7 @@ const UpdateChair = (props) => {
         if(firstNameError===null && lastNameError===null && emailError===null && props.editable===true)
         {
             const data={
-                // display_id: userData.display_id,
-                // provider_color:userData.provider_color,
-                // staff_type: userData.staff_type,
-                // drug_lic: userData.drug_lic,
-                // npi: userData.npi,
-                // specialty: userData.specialty, 
-                // access_group: userData.access_group, 
-            
-                // notify_staff_msg: userData.notify_staff_msg, 
-                // notify_patient_msg: userData.notify_patient_msg, 
-                // notify_meeting: userData.notify_meeting,
-                // user_type: userData.user_type,
-                // theme:userData.theme,
-                // language:userData.language,
-    
+
             
                 //change
                 facebook: facebook,
@@ -146,15 +130,13 @@ const UpdateChair = (props) => {
                 fax: fax,
                 mobile_phone: mobile,
                 home_phone: homePhone,
-                //staff_photo: staffPhoto,
                 address: address,
                 is_active:active, 
     
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
-                // username: username,
-                // password: password,
+             
     
             };
             const update=await ProviderService.update(props.id,data);
@@ -166,7 +148,6 @@ const UpdateChair = (props) => {
             else
             {
                 toast.error(t(strings.updateFail));
-                // console.log("Check update:",update);
     
             }
         }
@@ -176,7 +157,6 @@ const UpdateChair = (props) => {
     useEffect(()=>{
         const searchProvider=async()=>{
             const result=await ProviderService.search(props.id);
-            // console.log("Search provider in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setUserData(result.data.payload);

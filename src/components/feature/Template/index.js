@@ -22,11 +22,7 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
+
 
 import styles from "./jss";
 // import darkTdarkTheme from "../../../themes/darkTheme";
@@ -53,7 +49,6 @@ import InsertTemplate from "../InsertTemplate";
 import UpdateTemplate from "../UpdateTemplate";
 import LoadingPage from '../../../layouts/LoadingPage';
 
-import { getSuggestedQuery } from '@testing-library/dom';
 // import { indigo } from '@material-ui/core/colors';
 const createData=(id,content,noteType)=>{
     return {id,content,noteType};
@@ -68,8 +63,7 @@ const Template = () => {
     const classes = useStyles();
     
     //state
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -106,7 +100,6 @@ const Template = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -143,7 +136,6 @@ const Template = () => {
         setRowsWithType(null);
     }
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleChangeChooseType=(value)=>{
@@ -153,12 +145,10 @@ const Template = () => {
     const changeData=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            //console.log("Check item:",a);
             let newData=createData(a._id,a.content,a.note_type);
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
         if(chooseType===1)
         {
@@ -219,10 +209,8 @@ const Template = () => {
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        //console.log("Delete now:",selectedRowData);
         const deleteTemplate=async()=>{
             const res=await TemplateService.delete(selectedRowData.id);
-            //console.log("Delete template:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -278,27 +266,23 @@ const Template = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rowsWithType[selectedRow])
-                console.log("Check selected row data:",rowsWithType[selectedRow]);
             }
 
 
         }
         if(isInsert)
         {
-            //console.log("Co vao day insert");
             getTemplate();
             
             setIsInsert(false);
         }
         if(isUpdate)
         {
-            //console.log("Co vao day update:");
             getTemplate();
             
             setIsUpdate(false);
@@ -471,8 +455,7 @@ const Template = () => {
                                 handleCloseDialog={handleCloseDialog}
                             />
                            
-                            // :
-                            // <div>Hello world</div>
+                         
                         }
                         
                     

@@ -370,6 +370,13 @@ export default {
         "Interval":"Interval",
         "Recall date":"Recall date",
         "Patient recall":"Patient recall",
+        //patient
+        "Marital status":"Marital status",
+        "NOT_SPECIFY":"NOT_SPECIFY",
+        "MARRIED":"MARRIED",
+        "DIVORCED":"DIVORCED",
+        "SINGLE":"SINGLE",
+        "WIDOWED":"WIDOWED",
         //table
         "Rows per page":"Rows per page",
         // Appointment

@@ -27,7 +27,6 @@ import {
     InputAdornment,
     Button,
     Divider,
-    TextField,
     Select,
     MenuItem,
     FormHelperText,
@@ -42,8 +41,6 @@ import styles from "./jss";
 //import configs
 import strings from "../../../configs/strings";
 //import component
-import TableCustom from "../../common/TableCustom";
-import LoadingPage from '../../../layouts/LoadingPage';
 
 import moment from 'moment';
 const useStyles = makeStyles(styles);
@@ -51,7 +48,6 @@ const useStyles = makeStyles(styles);
 const createData=(id,name,address,phone,fax,startTime,endTime)=>{
     return {id,name,address,phone,fax,startTime,endTime};
 };
-const dataColumnsName=["index","name","address","phone","fax","startTime","endTime"];
 
 const Practice = () => {
     const {t, i18n } = useTranslation();
@@ -59,13 +55,9 @@ const Practice = () => {
     const classes = useStyles();
     
     const [rows,setRows]=useState(null);
-    const [page, setPage] = useState(0);
-    const [searchText,setSearchText]=useState(null);
+  
     const [editable,setEditable]=useState(false);
-    const [isEdited,setIsEdited]=useState(false);
     
-    const [isInsert,setIsInsert]=useState(false);
-    const [isUpdate,setIsUpdate]=useState(false);
     const [name,setName]=useState(null);
     const [address,setAddress]=useState(null);
     const [phone,setPhone]=useState(null);
@@ -94,10 +86,8 @@ const Practice = () => {
         {
             setStartTime(date);
             
-            //console.log("Start time:",moment(date).format("HH:mm"));
             if(moment(date).format("HH:mm")<moment(endTime).format("HH:mm"))
             {
-                //console.log("Nho hon roi do");
             }
         }
     }
@@ -105,14 +95,11 @@ const Practice = () => {
         if(editable)
         {
             setEndTime(date);
-            //console.log("End time:",date);
             if(date>startTime)
             {
-                //console.log("Lon hon roi do");
             }
             else
             {
-                //console.log("nho hon hoac bang")
             }
         }
     }
@@ -123,7 +110,6 @@ const Practice = () => {
     
     const getPractice=async()=>{
         const res=await PracticeService.getPractice();
-        //console.log("Check res after get practice:",res.data);
         if(res.success)
         {
             let a=res.data;
@@ -249,131 +235,7 @@ const Practice = () => {
                         <Typography className={classes.title} variant="h5">
                             {t(strings.general)}
                         </Typography>
-                        {/* <div className={classes.item}>
-                            {name ?
-                            <OutlinedInput className={classes.inputControl} 
-                                placeholder={t(strings.name)}  
-                                variant="outlined" 
-                                onChange={handleChangeName}
-                                value={name}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <AccountBox className={classes.iconButton} />
-
-                                    </InputAdornment>
-                                    }
-                            /> 
-                            :
-                            <OutlinedInput className={classes.inputControl} 
-                                        label={t(strings.name)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeName}
-                                        value={name}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <AccountBox className={classes.iconButton} />
-        
-                                            </InputAdornment>
-                                            }
-                                        /> 
-                            }
-                            
-                        </div>
-                        {address ?
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                        placeholder={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <LocationCity className={classes.iconButton} />
-        
-                                            </InputAdornment>
-                                            }
-                                        /> 
-                        </div>
-                        :
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                        label={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <LocationCity className={classes.iconButton} />
-        
-                                            </InputAdornment>
-                                            }
-                                        /> 
-                        </div>
-                        }
-                        
-                        {phone ? 
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                        placeholder={t(strings.phone)}  
-                                        variant="outlined" 
-                                        onChange={handleChangePhone}
-                                        value={phone}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <ContactPhone className={classes.iconButton} />
-    
-                                            </InputAdornment>
-                                            }
-                                        /> 
-                        </div>
-                        :
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                        label={t(strings.phone)}  
-                                        variant="outlined" 
-                                        onChange={handleChangePhone}
-                                        value={phone}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <ContactPhone className={classes.iconButton} />
-    
-                                            </InputAdornment>
-                                            }
-                                        /> 
-                        </div>
-                        }
-                        {fax ? 
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                    placeholder={t(strings.fax)}  
-                                    variant="outlined" 
-                                    onChange={handleChangeFax}
-                                    value={fax}
-                                    startAdornment={
-                                        <InputAdornment position="start">
-                                            <Devices className={classes.iconButton} />
-    
-                                        </InputAdornment>
-                                        }
-                                    /> 
-                        </div>
-                        :
-                        <div className={classes.item}>
-                            <OutlinedInput className={classes.inputControl} 
-                                    label={t(strings.fax)}  
-                                    variant="outlined" 
-                                    onChange={handleChangeFax}
-                                    value={fax}
-                                    startAdornment={
-                                        <InputAdornment position="start">
-                                            <Devices className={classes.iconButton} />
-    
-                                        </InputAdornment>
-                                        }
-                                    /> 
-                        </div>
-                        } */}
-                       
+                
                        
                         <div>
                             <FormControl variant="filled">
@@ -511,27 +373,7 @@ const Practice = () => {
                             
                         </div>
                         
-                        {/* <div>
-                            <FormControl variant="filled">
-                                <OutlinedInput
-                                    className={classes.inputControl}
-                                    id="outlined-adornment-password"
-                                    type={'text'}
-                                    value={description}
-                                    placeholder={t(strings.description)}
-                                    onChange={handleChangeDescription}
-                                    startAdornment={
-                                    <InputAdornment position="start">
-                                        <Assignment className={classes.iconButton} />
-
-                                    </InputAdornment>
-                                    }
-                                />
-                                
-                            </FormControl>
-                            
-                        </div>
-                         */}
+                     
                         {editable===true ? 
                         <div>
                             <Button variant="contained" color="primary" className={classes.saveButton} onClick={onClickUpdate}>

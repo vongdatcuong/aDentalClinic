@@ -54,8 +54,7 @@ const DialogReferral = (props) => {
     const {t, i18n } = useTranslation();
 
     const classes = useStyles();
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -71,7 +70,6 @@ const DialogReferral = (props) => {
     const [isLoading,setIsLoading]=useState(true);
     const [referredBy,setReferredBy]=useState([]);
     const [referredTo,setReferredTo]=useState([]);
-    // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
     const handleChangeIsInsert=()=>{
@@ -85,7 +83,6 @@ const DialogReferral = (props) => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -94,13 +91,7 @@ const DialogReferral = (props) => {
         setEditable(false);
     }
 
-    // const handleChangePage = (event, newPage) => {
-    //     setPage(newPage);
-    // };
-    // const handleChangeRowsPerPage = (event) => {
-    //     setRowsPerPage(parseInt(event.target.value, 10));
-    //     setPage(0);
-    // };
+ 
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
@@ -121,7 +112,6 @@ const DialogReferral = (props) => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -150,7 +140,6 @@ const DialogReferral = (props) => {
             temp=temp.concat(newData);
 
         })
-        console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const deleteRow=(e)=>{
@@ -163,7 +152,6 @@ const DialogReferral = (props) => {
                 toast.success(t(strings.deleteSuccess));
                 let temp=rows;
                 temp.splice(selectedRow,1);
-                console.log("Check temp before set for rows:",temp);
                 setRows(temp);
                 setSelectedRow(-1);
                 setSelectedRowData(null);
@@ -216,10 +204,12 @@ const DialogReferral = (props) => {
     }
     const searchPatientReferral=async()=>{
         const res=await PatientReferralService.searchByPatient(props.patientID);
-        console.log("Check res in dialog referra:",res);
-        console.log("Check type referral:",props.type);
-        getReferredBy(res.data);
-        getReferredTo(res.data);
+        if(res.data)
+        {
+            getReferredBy(res.data);
+            getReferredTo(res.data);
+        }
+        
         
 
     }
@@ -242,8 +232,7 @@ const DialogReferral = (props) => {
             {
 
                 setSelectedRowData(rows[selectedRow])
-                console.log("Selected row:",selectedRow);
-                console.log("Check selected row data:",rows[selectedRow]);
+                
             }
 
         }
@@ -337,8 +326,7 @@ const DialogReferral = (props) => {
                                         handleChangeIsInsert={handleChangeIsInsert}
                                         patientID={props.patientID}
                                         type={props.type}
-                                        // handleChangeReferredBy={props.handleChangeOpenReferredBy}
-                                        // handleChangeReferredTo={props.handleChangeOpenReferredTo}
+                                        
                                 />
                                 
                                 : isEdited===true &&selectedRowData!==null && isDelete===false?
@@ -348,8 +336,7 @@ const DialogReferral = (props) => {
                                                 handleChangeIsUpdate={handleChangeIsUpdate}
                                                 patientID={props.patientID}
                                                 type={props.type}
-                                                // handleChangeReferredBy={props.handleChangeOpenReferredBy}
-                                                // handleChangeReferredTo={props.handleChangeOpenReferredTo}
+                                               
                                 />
                                 :
                                     <TableCustom titles={titles}

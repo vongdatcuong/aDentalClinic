@@ -12,14 +12,11 @@ import {
     
     Button,
     TextField,
-    Select,
-    MenuItem,
+   
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-// import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 import styles from "./jss";
-// import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
 
 //import configs
@@ -43,35 +40,18 @@ const UpdateTemplate = (props) => {
     //state
    
     const [content,setContent]=useState(null);
-    // const [noteType,setNoteType]=useState(null);
-    // const [listTypeTemplate,setListTypeTemplate]=useState([
-    //     "TREATMENT",
-    //     "MEDICAL ALERT",
-    //     "PROGRESS",
-    // ]);
-
+   
     const handleChangeContent=(e)=>{
         setContent(e.target.value);
     }
-    // const handleChangeNoteType=(e)=>{
-    //     setNoteType(e.target.value);
-    // }
-
-    // const renderListTypeTemplate=()=>{
-    //     return listTypeTemplate.map((item,index)=>{
-    //         return  <MenuItem value={item}>{item}</MenuItem>
-
-    //     })
-    // }
+  
     const onClickUpdate=async()=>{
         if(props.editable===true && content!==null && content !=='' )
         {
             const data={
                 content:content,
-                // note_type:noteType
               
             };
-            //console.log("Data check onclick:",data);
             const result=await TemplateService.update(props.id,data);
             if(result.success)
             {
@@ -93,11 +73,9 @@ const UpdateTemplate = (props) => {
     useEffect(()=>{
         const searchTemplate=async()=>{
             const result=await TemplateService.search(props.id);
-            //console.log("Search drug in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setContent(result.data.payload.content);
-                // setNoteType(result.data.payload.note_type);
             }
         }
         if(props.id && content===null)
@@ -128,33 +106,8 @@ const UpdateTemplate = (props) => {
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            {/* <TextField className={classes.inputControl} 
-                                        
-                                        placeholder={t(strings.noteType)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeNoteType}
-                                        value={noteType}
-                                        
-                                        />  */}
-                            {/* {listTypeTemplate.length!==0 ?
-
-                            <Select
-                                value={noteType}
-                                onChange={handleChangeNoteType}
-                                disableUnderline 
-                                displayEmpty
-                                className={classes.inputCombobox}
-                                inputProps={{ readOnly: !props.editable }}
-
-                                //defaultValue={listCategory[0]._id}
-                                //placeholder={t(strings.category)}
-                                >
-                                <MenuItem value={noteType}>{t(strings.noteType)}</MenuItem>
-                                {renderListTypeTemplate()}
-                            </Select>
-                            :
-                            <div></div>
-                            } */}
+                         
+                        
                         </div>
                        
                         

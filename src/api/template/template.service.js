@@ -9,7 +9,6 @@ class TemplateService{
             const result = await httpGet({
                 url: apiPath.noteMacro.noteMacro,
             });
-            //console.log("Get note Macro:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -26,7 +25,6 @@ class TemplateService{
             }           
         }
         catch(error){
-            //console.log("Failed to fetch note Macro:",error);
             return {
                 success: false,
                 data: null
@@ -70,7 +68,6 @@ class TemplateService{
                 url: apiPath.noteMacro.noteMacro,
                 body:data
             });
-            //console.log("insert note Macro:",result);
             if(result.success)
             {
                 return {
@@ -85,7 +82,6 @@ class TemplateService{
             }           
         }
         catch(error){
-            //console.log("Failed to fetch note Macro:",error);
             return {
                 success: false,
             };
@@ -99,14 +95,12 @@ class TemplateService{
             const result = await httpGet({
                 url: `${apiPath.noteMacro.noteMacro}/${id}`,
             });
-            //console.log("search note Macro:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch note Macro:",error);
             return {
                 success: false,
                 data:null,
@@ -115,14 +109,12 @@ class TemplateService{
     }
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.noteMacro.noteMacro}/${id}`,
                 body:data
             });
-            //console.log("update note Macro:",result);
             if(result.success)
             {
                 return {
@@ -141,7 +133,6 @@ class TemplateService{
                      
         }
         catch(error){
-            //console.log("Failed to update note Macro:",error);
             return {
                 success: false,
                 data:null
@@ -155,7 +146,6 @@ class TemplateService{
             const result = await httpDelete({
                 url: `${apiPath.noteMacro.noteMacro}/${id}`,
             });
-            //console.log("delete note Macro:",result);
             if(result.success)
             {
                 return {
@@ -174,7 +164,6 @@ class TemplateService{
                      
         }
         catch(error){
-            //console.log("Failed to delete note Macro:",error);
             return {
                 success: false,
                 data:null

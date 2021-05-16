@@ -17,16 +17,9 @@ import {
     Checkbox,
     Button,
     TextField,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    Radio,
-    RadioGroup,
-    Select,
+    
     InputAdornment,
-    Input,
-    FilledInput,
+  
     FormControl,
     OutlinedInput,
  } from '@material-ui/core';
@@ -78,7 +71,7 @@ const UpdatePatient = (props) => {
     const [address,setAddress]=useState(null);
     const [gender,setGender]=useState(true);
     const [active,setActive]=useState(true);
-    const [staffPhoto,setStaffPhoto]=useState(null);
+    // const [staffPhoto,setStaffPhoto]=useState(null);
     const [otherInfo,setOtherInfo]=useState(null);
     const [referredBy,setReferredBy]=useState(null);
     const [referredTo,setReferredTo]=useState(null);
@@ -160,14 +153,8 @@ const UpdatePatient = (props) => {
     const handleChangeIsUpdate=()=>{
         setIsUpdate(!isUpdate);
     }
-    const handleChangeDisplayBy=(value)=>{
-        setDisplayBy(value);
-    }
-    const handleChangeDisplayTo=(value)=>{
-        setDisplayTo(value);
-    }
+    
     const handleUploadClick = event => {
-        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -179,7 +166,6 @@ const UpdatePatient = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        //console.log("Url:",reader); 
 
     };
 
@@ -203,15 +189,13 @@ const UpdatePatient = (props) => {
                 fax: fax,
                 mobile_phone: mobile,
                 home_phone: homePhone,
-                //staff_photo: staffPhoto,
                 address: address,
                 is_active:active, 
                 other_info:otherInfo,
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
-                // username: username,
-                // password: password,
+                
 
             };
             const update=await PatientService.update(props.id,data);
@@ -219,12 +203,10 @@ const UpdatePatient = (props) => {
             {
                 toast.success(t(strings.updateSuccess));
                 props.handleChangeIsUpdate();
-                //console.log("Check update:",update);
             }
             else
             {
                 toast.error(t(strings.updateFail));
-                //console.log("Check update:",update);
 
             }
         }
@@ -233,7 +215,6 @@ const UpdatePatient = (props) => {
     }
     const searchPatient=async()=>{
         const result=await PatientService.search(props.id);
-        // console.log("Search patient in useEffect:",result.data.payload);
         if(result.success)
         {
             setUserData(result.data.payload);
@@ -388,7 +369,6 @@ const UpdatePatient = (props) => {
                     <input
                         accept="image/*"
                         className={classes.inputAvatarDisplay}
-                        // id="contained-button-file"
                         multiple
                         type="file"
                         onChange={handleUploadClick}
@@ -571,7 +551,6 @@ const UpdatePatient = (props) => {
                                     <OutlinedInput
                                         className={classes.inputControl}
                                         type={'text'}
-                                        // onChange={handleChangeReferredBy}
                                         value={displayBy}
                                         placeholder={t(strings.referredBy)}
                                         readOnly={true}
@@ -594,7 +573,6 @@ const UpdatePatient = (props) => {
                                     <OutlinedInput
                                         className={classes.inputControl}
                                         type={'text'}
-                                        // onChange={handleChangeReferredBy}
                                         value={displayTo}
                                         placeholder={t(strings.referredTo)}
                                         readOnly={true}

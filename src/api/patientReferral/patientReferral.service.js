@@ -9,7 +9,6 @@ class PatientReferralService{
             const result = await httpGet({
                 url: apiPath.referral.referral,
             });
-            //console.log("Get procedure:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -26,7 +25,6 @@ class PatientReferralService{
             }            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data: null
@@ -42,7 +40,6 @@ class PatientReferralService{
                 url: apiPath.referral.referral,
                 body:data
             });
-            //console.log("insert procedure:",result);
             if(result.success)
             {
                 return {
@@ -58,7 +55,6 @@ class PatientReferralService{
             }      
         }
         catch(error){
-            //console.log("Failed to insert procedure:",error);
             return {
                 success: false,
             };
@@ -78,14 +74,12 @@ class PatientReferralService{
                     get_staff:true,
                 }
             });
-            //console.log("search procedure:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data:null,
@@ -105,14 +99,12 @@ class PatientReferralService{
                     get_staff:true,
                 }
             });
-            //console.log("search procedure:",result);
             return {
                 success: true,
                 data:result.payload,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data:null,
@@ -122,14 +114,12 @@ class PatientReferralService{
     
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.referral.referral}/${id}`,
                 body:data
             });
-            //console.log("update procedure:",result);
             if(result.success)
             {
                 return {
@@ -148,7 +138,6 @@ class PatientReferralService{
                      
         }
         catch(error){
-            //console.log("Failed to update procedure:",error);
             return {
                 success: false,
                 data:null
@@ -162,7 +151,6 @@ class PatientReferralService{
             const result = await httpDelete({
                 url: `${apiPath.referral.referral}/${id}`,
             });
-            //console.log("delete referral source:",result);
             if(result.success)
             {
                 return {
@@ -180,7 +168,6 @@ class PatientReferralService{
                      
         }
         catch(error){
-            //console.log("Failed to delete referralSource:",error);
             return {
                 success: false,
                 message:error,

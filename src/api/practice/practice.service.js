@@ -9,7 +9,6 @@ class PracticeService{
             const result = await httpGet({
                 url: apiPath.practice.practice,
             });
-            //console.log("Get practice:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -27,7 +26,6 @@ class PracticeService{
                      
         }
         catch(error){
-            //console.log("Failed to fetch practice:",error);
             return {
                 success: false,
                 data: null
@@ -43,7 +41,6 @@ class PracticeService{
                 url: apiPath.practice.practice,
                 body:data
             });
-            //console.log("insert procedure:",result);
             if(result.success)
             {
                 return {
@@ -58,7 +55,6 @@ class PracticeService{
             }             
         }
         catch(error){
-            //console.log("Failed to insert procedure:",error);
             return {
                 success: false,
             };
@@ -72,7 +68,6 @@ class PracticeService{
             const result = await httpGet({
                 url: `${apiPath.practice.practice}/${id}`,
             });
-            //console.log("search practice:",result);
             if(result.success)
             {
                 return {
@@ -89,7 +84,6 @@ class PracticeService{
             }              
         }
         catch(error){
-            //console.log("Failed to fetch practice:",error);
             return {
                 success: false,
                 data:null,
@@ -101,14 +95,12 @@ class PracticeService{
     
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.practice.practice}/${id}`,
                 body:data
             });
-            //console.log("update practice:",result);
             if(result.success)
             {
                 return {
@@ -127,7 +119,6 @@ class PracticeService{
                      
         }
         catch(error){
-            //console.log("Failed to update practice:",error);
             return {
                 success: false,
                 data:null
@@ -141,14 +132,12 @@ class PracticeService{
             const result = await httpDelete({
                 url: `${apiPath.practice.practice}/${id}`,
             });
-            //console.log("delete practice:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch practice:",error);
             return {
                 success: false,
                 data:null,

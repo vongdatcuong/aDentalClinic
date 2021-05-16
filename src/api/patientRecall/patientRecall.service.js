@@ -15,7 +15,6 @@ class PatientRecallService{
                     get_procedure:true
                 }
             });
-            //console.log("Get patient recall:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -33,7 +32,6 @@ class PatientRecallService{
                       
         }
         catch(error){
-            //console.log("Failed to fetch recall:",error);
             return {
                 success: false,
                 data: null
@@ -49,7 +47,6 @@ class PatientRecallService{
                 url: apiPath.patientRecall.recall,
                 body:data
             });
-            //console.log("insert recall:",result);
             if(result.success)
             {
                 return {
@@ -64,7 +61,6 @@ class PatientRecallService{
             }             
         }
         catch(error){
-            //console.log("Failed to insert recall:",error);
             return {
                 success: false,
             };
@@ -79,7 +75,6 @@ class PatientRecallService{
                 url: `${apiPath.patientRecall.recall}/${id}`,
                 
             });
-            //console.log("search recall:",result);
             if(result.success)
             {
                 return {
@@ -96,7 +91,6 @@ class PatientRecallService{
             }             
         }
         catch(error){
-            //console.log("Failed to fetch recall:",error);
             return {
                 success: false,
                 data:null,
@@ -105,14 +99,12 @@ class PatientRecallService{
     }
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.patientRecall.recall}/${id}`,
                 body:data
             });
-            //console.log("update recall:",result);
             if(result.success)
             {
                 return {
@@ -131,7 +123,6 @@ class PatientRecallService{
                      
         }
         catch(error){
-            //console.log("Failed to update recall:",error);
             return {
                 success: false,
                 data:null
@@ -151,7 +142,6 @@ class PatientRecallService{
                     get_procedure:true
                 }
             });
-            //console.log("search recall of patient:",result);
             if(result.success)
             {
                 return {
@@ -168,7 +158,6 @@ class PatientRecallService{
             }             
         }
         catch(error){
-            //console.log("Failed to fetch recall:",error);
             return {
                 success: false,
                 data:null,

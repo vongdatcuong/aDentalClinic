@@ -14,8 +14,6 @@ import {
     Tab,
 
  } from '@material-ui/core';
-// import Grid from '@material-ui/core/Grid';
-// import IconButton from '@material-ui/core/IconButton';
 
 
 import styles from "./jss";
@@ -32,13 +30,7 @@ import DentalSchedule from "../../../assets/images/calendar.png";
 import AuthenticationImage from "../../../assets/images/authentication.png";
 import TemplatesImage from "../../../assets/images/templates.png";
 import DrugImage from "../../../assets/images/drug.png";
-// import PortalImage from "../../../assets/images/portal.png";
-// import RecallImage from '../../../assets/images/recall.jpg';
-//import icons
-// import SearchIcon from '@material-ui/icons/Search';
-// import FilterList from '@material-ui/icons/FilterList';
-// import AddBox from '@material-ui/icons/AddBox';
-// import AccessAlarm from '@material-ui/icons/AccessAlarm';
+
 //import route
 import routePaths from '../../../routes/path';
 
@@ -47,7 +39,6 @@ import routePaths from '../../../routes/path';
 import Authentication from "../Authentication";
 import Chair from "../Chair";
 import Drug from "../Drug";
-// import Portal from "../Portal";
 import Procedure from "../Procedure";
 import Providers from "../Providers";
 import Referral from "../Referral";
@@ -57,8 +48,7 @@ import Practice from "../Practice";
 import Template from "../Template"; 
 import TabPanel from "../../../layouts/TabPanel";
 import Footer from "../../../layouts/Footer";
-// import InsertPerson from "../InsertPerson";
-// import PatientRecall from "../PatientRecallPage";
+
 const useStyles = makeStyles(styles);
 function a11yProps(index) {
   return {
@@ -107,8 +97,7 @@ const Management = () => {
         t(strings.authentication),
         t(strings.templates),
         t(strings.drug),
-        //t(strings.portal),
-        // t(strings.recall),
+        
       ];
     const srcs=[
         DentalProvider,
@@ -121,8 +110,7 @@ const Management = () => {
         AuthenticationImage,
         TemplatesImage,
         DrugImage,
-        // RecallImage,
-        //PortalImage,
+      
     ];
     const tablePanels=[
         <Providers />,
@@ -135,8 +123,7 @@ const Management = () => {
         <Authentication/>,
         <Template/>,
         <Drug />,
-        // <PatientRecall />
-        //<Portal/>,
+        
     ];
     return (
         <div className={classes.container}>

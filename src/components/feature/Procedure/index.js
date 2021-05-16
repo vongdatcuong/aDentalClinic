@@ -18,14 +18,8 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-// import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image
@@ -54,8 +48,7 @@ const Procedure = () => {
     //state
     const [insertProcedure,setInsertProcedure]=useState(false);
     const [rows,setRows]=useState([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -65,7 +58,6 @@ const Procedure = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
     const handleChangeIsInsert=()=>{
@@ -74,13 +66,7 @@ const Procedure = () => {
     const handleChangeIsUpdate=()=>{
         setIsUpdate(!isUpdate);
     }
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+   
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
@@ -96,7 +82,6 @@ const Procedure = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const handleGoBack=(e)=>{
@@ -110,33 +95,22 @@ const Procedure = () => {
         t(strings.abbreviation),
         t(strings.code),
         t(strings.description),
-        // t(strings.category),
         t(strings.toothSelect),
         t(strings.toothType),
     ];
     const changeData=(data)=>{
         let temp=[];
-        //let categoryName;
         data.map((a,index)=>{
-            // const searchCategory=async()=>{
-            //     const res=await ProcedureService.searchCategory(a.category);
-            //     categoryName=res.data.name;
-            //     //console.log("Check search procedure category:",categoryName);
-
-                
-            // }
-            // searchCategory();
+            
             let newData=createData(a._id,a.abbreviation,a.code,a.description,a.tooth_select,a.tooth_type);
             temp=temp.concat(newData);
             
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
        
     }
     const getProcedure=async()=>{
         const result=await ProcedureService.getProcedure();
-        //console.log("Get procedure in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -162,7 +136,6 @@ const Procedure = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

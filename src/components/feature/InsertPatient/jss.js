@@ -247,7 +247,9 @@ const insertPersonStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-        
+        '& .MuiInputLabel-animated':{
+            marginLeft:'30px',
+        }
     },
     itemMedium:{
         flexDirection:'row',
@@ -284,7 +286,19 @@ const insertPersonStyle = (theme) => ({
     },
     dialog:{
         
-    }
+    },
+    status:{
+        marginLeft:'30px',
+        marginRight:'10px',
+        marginTop:'20px',
+        minWidth:'16vw',
+        border:`1px solid ${theme.grayColor[0]}`,
+        borderRadius:'5px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+            paddingLeft:'10px',
+        },
+    },
 });
 
   

@@ -11,27 +11,18 @@ import { useTranslation } from 'react-i18next';
 import Container from '@material-ui/core/Container';
 import { Typography,
     Divider,
-    // TextField,
-    // InputLabel ,
+    
     InputAdornment,
     FormControl,
-    // FilledInput,
     OutlinedInput,
     Select,
     MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import AccessAlarm from '@material-ui/icons/AccessAlarm';
-// import PropTypes from 'prop-types';
+
 
 import styles from "./jss";
-// import darkTheme from "../../../themes/darkTheme";
-// import { toast } from 'react-toastify';
 import moment from 'moment';
 //import configs
 import strings from "../../../configs/strings";
@@ -110,7 +101,6 @@ const PatientRecallPage = ({patientID}) => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        ////console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
 
@@ -133,12 +123,10 @@ const PatientRecallPage = ({patientID}) => {
             let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.appointment? moment(a.appointment.appointment_date).format("DD/MM/YYYY") : null,a.note,a.procedure ? a.procedure.procedure_code : null);
             temp=temp.concat(newData);
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getPatientRecall=async()=>{
         const result=await PatientRecallService.getPatientRecallByID(patientID);
-        // console.log("Get recall in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -166,7 +154,6 @@ const PatientRecallPage = ({patientID}) => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

@@ -47,29 +47,13 @@ const InsertPatientRecall = (props) => {
     const classes = useStyles();
     
     //state
-    // const [treatment,setTreatment]=useState(t(strings.treatment));
-    // const [appointment,setAppointment]=useState(t(strings.appointment));
-    // const [procedure,setProcedure]=useState(t(strings.procedure));
+   
     const [recallDate,setRecallDate]=useState(new Date());
     const [note,setNote]=useState(null);
 
-    // const [listPatient,setListPatient]=useState([]);
-    // const [listProcedure,setListProcedure]=useState([]);
-    // const [listAppointment,setListAppointment]=useState([]);
-
+  
     //handle change
-    // const handleChangePatient=(e)=>{
-    //     setPatient(e.target.value);
-    // }
-    // const handleChangeTreatment=(e)=>{
-    //     setTreatment(e.target.value);
-    // }
-    // const handleChangeAppointment=(e)=>{
-    //     setAppointment(e.target.value);
-    // }
-    // const handleChangeProcedure=(e)=>{
-    //     setProcedure(e.target.value);
-    // }
+  
     const handleChangeRecallDate=(e,date)=>{
         setRecallDate(date);
     }
@@ -83,9 +67,7 @@ const InsertPatientRecall = (props) => {
         {
             const data={
                 patient:props.patientID,
-             //    treatment:null,
-             //    appointment:null,
-             //    procedure:null,
+            
                 recall_date:recallDate,
                 note:note,
                 is_active:true,
@@ -111,80 +93,17 @@ const InsertPatientRecall = (props) => {
         
 
     }
-    // const renderListPatient=()=>{
-    //     return listPatient.map((patient,index)=>{
-    //         return <MenuItem key={index} value={patient._id}>{patient.user.first_name} {patient.user.last_name}</MenuItem>
-    //     })
-    // }
-    // const renderListProcedure=()=>{
-    //     return listProcedure.map((procedure,index)=>{
-    //         return <MenuItem key={index} value={procedure._id}>{procedure.description}</MenuItem>
-    //     })
-    // }
-    // const renderListAppointment=()=>{
-    //     return listAppointment.map((appointment,index)=>{
-    //         return <MenuItem key={index} value={appointment._id}>{appointment.description}</MenuItem>
-    //     })
-    // }
-    // const getListPatient=async()=>{
-    //     const res=await PatientService.getPatient();
-    //     if(res.success)
-    //     {
-    //         setListPatient(res.data);
-    //     }
-    // }
-    // const getListProcedure=async()=>{
-    //     const res=await ProcedureService.getProcedure();
-    //     if(res.success)
-    //     {
-    //         setListProcedure(res.data);
-    //     }
-    // }
-    // const getListAppointment=async()=>{
-    //     const res=await AppointmentService.getAppointment();
-    //     if(res.success)
-    //     {
-    //         console.log("Check list appointment:",res.data[0]);
-    //         setListAppointment(res.data);
-    //     }
-    // }
+    
+   
     useEffect(()=>{
-        // if(listPatient.length===0)
-        // {
-        //     getListPatient();
-        // }
-        // if(listProcedure.length===0)
-        // {
-        //     getListProcedure();
-        // }
-        // if(listAppointment.length===0)
-        // {
-        //     getListAppointment();
-        // }
+       
     })
     return (
         <div className={classes.container}>  
             <div className={classes.content}>
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        {/* {listPatient.length!==0 ?
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={patient}
-                                onChange={handleChangePatient}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.patient)}>{t(strings.patient)}</MenuItem>
-                                {renderListPatient()}
-
-                            </Select>
-                    
-                        </div>
-                        :
-                        <div></div>
-                        } */}
+                      
                         <div className={classes.itemDate}>
                             <KeyboardDatePicker
                                     margin="normal"
@@ -203,70 +122,16 @@ const InsertPatientRecall = (props) => {
                                     
                                     className={classes.inputControlDate} 
                             />
-                            {/* <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                placeholder={t(strings.recallDate)}
-                                format={t(strings.apiDateFormat)}
-                                value={recallDate}
-                                onChange={handleChangeRecallDate}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                                className={classes.inputControl} 
-                            /> */}
+                          
                         </div>
 
-                        {/* <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={appointment}
-                                onChange={handleChangeAppointment}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.appointment)}>{t(strings.appointment)}</MenuItem>
-
-                            </Select>
-                    
-                        </div>
-                         */}
+                        
                         
                         
                         </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
                     
-{/*                        
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={treatment}
-                                onChange={handleChangeTreatment}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.treatment)}>{t(strings.treatment)}</MenuItem>
 
-                            </Select>
-                    
-                        </div>
-                        {listProcedure.length!==0 ?
-                        <div className={classes.itemSelect}>
-                            <Select
-                                
-                                value={procedure}
-                                onChange={handleChangeProcedure}
-                                disableUnderline 
-                                className={classes.status}
-                                >
-                                <MenuItem value={t(strings.procedure)}>{t(strings.procedure)}</MenuItem>
-                                {renderListProcedure()}
-                            </Select>
-                    
-                        </div>
-                        :
-                        <div></div>
-                        } */}
                         <div className={classes.item}>
                             <TextField className={classes.inputControlBig} 
                                         

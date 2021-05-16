@@ -9,7 +9,6 @@ class ChairService{
             const result = await httpGet({
                 url: apiPath.appointment.appointment+apiPath.appointment.chair,
             });
-            //console.log("Get chair:",result);
             if(result.success)
             {
                 return {
@@ -27,7 +26,6 @@ class ChairService{
                      
         }
         catch(error){
-            //console.log("Failed to fetch chair:",error);
             return {
                 success: false,
                 data: null
@@ -43,7 +41,6 @@ class ChairService{
                 url: apiPath.appointment.appointment+apiPath.appointment.chair,
                 body:data
             });
-            //console.log("insert chair:",result);
             if(result.success)
             {
                 return {
@@ -59,7 +56,6 @@ class ChairService{
                        
         }
         catch(error){
-            //console.log("Failed to insert chair:",error);
             return {
                 success: false,
             };
@@ -73,7 +69,6 @@ class ChairService{
             const result = await httpGet({
                 url: `${apiPath.appointment.appointment}${apiPath.appointment.chair}/${id}`,
             });
-            //console.log("search chair:",result);
             if(result.success)
             {
                 return {
@@ -91,7 +86,6 @@ class ChairService{
                       
         }
         catch(error){
-            //console.log("Failed to fetch chair:",error);
             return {
                 success: false,
                 data:null,
@@ -103,14 +97,12 @@ class ChairService{
     
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.appointment.appointment}${apiPath.appointment.chair}/${id}`,
                 body:data
             });
-            //console.log("update chair:",result);
             if(result.success)
             {
                 return {
@@ -129,7 +121,6 @@ class ChairService{
                      
         }
         catch(error){
-            //console.log("Failed to update chair:",error);
             return {
                 success: false,
                 data:null

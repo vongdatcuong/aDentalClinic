@@ -23,11 +23,7 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
+
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
@@ -60,8 +56,7 @@ const Drug = () => {
     const classes = useStyles();
     const [insertDrug,setInsertDrug]=useState(false);
     const [openDialog,setOpenDialog]=useState(false);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -73,7 +68,6 @@ const Drug = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
     const handleChangeIsInsert=()=>{
@@ -87,7 +81,6 @@ const Drug = () => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
-        //console.log("Close dialog");
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -95,13 +88,7 @@ const Drug = () => {
         setIsEdited(false);
         setEditable(false);
     }
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
@@ -122,7 +109,6 @@ const Drug = () => {
         setSelectedRowData(null);
     }
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
     const titles=[
@@ -142,15 +128,12 @@ const Drug = () => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
-        //console.log("Delete now:",selectedRowData);
         const deleteDrug=async()=>{
             const res=await DrugService.delete(selectedRowData.id);
-            //console.log("Delete drug:",res);
             if(res.success)
             {
                 toast.success(t(strings.deleteSuccess));
@@ -170,7 +153,6 @@ const Drug = () => {
     }
     const getDrug=async()=>{
         const result=await DrugService.getDrug();
-        //console.log("Get drug in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -198,13 +180,11 @@ const Drug = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
             if(selectedRowData!==rows[selectedRow] && isDelete===true  )
             {
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
         }
         if(isInsert===true)

@@ -365,6 +365,13 @@ export default {
         "Name":"Tên",
         "Dispensed":"Pha chế",
         "Refill":"Đổ đầy",
+        //patient
+        "Marital status":"Tình trạng hôn nhân",
+        "NOT_SPECIFY":"Không xác định",
+        "MARRIED":"Đã kết hôn",
+        "DIVORCED":"Đã ly dị",
+        "SINGLE":"Độc thân",
+        "WIDOWED":"Góa vợ/chồng",
         //patient recall
         "Treatment":"Điều trị",
         "Interval":"Khoảng thời gian",

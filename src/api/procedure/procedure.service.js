@@ -9,7 +9,6 @@ class ProcedureService{
             const result = await httpGet({
                 url: apiPath.procedure.procedure,
             });
-            //console.log("Get procedure:",result.payload[0]);
             if(result.success)
             {
                 return {
@@ -26,7 +25,6 @@ class ProcedureService{
             }            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data: null
@@ -42,7 +40,6 @@ class ProcedureService{
                 url: apiPath.procedure.procedure,
                 body:data
             });
-            //console.log("insert procedure:",result);
             if(result.success)
             {
                 return {
@@ -57,7 +54,6 @@ class ProcedureService{
             }      
         }
         catch(error){
-            //console.log("Failed to insert procedure:",error);
             return {
                 success: false,
             };
@@ -71,14 +67,12 @@ class ProcedureService{
             const result = await httpGet({
                 url: `${apiPath.procedure.procedure}/${id}`,
             });
-            //console.log("search procedure:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data:null,
@@ -92,14 +86,12 @@ class ProcedureService{
             const result = await httpGet({
                 url: `${apiPath.procedure.procedure}${apiPath.procedure.category}/${id}`,
             });
-            //console.log("search procedure category:",result);
             return {
                 success: true,
                 data:result,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch procedure:",error);
             return {
                 success: false,
                 data:null,
@@ -113,14 +105,12 @@ class ProcedureService{
             const result = await httpGet({
                 url: apiPath.procedure.procedure+apiPath.procedure.category,
             });
-            //console.log("Get procedure category:",result.payload[0]);
             return {
                 success: true,
                 data:result.payload,
             };            
         }
         catch(error){
-            //console.log("Failed to fetch procedure category:",error);
             return {
                 success: false,
                 data: null
@@ -130,14 +120,12 @@ class ProcedureService{
     
     async update(id,data)
     {
-        //console.log("Data for update:",data);
         try{
             
             const result = await httpPatch({
                 url: `${apiPath.procedure.procedure}/${id}`,
                 body:data
             });
-            //console.log("update procedure:",result);
             if(result.success)
             {
                 return {
@@ -156,7 +144,6 @@ class ProcedureService{
                      
         }
         catch(error){
-            //console.log("Failed to update procedure:",error);
             return {
                 success: false,
                 data:null

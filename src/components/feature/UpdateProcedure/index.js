@@ -83,7 +83,6 @@ const UpdateProcedure = (props) => {
     
     const handleChangeCategory=(e)=>{
         setCategory(e.target.value);
-        //console.log("Check choose category:",e.target.value);
     }
 
 
@@ -155,11 +154,9 @@ const UpdateProcedure = (props) => {
     useEffect(()=>{
         const searchProcedure=async()=>{
             const result=await ProcedureService.search(props.id);
-            //console.log("Search procedure in useEffect:",result.data.payload);
             if(result.success)
             {
                 setAbbreviation(result.data.payload.abbreviation);
-                // setInsuredPercent(result.data.payload.insured_percent);
                 setProcedureCode(result.data.payload.procedure_code);
                 setProcedureFee(result.data.payload.procedure_fee["$numberDecimal"]);
                 setProcedureTime(result.data.payload.procedure_time["$numberDecimal"]);
@@ -181,7 +178,6 @@ const UpdateProcedure = (props) => {
         {
             const getListCategory=async()=>{
                 const res=await ProcedureService.getProcedureCategory();
-                //console.log("Get procedure category in useEffect:",res.data);
                 setListCategory(res.data);
             }
             getListCategory();
@@ -297,8 +293,7 @@ const UpdateProcedure = (props) => {
                                     displayEmpty
                                     inputProps={{ readOnly: !props.editable }}
                                     className={classes.inputCombobox}
-                                    //defaultValue={listCategory[0]._id}
-                                    //placeholder={t(strings.category)}
+                                    
                                     >
                                     <MenuItem value={toothType}>{t(strings.toothType)}</MenuItem>
                                     {renderListToothType()}

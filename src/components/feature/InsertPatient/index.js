@@ -11,26 +11,18 @@ import { useTranslation } from 'react-i18next';
 // @material-ui/core Component
 // import Container from '@material-ui/core/Container';
 import { 
+    FormControl,
+    InputLabel,
     FormControlLabel,
     Checkbox,
     Button,
     TextField,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    Radio,
-    RadioGroup,
+    
     Select,
-    InputAdornment,
-    Input,
-    FilledInput,
-    FormControl,
-    OutlinedInput,
+    MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import EditIcon from '@material-ui/icons/Edit';
 import styles from "./jss";
 // import darkTheme from "../../../themes/darkTheme";
 import { toast } from 'react-toastify';
@@ -43,7 +35,6 @@ import strings from "../../../configs/strings";
 
 
 //import component
-import DialogReferral from '../DialogReferral';
 const useStyles = makeStyles(styles);
 
 
@@ -64,7 +55,20 @@ const InsertPatient = (props) => {
     const [mobile,setMobile]=useState(null);
     const [homePhone,setHomePhone]=useState(null);
     const [address,setAddress]=useState(null);
-    const [gender,setGender]=useState(true);
+    const [gender,setGender]=useState(t(strings.notSpecify));
+    const [listGender,setListGender]=useState([
+        t(strings.notSpecify),
+        t(strings.male),
+        t(strings.female),
+    ]);
+    const [maritalStatus,setMaritalStatus]=useState(t(strings.notSpecify));
+    const [listMaritalStatus,setListMaritalStatus]=useState([
+        t(strings.notSpecify),
+        t(strings.married),
+        t(strings.divorced),
+        t(strings.single),
+        t(strings.widowed),
+    ]);
     const [active,setActive]=useState(true);
     const [staffPhoto,setStaffPhoto]=useState(null);
     const [otherInfo,setOtherInfo]=useState(null);
@@ -115,34 +119,23 @@ const InsertPatient = (props) => {
         setHomePhone(e.target.value);
     }
     const handleChangeGender=(e)=>{
-        setGender(!gender);
+        setGender(e.target.value);
+    }
+    const handleChangeMaritalStatus=(e)=>{
+        setMaritalStatus(e.target.value);
     }
     const handleChangeOtherInfo=(e)=>{
         setOtherInfo(e.target.value);
     }
-    const handleChangeCloseDialog=(e)=>{
-        setOpenDialog(false);
-    }
-    const handleChangeOpenDialog=(e)=>{
-        setOpenDialog(true);
-        console.log("Open dialog:",true);
-    }
+    
     const handleChangeReferredTo=(e)=>{
         setReferredTo(e.target.value);
     }
     const handleChangeReferredBy=(e)=>{
         setReferredBy(e.target.value);
     }
-    const handleChangeOpenReferredBy=(e)=>{
-        setOpenDialog(true);
-        setReferralType("FROM");
-    }
-    const handleChangeOpenReferredTo=(e)=>{
-        setOpenDialog(true);
-        setReferralType("TO");
-    }
+    
     const handleUploadClick = event => {
-        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -154,13 +147,20 @@ const InsertPatient = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        //console.log("Url:",reader); 
 
     };
 
-    
+    const renderListGender=()=>{
+        return listGender.map((gend,index)=>{
+            return <MenuItem key={index} value={gend}>{gend}</MenuItem>
+        })
+    }
+    const renderListMaritalStatus=()=>{
+        return listMaritalStatus.map((mar,index)=>{
+            return <MenuItem key={index} value={mar}>{mar}</MenuItem>
+        })
+    }
     const insertPerson=async(e)=>{
-        //console.log("Insert person");
         let genderData;
         if(gender===true)
         {
@@ -174,7 +174,6 @@ const InsertPatient = (props) => {
             display_id: "",
 		    is_active:active, 
             
-            // staff_type: props.staffType,
             drug_lic: "",
             npi: "",
             specialty: null, 
@@ -288,41 +287,48 @@ const InsertPatient = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink id="username">
+                                {t(strings.username)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.username)}  
+                                        // placeholder={t(strings.username)}  
                                         variant="outlined" 
                                         onChange={handleChangeUsername}
                                         value={username}
                                         error={usernameError !== null}
                                         helperText={usernameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel id="password">
+                                {t(strings.password)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
-                                        placeholder={t(strings.password)}  
                                         variant="outlined" 
                                         onChange={handleChangePassword}
                                         value={password}
                                         error={passwordError !== null}
                                         helperText={passwordError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel id="firstName">
+                                {t(strings.firstName)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.firstName)}  
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.lastName)}  
@@ -332,8 +338,8 @@ const InsertPatient = (props) => {
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         placeholder={t(strings.email)}  
                                         variant="outlined" 
@@ -342,6 +348,34 @@ const InsertPatient = (props) => {
                                         error={emailError !== null}
                                         helperText={emailError}
                                         /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel id="gender">
+                                {t(strings.gender)}
+                            </InputLabel>
+                            <Select
+                                labelId="gender"
+                                value={gender}
+                                onChange={handleChangeGender}
+                                disableUnderline 
+                                className={classes.status}
+                                >
+                            
+                                {renderListGender()}
+                            </Select>
+                        </FormControl>
+                        <div className={classes.item}>
+                            <Select
+                            
+                                value={maritalStatus}
+                                onChange={handleChangeMaritalStatus}
+                                disableUnderline 
+                                className={classes.status}
+                                >
+                            
+                                <MenuItem value={null}>{t(strings.maritalStatus)}</MenuItem>
+                                {renderListMaritalStatus()}
+                            </Select>
                         </div>
                         <div className={classes.itemSmall}>
                             <FormControlLabel
@@ -453,62 +487,11 @@ const InsertPatient = (props) => {
                                         multiline
                                         /> 
                         </div>
-                        {/* <div className={classes.item}>
-                            <FormControl variant="filled">
-                                    <OutlinedInput
-                                        className={classes.inputControl}
-                                        type={'text'}
-                                        onChange={handleChangeReferredBy}
-                                        value={referredBy}
-                                        placeholder={t(strings.referredBy)}
-                                        readOnly={true}
-                                        endAdornment={
-                                        <InputAdornment position="start" >
-                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredBy}/>
-
-                                        </InputAdornment>
-                                        }
-                                        
-                                        
-                                    />
-                                  
-                                   
-                            </FormControl>   
                         
-                        </div>
-                        <div >
-                            <FormControl variant="filled">
-                                    <OutlinedInput
-                                        className={classes.inputControl}
-                                        type={'text'}
-                                        onChange={handleChangeReferredBy}
-                                        value={referredTo}
-                                        placeholder={t(strings.referredTo)}
-                                        readOnly={true}
-                                        endAdornment={
-                                        <InputAdornment position="start" >
-                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredTo}/>
-
-                                        </InputAdornment>
-                                        }
-                                        
-                                        
-                                    />
-                                    
-                            </FormControl>   
-                        
-                       
-                        </div>
-                     */}
                     </Grid>
                 </Grid>
                 
-                <DialogReferral 
-                            isOpen={openDialog}
-                            close={handleChangeCloseDialog}
-                            open={handleChangeOpenDialog}
-                            type={referralType}
-                />
+                
                 <div>
                     <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertPerson}>
                         {t(strings.insert)}

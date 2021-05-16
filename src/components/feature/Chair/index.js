@@ -19,21 +19,14 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
 
 import styles from "./jss";
-import darkTheme from "../../../themes/darkTheme";
 //import configs
 import strings from "../../../configs/strings";
 //import image
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
-import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
 //import component
@@ -53,8 +46,7 @@ const Chairs = () => {
     const classes = useStyles();
     const [insertChair,setInsertChair]=useState(false);
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -65,7 +57,6 @@ const Chairs = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
     const handleChangeIsInsert=()=>{
@@ -82,16 +73,9 @@ const Chairs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
@@ -111,8 +95,7 @@ const Chairs = () => {
         t(strings.index),
         t(strings.name),
         t(strings.order),
-        t(strings.status)
-        // t(strings.color),
+        t(strings.status),
     ]
     const changeData=(data)=>{
         let temp=[];
@@ -130,12 +113,10 @@ const Chairs = () => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getChair=async()=>{
         const result=await ChairService.getChair();
-        //console.log("Get chair in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -163,7 +144,6 @@ const Chairs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
             
         }

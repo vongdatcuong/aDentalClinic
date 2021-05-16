@@ -128,6 +128,13 @@ const templateDefault="DEFAULT";
 const templateMedicalAlert="MEDICAL ALERT";
 const templateProgress="PROGRESS";
 const templateTreatment="TREATMENT";
+//patient
+const maritalStatus="Marital status";
+const notSpecify="NOT_SPECIFY";
+const married="MARRIED";
+const divorced="DIVORCED";
+const single="SINGLE";
+const widowed="WIDOWED";
 // Common
 const yes = "Yes";
 const no = "No";
@@ -839,6 +846,13 @@ export default {
     interval,
     recallDate,
     patientRecall,
+    //patient
+    maritalStatus,
+    notSpecify,
+    married,
+    divorced,
+    single,
+    widowed,
     // Treatment
     next,
     finish,

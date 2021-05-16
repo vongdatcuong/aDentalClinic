@@ -66,7 +66,6 @@ const DialogReferralUpdate = (props) => {
     }
     
     const handleChangeType=(e)=>{
-        console.log("Check type:",e.target.value);
         setType(e.target.value);
     }
     const handleChangeReferral=(e)=>{
@@ -103,10 +102,8 @@ const DialogReferralUpdate = (props) => {
         })
     }
     const onClickUpdate=async()=>{
-        console.log("Check before update:",props.editable,referral,date)
         if(props.editable===true && referral!==null && date!==null && date!=="")
         {
-            console.log("Vao day ne");
             let dataForUpdate;
             if(type===t(strings.patient))
             {
@@ -160,7 +157,6 @@ const DialogReferralUpdate = (props) => {
     }
     const searchPatientReferral=async()=>{
         const result=await PatientReferralService.search(props.id);
-        console.log("Search patient referral in useEffect:",result.data);
         if(result.success)
         {
             setDate(result.data.payload.referral_date);
@@ -180,12 +176,7 @@ const DialogReferralUpdate = (props) => {
                 setType(t(strings.existedReferral));
             }
 
-            // setName(result.data.payload.name);
-            // setPhone(result.data.payload.phone);
-            // setAddress(result.data.payload.address);
-            // setFax(result.data.payload.fax);
-            // setEmail(result.data.payload.email);
-            // setAdditionalInfo(result.data.payload.additional_info);
+          
         }
     }
     useEffect(()=>{
@@ -214,7 +205,6 @@ const DialogReferralUpdate = (props) => {
                     {props.type==="FROM" ? 
                     <Grid container spacing={5} className={classes.input}>
 
-                    {/* // <div className={classes.radio}> */}
                         <Grid item xs={6} className={classes.leftContent}>
 
                         <Select 
@@ -269,7 +259,6 @@ const DialogReferralUpdate = (props) => {
                                                  />} 
                                          label={t(strings.existedReferral)}  />
                         </Grid>
-                    {/* // </div> */}
                     </Grid>
                     :
                     <Grid container spacing={5} className={classes.input}>

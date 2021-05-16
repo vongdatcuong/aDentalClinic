@@ -18,11 +18,6 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
 
 import styles from "./jss";
 // import darkTheme from "../../../themes/darkTheme";
@@ -61,8 +56,7 @@ const Staffs = () => {
     const [rows,setRows]=useState([]);
 
     const [insertPerson,setInsertPerson]=useState(false);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+   
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -72,7 +66,6 @@ const Staffs = () => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     //handle
     const handleChangeIsInsert=()=>{
@@ -89,16 +82,9 @@ const Staffs = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    
     const handleChangeSearchText = (event) => {
         setSearchText(event.target.value);
     };
@@ -129,7 +115,6 @@ const Staffs = () => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const titles=[
@@ -142,7 +127,6 @@ const Staffs = () => {
 
     const getStaff=async()=>{
         const result=await StaffService.getStaff();
-        //console.log("Get staff in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -170,7 +154,6 @@ const Staffs = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }

@@ -99,19 +99,12 @@ const UpdatePatientPrescription = (props) => {
         setRefill(null);
         setCurrentDrug(t(strings.drug));
     }
-    const handleOpenDialog2=(e)=>{
-        setOpenDialog2(true);
-    };
-    const handleCloseDialog2=(e)=>{
-        setOpenDialog2(false);
-    }
+    
     const handleChangeCurrentDrug=(e)=>{
         setCurrentDrug(e.target.value);
-        //console.log("Check current drug:",e.target.value);
         
     }
     const handleChangeProvider=(e)=>{
-        //console.log("Check provider handle change:",e.target.value);
         setProvider(e.target.value);
     }
     
@@ -129,7 +122,6 @@ const UpdatePatientPrescription = (props) => {
         setDispensed(e.target.value);
     }
     const handleChangeExpired=(e,date)=>{
-        //console.log("Handle change expired:",date);
         setExpired(date);
     }
 
@@ -138,15 +130,12 @@ const UpdatePatientPrescription = (props) => {
     }
     
     const updateDrug=(e)=>{
-        //console.log("Check drug before update:",drug);
-        //console.log("Selected row data:",selectedRowData);
+      
         let temp= [...drug];
         const data = createData(selectedRowData.id,selectedRowData.name,
             dispensed,quantity,description,refill,expired);
-            //console.log(selectedRow);
         const index = drug.findIndex(n => n.id == selectedRowData.id);
         if (index == -1) {
-            //console.log("index -1");//index -1 roi 
             return;
         }
         temp = drug.slice(0, index);
@@ -155,7 +144,6 @@ const UpdatePatientPrescription = (props) => {
 
         setDrug(temp);
         setRefresh(!refresh)
-        //console.log("Check after update row:",temp);
         handleCloseDialog();
         
     }
@@ -169,7 +157,6 @@ const UpdatePatientPrescription = (props) => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check data for display:",temp);
         setDrug(temp);
     }
     const changeDataDrug=(data)=>{
@@ -180,13 +167,11 @@ const UpdatePatientPrescription = (props) => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setListDrug(temp);
     }
     const updatePrescription=async(e)=>{
         if(props.editable===true)
         {
-            //console.log("Check list detail:",listDetail[0]._id);
             let details=[];
             drug.map((a,index)=>{
                 let temp=details;
@@ -200,10 +185,8 @@ const UpdatePatientPrescription = (props) => {
                 })
             details=temp;
             });
-            //console.log("Check detail before update to db:",details);
             details.map((detail,index)=>{
                 const updateDetail=async()=>{
-                    //console.log("Check list detail index:",listDetail[index]);
                     const res=await PrescriptionService.updateDetail(listDetail[index]._id,detail);
                         
                     }
@@ -212,9 +195,7 @@ const UpdatePatientPrescription = (props) => {
             const data={
                 patient:props.patientID,
                 provider:provider,
-                    // details:details,
             };
-            //console.log("Check before update:",data);
             const result=await PrescriptionService.update(props.id,data);
             if(result.success===true )
             {
@@ -250,7 +231,6 @@ const UpdatePatientPrescription = (props) => {
         {
             const getListProvider=async()=>{
                 const result=await ProviderService.getProvider();
-                //console.log("Check provider list:",result.data);
                 if(result.success)
                 {
                     setListProvider(result.data);
@@ -263,7 +243,6 @@ const UpdatePatientPrescription = (props) => {
         {
             const getListDrug=async()=>{
                 const result=await DrugService.getDrug();
-                //console.log("Check drug list:",result.data);
                 if(result.success)
                 {
                     changeDataDrug(result.data);
@@ -277,7 +256,6 @@ const UpdatePatientPrescription = (props) => {
             {
 
                 setSelectedRowData(drug[selectedRow])
-                //console.log("Check selected drug data:",drug[selectedRow]);
 
                 setDescription(drug[selectedRow].description);
                 setDispensed(drug[selectedRow].dispensed);
@@ -293,7 +271,6 @@ const UpdatePatientPrescription = (props) => {
         {
             const getDetailPrescription=async()=>{
                 const result=await PrescriptionService.detail(props.id);
-                //console.log("Check result search in update:",result.data);
                 if(result.success)
                 {
                     setListDetail(result.data.payload.details);
@@ -540,26 +517,7 @@ const UpdatePatientPrescription = (props) => {
             </Button>
             </DialogActions>
       </Dialog>
-      {/* <Dialog onClose={handleCloseDialog2} open={openDialog2} className={classes.dialog}>
-                    
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                        {t(strings.deleteConfirmMessage)}
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseDialog2} color="secondary">
-                            {t(strings.no)}
-                        </Button>
-                        <Button onClick={deleteRow} color="primary" autoFocus>
-                            {t(strings.yes)}
-
-                        </Button>
-                    </DialogActions>
-                    
-        </Dialog>
-          */}
+     
     </div>
     )
 }

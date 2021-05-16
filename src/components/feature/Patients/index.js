@@ -176,7 +176,6 @@ const Patients = () => {
         {
             setRows(rowsAll);
         }
-        //console.log("Check status:",event.target.value);
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -190,7 +189,6 @@ const Patients = () => {
     };
 
     const handleChangeIsEdited=(e)=>{
-        //console.log("Handle change edit");
         setIsEdited(!isEdited);
     };
 
@@ -249,7 +247,6 @@ const Patients = () => {
             }
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(tempActive);
         setRowsAll(temp);
         setRowsActive(tempActive);
@@ -258,7 +255,6 @@ const Patients = () => {
     }
     const getPatient=async()=>{
         const result=await PatientService.getPatient();
-        //console.log("Get patient in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -285,7 +281,6 @@ const Patients = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -406,40 +401,7 @@ const Patients = () => {
                     />
                     :
                     <div></div>
-                        // status===t(strings.active)?
-                        // <TableCustom titles={titles}
-                        //         data={rowsActive}
-                        //         dataColumnsName={dataColumnsName}
-                        //         editable={editable}
-                        //         handleChangeIsEdited={handleChangeIsEdited}
-                        //         changeToEditPage={true}
-                        //         handleChangeSelectedRow={handleChangeSelectedRow}
-                        //         numberColumn={dataColumnsName.length}
-                                
-                        //         />
-                        //         :
-                        // status===t(strings.inactive)?
-                        // <TableCustom titles={titles}
-                        //         data={rowsInactive}
-                        //         dataColumnsName={dataColumnsName}
-                        //         editable={editable}
-                        //         handleChangeIsEdited={handleChangeIsEdited}
-                        //         changeToEditPage={true}
-                        //         handleChangeSelectedRow={handleChangeSelectedRow}
-                        //         numberColumn={dataColumnsName.length}
-                                
-                        //         />
-                        //         :
-                        // <TableCustom titles={titles}
-                        //         data={rows}
-                        //         dataColumnsName={dataColumnsName}
-                        //         editable={editable}
-                        //         handleChangeIsEdited={handleChangeIsEdited}
-                        //         changeToEditPage={true}
-                        //         handleChangeSelectedRow={handleChangeSelectedRow}
-                        //         numberColumn={dataColumnsName.length}
-                                
-                        //         />        
+              
                 }
                
                

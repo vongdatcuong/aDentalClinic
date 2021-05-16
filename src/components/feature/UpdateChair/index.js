@@ -3,7 +3,6 @@ import { makeStyles  } from "@material-ui/core/styles";
 //api
 import ChairService from "../../../api/chair/chair.service";
 //validators
-// import validators, {isPropValid} from '../../../utils/validators';
 
 //translation
 import { useTranslation } from 'react-i18next';
@@ -98,7 +97,6 @@ const UpdatePerson = (props) => {
     useEffect(()=>{
         const searchChair=async()=>{
             const result=await ChairService.search(props.id);
-            //console.log("Search chair in useEffect:",result.data.payload._id);
             if(result.success)
             {
                 setName(result.data.payload.name);

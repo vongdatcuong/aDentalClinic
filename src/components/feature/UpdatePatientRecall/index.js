@@ -47,27 +47,11 @@ const UpdatePatientRecall = (props) => {
     const classes = useStyles();
     
     //state
-    // const [patient,setPatient]=useState(t(strings.patient));
-    // const [treatment,setTreatment]=useState(t(strings.treatment));
-    // const [appointment,setAppointment]=useState(t(strings.appointment));
-    // const [procedure,setProcedure]=useState(t(strings.procedure));
+    
     const [recallDate,setRecallDate]=useState(new Date());
     const [note,setNote]=useState(null);
     const [isActive,setIsActive]=useState(true);
-    // const [listPatient,setListPatient]=useState([]);
-    //handle change
-    // const handleChangePatient=(e)=>{
-    //     setPatient(e.target.value);
-    // }
-    // const handleChangeTreatment=(e)=>{
-    //     setTreatment(e.target.value);
-    // }
-    // const handleChangeAppointment=(e)=>{
-    //     setAppointment(e.target.value);
-    // }
-    // const handleChangeProcedure=(e)=>{
-    //     setProcedure(e.target.value);
-    // }
+    
     const handleChangeRecallDate=(e,date)=>{
         setRecallDate(date);
     }
@@ -83,9 +67,7 @@ const UpdatePatientRecall = (props) => {
         {
             const data={
                 patient:props.patientID,
-             //    treatment:treatment,
-             //    appointment:appointment,
-             //    procedure:procedure,
+             
                 recall_date:recallDate,
                 note:note,
                 is_active:isActive,
@@ -115,7 +97,6 @@ const UpdatePatientRecall = (props) => {
         if(res.success)
         {
             setIsActive(res.data.payload.is_active);
-            // setPatient(res.data.payload.patient);
             setNote(res.data.payload.note);
             setRecallDate(res.data.payload.recall_date);
         }

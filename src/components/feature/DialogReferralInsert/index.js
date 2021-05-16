@@ -93,7 +93,6 @@ const DialogReferralInsert = (props) => {
         setAdditionalInfo(e.target.value);
     }
     const handleChangeType=(e)=>{
-        console.log("Check type:",e.target.value);
         setType(e.target.value);
     }
     const handleChangeReferral=(e)=>{
@@ -145,7 +144,6 @@ const DialogReferralInsert = (props) => {
 
                 if(res.success)
                 {
-                    console.log("Insert patient");
 
                     toast.success(t(strings.insertSuccess));
                     props.handleChangeIsInsert();
@@ -155,14 +153,7 @@ const DialogReferralInsert = (props) => {
                 {
                     toast.error(t(strings.insertFail))
                 }
-                // if(props.type==="FROM")
-                // {
-                //     props.handleChangeReferredBy(res.data)
-                // }
-                // else
-                // {
-                //     props.handleChangeReferredTo(res.data)
-                // }
+               
 
             }
             if(type===t(strings.staffs))
@@ -177,7 +168,6 @@ const DialogReferralInsert = (props) => {
 
                 if(res.success)
                 {
-                    console.log("Insert staff");
 
                     toast.success(t(strings.insertSuccess));
                     props.handleChangeIsInsert();
@@ -187,14 +177,7 @@ const DialogReferralInsert = (props) => {
                 {
                     toast.error(t(strings.insertFail))
                 }
-                // if(props.type==="FROM")
-                // {
-                //     props.handleChangeReferredBy(res.data)
-                // }
-                // else
-                // {
-                //     props.handleChangeReferredTo(res.data)
-                // }
+               
             }
             if(type===t(strings.existedReferral))
             {
@@ -210,26 +193,17 @@ const DialogReferralInsert = (props) => {
                 {
                     toast.success(t(strings.insertSuccess));
                     props.handleChangeIsInsert();
-                    console.log("Insert existed referral");
                 }
                 else
                 {
                     toast.error(t(strings.insertFail))
                 }
-                // if(props.type==="FROM")
-                // {
-                //     props.handleChangeReferredBy(res.data)
-                // }
-                // else
-                // {
-                //     props.handleChangeReferredTo(res.data)
-                // }
+               
             }
         
         }
         if(referral===null &&nameErrorMessage===null && emailErrorMessage===null)
         {
-            console.log("Vao day new referral:",type)
             const dataReferralSource={
                 name:name,
                 phone:phone,
@@ -250,7 +224,6 @@ const DialogReferralInsert = (props) => {
                 };
                
                 const insertPatientReferral=await PatientReferralService.insert(dataPatientReferral);
-                console.log("Check insert referral:",insertPatientReferral);
                 if(insertPatientReferral.success)
                 {
                     toast.success(t(strings.insertSuccess))
@@ -260,14 +233,7 @@ const DialogReferralInsert = (props) => {
                 {
                     toast.error(t(strings.insertFail))
                 }
-                // if(props.type==="FROM")
-                // {
-                //     props.handleChangeReferredBy(insertPatientReferral.data)
-                // }
-                // else
-                // {
-                //     props.handleChangeReferredTo(insertPatientReferral.data)
-                // }
+                
             }
         }
 

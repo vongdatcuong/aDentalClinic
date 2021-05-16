@@ -111,14 +111,7 @@ const InsertTemplate = (props) => {
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            {/* <TextField className={classes.inputControl} 
-                                        
-                                        placeholder={t(strings.noteType)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeNoteType}
-                                        value={noteType}
-                                        
-                                        />  */}
+                        
                             {listTypeTemplate.length!==0 ?
 
                             <Select
@@ -127,8 +120,7 @@ const InsertTemplate = (props) => {
                                 disableUnderline 
                                 displayEmpty
                                 className={classes.inputCombobox}
-                                //defaultValue={listCategory[0]._id}
-                                //placeholder={t(strings.category)}
+                                
                                 >
                                 <MenuItem value={noteType}>{t(strings.noteType)}</MenuItem>
                                 {renderListTypeTemplate()}

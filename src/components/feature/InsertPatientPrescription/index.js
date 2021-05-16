@@ -71,7 +71,6 @@ const InsertPatientPrescription = (props) => {
     const [listDrug,setListDrug]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
-    const [isDelete,setIsDelete]=useState(false);
 
     const titles=[
         t(strings.index),
@@ -98,11 +97,9 @@ const InsertPatientPrescription = (props) => {
     }
     const handleChangeCurrentDrug=(e)=>{
         setCurrentDrug(e.target.value);
-        //console.log("Check current drug:",e.target.value);
         
     }
     const handleChangeProvider=(e)=>{
-        //console.log("Check provider handle change:",e.target.value);
         setProvider(e.target.value);
     }
     
@@ -120,7 +117,6 @@ const InsertPatientPrescription = (props) => {
         setDispensed(e.target.value);
     }
     const handleChangeExpired=(e,date)=>{
-        //console.log("Handle change expired:",date);
         setExpired(date);
     }
 
@@ -138,7 +134,6 @@ const InsertPatientPrescription = (props) => {
 
            
             setDrug(temp);
-            //console.log("Check after add drug:",temp);
             setDescription(null);
             setDispensed(null);
             setExpired(new Date());
@@ -150,7 +145,6 @@ const InsertPatientPrescription = (props) => {
     }
     const deleteRow=(e)=>{
         handleCloseDialog2();
-        //console.log("Delete now:",selectedRowData);
         
         drug.splice(selectedRow,1);
     }
@@ -162,12 +156,10 @@ const InsertPatientPrescription = (props) => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setListDrug(temp);
     }
 
     const insertPrescription=async(e)=>{
-        //console.log("Drug :",drug);
         if(provider!==t(strings.provider) && drug.length!==0)
         {
             let details=[];
@@ -189,9 +181,7 @@ const InsertPatientPrescription = (props) => {
                 provider:provider,
                 details:details,
             };
-            //console.log("Check data for insert pres:",data);
             const result=await PrescriptionService.insert(data);
-            //console.log("Check result insert pres:",result);
             if(result.success)
             {
                 toast.success(t(strings.insertSuccess));
@@ -222,7 +212,6 @@ const InsertPatientPrescription = (props) => {
         {
             const getListProvider=async()=>{
                 const result=await ProviderService.getProvider();
-                //console.log("Check provider list:",result.data);
                 if(result.success)
                 {
                     setListProvider(result.data);
@@ -235,7 +224,6 @@ const InsertPatientPrescription = (props) => {
         {
             const getListDrug=async()=>{
                 const result=await DrugService.getDrug();
-                //console.log("Check drug list:",result.data);
                 if(result.success)
                 {
                     changeDataDrug(result.data);
@@ -249,7 +237,6 @@ const InsertPatientPrescription = (props) => {
             {
 
                 setSelectedRowData(drug[selectedRow])
-                //console.log("Check selected drug data:",drug[selectedRow]);
             }
 
         }
@@ -392,13 +379,7 @@ const InsertPatientPrescription = (props) => {
                                         /> 
                         </div>
                         <div className={classes.item}>
-                            {/* <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.expired)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeExpired}
-                                        value={expired}
-                                        
-                                        />  */}
+                            
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="date-picker-dialog"

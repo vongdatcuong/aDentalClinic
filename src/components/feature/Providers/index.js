@@ -20,11 +20,6 @@ import { Typography,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-// import FirstPageIcon from '@material-ui/icons/FirstPage';
-// import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-// import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-// import LastPageIcon from '@material-ui/icons/LastPage';
-// import PropTypes from 'prop-types';
 
 import styles from "./jss";
 // import darkTheme from "../../../themes/darkTheme";
@@ -111,7 +106,6 @@ const Providers = () => {
     }
 
     const handleChangeIsEdited=(e)=>{
-        ////console.log("Handle change edit");
         setIsEdited(!isEdited);
     }
 
@@ -139,12 +133,10 @@ const Providers = () => {
             temp=temp.concat(newData);
 
         })
-        //console.log("Check rows in change data:",temp);
         setRows(temp);
     }
     const getProvider=async()=>{
         const result=await ProviderService.getProvider();
-        //console.log("Get provider in useEffect:",result.data);
         if(result.success)
         {
             changeData(result.data);
@@ -174,7 +166,6 @@ const Providers = () => {
                 handleChangeIsEdited();
 
                 setSelectedRowData(rows[selectedRow])
-                //console.log("Check selected row data:",rows[selectedRow]);
             }
 
         }
@@ -274,19 +265,7 @@ const Providers = () => {
 
                     />
                     :
-                    // rows.length!==0 && dataColumnsName.length!==0?
-                    //     <TableCustom titles={titles}
-                    //             data={rows}
-                    //             dataColumnsName={dataColumnsName}
-                    //             editable={editable}
-                    //             handleChangeIsEdited={handleChangeIsEdited}
-                    //             changeToEditPage={true}
-                    //             handleChangeSelectedRow={handleChangeSelectedRow}
-                    //             numberColumn={dataColumnsName.length}
-                                
-                    //             />
-                    // :
-                    // <div></div>
+                
                     <TableCustom titles={titles}
                                 data={rows}
                                 dataColumnsName={dataColumnsName}

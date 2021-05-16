@@ -81,7 +81,6 @@ const InsertProcedure = (props) => {
     
     const handleChangeCategory=(e)=>{
         setCategory(e.target.value);
-        //console.log("Check choose category:",e.target.value);
     }
 
 
@@ -102,7 +101,6 @@ const InsertProcedure = (props) => {
             {
                 const data={
                     abbreviation:abbreviation,
-                    // insuredPercent:insuredPercent,
                     procedure_code:procedureCode,
                     procedure_fee:procedureFee,
                     procedure_time:procedureTime,
@@ -156,7 +154,6 @@ const InsertProcedure = (props) => {
         {
             const getListCategory=async()=>{
                 const res=await ProcedureService.getProcedureCategory();
-                //console.log("Get procedure category in useEffect:",res.data);
                 setListCategory(res.data);
             }
             getListCategory();
@@ -203,11 +200,7 @@ const InsertProcedure = (props) => {
                              
                         </div>
                         <div className={classes.item}>
-                            {/* <TextField className={classes.inputControl}
-                                        placeholder={t(strings.category)}  
-                                        variant="outlined"
-                                        onChange={handleChangeCategory}
-                                        value={category}/> */}
+                            
                             {listCategory.length!==0 ?
 
                                 <Select
@@ -216,8 +209,7 @@ const InsertProcedure = (props) => {
                                     disableUnderline 
                                     displayEmpty
                                     className={classes.inputCombobox}
-                                    //defaultValue={listCategory[0]._id}
-                                    //placeholder={t(strings.category)}
+                                    
                                     >
                                     <MenuItem value={category}>{t(strings.category)}</MenuItem>
                                     {renderListCategory()}
@@ -232,14 +224,7 @@ const InsertProcedure = (props) => {
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        {/* <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        placeholder={t(strings.insuredPercent)}  
-                                        variant="outlined"
-                                        onChange={handleChangeInsuredPercent}
-                                        value={insuredPercent}/>
-                             
-                        </div> */}
+                     
                         <div className={classes.item}>
                             <TextField className={classes.inputControl}
                                         placeholder={t(strings.description)}  
@@ -257,11 +242,7 @@ const InsertProcedure = (props) => {
                              
                         </div>
                         <div className={classes.item}>
-                            {/* <TextField className={classes.inputControl}
-                                        placeholder={t(strings.category)}  
-                                        variant="outlined"
-                                        onChange={handleChangeCategory}
-                                        value={category}/> */}
+                            
                             {listToothType.length!==0 ?
 
                                 <Select
@@ -270,8 +251,7 @@ const InsertProcedure = (props) => {
                                     disableUnderline 
                                     displayEmpty
                                     className={classes.inputCombobox}
-                                    //defaultValue={listCategory[0]._id}
-                                    //placeholder={t(strings.category)}
+                                    
                                     >
                                     <MenuItem value={toothType}>{t(strings.toothType)}</MenuItem>
                                     {renderListToothType()}
@@ -299,11 +279,7 @@ const InsertProcedure = (props) => {
                             :
                             <div></div>
                             }
-                            {/* <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureType)}  
-                                        variant="outlined"
-                                        onChange={handleChangeProcedureType}
-                                        value={procedureType}/> */}
+                           
                              
                         </div>
                         

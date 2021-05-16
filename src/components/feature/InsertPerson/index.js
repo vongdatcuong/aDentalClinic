@@ -101,7 +101,6 @@ const InsertPerson = (props) => {
     }
 
     const handleUploadClick = event => {
-        //console.log();
         var file = event.target.files[0];
         const reader = new FileReader();
         var url = reader.readAsDataURL(file);
@@ -113,7 +112,6 @@ const InsertPerson = (props) => {
         
     
         setSelectedFile(event.target.files[0]);
-        //console.log("Url:",reader); 
 
     };
 
@@ -121,7 +119,6 @@ const InsertPerson = (props) => {
     const insertPerson=async(e)=>{
         if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
-            //console.log("Insert person");
             const data={
                 display_id: "",
                 is_active:active, 
@@ -367,34 +364,7 @@ const InsertPerson = (props) => {
                                 label={t(strings.inactive)}
                             />
                         </div>
-                        {/* <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                placeholder={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                placeholder={t(strings.female)}
-                            />
-                        </div> */}
-                        
+                      
                         
                     </Grid>
                 </Grid>
