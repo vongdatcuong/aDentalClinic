@@ -115,6 +115,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const [toothNotes, setToothNotes] = React.useState([]);
   const [selectedTooth_Raw, setSelectedTooth_Raw] = React.useState([]); // các răng đã chọn - tổng hợp - json
   const [selectedTooth_Display, setSelectedTooth_Display] = React.useState([]); // parse chuỗi json ở trên để hiện thị với user
+  const [toothSelectedSurfaces, setToothSelectedSurfaces] = React.useState([]);
   const [showUnselectBtn, setShowUnselectBtn] = React.useState(false);
   const [selectedFacial, setSelectedFacial] = React.useState(false);
   const [selectedLingual, setSelectedLingual] = React.useState(false);
@@ -259,7 +260,7 @@ const AddTreatmentPage = ({ patientID }) => {
     }
   };
 
-  const handleChangeNote = (e) => {console.log(treatmentNote);
+  const handleChangeNote = (e) => {
     setTreatmentNote(e.target.value);
   };
 
@@ -280,6 +281,7 @@ const AddTreatmentPage = ({ patientID }) => {
         setToothCondition(tempArray);
         setToothNotes(tempNote);
         let tSelectedTooth_Raw = [];
+        let toothSelectedSurfaces = [];
         for (let i = 0; i < 32; i++) {
             let tooth = {
                 toothNumber: i+1,
@@ -292,8 +294,20 @@ const AddTreatmentPage = ({ patientID }) => {
                 // root: false,
             }
             tSelectedTooth_Raw.push(tooth);
+            let surfaces = {
+                toothNumber: i+1,
+                isSelected: false,
+                distal: false,
+                mesial: false,
+                facial: false,
+                lingual: false,
+                top: false,
+                root: false,
+            }
+            toothSelectedSurfaces.push(surfaces);
         }
         setSelectedTooth_Raw(tSelectedTooth_Raw);
+        setToothSelectedSurfaces(toothSelectedSurfaces);
         return true;
       }
       toast.error(result.message);
@@ -399,23 +413,18 @@ const AddTreatmentPage = ({ patientID }) => {
   }
 
   const handleClickToothFacial = () => {
-    //updateSelectedToothCondition("MISSING");
     setSelectedFacial(!selectedFacial);
   };
   const handleClickToothLingual = () => {
-    //updateSelectedToothCondition("VENEER");
     setSelectedLingual(!selectedLingual);
   };
   const handleClickToothMesial = () => {
-    //updateSelectedToothCondition("PONTICS");
     setSelectedMesial(!selectedMesial);
   };
   const handleClickToothDistal = () => {
-    //updateSelectedToothCondition("CROWN");
     setSelectedDistal(!selectedDistal);
   };
   const handleClickToothTop = () => {
-    //updateSelectedToothCondition("ENDOTESTS");
     setSelectedTop(!selectedTop);
   };
   const handleClickToothRoot = () => {
@@ -424,6 +433,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const handleClickToothUnselect = () => {
     // update selectedTooth_Raw
     let tselectedTooth_Raw = selectedTooth_Raw.slice();
+    let tToothSelectedSurfaces = toothSelectedSurfaces.slice();
     selectedTooth.forEach((tooth) => {
         let toothNumber = parseInt(tooth.replace("Tooth",""));
         tselectedTooth_Raw[toothNumber-1].isSelected = false;
@@ -433,13 +443,22 @@ const AddTreatmentPage = ({ patientID }) => {
         tselectedTooth_Raw[toothNumber-1].distal = false;
         tselectedTooth_Raw[toothNumber-1].top = false;
         tselectedTooth_Raw[toothNumber-1].root = false;
+
+        tToothSelectedSurfaces[toothNumber-1].isSelected = false;
+        tToothSelectedSurfaces[toothNumber-1].facial = false;
+        tToothSelectedSurfaces[toothNumber-1].lingual = false;
+        tToothSelectedSurfaces[toothNumber-1].mesial = false;
+        tToothSelectedSurfaces[toothNumber-1].distal = false;
+        tToothSelectedSurfaces[toothNumber-1].top = false;
+        tToothSelectedSurfaces[toothNumber-1].root = false;
     });
-    //setSelectedTooth_Raw(tselectedTooth_Raw);
+    setSelectedTooth_Raw(tselectedTooth_Raw);
+    setToothSelectedSurfaces(tToothSelectedSurfaces);
     clearSelectedTooth();
   };
   const handleClickToothSelect = () => {
-    // update selectedTooth_Raw
     let tselectedTooth_Raw = selectedTooth_Raw.slice();
+    let tToothSelectedSurfaces = toothSelectedSurfaces.slice();
     selectedTooth.forEach((tooth) => {
         let toothNumber = parseInt(tooth.replace("Tooth",""));
         tselectedTooth_Raw[toothNumber-1].isSelected = true;
@@ -449,8 +468,19 @@ const AddTreatmentPage = ({ patientID }) => {
         tselectedTooth_Raw[toothNumber-1].distal = selectedDistal;
         tselectedTooth_Raw[toothNumber-1].top = selectedTop;
         tselectedTooth_Raw[toothNumber-1].root = selectedRoot;
+
+        tToothSelectedSurfaces[toothNumber-1].isSelected = true;
+        tToothSelectedSurfaces[toothNumber-1].facial = selectedFacial;
+        tToothSelectedSurfaces[toothNumber-1].lingual = selectedLingual;
+        tToothSelectedSurfaces[toothNumber-1].mesial = selectedMesial;
+        tToothSelectedSurfaces[toothNumber-1].distal = selectedDistal;
+        tToothSelectedSurfaces[toothNumber-1].top = selectedTop;
+        tToothSelectedSurfaces[toothNumber-1].root = selectedRoot;
     });
-    //setSelectedTooth_Raw(tselectedTooth_Raw);
+    // update selectedTooth_Raw
+    setSelectedTooth_Raw(tselectedTooth_Raw);
+    // update toothSelectedSurfaces to display tooth UI
+    setToothSelectedSurfaces(tToothSelectedSurfaces);
     clearSelectedTooth();
   };
   function clearSelectedTooth() {
@@ -582,10 +612,11 @@ const AddTreatmentPage = ({ patientID }) => {
             <span className={classes.toothChartContainer}>
               <AdultToothChart
                 toothCondition={toothCondition}
+                toothSelectedSurfaces={toothSelectedSurfaces}
                 toothNotes={toothNotes}
                 selectedTooth={selectedTooth}
                 onSelectTooth={handleSelectToothQuickselect}
-                viewType="quickselect"
+                viewType="add-treatment"
               ></AdultToothChart>
             </span>
             <span className={classes.quickselectMenuContainer}>
