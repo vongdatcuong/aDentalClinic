@@ -97,7 +97,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const steps = [
     t(strings.selectTreatment),
     t(strings.selectTooth),
-    t(strings.previewTreatmentInfo),
+    t(strings.reviewTreatmentInfo),
   ];
   const { loadingState, dispatchLoading } = useContext(loadingStore);
   // States
@@ -105,7 +105,11 @@ const AddTreatmentPage = ({ patientID }) => {
   const [procedures, setProcedures] = useState([]);
   const [selectedProcedureCate, setselectedProcedureCate] = useState(null);
   const [selectedProcedure, setSelectedProcedure] = useState(null);
+  const [selectedProcedureCate_text, setselectedProcedureCate_text] = useState("Not selected");
+  const [selectedProcedure_text, setSelectedProcedure_text] = useState("Not selected");
   const [treatmentNote, setTreatmentNote] = useState("");
+  const [provider, setProvider] = React.useState(null);
+  const [assistant, setAssistant] = React.useState(null);
   //
   const [procedureErrMsg, setProcedureErrMsg] = useState("");
 
@@ -114,7 +118,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const [toothCondition, setToothCondition] = React.useState([]);
   const [toothNotes, setToothNotes] = React.useState([]);
   const [selectedTooth_Raw, setSelectedTooth_Raw] = React.useState([]); // các răng đã chọn - tổng hợp - json
-  const [selectedTooth_Display, setSelectedTooth_Display] = React.useState([]); // parse chuỗi json ở trên để hiện thị với user
+  const [selectedTooth_Display, setSelectedTooth_Display] = React.useState(""); // parse chuỗi json ở trên để hiện thị với user
   const [toothSelectedSurfaces, setToothSelectedSurfaces] = React.useState([]);
   const [showUnselectBtn, setShowUnselectBtn] = React.useState(false);
   const [selectedFacial, setSelectedFacial] = React.useState(false);
@@ -168,6 +172,11 @@ const AddTreatmentPage = ({ patientID }) => {
       const result = await Promise.all(promises);
       if (result[0].success) {
         setselectedProcedureCate(newSelectedCate);
+        procedureCates.forEach(cate => {
+            if (cate.id === newSelectedCate) {
+                setselectedProcedureCate_text(cate.name);
+            }
+        })
         const codes = result[0].payload.procedure_code.map((code) => ({
           id: code._id,
           procedure_code: code.procedure_code,
@@ -175,6 +184,9 @@ const AddTreatmentPage = ({ patientID }) => {
         }));
         setProcedures(codes);
         setSelectedProcedure(null);
+        setSelectedProcedure_text("Not selected");
+        clearSelectedTooth();
+        resetSelectedToothArray();
         //   setSelectedTooth(null);
         //   setSelectedTeeth([]);
         //   setSelectedSurface(null);
@@ -203,6 +215,13 @@ const AddTreatmentPage = ({ patientID }) => {
       const result = await Promise.all(promises);
       if (result[0].success) {
         setSelectedProcedure(newSelectedProcedure);
+        procedures.forEach(procd => {
+            if (procd.procedure_code === newSelectedProcedure.procedure_code) {
+                setSelectedProcedure_text(procd.description);
+            }
+        })
+        clearSelectedTooth();
+        resetSelectedToothArray();
         // const selectedTooth = result[0].payload.tooth_select;
         // if (selectedTooth){
         // const tokens = selectedTooth.split(":");
@@ -280,34 +299,7 @@ const AddTreatmentPage = ({ patientID }) => {
         });
         setToothCondition(tempArray);
         setToothNotes(tempNote);
-        let tSelectedTooth_Raw = [];
-        let toothSelectedSurfaces = [];
-        for (let i = 0; i < 32; i++) {
-            let tooth = {
-                toothNumber: i+1,
-                isSelected: false,
-                // distal: false,
-                // mesial: false,
-                // facial: false,
-                // lingual: false,
-                // top: false,
-                // root: false,
-            }
-            tSelectedTooth_Raw.push(tooth);
-            let surfaces = {
-                toothNumber: i+1,
-                isSelected: false,
-                distal: false,
-                mesial: false,
-                facial: false,
-                lingual: false,
-                top: false,
-                root: false,
-            }
-            toothSelectedSurfaces.push(surfaces);
-        }
-        setSelectedTooth_Raw(tSelectedTooth_Raw);
-        setToothSelectedSurfaces(toothSelectedSurfaces);
+        resetSelectedToothArray();
         return true;
       }
       toast.error(result.message);
@@ -370,6 +362,37 @@ const AddTreatmentPage = ({ patientID }) => {
       }
     }
   };
+  function resetSelectedToothArray () {
+    let tSelectedTooth_Raw = [];
+    let toothSelectedSurfaces = [];
+    for (let i = 0; i < 32; i++) {
+        let tooth = {
+            toothNumber: i+1,
+            isSelected: false,
+            // distal: false,
+            // mesial: false,
+            // facial: false,
+            // lingual: false,
+            // top: false,
+            // root: false,
+        }
+        tSelectedTooth_Raw.push(tooth);
+        let surfaces = {
+            toothNumber: i+1,
+            isSelected: false,
+            distal: false,
+            mesial: false,
+            facial: false,
+            lingual: false,
+            top: false,
+            root: false,
+        }
+        toothSelectedSurfaces.push(surfaces);
+    }
+    setSelectedTooth_Raw(tSelectedTooth_Raw);
+    setToothSelectedSurfaces(toothSelectedSurfaces);
+    setSelectedTooth_Display("");
+  }
 
   function groupToothBySelectedSurface(){
     let showUnselectForAll = true;
@@ -497,6 +520,23 @@ const AddTreatmentPage = ({ patientID }) => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // update setSelectedTooth_Display
+    let displayString = "";
+    selectedTooth_Raw.forEach(tooth => {
+        if(tooth.isSelected === true) {
+            displayString += "\n\tTooth " + tooth.toothNumber + ": ";
+            displayString += tooth.distal === true ? "D" : "";
+            displayString += tooth.mesial === true ? "M" : "";
+            displayString += tooth.facial === true ? "F" : "";
+            displayString += tooth.lingual === true ? "L" : "";
+            displayString += tooth.top === true ? "T" : "";
+            displayString += tooth.root === true ? "R" : "";
+        }
+    });
+    setSelectedTooth_Display(displayString);
+    if (activeStep === steps.length-1) {
+        handleSubmit();
+    }
   };
 
   const handleBack = () => {
@@ -505,6 +545,9 @@ const AddTreatmentPage = ({ patientID }) => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+  function handleSubmit() {
+    alert("submit");
   };
 
   function getStepContent(step) {
@@ -586,6 +629,7 @@ const AddTreatmentPage = ({ patientID }) => {
               className={classes.selectProcedure}
             >
               <TextField
+                value={treatmentNote}
                 multiline
                 rows={10}
                 rowsMax={15}
@@ -659,10 +703,17 @@ const AddTreatmentPage = ({ patientID }) => {
         );
       case 2:
         return (
-          <div className={classes.stepContent}>
-            <h1>This is the bit I really care about!</h1>
-          </div>
-        );
+            <div className={classes.stepContent}>
+              <h1>{t(strings.reviewTreatmentInfo)}</h1>
+              <Grid item md={8} sm={6} xs={12}>
+                <div>{t(strings.treatment)}: {selectedProcedureCate_text} {" - "} {selectedProcedure_text}</div>
+                <div className={classes.treatmentNote}>{t(strings.note)}: {treatmentNote === "" ? "None" : treatmentNote}</div>
+                <div>{t(strings.provider)}: {provider}</div>
+                <div>{t(strings.assistant)}: {assistant}</div>
+                <div className={classes.selectedToothDisplay}>{t(strings.selectedTooth)}: {selectedTooth_Display}</div>
+              </Grid>
+            </div>
+          );
       default:
         return "Unknown step";
     }
@@ -696,11 +747,12 @@ const AddTreatmentPage = ({ patientID }) => {
           <div className={classes.stepContainer}>
             {activeStep === steps.length ? (
               <div>
-                <Typography className={classes.instructions}>
-                  {t(strings.allStepsCompleted)}
-                </Typography>
-                <Button onClick={handleReset} className={classes.button}>
+                <h1>{t(strings.allStepsCompleted)}</h1>
+                {/* <Button onClick={handleReset} className={classes.button}>
                   {t(strings.reset)}
+                </Button> */}
+                <Button onClick={() => history.push(path.patientProfilePath.replace(':patientID', patientID))} className={classes.button} variant="contained" color="primary">
+                  {t(strings.back)}
                 </Button>
               </div>
             ) : (

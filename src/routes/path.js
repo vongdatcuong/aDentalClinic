@@ -31,10 +31,10 @@ const patientRecallPath='/patient/:patientID/recall';
 const patientPrescriptionPath = '/patient/:patientID/prescription';
 const patientNotePath = '/patient/:patientID/note';
 const patientXRayImagesPath = '/patient/:patientID/xRayImages';
-const patientAddXRayImagesPath = "/patient/:patientID/xRayImages/add/:MouthID"; // TODO: param: xray layer
-const patientViewXRayImagesPath = '/patient/:patientID/xRayImages/view/:MouthID'; // TODO: param: xray layer, image id
+const patientAddXRayImagesPath = "/patient/:patientID/xRayImages/add/:MouthID";
+const patientViewXRayImagesPath = '/patient/:patientID/xRayImages/view/:MouthID';
 const patientImagesPath = '/patient/:patientID/images';
-const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';  // TODO: sửa thành đường dẫn với param là tooth ID (/patient?id=0/toothChart/toothOverviewInfo?toothID=0)
+const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo';
 const patientInfoPath = '/patient/:patientID/info';
 const profilePath = '/profile';
 const addTreatmentPath = '/patient/:patientID/addTreatment';

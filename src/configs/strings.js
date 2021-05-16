@@ -431,7 +431,8 @@ const finish = "finish";
 const allStepsCompleted = "All steps completed - you are finished";
 const selectTreatment = "Select Treatment";
 const selectTooth = "Select Tooth";
-const previewTreatmentInfo = "Preview Treatment Information";
+const selectedTooth = "Selected Tooth";
+const reviewTreatmentInfo = "Review Treatment Information";
 
 const facial = "Facial";
 const lingual = "Lingual";
@@ -845,13 +846,14 @@ export default {
     allStepsCompleted,
     selectTreatment,
     selectTooth,
-    previewTreatmentInfo,
+    reviewTreatmentInfo,
     facial,
     lingual,
     mesial,
     distal,
     top,
     root,
+    selectedTooth,
     // Report
     patientsShort,
     viewPatientDocument,

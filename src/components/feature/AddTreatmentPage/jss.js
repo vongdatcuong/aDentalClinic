@@ -70,7 +70,13 @@ const styles = (theme) => ({
   },
   selectProcedure: {
     marginTop: theme.spacing(4),
-  }
+  },
+  selectedToothDisplay: {
+      whiteSpace: "pre-wrap",
+  },
+  treatmentNote: {
+      whiteSpace: "pre-wrap",
+  },
 });
 
 const colorlibStepIconStyles = (theme) => ({
