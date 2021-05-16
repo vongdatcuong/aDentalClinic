@@ -51,6 +51,7 @@ import Typography from "@material-ui/core/Typography";
 // API
 import api from "../../../api/base-api";
 import apiPath from "../../../api/path";
+import TreatmentService from "../../../api/treatment/treatment.service";
 // Context
 import { loadingStore } from "../../../contexts/loading-context";
 
@@ -545,9 +546,36 @@ const AddTreatmentPage = ({ patientID }) => {
 
   const handleReset = () => {
     setActiveStep(0);
+    // reset state ...
   };
   function handleSubmit() {
     alert("submit");
+    const submitAddTreatment=async()=>{
+        try {
+            const data = { // Todo: cập nhật đầy đủ các value ///////
+                //treatment_date: ,
+                patient: patientID,
+                // assistant: ,
+                // provider: ,
+                procedure_code: selectedProcedure.procedure_code,
+                selected_tooth_raw: selectedTooth_Raw,
+                note: treatmentNote,
+                status: "PLAN",  // hardcode
+
+            }
+            const result = await TreatmentService.addTreatment(data);
+            if (result.success){
+                return true;
+            }
+            toast.error(result.message);
+            return false;
+        } 
+        catch(err)  {
+            toast.error(t(strings.updateFail));    
+            return false;
+        }
+    };
+    submitAddTreatment();
   };
 
   function getStepContent(step) {
@@ -556,6 +584,7 @@ const AddTreatmentPage = ({ patientID }) => {
         return (
           <div className={classes.stepContent}>
             <h1>{t(strings.selectTreatment)}</h1>
+            {/* // Todo: bổ sung thêm select provider và assistant /////// */}
             <Grid item md={8} sm={6} xs={12}>
               <InputLabel shrink id="treatment-category">
                 {t(strings.category)}
