@@ -110,9 +110,18 @@ const AddTreatmentPage = ({ patientID }) => {
   const [procedureErrMsg, setProcedureErrMsg] = useState("");
 
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
-  const [selectedTooth, setSelectedTooth] = React.useState([]);
+  const [selectedTooth, setSelectedTooth] = React.useState([]); // các răng đã chọn - tạm thời
   const [toothCondition, setToothCondition] = React.useState([]);
   const [toothNotes, setToothNotes] = React.useState([]);
+  const [selectedTooth_Raw, setSelectedTooth_Raw] = React.useState([]); // các răng đã chọn - tổng hợp - json
+  const [selectedTooth_Display, setSelectedTooth_Display] = React.useState([]); // parse chuỗi json ở trên để hiện thị với user
+  const [showUnselectBtn, setShowUnselectBtn] = React.useState(false);
+  const [selectedFacial, setSelectedFacial] = React.useState(false);
+  const [selectedLingual, setSelectedLingual] = React.useState(false);
+  const [selectedMesial, setSelectedMesial] = React.useState(false);
+  const [selectedDistal, setSelectedDistal] = React.useState(false);
+  const [selectedTop, setSelectedTop] = React.useState(false);
+  const [selectedRoot, setSelectedRoot] = React.useState(false);
 
   // fetch category
   useEffect(async () => {
@@ -257,7 +266,7 @@ const AddTreatmentPage = ({ patientID }) => {
   useEffect(() => {
     fetchToothCondition();
   }, []);
-  const fetchToothCondition = async () => {
+  const fetchToothCondition = async () => { // this run when page open
     try {
       const result = await ToothService.getAllPatientTooth(patientID);
       if (result.success) {
@@ -270,6 +279,21 @@ const AddTreatmentPage = ({ patientID }) => {
         });
         setToothCondition(tempArray);
         setToothNotes(tempNote);
+        let tSelectedTooth_Raw = [];
+        for (let i = 0; i < 32; i++) {
+            let tooth = {
+                toothNumber: i+1,
+                isSelected: false,
+                // distal: false,
+                // mesial: false,
+                // facial: false,
+                // lingual: false,
+                // top: false,
+                // root: false,
+            }
+            tSelectedTooth_Raw.push(tooth);
+        }
+        setSelectedTooth_Raw(tSelectedTooth_Raw);
         return true;
       }
       toast.error(result.message);
@@ -281,53 +305,164 @@ const AddTreatmentPage = ({ patientID }) => {
   };
 
   const handleSelectToothQuickselect = (toothID) => {
-    if (selectedTooth.includes(toothID)) {
-      // selected
+    let intToothID = parseInt(toothID.replace("Tooth",""));
+    if (selectedTooth.includes(toothID)) { //răng này đã được chọn => bỏ chọn răng
       // pop tooth ID
       let pos = selectedTooth.indexOf(toothID);
       let removedItem = selectedTooth.splice(pos, 1);
       setSelectedTooth(selectedTooth.slice());
       if (selectedTooth.length === 0) {
-        setShowQuickselectMenu(false);
+        //setShowQuickselectMenu(false);
+        clearSelectedTooth();
       }
-    } else {
-      // unselected
+      else if (selectedTooth.length === 1) {    // mới chỉ chọn 1 răng
+        // hiển thị menu theo răng được chọn
+        let selectedToothID = parseInt(selectedTooth[0].replace("Tooth",""));
+        setShowUnselectBtn(selectedTooth_Raw[selectedToothID-1].isSelected === true);
+        setSelectedFacial(selectedTooth_Raw[selectedToothID-1].facial === true);
+        setSelectedLingual(selectedTooth_Raw[selectedToothID-1].lingual === true);
+        setSelectedMesial(selectedTooth_Raw[selectedToothID-1].mesial === true);
+        setSelectedDistal(selectedTooth_Raw[selectedToothID-1].distal === true);
+        setSelectedTop(selectedTooth_Raw[selectedToothID-1].top === true);
+        setSelectedRoot(selectedTooth_Raw[selectedToothID-1].root === true);
+      }
+      else {    // sau khi bỏ chọn, nếu những răng còn lại đều đã được selected => hiện nút unselect
+        groupToothBySelectedSurface();
+      }
+    } else { // răng này chưa được chọn => chọn răng
       // push tooth ID
       selectedTooth.push(toothID);
       setSelectedTooth(selectedTooth.slice());
-      if (!showQuickselectMenu) {
+      if (!showQuickselectMenu) {   // mới chỉ chọn 1 răng
+        // hiển thị menu theo răng vừa chọn
+        setShowUnselectBtn(selectedTooth_Raw[intToothID-1].isSelected === true);
+        setSelectedFacial(selectedTooth_Raw[intToothID-1].facial === true);
+        setSelectedLingual(selectedTooth_Raw[intToothID-1].lingual === true);
+        setSelectedMesial(selectedTooth_Raw[intToothID-1].mesial === true);
+        setSelectedDistal(selectedTooth_Raw[intToothID-1].distal === true);
+        setSelectedTop(selectedTooth_Raw[intToothID-1].top === true);
+        setSelectedRoot(selectedTooth_Raw[intToothID-1].root === true);
         setShowQuickselectMenu(true);
+      }
+      else {    // đã chọn nhiều răng => nếu tất cả các răng trong selectedTooth đều có isSlected = 1 thì hiện nút bỏ chọn
+        setSelectedFacial(false);
+        setSelectedLingual(false);
+        setSelectedMesial(false);
+        setSelectedDistal(false);
+        setSelectedTop(false);
+        setSelectedRoot(false);
+        groupToothBySelectedSurface();
+
       }
     }
   };
 
-  const handleClickToothMissing = () => {
+  function groupToothBySelectedSurface(){
+    let showUnselectForAll = true;
+    let showFacialForAll = true;
+    let showLingualForAll = true;
+    let showMesialForAll = true;
+    let showDistalForAll = true;
+    let showTopForAll = true;
+    let showRootForAll = true;
+    selectedTooth.forEach((tooth) => {
+        let intTooth = parseInt(tooth.replace("Tooth",""));
+        if (selectedTooth_Raw[intTooth-1].isSelected === false) {
+            showUnselectForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].facial === true)) {
+            showFacialForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].lingual === true)) {
+            showLingualForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].mesial === true)) {
+            showMesialForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].distal === true)) {
+            showDistalForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].top === true)) {
+            showTopForAll = false;
+        }
+        if (!(selectedTooth_Raw[intTooth-1].root === true)) {
+            showRootForAll = false;
+        }
+    });
+    setShowUnselectBtn(showUnselectForAll);
+    setSelectedFacial(showFacialForAll);
+    setSelectedLingual(showLingualForAll);
+    setSelectedMesial(showMesialForAll);
+    setSelectedDistal(showDistalForAll);
+    setSelectedTop(showTopForAll);
+    setSelectedRoot(showRootForAll);
+  }
+
+  const handleClickToothFacial = () => {
     //updateSelectedToothCondition("MISSING");
-    clearSelectedTooth();
+    setSelectedFacial(!selectedFacial);
   };
-  const handleClickToothVeneer = () => {
+  const handleClickToothLingual = () => {
     //updateSelectedToothCondition("VENEER");
-    clearSelectedTooth();
+    setSelectedLingual(!selectedLingual);
   };
-  const handleClickToothPontics = () => {
+  const handleClickToothMesial = () => {
     //updateSelectedToothCondition("PONTICS");
-    clearSelectedTooth();
+    setSelectedMesial(!selectedMesial);
   };
-  const handleClickToothCrown = () => {
+  const handleClickToothDistal = () => {
     //updateSelectedToothCondition("CROWN");
-    clearSelectedTooth();
+    setSelectedDistal(!selectedDistal);
   };
-  const handleClickToothEndoTests = () => {
+  const handleClickToothTop = () => {
     //updateSelectedToothCondition("ENDOTESTS");
+    setSelectedTop(!selectedTop);
+  };
+  const handleClickToothRoot = () => {
+    setSelectedRoot(!selectedRoot);
+  };
+  const handleClickToothUnselect = () => {
+    // update selectedTooth_Raw
+    let tselectedTooth_Raw = selectedTooth_Raw.slice();
+    selectedTooth.forEach((tooth) => {
+        let toothNumber = parseInt(tooth.replace("Tooth",""));
+        tselectedTooth_Raw[toothNumber-1].isSelected = false;
+        tselectedTooth_Raw[toothNumber-1].facial = false;
+        tselectedTooth_Raw[toothNumber-1].lingual = false;
+        tselectedTooth_Raw[toothNumber-1].mesial = false;
+        tselectedTooth_Raw[toothNumber-1].distal = false;
+        tselectedTooth_Raw[toothNumber-1].top = false;
+        tselectedTooth_Raw[toothNumber-1].root = false;
+    });
+    //setSelectedTooth_Raw(tselectedTooth_Raw);
     clearSelectedTooth();
   };
-  const handleClickToothClear = () => {
-    //updateSelectedToothCondition("NONE");
+  const handleClickToothSelect = () => {
+    // update selectedTooth_Raw
+    let tselectedTooth_Raw = selectedTooth_Raw.slice();
+    selectedTooth.forEach((tooth) => {
+        let toothNumber = parseInt(tooth.replace("Tooth",""));
+        tselectedTooth_Raw[toothNumber-1].isSelected = true;
+        tselectedTooth_Raw[toothNumber-1].facial = selectedFacial;
+        tselectedTooth_Raw[toothNumber-1].lingual = selectedLingual;
+        tselectedTooth_Raw[toothNumber-1].mesial = selectedMesial;
+        tselectedTooth_Raw[toothNumber-1].distal = selectedDistal;
+        tselectedTooth_Raw[toothNumber-1].top = selectedTop;
+        tselectedTooth_Raw[toothNumber-1].root = selectedRoot;
+    });
+    //setSelectedTooth_Raw(tselectedTooth_Raw);
     clearSelectedTooth();
   };
   function clearSelectedTooth() {
     setShowQuickselectMenu(false);
     setSelectedTooth([]);
+    setShowUnselectBtn(false);
+    setSelectedFacial(false);
+    setSelectedLingual(false);
+    setSelectedMesial(false);
+    setSelectedDistal(false);
+    setSelectedTop(false);
+    setSelectedRoot(false);
   }
 
   const handleNext = () => {
@@ -421,6 +556,9 @@ const AddTreatmentPage = ({ patientID }) => {
               className={classes.selectProcedure}
             >
               <TextField
+                multiline
+                rows={10}
+                rowsMax={15}
                 onChange={handleChangeNote}
                 label={t(strings.note)}
                 className={classes.textField}
@@ -458,28 +596,29 @@ const AddTreatmentPage = ({ patientID }) => {
                   aria-label="large outlined primary button group"
                   className={classes.quickselectMenu}
                 >
-                  <Button onClick={handleClickToothMissing}>
+                  <Button onClick={handleClickToothFacial} variant={ selectedFacial? "contained" : ""}>
                     <b>{t(strings.facial)}</b>
                   </Button>
-                  <Button onClick={handleClickToothVeneer}>
+                  <Button onClick={handleClickToothLingual} variant={ selectedLingual? "contained" : ""}>
                     <b>{t(strings.lingual)}</b>
                   </Button>
-                  <Button onClick={handleClickToothPontics}>
+                  <Button onClick={handleClickToothMesial} variant={ selectedMesial? "contained" : ""}>
                     <b>{t(strings.mesial)}</b>
                   </Button>
-                  <Button onClick={handleClickToothCrown}>
+                  <Button onClick={handleClickToothDistal} variant={ selectedDistal? "contained" : ""}>
                     <b>{t(strings.distal)}</b>
                   </Button>
-                  <Button onClick={handleClickToothEndoTests}>
+                  <Button onClick={handleClickToothTop} variant={ selectedTop? "contained" : ""}>
                     <b>{t(strings.top)}</b>
                   </Button>
-                  <Button onClick={handleClickToothClear}>
+                  <Button onClick={handleClickToothRoot} variant={ selectedRoot? "contained" : ""}>
                     <b>{t(strings.root)}</b>
                   </Button>
-                  <Button onClick={handleClickToothClear}>
+                  { showUnselectBtn && 
+                  <Button onClick={handleClickToothUnselect}>
                     <b>{t(strings.unselect)}</b>
-                  </Button>
-                  <Button onClick={handleClickToothClear}>
+                  </Button> }
+                  <Button onClick={handleClickToothSelect}>
                     <b>{t(strings.select)}</b>
                   </Button>
                 </ButtonGroup>
@@ -502,7 +641,7 @@ const AddTreatmentPage = ({ patientID }) => {
     <React.Fragment>
       <TreatmentMenu patientID={patientID} />
       <Container className={classes.container}>
-        <PopupChat></PopupChat>
+        {/* <PopupChat></PopupChat> */}
         <Grid
           container
           xs={12}
