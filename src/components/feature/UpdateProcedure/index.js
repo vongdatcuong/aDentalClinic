@@ -91,8 +91,8 @@ const UpdateProcedure = (props) => {
         setDescription(e.target.value);
     }
     const onClickUpdateProcedure=async(e)=>{
-        if(category!=='' || abbreviation!=='' || procedureCode!=='' || procedureFee!=='' || procedureTime!==''
-            || procedureType!=='' || toothSelect!=='' || toothType!=='' || description!=='')
+        if(category==='' || abbreviation==='' || procedureCode==='' || procedureFee==='' || procedureTime===''
+            || procedureType==='' || toothSelect==='' || toothType==='' || description==='')
         {
             toast.error(t(strings.errorInput));
 
