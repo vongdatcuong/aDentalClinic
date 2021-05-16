@@ -5,6 +5,12 @@ import { useParams, useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import style from "./jss";
 import strings from "../../../configs/strings";
+import figures from "../../../configs/figures";
+import lists from "../../../configs/lists";
+
+// moment
+import moment from 'moment';
+
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
@@ -47,6 +53,13 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import StepConnector from "@material-ui/core/StepConnector";
 import Typography from "@material-ui/core/Typography";
+import FormControl from '@material-ui/core/FormControl';
+
+// React-select
+import AsyncSelect from 'react-select/async';
+
+// @material-ui/core Datepicker
+import { DatePicker  } from "@material-ui/pickers";
 
 // API
 import api from "../../../api/base-api";
@@ -54,6 +67,9 @@ import apiPath from "../../../api/path";
 import TreatmentService from "../../../api/treatment/treatment.service";
 // Context
 import { loadingStore } from "../../../contexts/loading-context";
+
+// Utils
+import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 
 const ColorlibConnector = withStyles(style.colorlibConnector)(StepConnector);
 
@@ -94,6 +110,18 @@ const AddTreatmentPage = ({ patientID }) => {
   const classes = useStyles();
   const history = useHistory();
 
+  // None option
+  const noneOption = {value: "", label: t(strings.none)};
+
+  // Async select Style
+  const asyncSelectStyle = {
+    menu: ({...provided}, state) => ({
+        ...provided,
+        zIndex: 2
+        
+    }),
+  };
+
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = [
     t(strings.selectTreatment),
@@ -111,8 +139,12 @@ const AddTreatmentPage = ({ patientID }) => {
   const [treatmentNote, setTreatmentNote] = useState("");
   const [provider, setProvider] = React.useState(null);
   const [assistant, setAssistant] = React.useState(null);
+  const [date, setDate] = React.useState(new Date());
+
   //
   const [procedureErrMsg, setProcedureErrMsg] = useState("");
+  const [providerErrMsg, setProviderErrMsg] = useState("");
+  const [dateErrMsg, setDateErrMsg] = useState("");
 
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
   const [selectedTooth, setSelectedTooth] = React.useState([]); // các răng đã chọn - tạm thời
@@ -551,12 +583,31 @@ const AddTreatmentPage = ({ patientID }) => {
   function handleSubmit() {
     alert("submit");
     const submitAddTreatment=async()=>{
+      let isValid = true;
+      // Treatment Date
+      if (date?.getTime() < Date.now()){ // Treatment date must be in the future
+          setDateErrMsg(t(strings.treatmentDateErrMsg));
+          isValid = false;
+      } else {
+          setDateErrMsg("");
+      }
+      // Provider
+      if (!provider?.value){
+          setProviderErrMsg(t(strings.appointProviderErrMsg));
+          isValid = false;
+      } else {
+          setProviderErrMsg("");
+      }
+
+      if (!isValid){
+        return;
+      }
         try {
             const data = { // Todo: cập nhật đầy đủ các value ///////
-                //treatment_date: ,
+                treatment_date: ConvertDateTimes.formatDate(date, strings.apiDateFormat),
                 patient: patientID,
-                // assistant: ,
-                // provider: ,
+                assistant: assistant.value,
+                provider: provider.value,
                 procedure_code: selectedProcedure.procedure_code,
                 selected_tooth_raw: selectedTooth_Raw,
                 note: treatmentNote,
@@ -578,14 +629,150 @@ const AddTreatmentPage = ({ patientID }) => {
     submitAddTreatment();
   };
 
+  // Select Date
+  const handleOnDateChange = (date) => {
+    setDate(date._d);
+  }
+  // Select Assistant
+  const handleOnAssistantChange = (option) => {
+    setAssistant(option);
+  
+  }
+  // Autocomplete Assistant
+  const loadAssistantOptions  = (inputValue) => {
+    return new Promise(async (resolve) => {
+      try {
+          let options = [];
+          const result = await api.httpGet({
+              url: apiPath.staff.staff + apiPath.common.autocomplete,
+              query: {
+                  data: inputValue,
+                  limit: figures.autocomplete.limit,
+                  staffType: lists.staff.staffType.staff
+              }
+          });
+          if (result.success){
+              options = result.payload.map((option) => ({
+                  value: option._id,
+                  label: `${option.first_name} ${option.last_name} (${option.display_id})`
+              }));
+          }
+          options.unshift(noneOption);
+          resolve(options);
+      } catch(err){
+          toast.error(err);
+      }
+    });
+  };
+
+  // Select Provider
+  const handleOnProviderChange = (option) => {
+    setProvider(option);
+  }
+
+  // Autocomplete Provider
+  const loadProviderOptions  = (inputValue) => {
+    return new Promise(async (resolve) => {
+      try {
+          let options = [];
+          const result = await api.httpGet({
+              url: apiPath.staff.staff + apiPath.common.autocomplete,
+              query: {
+                  data: inputValue,
+                  limit: figures.autocomplete.limit,
+                  staffType: lists.staff.staffType.provider,
+              }
+          });
+          if (result.success){
+              options = result.payload.map((option, index) => {
+                  return {
+                      value: option._id,
+                      label: `${option.first_name} ${option.last_name} (${option.display_id})`
+                  }
+              });
+          }
+          options.unshift({value: -1, label: t(strings.none)});
+          resolve(options);
+      } catch(err){
+          toast.error(err);
+      }
+    });
+  };
+
   function getStepContent(step) {
     switch (step) {
       case 0:
         return (
           <div className={classes.stepContent}>
             <h1>{t(strings.selectTreatment)}</h1>
-            {/* // Todo: bổ sung thêm select provider và assistant /////// */}
-            <Grid item md={8} sm={6} xs={12}>
+            {/* Date */}
+            <Grid item md={4} sm={6} xs={8} className={classes.selectProviderAssistant}>
+              <DatePicker
+                  label={t(strings.date)}
+                  id="treatment-date"
+                  margin="dense"
+                  inputVariant="outlined"
+                  size="small"
+                  fullWidth
+                  format={strings.defaultDateFormat}
+                  value={date}
+                  onChange={() => {}}
+                  onAccept={handleOnDateChange}
+                  InputLabelProps={{
+                      shrink: true,
+                  }}
+                  helperText={dateErrMsg}
+                  error={Boolean(dateErrMsg)}
+              />
+            </Grid>
+            {/* Select Provider/Assistant */}
+            <Grid item container md={8} sm={6} xs={12} className={classes.selectProviderAssistant} spacing={2}>
+              {/* Assistant */}
+              <Grid item md={6} sm={12} xs={12}>
+                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
+                    <label htmlFor="treatment-assistant" className={classes.autocompleteLabel}>{t(strings.assistant)}</label>
+                    <AsyncSelect
+                        inputId="treatment-assistant"
+                        item
+                        cacheOptions 
+                        defaultOptions 
+                        loadOptions={loadAssistantOptions}
+                        styles={asyncSelectStyle}
+                        placeholder={t(strings.select) + " " + t(strings.assistant)}
+                        noOptionsMessage={() => t(strings.noOptions)}
+                        value={assistant || null}
+                        onChange={handleOnAssistantChange}
+                    />
+                </FormControl>
+              </Grid>
+              {/* Provider */}
+              <Grid item md={6} sm={12} xs={12} className={classes.selectProvider}>
+                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
+                    <label htmlFor="treatment-provider" className={classes.autocompleteLabel}>{t(strings.provider)}</label>
+                    <AsyncSelect
+                        inputId="treatment-provider"
+                        item
+                        cacheOptions 
+                        defaultOptions 
+                        loadOptions={loadProviderOptions}
+                        styles={asyncSelectStyle}
+                        placeholder={t(strings.select) + " " + t(strings.provider)}
+                        noOptionsMessage={() => t(strings.noOptions)}
+                        value={provider || null}
+                        onChange={handleOnProviderChange}
+                    />
+                    {Boolean(providerErrMsg) && 
+                      <FormHelperText
+                          className={classes.formMessageFail}
+                          error={true}
+                      >
+                          {t(providerErrMsg)}
+                      </FormHelperText>
+                    }
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid item md={8} sm={6} xs={12} className={classes.selectCategory}>
               <InputLabel shrink id="treatment-category">
                 {t(strings.category)}
               </InputLabel>

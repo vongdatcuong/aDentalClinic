@@ -146,6 +146,8 @@ export default {
         "Load Appointment Document fail": "Tải tài liệu cuộc hẹn thất bại",
         "Load Patient Document fail": "Tải tài liệu bệnh nhân thất bại",
         "Load Appointment of Patient Document fail": "Tải tài liệu cuộc hẹn của bệnh nhân thất bại",
+        // Error Messages Treatment
+        "Treatment date must be in the future": "Ngày điều trị phải ở tương lai",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",

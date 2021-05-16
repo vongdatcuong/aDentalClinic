@@ -147,6 +147,8 @@ export default {
         "Load Appointment Document fail": "Load Appointment Document fail",
         "Load Patient Document fail": "Load Patient Document fail",
         "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
+        // Error Messages Treatment
+        "Treatment date must be in the future": "Treatment date must be in the future",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",

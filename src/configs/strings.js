@@ -251,6 +251,8 @@ const loadStatisticsErrMsg = "Load Report fail";
 const loadAppointDocErrMsg = "Load Appointment Document fail";
 const loadPatientDocErrMsg = "Load Patient Document fail";
 const loadAppointPatientDocErrMsg = "Load Appointment of Patient Document fail";
+    // Error Messages Treatments
+const treatmentDateErrMsg = "Treatment date must be in the future";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -587,6 +589,8 @@ export default {
     loadAppointDocErrMsg,
     loadPatientDocErrMsg,
     loadAppointPatientDocErrMsg,
+    // Error Messages Treatments
+    treatmentDateErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
