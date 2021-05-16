@@ -227,7 +227,7 @@ const PatientProfilePage = ({ patientID }) => {
                     {editOralHeath ? t(strings.save) : t(strings.edit)}
                   </Button>
                 </Typography>
-                <span>
+                <span className={classes.indexInputWrapper}>
                   {t(strings.plaqueIndex).toUpperCase()}:
                   <input
                     type="number"
@@ -248,7 +248,7 @@ const PatientProfilePage = ({ patientID }) => {
                   ></LinearProgress>
                 </span>
 
-                <span>
+                <span className={classes.indexInputWrapper}>
                   {t(strings.bleedingIndex).toUpperCase()}:
                   <input
                     type="number"
@@ -269,7 +269,7 @@ const PatientProfilePage = ({ patientID }) => {
                   ></LinearProgress>
                 </span>
 
-                <span>
+                <span className={classes.indexInputWrapper}>
                   {t(strings.halitosis).toUpperCase()}:
                   <input
                     type="number"

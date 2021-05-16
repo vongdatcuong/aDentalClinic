@@ -13,6 +13,18 @@ const loginStyle = (theme) => ({
     height: "40vh",
     borderBottom: "solid gray 0.1rem",
   },
+  indexInputWrapper: {
+    display: 'inline-block',
+    width: '90%',
+    '& input': {
+      display: 'block',
+      float: 'right',
+      [theme.breakpoints.down('sm')]: {
+        float: 'none',
+        margin: '2px auto'
+      },
+    }
+  },
   inputOralHeath: {
       marginLeft: theme.spacing(0.2),
       maxWidth: "3rem",
