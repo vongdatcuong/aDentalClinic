@@ -70,7 +70,7 @@ const useStyles = makeStyles(styles);
 
 const AppointmentTab = ({
     selectedChairId, selectedAppointStart, selectedDuration, chairs, cellDuration, startDayHour, endDayHour, holidays, appointRequest,
-    onClose, onSelectChair, onSelectDate, onAddAppointment, setSelectedAppointReqIdx
+    onClose, onSelectChair, onSelectDate, onAddAppointment, setSelectedAppointReqIdx, onSelectDuration
 }) => {
     const classes = useStyles();
     const [t, i18n] = useTranslation();
@@ -103,7 +103,6 @@ const AppointmentTab = ({
     const [assistant, setAssistant] = useState(null);
     const [provider, setProvider] = useState(null);
     const [staging, setStaging] = useState(lists.appointment.staging.new);
-    const [duration, setDuration] = useState(selectedDuration);
     const [note, setNote] = useState("");
 
     const [firstNameErrMsg, setFirstNameErrMsg] = useState("");
@@ -136,12 +135,12 @@ const AppointmentTab = ({
 
     // Treatments
     const [treatments, setTreatments] = useState([]);
-    const [addedTreatments, setAddedTreatments] = useState([]);
+    //const [addedTreatments, setAddedTreatments] = useState([]);
 
     // Dialogs
     const [openRecallDialog, setOpenRecallDialog] = useState(false);
     const [openTreatmentDialog, setOpenTreatmentDialog] = useState(false);
-    const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
+    //const [openAddTreatmentDialog, setOpenAddTreatmentDialog] = useState(false);
 
     // Temp
     const [fakeTempProvi, setFakeTempProvi] = useState(1);
@@ -149,7 +148,6 @@ const AppointmentTab = ({
     const [lastAppointRequest, setLastAppointRequest] = useState(null);
 
     useEffect(async () => {
-        setDuration(selectedDuration);
         setFakeTempProvi(fakeTempProvi + 1);
 
         // Appointment Request
@@ -189,7 +187,7 @@ const AppointmentTab = ({
 
         setRecalls([]);
         setTreatments([]);
-        setAddedTreatments([]);
+        //setAddedTreatments([]);
 
         // Ref
         patientIDRef.current.value = "";
@@ -265,7 +263,7 @@ const AppointmentTab = ({
                 }
                 setRecalls([]);
                 setTreatments([]);
-                setAddedTreatments([]);
+                //setAddedTreatments([]);
             } else {
                 toast.error(result.message);
             }
@@ -322,7 +320,7 @@ const AppointmentTab = ({
     }
 
     const handleOnDurationChange = (evt) => {
-        setDuration(evt.target.value);
+        onSelectDuration(evt.target.value);
     }
 
     const handleOnNoteChange = (evt) => {
@@ -415,7 +413,7 @@ const AppointmentTab = ({
                 let startDayNum = Number(startDayHour.slice(0, 2)) + Number(startDayHour.slice(3)) / 60,
                     endDayNum = Number(endDayHour.slice(0, 2)) + Number(endDayHour.slice(3)) / 60,
                     appointTimeNum = Number(appointTime.slice(0, 2)) + Number(appointTime.slice(2)) / 60;
-                    appointTimeNum+= duration/60;
+                    appointTimeNum+= selectedDuration/60;
                 if (appointTimeNum >= startDayNum && appointTimeNum <= endDayNum){
                     const appointData = {
                         patient: patient?.value || "",
@@ -424,7 +422,7 @@ const AppointmentTab = ({
                         chair: selectedChairId,
                         appointment_date:  startOfSelectedDate._d,
                         appointment_time: appointTime,
-                        duration: duration,
+                        duration: selectedDuration,
                         note: note,
                         status: staging,
                         recall_link: recalls.map((recall) => recall.id),
@@ -568,15 +566,15 @@ const AppointmentTab = ({
     }
 
     // Add Treatment Dialog
-    const handleOpenAddTreatmentDialog = () => {
+    /*const handleOpenAddTreatmentDialog = () => {
         setOpenAddTreatmentDialog(true);
-    }
+    }*/
 
-    const handleCloseAddTreatmentDialog = () => {
+    /*const handleCloseAddTreatmentDialog = () => {
         setOpenAddTreatmentDialog(false);
-    }
+    }*/
 
-    const handleAddNewTreatment = (procedure, surface, tooth) => {
+    /*const handleAddNewTreatment = (procedure, surface, tooth) => {
         const newTreatment = {};
         newTreatment.procedure_code = procedure.id; // ID
         newTreatment.surface = surface || noneStr;
@@ -586,7 +584,7 @@ const AppointmentTab = ({
         const addeds = [...addedTreatments];
         addeds.push(newTreatment);
         setAddedTreatments(addeds)
-      }
+    }*/
 
     const resetAllFields = () => {
         setIsNewPatient(true);
@@ -599,7 +597,7 @@ const AppointmentTab = ({
         setAssistant(null);
         setProvider(null);
         setStaging(lists.appointment.staging.new);
-        setDuration(cellDuration);
+        onSelectDuration(cellDuration);
         setNote("");
         setFirstNameErrMsg("");
         setLastNameErrMsg("");
@@ -611,10 +609,10 @@ const AppointmentTab = ({
         setTimeErrMsg("");
         setRecalls([]);
         setTreatments([]);
-        setAddedTreatments([]);
+        //setAddedTreatments([]);
         setOpenRecallDialog(false);
         setOpenTreatmentDialog(false);
-        setOpenAddTreatmentDialog(false);
+        //setOpenAddTreatmentDialog(false);
 
         // Ref
         patientIDRef.current.value = "";
@@ -1039,7 +1037,7 @@ const AppointmentTab = ({
                                     variant="outlined"
                                     size="small"
                                     fullWidth
-                                    value={duration}
+                                    value={selectedDuration}
                                     onChange={handleOnDurationChange}
                                 >
                                     {durationOptions}
@@ -1205,13 +1203,13 @@ const AppointmentTab = ({
                 onSelect={setTreatments}
                 selectedDate={selectedAppointStart}
             />
-            <AddTreatmentDialog
+            {/*<AddTreatmentDialog
                 patientID={patient.value}
                 open={openAddTreatmentDialog}
                 onClose={handleCloseAddTreatmentDialog}
                 onAdd={handleAddNewTreatment}
                 selectedDate={selectedAppointStart}
-            />
+            />*/}
         </Paper>
     )
 }
