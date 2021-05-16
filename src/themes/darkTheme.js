@@ -15,12 +15,41 @@
 
 import {hexToRgb} from '../utils/colors';
   
+  // Width Height
   const drawerLeftWidth = 120;
   const drawerRightWidth = 240;
   const drawerRightCloseWidth = 50;
   const notificationPopoverWidth = 420;
   const notificationPopoverMinHeight = 300;
   const notificationPopoverMaxHeight = 600;
+  const filterChairPopoverWidth = 200;
+  const filterChairPopoverMaxWidth = 300;
+  const filterPatientPopoverWidth = 500;
+  const filterPatientPopoverMaxWidth = 700;
+  const filterPatientPopoverHeight = 300;
+  const filterPatientPopoverMaxHeight = 800;
+  const appointmentRecallTableHeight = 300;
+  const appointmentTreatmentTableHeight = 350;
+  const appointRecallDialogWidth = '70%';
+  const appointTreatmentDialogWidth = '80%';
+  const appointAddTreatmentDialogWidth = '50%';
+  const appointRecallDialogMaxHeight = 600;
+  const appointTreatmentDialogMaxHeight = 600;
+  const confirmDialogMinWidth = 350;
+  const appointTooltipMaxWidth = 450;
+  const scheduleAutoItemMinWidth = 150;
+  const addScheduleMonthlyWidth = 600;
+  const addScheduleMonthlyHeight = 500;
+  const appointExportDialogWidth = '40%';
+  const appointExportDialogWidthSm = '70%';
+  const appointExportDialogMaxHeight = 300;
+
+  // Z-index
+  const miniLeftSidebarZIndex = 999;
+  const loadingZIndex = 9999;
+  const menuBarZIndex = 998;
+  const selectedToothZIndex = 900;
+  const fabZIndex = 99999;
 
   const transition = {
     transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
@@ -52,9 +81,29 @@ import {hexToRgb} from '../utils/colors';
   const hoverDarkColor = ["#551796", "#5e19a7", "#681cb8", "#711ec9"];
   const blackColor = "#000000";
   const whiteColor = "#ffffff";
-  
+  const circularProgressChart = '#8529e6';
+  const coldColor = "#dde9ef";
+  const percussionColor = "#ccffcc";
+  const palpationColor = "#ffd9b3";
+  const heatColor = "#ffc2b3";
+  const electricityColor = "#ffffcc";
+
+  const tableInsertLinkIconColor = "#bb001b";
+  const tableAddIconColor = "#34a853";
+
+  const scheduleMonthlyItemColor = "#8c8daf";
+  const scheduleWeeklyItemColor = "#ba9187";
+  const scheduleAutoItemColor = "#639f88";
   const pageBackgroundColor = "#fafafa";
 
+  // Google map
+  const mapMinWidth = 500;
+  const mapMinHeight = 500;
+
+  // opacity
+  const secondaryOpacity = 0.54;
+
+  
   const boxShadow = {
     boxShadow:
       "0 10px 30px -12px rgba(" +
@@ -178,12 +227,41 @@ import {hexToRgb} from '../utils/colors';
   
 export default {
   hexToRgb,
+  // Width Height
   drawerLeftWidth,
   drawerRightWidth,
   drawerRightCloseWidth,
   notificationPopoverWidth,
   notificationPopoverMinHeight,
   notificationPopoverMaxHeight,
+  filterChairPopoverWidth,
+  filterChairPopoverMaxWidth,
+  filterPatientPopoverWidth,
+  filterPatientPopoverHeight,
+  filterPatientPopoverMaxWidth,
+  filterPatientPopoverMaxHeight,
+  appointmentRecallTableHeight,
+  appointmentTreatmentTableHeight,
+  appointRecallDialogWidth,
+  appointTreatmentDialogWidth,
+  appointAddTreatmentDialogWidth,
+  appointRecallDialogMaxHeight,
+  appointTreatmentDialogMaxHeight,
+  confirmDialogMinWidth,
+  appointTooltipMaxWidth,
+  scheduleAutoItemMinWidth,
+  addScheduleMonthlyWidth,
+  addScheduleMonthlyHeight,
+  appointExportDialogWidth,
+  appointExportDialogWidthSm,
+  appointExportDialogMaxHeight,
+  // Z-index
+  miniLeftSidebarZIndex,
+  loadingZIndex,
+  menuBarZIndex,
+  selectedToothZIndex,
+  fabZIndex,
+  // ???
   transition,
   boxShadow,
   fontColor,
@@ -197,9 +275,22 @@ export default {
   grayColor,
   blackColor,
   whiteColor,
+  circularProgressChart,
+  coldColor,percussionColor,palpationColor,heatColor,electricityColor, //Endodontic test color
   hoverBrightColor,
   hoverDarkColor,
+  tableInsertLinkIconColor,
+  tableAddIconColor,
+  scheduleMonthlyItemColor,
+  scheduleWeeklyItemColor,
+  scheduleAutoItemColor,
   pageBackgroundColor,
+  // Google Map
+  mapMinWidth,
+  mapMinHeight,
+  // Opacity
+  secondaryOpacity,
+  //
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,

@@ -144,7 +144,9 @@ const General = () => {
   };
 
   const handleChangeTheme = useCallback(async (value) => {
-    if (value === language){
+    if (!value) return;
+    value = Number(value);
+    if (value === theme){
       return;
     }
     try {
