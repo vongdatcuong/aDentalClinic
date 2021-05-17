@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/core Component
-import Container from "@material-ui/core/Container";
 import styles from "../../jss";
-import strings from "../../../../../configs/strings";
 import Typography from "@material-ui/core/Typography";
 
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import IconButton from "@material-ui/core/IconButton";
 // Component
-import { toast } from "react-toastify";
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
+import Draggable from "react-draggable"; // Both at the same time
 import { FaPencilAlt, FaSearchPlus, FaTrashAlt } from "react-icons/fa";
 
 import keys from "../../../../../configs/keys";

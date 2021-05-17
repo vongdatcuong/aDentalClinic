@@ -11,7 +11,6 @@ import AuthorizedRoute from './AuthorizedRoute';
 // Components
 import PageContainer from "../layouts/PageContainer";
 import LeftSidebar from "../layouts/LeftSidebar";
-import RightSidebar from "../layouts/RightSidebar";
 import Providers from "../components/feature/Providers";
 import Staffs from "../components/feature/Staffs";
 import Procedure from "../components/feature/Procedure";
@@ -28,12 +27,9 @@ import LoginPage from '../components/feature/LoginPage';
 import Settings from '../components/feature/Settings';
 import ToothChartPage from '../components/feature/ToothChartPage';
 import PatientProfilePage from '../components/feature/PatientProfilePage';
-import MenuBar from "../layouts/MenuBar";
 import Management from "../components/feature/Management";
 import PatientNotePage from "../components/feature/PatientNotePage";
-
 import PatientXRayImagesPage from "../components/feature/PatientXRayImagesPage";
-import PatientAddXRayImagesPage from "../components/feature/PatientAddXRayImagesPage";
 import PatientViewXRayImagesPage from "../components/feature/PatientViewXRayImagesPage";
 import PatientImagesPage from "../components/feature/PatientImagesPage";
 import PatientPrescriptionPage from "../components/feature/PatientPrescriptionPage";
@@ -44,7 +40,6 @@ import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
 import AddTreatmentPage from '../components/feature/AddTreatmentPage';
-import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 function PatientProfile() {
     let { patientID } = useParams();

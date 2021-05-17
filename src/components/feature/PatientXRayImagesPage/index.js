@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
@@ -8,13 +8,7 @@ import styles from "./jss";
 import strings from "../../../configs/strings";
 import Typography from "@material-ui/core/Typography";
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
-import Button from "@material-ui/core/Button";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-
-import TwoLayer from "../../../assets/images/2-Layer.png";
-import FourLayer from "../../../assets/images/4-Layer.png";
-import DefaultMouthThumbnail from "../../../assets/mount-template/thumnail_default_mountemplate.png";
+import { useTranslation } from "react-i18next";
 import path from "../../../routes/path";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";

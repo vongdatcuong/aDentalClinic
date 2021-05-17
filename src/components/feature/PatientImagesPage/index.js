@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Viewer from "react-viewer";
-import toothImg from "../../../assets/images/XRayTeeth.png";
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
 import styles from "./jss";
@@ -10,12 +9,11 @@ import Typography from "@material-ui/core/Typography";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import ConfirmDialog from "../../dialogs/ConfirmDialog";
 import { FaExpand, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Select from "@material-ui/core/Select";
@@ -29,6 +27,10 @@ import { toast } from "react-toastify";
 import moment from "moment";
 // Context
 import { loadingStore } from "../../../contexts/loading-context";
+
+// Icons
+import NoDataIcon from '../../common/NoDataIcon';
+
 const useStyles = makeStyles(styles);
 
 const PatientImagesPage = ({ patientID }) => {
@@ -184,64 +186,65 @@ const PatientImagesPage = ({ patientID }) => {
             </Select>
           </div>
 
-          <GridList className={classes.gridList}>
-            {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">December</ListSubheader>
-        </GridListTile> */}
-            <Pagination
-              data={imageList}
-              pageSize={imagesPerPage}
-              renderItem={(image, index) => (
-                <GridListTile key={image.img}>
-                  <img
-                    src={image.src}
-                    alt={image.title}
-                    className={classes.thumbnail}
-                    onClick={() => {
-                      handleViewImage(index);
-                    }}
-                  />
-                  <GridListTileBar
-                    title={image.title}
-                    subtitle={<span>Date: {image.date}</span>}
-                    actionIcon={
-                      <div>
-                        <IconButton
-                          onClick={() => handleOpenConfirmDelete(image)}
-                          aria-label={`edit info about ${image.title}`}
-                          className={classes.icon}
-                          size="small"
-                        >
-                          <FaTrashAlt />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => openUpdateDialogVisible(image)}
-                          aria-label={`edit info about ${image.title}`}
-                          className={classes.icon}
-                          size="small"
-                        >
-                          <FaPencilAlt />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => {
-                            handleViewImage(index);
-                          }}
-                          aria-label={`info about ${image.title}`}
-                          className={classes.icon}
-                          size="small"
-                        >
-                          <FaExpand />
-                        </IconButton>
-                      </div>
-                    }
-                  />
-                </GridListTile>
-              )}
-            />
-            {/* {images.map((image, index) => (
-            
-          ))} */}
-          </GridList>
+          {(imageList.length > 0)? 
+            <GridList className={classes.gridList}>
+              {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                  <ListSubheader component="div">December</ListSubheader>
+                </GridListTile> */}
+              <Pagination
+                data={imageList}
+                pageSize={imagesPerPage}
+                renderItem={(image, index) => (
+                  <GridListTile key={image.img}>
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className={classes.thumbnail}
+                      onClick={() => {
+                        handleViewImage(index);
+                      }}
+                    />
+                    <GridListTileBar
+                      title={image.title}
+                      subtitle={<span>Date: {image.date}</span>}
+                      actionIcon={
+                        <div>
+                          <IconButton
+                            onClick={() => handleOpenConfirmDelete(image)}
+                            aria-label={`edit info about ${image.title}`}
+                            className={classes.icon}
+                            size="small"
+                          >
+                            <FaTrashAlt />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => openUpdateDialogVisible(image)}
+                            aria-label={`edit info about ${image.title}`}
+                            className={classes.icon}
+                            size="small"
+                          >
+                            <FaPencilAlt />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => {
+                              handleViewImage(index);
+                            }}
+                            aria-label={`info about ${image.title}`}
+                            className={classes.icon}
+                            size="small"
+                          >
+                            <FaExpand />
+                          </IconButton>
+                        </div>
+                      }
+                    />
+                  </GridListTile>
+                )}
+              />
+            </GridList>
+          : 
+            <div className={classes.noDataIcon}><NoDataIcon/></div>
+          }
           <Viewer
             noImgDetails={true}
             visible={visible}

@@ -1,27 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/core Component
-import Container from "@material-ui/core/Container";
 import styles from "./jss";
 import strings from "../../../../../configs/strings";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from '@material-ui/core/Grid';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
-import IconButton from "@material-ui/core/IconButton";
+import { useTranslation } from "react-i18next";
 // Component
 import { toast } from "react-toastify";
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
-import { FaPencilAlt, FaSearchPlus, FaTrashAlt } from "react-icons/fa";
 import { loadingStore } from "../../../../../contexts/loading-context";
 import ImageService from "../../../../../api/images/image.service";
-import keys from "../../../../../configs/keys";
+
 const useStyles = makeStyles(styles);
 const ImageDialog = ({ open, onClose, onSelect, patientID }) => {
   const [imageList, setImageList] = React.useState([]);

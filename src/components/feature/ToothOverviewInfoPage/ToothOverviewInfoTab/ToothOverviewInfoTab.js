@@ -42,14 +42,14 @@ function a11yProps(index) {
   };
 }
 
-const EndodonticItem = (props) => {
+const EndodonticItem = (props) => { console.log(props);
   const classes = useStyles();
   return (
     <div className={classes.endodonticItem}>
       <span className={classes.endodonticTestIcon}>{props.icon}</span>
       <span className={classes.endodonticTestName}>{props.testName}</span>
       <span className={classes.endodonticTestStatus}>
-        <span>{props.testStatus}</span>
+        <span>{props.value}</span>
         <span>
           <ChevronRightIcon></ChevronRightIcon>
         </span>
@@ -288,12 +288,33 @@ const ToothOverviewInfoTab = (props) => {
                 className={classes.tabs}
               >
                 {endodonticList.map((endodonticItem, index) => {
+                  let value = 0;
+                  switch (endodonticItem.testName){
+                    case strings.cold:
+                      value = toothCold;
+                      break;
+                    case strings.percussion:
+                      value = toothPercussion;
+                      break;
+                    case strings.palpation:
+                      value = toothPalpation;
+                      break;
+                    case strings.heat:
+                      value = toothHeat;
+                      break;
+                    case strings.electricity:
+                      value = toothEletricity;
+                      break;
+                    default:
+                      value = 0;
+                  }
                   return (
                     <Tab
                       label=<EndodonticItem
                         icon={endodonticItem.icon}
                         testName={endodonticItem.testName}
                         testStatus={endodonticItem.testStatus}
+                        value={value}
                       />
                       {...a11yProps(index)}
                     />

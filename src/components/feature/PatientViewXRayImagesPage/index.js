@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import XrayBackground from "../../../assets/images/xray_bg.png";
 import Viewer from "react-viewer";
 // @material-ui/core Component
@@ -9,20 +9,15 @@ import strings from "../../../configs/strings";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
 import { toast } from "react-toastify";
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import {
   FaPencilAlt,
   FaSave,
-  FaSearchPlus,
   FaTimes,
   FaTrashAlt,
 } from "react-icons/fa";

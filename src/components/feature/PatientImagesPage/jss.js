@@ -56,6 +56,11 @@ const styles = (theme) => ({
   selectImgPerPage: {
     marginLeft: theme.spacing(1),
   },
+  noDataIcon: {
+    textAlign: 'center',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  }
 });
 
 export default styles;
