@@ -15,7 +15,7 @@ import moment from 'moment';
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { MdSettingsBackupRestore } from "react-icons/md";
+import { FaTeethOpen } from "react-icons/fa";
 
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
@@ -646,6 +646,24 @@ const AddTreatmentPage = ({ patientID }) => {
     });
   };
 
+  // for quickly select tooth
+  const selectAllTopTeeth = () => {
+    for (let i = 1; i <=16 ; i++) {
+        let tooth = "Tooth" + i;
+        if (toothCondition[i-1] !== "MISSING") {
+            handleSelectToothQuickselect(tooth);
+        }
+    }
+  }
+  const selectAllBottomTeeth = () => {
+    for (let i = 17; i <=32 ; i++) {
+        let tooth = "Tooth" + i;
+        if (toothCondition[i-1] !== "MISSING") {
+            handleSelectToothQuickselect(tooth);
+        }
+    }
+  }
+
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -862,6 +880,22 @@ const AddTreatmentPage = ({ patientID }) => {
                 </ButtonGroup>
               </Grow>
             </span>
+            <div className={classes.btnQuickSelect}>
+                  <Button
+                    onClick={ selectAllTopTeeth }
+                    className={classes.button}
+                  >
+                    <svg height="20" width="20" className={classes.coverIconBot}> </svg> 
+                    <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
+                  </Button>
+                  <Button
+                    onClick={ selectAllBottomTeeth }
+                    className={classes.button}
+                  >
+                    <svg height="20" width="20" className={classes.coverIconTop}> </svg> 
+                    <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
+                  </Button>
+                </div>
           </div>
         );
       case 2:

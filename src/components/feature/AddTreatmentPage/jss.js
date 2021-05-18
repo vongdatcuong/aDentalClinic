@@ -68,6 +68,14 @@ const styles = (theme) => ({
       marginTop: theme.spacing(4),
       marginRight: theme.spacing(5),
   },
+  btnQuickSelect: {
+    display: "grid",
+    position: "fixed",
+    right: 0,
+    top: 0,
+    marginTop: theme.spacing(37),
+    marginRight: theme.spacing(5),
+  },
   selectProcedure: {
     marginTop: theme.spacing(4),
   },
@@ -104,6 +112,23 @@ const styles = (theme) => ({
     marginTop: '4px',
     marginLeft: theme.spacing(1.5),
     marginBottom: theme.spacing(1.5)
+  },
+  teethIcon: {
+      fontSize: "4rem",
+  },
+  coverIconTop: {
+      height: "2rem",
+      width: "4rem",
+      position: "absolute",
+      bottom: "50%",
+      backgroundColor: theme.pageBackgroundColor,
+  },
+  coverIconBot: {
+      height: "2rem",
+      width: "4rem",
+      position: "absolute",
+      top: "50%",
+      backgroundColor: theme.pageBackgroundColor,
   },
 });
 

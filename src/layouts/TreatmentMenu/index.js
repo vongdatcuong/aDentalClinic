@@ -99,6 +99,8 @@ const TreatmentMenu = ({ patientID }) => {
       return newUrl.substring(0, newUrl.lastIndexOf("/"));
     } else if (curUrl.includes("toothOverviewInfo")) {
       return curUrl.substring(0, curUrl.lastIndexOf("/"));
+    } else if (curUrl.includes("addTreatment")) {
+      return curUrl.replace("addTreatment", "profile");
     } else {
       return path.patientPath;
     }
