@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Container from "@material-ui/core/Container";
 import styles from "./jss";
 import strings from "../../../../configs/strings";
+import lists from "../../../../configs/lists";
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
@@ -28,7 +29,6 @@ import { FaHammer, FaHandPaper, FaFireAlt } from "react-icons/fa";
 import { AiFillThunderbolt } from "react-icons/ai";
 
 // Component
-import PopupChat from "../../../common/Messenger/PopupChat";
 import TabPanel from "../../../common/TabPanel";
 // Toast
 import { toast } from "react-toastify";
@@ -42,14 +42,14 @@ function a11yProps(index) {
   };
 }
 
-const EndodonticItem = (props) => { console.log(props);
+const EndodonticItem = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.endodonticItem}>
       <span className={classes.endodonticTestIcon}>{props.icon}</span>
       <span className={classes.endodonticTestName}>{props.testName}</span>
       <span className={classes.endodonticTestStatus}>
-        <span>{props.value}</span>
+        <span>{props.valueStr}</span>
         <span>
           <ChevronRightIcon></ChevronRightIcon>
         </span>
@@ -288,25 +288,25 @@ const ToothOverviewInfoTab = (props) => {
                 className={classes.tabs}
               >
                 {endodonticList.map((endodonticItem, index) => {
-                  let value = 0;
-                  switch (endodonticItem.testName){
-                    case strings.cold:
+                  let value = -1;
+                  switch (index){
+                    case 0:
                       value = toothCold;
                       break;
-                    case strings.percussion:
+                    case 1:
                       value = toothPercussion;
                       break;
-                    case strings.palpation:
+                    case 2:
                       value = toothPalpation;
                       break;
-                    case strings.heat:
+                    case 3:
                       value = toothHeat;
                       break;
-                    case strings.electricity:
+                    case 4:
                       value = toothEletricity;
                       break;
                     default:
-                      value = 0;
+                      value = -1;
                   }
                   return (
                     <Tab
@@ -314,7 +314,7 @@ const ToothOverviewInfoTab = (props) => {
                         icon={endodonticItem.icon}
                         testName={endodonticItem.testName}
                         testStatus={endodonticItem.testStatus}
-                        value={value}
+                        valueStr={(value !== -1)? t(lists.toothChart.toothTestValues[value]) : "..."}
                       />
                       {...a11yProps(index)}
                     />

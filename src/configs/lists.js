@@ -60,6 +60,11 @@ const exportObj = {
     }
 }
 
+// Tooth chart
+const toothChart = {
+    toothTestValues: [strings.notApplicable, strings.positive, strings.uncertain, strings.negative],
+}
+
 export default {
     languages,
     themes,
@@ -67,5 +72,6 @@ export default {
     staff,
     schedule,
     date,
-    exportObj
+    exportObj,
+    toothChart
 }
