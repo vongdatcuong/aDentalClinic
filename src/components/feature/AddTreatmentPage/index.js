@@ -532,11 +532,14 @@ const AddTreatmentPage = ({ patientID }) => {
   function validateData() {
     let isValid = true;
     // Treatment Date
-    if (date?.getTime() < Date.now()){ // Treatment date must be in the future
-        setDateErrMsg(t(strings.treatmentDateErrMsg));
-        isValid = false;
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1);
+    if (date?.getTime() < currentDate) {
+      // Treatment date must be in the future
+      setDateErrMsg(t(strings.treatmentDateErrMsg));
+      isValid = false;
     } else {
-        setDateErrMsg("");
+      setDateErrMsg("");
     }
     // Provider
     if (!provider?.value){
@@ -544,6 +547,13 @@ const AddTreatmentPage = ({ patientID }) => {
         isValid = false;
     } else {
         setProviderErrMsg("");
+    }
+    //Procedure code
+    if (selectedProcedure == null) {
+      setProcedureErrMsg(t(strings.appointProcedureErrMsg));
+      isValid = false;
+    } else {
+      setProcedureErrMsg("");
     }
     return isValid;
   }
@@ -556,7 +566,7 @@ const AddTreatmentPage = ({ patientID }) => {
                 patient: patientID,
                 provider: provider.value,
                 assistant: assistant?.value,
-                procedure_code: selectedProcedure?.procedure_code,
+                procedure_code: selectedProcedure?.id,
                 selected_tooth_raw: selectedTooth_Raw,
                 note: treatmentNote,
                 status: "PLAN",  // hardcode
