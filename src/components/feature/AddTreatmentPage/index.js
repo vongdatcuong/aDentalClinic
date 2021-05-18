@@ -220,13 +220,6 @@ const AddTreatmentPage = ({ patientID }) => {
         setSelectedProcedure_text("Not selected");
         clearSelectedTooth();
         resetSelectedToothArray();
-        //   setSelectedTooth(null);
-        //   setSelectedTeeth([]);
-        //   setSelectedSurface(null);
-        //   setAllowMultipleTooth(false);
-        //   setAllowNoTooth(false);
-        //   setAllowedTeeth({});
-        //   setSurfaces([]);
       } else {
         toast.error(result.message);
       }
@@ -255,53 +248,6 @@ const AddTreatmentPage = ({ patientID }) => {
         })
         clearSelectedTooth();
         resetSelectedToothArray();
-        // const selectedTooth = result[0].payload.tooth_select;
-        // if (selectedTooth){
-        // const tokens = selectedTooth.split(":");
-        // if (tokens[0] == strings.selectNoneTooth){
-        //     setAllowNoTooth(true);
-        //     setAllowMultipleTooth(false);
-        //     setAllowedTeeth({});
-        // } else {
-        //     if (tokens[0] == strings.selectMultiTooth){
-        //     setAllowMultipleTooth(true);
-        //     } else {
-        //     setAllowMultipleTooth(false);
-        //     }
-        //     let isOpt = false;
-        //     if (tokens[tokens.length - 1] == "opt"){
-        //     setAllowNoTooth(true);
-        //     isOpt = true;
-        //     } else {
-        //     setAllowNoTooth(false);
-        //     }
-        //     // Allowed teeth
-        //     let newAllowedTeeth = {};
-        //     let toks;
-        //     for (let i = 1; i < tokens.length - isOpt; i++){
-        //     if (tokens[i].indexOf("-") != -1){
-        //         toks = tokens[i].split("-");
-        //         for (let j = Number(toks[0]); j <= Number(toks[1]); j++){
-        //         newAllowedTeeth[j] = true;
-        //         }
-        //     } else {
-        //         toks = tokens[i].split(",");
-        //         for (let j = 0; j < toks.length; j++){
-        //         newAllowedTeeth[toks[j]] = true;
-        //         }
-        //     }
-        //     }
-        //     setAllowedTeeth(newAllowedTeeth);
-        // }
-        // } else {
-        // setAllowMultipleTooth(false);
-        // setAllowNoTooth(false);
-        // setAllowedTeeth({});
-        // }
-        // setSelectedTooth(null);
-        // setSelectedTeeth([]);
-        // setSelectedSurface(null);
-        // setSurfaces([]);
       } else {
         toast.error(result.message);
       }
@@ -552,24 +498,26 @@ const AddTreatmentPage = ({ patientID }) => {
   }
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // update setSelectedTooth_Display
-    let displayString = "";
-    selectedTooth_Raw.forEach(tooth => {
-        if(tooth.isSelected === true) {
-            displayString += "\n\tTooth " + tooth.toothNumber + ": ";
-            displayString += tooth.distal === true ? "D" : "";
-            displayString += tooth.mesial === true ? "M" : "";
-            displayString += tooth.facial === true ? "F" : "";
-            displayString += tooth.lingual === true ? "L" : "";
-            displayString += tooth.top === true ? "T" : "";
-            displayString += tooth.root === true ? "R" : "";
+      if (validateData()) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // update setSelectedTooth_Display
+        let displayString = "";
+        selectedTooth_Raw.forEach(tooth => {
+            if(tooth.isSelected === true) {
+                displayString += "\n\tTooth " + tooth.toothNumber + ": ";
+                displayString += tooth.distal === true ? "D" : "";
+                displayString += tooth.mesial === true ? "M" : "";
+                displayString += tooth.facial === true ? "F" : "";
+                displayString += tooth.lingual === true ? "L" : "";
+                displayString += tooth.top === true ? "T" : "";
+                displayString += tooth.root === true ? "R" : "";
+            }
+        });
+        setSelectedTooth_Display(displayString);
+        if (activeStep === steps.length-1) {
+            handleSubmit();
         }
-    });
-    setSelectedTooth_Display(displayString);
-    if (activeStep === steps.length-1) {
-        handleSubmit();
-    }
+      }
   };
 
   const handleBack = () => {
@@ -580,39 +528,38 @@ const AddTreatmentPage = ({ patientID }) => {
     setActiveStep(0);
     // reset state ...
   };
-  function handleSubmit() {
-    alert("submit");
-    const submitAddTreatment=async()=>{
-      let isValid = true;
-      // Treatment Date
-      if (date?.getTime() < Date.now()){ // Treatment date must be in the future
-          setDateErrMsg(t(strings.treatmentDateErrMsg));
-          isValid = false;
-      } else {
-          setDateErrMsg("");
-      }
-      // Provider
-      if (!provider?.value){
-          setProviderErrMsg(t(strings.appointProviderErrMsg));
-          isValid = false;
-      } else {
-          setProviderErrMsg("");
-      }
 
-      if (!isValid){
-        return;
-      }
+  function validateData() {
+    let isValid = true;
+    // Treatment Date
+    if (date?.getTime() < Date.now()){ // Treatment date must be in the future
+        setDateErrMsg(t(strings.treatmentDateErrMsg));
+        isValid = false;
+    } else {
+        setDateErrMsg("");
+    }
+    // Provider
+    if (!provider?.value){
+        setProviderErrMsg(t(strings.appointProviderErrMsg));
+        isValid = false;
+    } else {
+        setProviderErrMsg("");
+    }
+    return isValid;
+  }
+
+  function handleSubmit() {
+    const submitAddTreatment=async()=>{
         try {
             const data = { // Todo: cập nhật đầy đủ các value ///////
                 treatment_date: ConvertDateTimes.formatDate(date, strings.apiDateFormat),
                 patient: patientID,
-                assistant: assistant.value,
                 provider: provider.value,
-                procedure_code: selectedProcedure.procedure_code,
+                assistant: assistant?.value,
+                procedure_code: selectedProcedure?.procedure_code,
                 selected_tooth_raw: selectedTooth_Raw,
                 note: treatmentNote,
                 status: "PLAN",  // hardcode
-
             }
             const result = await TreatmentService.addTreatment(data);
             if (result.success){
@@ -727,24 +674,6 @@ const AddTreatmentPage = ({ patientID }) => {
             </Grid>
             {/* Select Provider/Assistant */}
             <Grid item container md={8} sm={6} xs={12} className={classes.selectProviderAssistant} spacing={2}>
-              {/* Assistant */}
-              <Grid item md={6} sm={12} xs={12}>
-                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
-                    <label htmlFor="treatment-assistant" className={classes.autocompleteLabel}>{t(strings.assistant)}</label>
-                    <AsyncSelect
-                        inputId="treatment-assistant"
-                        item
-                        cacheOptions 
-                        defaultOptions 
-                        loadOptions={loadAssistantOptions}
-                        styles={asyncSelectStyle}
-                        placeholder={t(strings.select) + " " + t(strings.assistant)}
-                        noOptionsMessage={() => t(strings.noOptions)}
-                        value={assistant || null}
-                        onChange={handleOnAssistantChange}
-                    />
-                </FormControl>
-              </Grid>
               {/* Provider */}
               <Grid item md={6} sm={12} xs={12} className={classes.selectProvider}>
                 <FormControl color="secondary" className={classes.asyncSelectFormControl}>
@@ -769,6 +698,24 @@ const AddTreatmentPage = ({ patientID }) => {
                           {t(providerErrMsg)}
                       </FormHelperText>
                     }
+                </FormControl>
+              </Grid>
+              {/* Assistant */}
+              <Grid item md={6} sm={12} xs={12}>
+                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
+                    <label htmlFor="treatment-assistant" className={classes.autocompleteLabel}>{t(strings.assistant)}</label>
+                    <AsyncSelect
+                        inputId="treatment-assistant"
+                        item
+                        cacheOptions 
+                        defaultOptions 
+                        loadOptions={loadAssistantOptions}
+                        styles={asyncSelectStyle}
+                        placeholder={t(strings.select) + " " + t(strings.assistant)}
+                        noOptionsMessage={() => t(strings.noOptions)}
+                        value={assistant || null}
+                        onChange={handleOnAssistantChange}
+                    />
                 </FormControl>
               </Grid>
             </Grid>
@@ -847,8 +794,8 @@ const AddTreatmentPage = ({ patientID }) => {
               <TextField
                 value={treatmentNote}
                 multiline
-                rows={10}
-                rowsMax={15}
+                rows={5}
+                rowsMax={10}
                 onChange={handleChangeNote}
                 label={t(strings.note)}
                 className={classes.textField}
@@ -923,9 +870,10 @@ const AddTreatmentPage = ({ patientID }) => {
               <h1>{t(strings.reviewTreatmentInfo)}</h1>
               <Grid item md={8} sm={6} xs={12}>
                 <div>{t(strings.treatment)}: {selectedProcedureCate_text} {" - "} {selectedProcedure_text}</div>
+                <div>{t(strings.date)}: {ConvertDateTimes.formatDate(date, strings.defaultDateFormat)}</div>
+                <div>{t(strings.provider)}: {provider.label}</div>
+                <div>{t(strings.assistant)}: {assistant?.label}</div>
                 <div className={classes.treatmentNote}>{t(strings.note)}: {treatmentNote === "" ? "None" : treatmentNote}</div>
-                <div>{t(strings.provider)}: {provider}</div>
-                <div>{t(strings.assistant)}: {assistant}</div>
                 <div className={classes.selectedToothDisplay}>{t(strings.selectedTooth)}: {selectedTooth_Display}</div>
               </Grid>
             </div>
@@ -964,9 +912,9 @@ const AddTreatmentPage = ({ patientID }) => {
             {activeStep === steps.length ? (
               <div>
                 <h1>{t(strings.allStepsCompleted)}</h1>
-                {/* <Button onClick={handleReset} className={classes.button}>
+                <Button onClick={handleReset} className={classes.button}>
                   {t(strings.reset)}
-                </Button> */}
+                </Button>
                 <Button onClick={() => history.push(path.patientProfilePath.replace(':patientID', patientID))} className={classes.button} variant="contained" color="primary">
                   {t(strings.back)}
                 </Button>
