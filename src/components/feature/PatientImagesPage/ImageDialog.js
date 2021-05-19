@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -19,7 +18,7 @@ import { toast } from "react-toastify";
 import { loadingStore } from "../../../contexts/loading-context";
 
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { IconButton } from "@material-ui/core";
 import ImageService from "../../../api/images/image.service";
 import moment from "moment";

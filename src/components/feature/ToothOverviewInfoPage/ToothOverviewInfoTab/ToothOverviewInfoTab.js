@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Container from "@material-ui/core/Container";
 import styles from "./jss";
 import strings from "../../../../configs/strings";
+import lists from "../../../../configs/lists";
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
@@ -28,7 +29,6 @@ import { FaHammer, FaHandPaper, FaFireAlt } from "react-icons/fa";
 import { AiFillThunderbolt } from "react-icons/ai";
 
 // Component
-import PopupChat from "../../../common/Messenger/PopupChat";
 import TabPanel from "../../../common/TabPanel";
 // Toast
 import { toast } from "react-toastify";
@@ -49,7 +49,7 @@ const EndodonticItem = (props) => {
       <span className={classes.endodonticTestIcon}>{props.icon}</span>
       <span className={classes.endodonticTestName}>{props.testName}</span>
       <span className={classes.endodonticTestStatus}>
-        <span>{props.testStatus}</span>
+        <span>{props.valueStr}</span>
         <span>
           <ChevronRightIcon></ChevronRightIcon>
         </span>
@@ -288,12 +288,33 @@ const ToothOverviewInfoTab = (props) => {
                 className={classes.tabs}
               >
                 {endodonticList.map((endodonticItem, index) => {
+                  let value = -1;
+                  switch (index){
+                    case 0:
+                      value = toothCold;
+                      break;
+                    case 1:
+                      value = toothPercussion;
+                      break;
+                    case 2:
+                      value = toothPalpation;
+                      break;
+                    case 3:
+                      value = toothHeat;
+                      break;
+                    case 4:
+                      value = toothEletricity;
+                      break;
+                    default:
+                      value = -1;
+                  }
                   return (
                     <Tab
                       label=<EndodonticItem
                         icon={endodonticItem.icon}
                         testName={endodonticItem.testName}
                         testStatus={endodonticItem.testStatus}
+                        valueStr={(value !== -1)? t(lists.toothChart.toothTestValues[value]) : "..."}
                       />
                       {...a11yProps(index)}
                     />

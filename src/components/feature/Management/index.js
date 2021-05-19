@@ -64,7 +64,7 @@ const Management = () => {
     const { management } = useParams();
 
     const managements = ["providers", "staffs", "schedule", "procedure", "chairs", "referral",
-                      "practices","authentication",
+                      "practices",
                       "templates","drug"];
     let curManagement = managements.indexOf(management);
     if (curManagement == -1){
@@ -94,7 +94,7 @@ const Management = () => {
         t(strings.chairs), 
         t(strings.referral),
         t(strings.practices),
-        t(strings.authentication),
+        //t(strings.authentication),
         t(strings.templates),
         t(strings.drug),
         
@@ -107,7 +107,7 @@ const Management = () => {
         DentalChair,
         DentalReferral,
         DentalPractice,
-        AuthenticationImage,
+        //AuthenticationImage,
         TemplatesImage,
         DrugImage,
       
@@ -120,7 +120,7 @@ const Management = () => {
         <Chair/>,
         <Referral />,
         <Practice/>,
-        <Authentication/>,
+        //<Authentication/>,
         <Template/>,
         <Drug />,
         

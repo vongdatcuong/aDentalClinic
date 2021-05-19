@@ -16,6 +16,7 @@ import { Typography,
     OutlinedInput,
     Select,
     MenuItem,
+    IconButton
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
@@ -27,6 +28,7 @@ import lists from "../../../configs/lists";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
+import AddBox from '@material-ui/icons/AddBox';
 
 //import component
 import TableCustom from "../../common/TableCustom";
@@ -41,6 +43,7 @@ import AuthService from '../../../api/authentication/auth.service';
 // Utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import ConvertSchedule from '../../../utils/datetimes/convertSchedule';
+import { Visibility } from '@material-ui/icons';
 
 
 const useStyles = makeStyles(styles);
@@ -235,7 +238,7 @@ const Schedule = () => {
                                 <FormControl variant="filled">
                                     <OutlinedInput
                                         className={classes.searchControl}
-                                        id="outlined-adornment-password"
+                                        id="outlined-search-schedule"
                                         type='text'
                                         value={searchText}
                                         placeholder={t(strings.search)}
@@ -248,15 +251,20 @@ const Schedule = () => {
                                     />
                                 </FormControl>
                                 {(isAdmin) && 
-                                    <Select
-                                        value={editable}
-                                        onChange={handleChangeEditable}
-                                        disableUnderline 
-                                        className={classes.status}
-                                    >
-                                        <MenuItem value={false}>{t(strings.read)}</MenuItem>
-                                        <MenuItem value={true}>{t(strings.edit)}</MenuItem>
-                                    </Select>
+                                    <div>
+                                        <Select
+                                            value={editable}
+                                            onChange={handleChangeEditable}
+                                            disableUnderline 
+                                            className={classes.status}
+                                        >
+                                            <MenuItem value={false}>{t(strings.read)}</MenuItem>
+                                            <MenuItem value={true}>{t(strings.edit)}</MenuItem>
+                                        </Select>
+                                        <IconButton style={{visibility: 'hidden'}}>
+                                            <AddBox />            
+                                        </IconButton>
+                                    </div>
                                 }
                             </Grid>
                         }

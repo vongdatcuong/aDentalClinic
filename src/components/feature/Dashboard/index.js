@@ -743,6 +743,7 @@ const DashBoard = () => {
                                     onSelectDate={handleOnAppointTabSelectDate}
                                     onAddAppointment={handleAddAppointment}
                                     setSelectedAppointReqIdx={setSelectedAppointReqIdx}
+                                    onSelectDuration={setSelectedDuration}
                                 />
                             </Box>
                         </Fade>

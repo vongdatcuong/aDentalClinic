@@ -19,7 +19,10 @@ const scheduleStyle = (theme) => ({
     serviceControl:{
         display:'flex',
         flexDirection:'row',
-
+        justifyContent: 'flex-end',
+        '& .MuiFormControl-root':{
+            marginRight: '2vw',
+        }
     },
     iconButton:{
         cursor:'pointer',
@@ -39,8 +42,7 @@ const scheduleStyle = (theme) => ({
         marginBottom: theme.spacing(1.5)
     },
     status:{
-        marginLeft:'20px',
-        marginRight:'10px',
+        marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },

@@ -161,7 +161,7 @@ export default {
         "Treatment plan": "Kế hoạch điều trị",
         "History": "Lịch sử",
         "Oral Health": "Sức khỏe răng miệng",
-        "Medical Issues": "Chống chỉ định thuốc",
+        "Medical Issues": "Chống chỉ định",
         "Currently there are no treatments pending": "Hiện tại không có yêu cầu điều trị nào đang chờ xử lý",
         "Add record": "Thêm mục",
         "Plaque index": "Chỉ số mảng bám",
