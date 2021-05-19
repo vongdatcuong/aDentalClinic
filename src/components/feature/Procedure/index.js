@@ -48,7 +48,7 @@ const Procedure = () => {
     //state
     const [insertProcedure,setInsertProcedure]=useState(false);
     const [rows,setRows]=useState([]);
-    
+    const [originalData,setOriginalData]=useState([])
     const [searchText,setSearchText]=useState(null);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -68,7 +68,10 @@ const Procedure = () => {
     }
    
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.abbreviation!==null && row.abbreviation.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);   
     };
     
     const handleChangeInsertProcedure=(e)=>{
@@ -107,7 +110,9 @@ const Procedure = () => {
             
         })
         setRows(temp);
-       
+        setOriginalData(temp);
+        setIsLoading(false);
+
     }
     const getProcedure=async()=>{
         const result=await ProcedureService.getProcedure();
@@ -127,7 +132,11 @@ const Procedure = () => {
             
             getProcedure();
             getUser();
-            setIsLoading(false);
+        }
+        if(searchText==="")
+        {
+            setRows(originalData);
+            setSearchText(null);
         }
         if(selectedRow!==-1)
         {

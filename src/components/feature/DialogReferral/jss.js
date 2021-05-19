@@ -82,12 +82,23 @@ const patientReferralStyle = (theme) => ({
     },
     dialogContainer:{
         minWidth:'93vw',
-        minHeight:'600px',
+        minHeight:'300px',
         justifyContent:'center',
         alignItems:'center',
         '& .MuiDialog-paperWidthSm':{
             minWidth:'93vw',
-            minHeight:'600px',
+            minHeight:'300px',
+
+        }
+    },
+    dialogContainerSmall:{
+        minWidth:'30vw',
+        minHeight:'100px',
+        justifyContent:'center',
+        alignItems:'center',
+        '& .MuiDialog-paperWidthSm':{
+            minWidth:'30vw',
+            minHeight:'100px',
 
         }
     },

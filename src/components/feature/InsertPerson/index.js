@@ -13,10 +13,15 @@ import {
     FormControlLabel,
     Checkbox,
     Button,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import ColorPicker from 'material-ui-color-picker'
 
 import styles from "./jss";
 // import darkTheme from "../../../themes/darkTheme";
@@ -59,7 +64,12 @@ const InsertPerson = (props) => {
     const [usernameError,setUsernameError]=useState(null);
     const [passwordError,setPasswordError]=useState(null);
     const [emailError,setEmailError]=useState(null);
-
+    const [displayId,setDisplayId]=useState(null);
+    const [providerColor,setProviderColor]=useState("#000");
+    const [drugLic,setDrugLic]=useState(null);
+    const [startDate,setStartDate]=useState(new Date());
+    const [npi,setNpi]=useState(null);
+    const [biography,setBiography]=useState(null);
 
     const [selectedFile,setSelectedFile]=useState(null);
 
@@ -99,7 +109,24 @@ const InsertPerson = (props) => {
     const handleChangeGender=(e)=>{
         setGender(!gender);
     }
-
+    const handleChangeDisplayId=(e)=>{
+        setDisplayId(e.target.value);
+    }
+    const handleChangeProviderColor=(e)=>{
+        setProviderColor(e.target.value);
+    }
+    const handleChangeDrugLic=(e)=>{
+        setDrugLic(e.target.value);
+    }
+    const handleChangeStartDate=(e,date)=>{
+        setStartDate(date);
+    }
+    const handleChangeNpi=(e)=>{
+        setNpi(e.target.value);
+    }
+    const handleChangeBiography=(e)=>{
+        setBiography(e.target.value);
+    }
     const handleUploadClick = event => {
         var file = event.target.files[0];
         const reader = new FileReader();
@@ -120,12 +147,12 @@ const InsertPerson = (props) => {
         if(firstNameError===null && lastNameError===null && usernameError===null && passwordError===null && emailError===null)
         {
             const data={
-                display_id: "",
+                display_id: displayId,
                 is_active:active, 
                 
                 staff_type: props.staffType,
-                drug_lic: "",
-                npi: "",
+                drug_lic: drugLic,
+                npi: npi,
                 specialty: null, 
                 access_group: null, 
             
@@ -136,7 +163,9 @@ const InsertPerson = (props) => {
                 theme:"",
                 language:"EN",
 
-            
+                provider_color:providerColor,
+                start_date:startDate,
+                biography:biography,
                 facebook: facebook,
                 email: email,
                 fax: fax,
@@ -238,106 +267,191 @@ const InsertPerson = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.username)}  
+                                        label={t(strings.username)}  
                                         variant="outlined" 
                                         onChange={handleChangeUsername}
                                         value={username}
                                         error={usernameError !== null}
                                         helperText={usernameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
-                                        placeholder={t(strings.password)}  
+                                        label={t(strings.password)}  
                                         variant="outlined" 
                                         onChange={handleChangePassword}
                                         value={password}
                                         error={passwordError !== null}
                                         helperText={passwordError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.firstName)}  
+                                        label={t(strings.firstName)}  
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.lastName)}  
+                                        label={t(strings.lastName)}  
                                         variant="outlined" 
                                         onChange={handleChangeLastName}
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.email)}  
+                                        label={t(strings.email)}  
+                                        required
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
                                         /> 
-                        </div>
+                        </FormControl>
+                        
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControlBig} 
+                                        label={t(strings.biography)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeBiography}
+                                        value={biography}
+                                        multiline
+                                        /> 
+                        </FormControl>
+                        {props.staffType===t(strings.staffTypeProvider) ? 
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                    label={t(strings.drugLic)}  
+                                    variant="outlined" 
+                                    onChange={handleChangeDrugLic}
+                                    value={drugLic}
+                                   
+                                    /> 
+                        </FormControl>
+                        :
+                        <div></div>
+                        }
+                        
+                        {props.staffType===t(strings.staffTypeProvider) ?
+                        <FormControl className={classes.itemColor}>
+                            <InputLabel shrink id="providerColor">
+                                {t(strings.providerColor)}
+                            </InputLabel>
+                            <div className={classes.inputControlColor} >
+                                <ColorPicker
+                                    name="color"
+                                    InputProps={{ disableUnderline: true }}
+                                    style={{width:'100%',backgroundColor:providerColor,}}
+                                    onChange={color => setProviderColor(color)}
+                                    value={providerColor}
+                                />
+                            </div>
+                            
+                        </FormControl>
+                        :
+                        <div></div>
+                        }
+                        
+                        
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.facebook)}  
+                                        label={t(strings.displayId)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeDisplayId}
+                                        value={displayId}
+                                       
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.facebook)}  
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.mobilePhone)}  
+                                        label={t(strings.mobilePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.homePhone)}  
+                                        label={t(strings.homePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
+                                        label={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
+                                        label={t(strings.address)}  
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
                                         /> 
-                        </div>
-                        <div className={classes.itemSmall}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        label={t(strings.npi)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeNpi}
+                                        value={npi}
+                                       
+                                        /> 
+                        </FormControl>
+                        
+                        <FormControl >
+                            <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label={t(strings.startDate)}
+                                        format={t(strings.apiDateFormat)}
+                                        value={startDate}
+                                        onChange={handleChangeStartDate}
+                                        readOnly={true}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                        InputProps={{
+                                            disableUnderline: true,
+                                            
+                                        }}
+                                        className={classes.inputControlDate} 
+                                    />
+                        </FormControl>
+                        
+                        <FormControl className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -363,8 +477,8 @@ const InsertPerson = (props) => {
                                 }
                                 label={t(strings.inactive)}
                             />
-                        </div>
-                      
+                        </FormControl>
+                        
                         
                     </Grid>
                 </Grid>

@@ -10,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    
+    FormControl,
+    InputLabel,
     Button,
     TextField
  } from '@material-ui/core';
@@ -125,69 +126,68 @@ const InsertReferralSource = (props) => {
               
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                         
-                                        placeholder={t(strings.name)}  
+                                        required
+                                        label={t(strings.name)}  
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
                                         error={nameErrorMessage !== null}
                                         helperText={nameErrorMessage}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         
-                                        placeholder={t(strings.address)}  
+                                        label={t(strings.address)}  
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        required 
-                                        placeholder={t(strings.phone)}  
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}  
+                                        label={t(strings.phone)}  
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
                                         
                                         /> 
-                        </div>
+                        </FormControl>
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <div className={classes.item}>
+                    <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.email)}  
+                                        label={t(strings.email)}  
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
                                         error={emailErrorMessage !== null}
                                         helperText={emailErrorMessage}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.fax)}  
+                                        label={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControlBig} 
-                                        placeholder={t(strings.additionalInfo)}  
+                                        label={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
                                         multiline
                                         /> 
-                        </div>
+                        </FormControl>
                        
                     </Grid>
                 </Grid>

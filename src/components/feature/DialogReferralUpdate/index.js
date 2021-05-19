@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    
+    InputLabel,
+    FormControl,
     FormControlLabel,
     Button,
     Radio,
@@ -97,7 +98,8 @@ const DialogReferralUpdate = (props) => {
     }
     const renderListReferral=()=>{
         return listReferral.map((a,index)=>{
-            return <MenuItem value={a._id} key={index}>{a.name}</MenuItem>
+            
+            return <MenuItem value={a.id} key={index}>{a.name}</MenuItem>
 
         })
     }
@@ -162,17 +164,18 @@ const DialogReferralUpdate = (props) => {
             setDate(result.data.payload.referral_date);
             if(result.data.payload.ref_patient)
             {
-                setReferral(result.data.payload.ref_patient);
+                setReferral(result.data.payload.ref_patient.id);
                 setType(t(strings.patient));
             }
             if(result.data.payload.ref_staff)
             {
-                setReferral(result.data.payload.ref_staff);
+                
+                setReferral(result.data.payload.ref_staff.id);
                 setType(t(strings.staffs));
             }
             if(result.data.payload.referral_source)
             {
-                setReferral(result.data.payload.referral_source);
+                setReferral(result.data.payload.referral_source.id);
                 setType(t(strings.existedReferral));
             }
 
@@ -205,23 +208,26 @@ const DialogReferralUpdate = (props) => {
                     {props.type==="FROM" ? 
                     <Grid container spacing={5} className={classes.input}>
 
-                        <Grid item xs={6} className={classes.leftContent}>
-
-                        <Select 
+                        <Grid item  className={classes.leftContent}>
+                        <FormControl>
+                            <InputLabel shrink>
+                                {type===t(strings.existedReferral) ? 
+                                t(strings.referral)
+                                :
+                                type===t(strings.patient) ?
+                                t(strings.patient)
+                                :
+                                type===t(strings.staffs) &&
+                                t(strings.staffs)
+                                }      
+                            </InputLabel>
+                            <Select 
                                 value={referral}
                                 onChange={handleChangeReferral}
                                 disableUnderline 
                                 className={classes.status}
-                        >
-                                {type===t(strings.existedReferral) ? 
-                                <MenuItem value={null}>{t(strings.referral)}</MenuItem>
-                                :
-                                type===t(strings.patient) ?
-                                <MenuItem value={null}>{t(strings.patient)}</MenuItem>
-                                :
-                                type===t(strings.staffs) &&
-                                <MenuItem value={null}>{t(strings.staffs)}</MenuItem>
-                                }      
+                            >
+                                
                                 {type===t(strings.existedReferral) ? 
                                 renderListReferral()
                                 :
@@ -230,10 +236,14 @@ const DialogReferralUpdate = (props) => {
                                 :
                                 renderListStaff()
                                 }        
-                        </Select>
+                            </Select>
+                        
+                        </FormControl>
+                        
                         </Grid>
-                        <Grid item xs={6} className={classes.rightContent}>
-                        <FormControlLabel value={t(strings.patient)} 
+                        <Grid item  className={classes.rightContent}>
+                            <div style={{marginTop:'20px'}}>
+                                <FormControlLabel value={t(strings.patient)} 
                                          control={<Radio 
                                                      checked={type === t(strings.patient)}
                                                      onChange={handleChangeType}
@@ -242,7 +252,7 @@ const DialogReferralUpdate = (props) => {
                                                  />} 
                                          label={t(strings.patient)}  />
     
-                        <FormControlLabel value={t(strings.staffs)} 
+                                <FormControlLabel value={t(strings.staffs)} 
                                         control={<Radio 
                                                      checked={type === t(strings.staffs)}
                                                      onChange={handleChangeType}
@@ -250,7 +260,7 @@ const DialogReferralUpdate = (props) => {
                                                      inputProps={{ 'aria-label': 'A' }}
                                             />} 
                                          label={t(strings.staffs)}  />                   
-                        <FormControlLabel value={t(strings.existedReferral)} 
+                                <FormControlLabel value={t(strings.existedReferral)} 
                                          control={<Radio 
                                                      checked={type === t(strings.existedReferral)}
                                                      onChange={handleChangeType}
@@ -258,26 +268,32 @@ const DialogReferralUpdate = (props) => {
                                                      inputProps={{ 'aria-label': 'A' }}
                                                  />} 
                                          label={t(strings.existedReferral)}  />
-                        </Grid>
+                        
+                            </div>
+                       </Grid>
                     </Grid>
                     :
                     <Grid container spacing={5} className={classes.input}>
-                        <Grid item xs={6} className={classes.leftContent}>
-
-                        <Select 
+                        <Grid item  className={classes.leftContent}>
+                        <FormControl>
+                            <InputLabel>
+                                {t(strings.referral)}
+                            </InputLabel>
+                            <Select 
                             value={referral}
                             onChange={handleChangeReferral}
                             disableUnderline 
                             className={classes.status}
-                    >
-                            <MenuItem value={t(strings.referral)}>{t(strings.referral)}</MenuItem>
-                            
+                    >                            
                             {renderListReferral()}
 
     
                         </Select>
+                        </FormControl>
+                       
                         </Grid>
-                        <Grid item xs={6} className={classes.rightContent}>
+                        <Grid item  className={classes.rightContent}>
+                        <div style={{marginTop:'20px'}}>
 
                         <FormControlLabel value={t(strings.existedReferral)} 
                                         control={<Radio 
@@ -287,21 +303,21 @@ const DialogReferralUpdate = (props) => {
                                                     inputProps={{ 'aria-label': 'A' }}
                                                 />} 
                                         label={t(strings.existedReferral)}  />
-                        
+                        </div>
                         </Grid>
                         </Grid>
                     }
                     {props.type==="FROM" ? 
                         <Grid container spacing={5} className={classes.input}>
-                            <Grid item xs={6} className={classes.leftContent}>
+                            <Grid item  className={classes.leftContent}>
                                
                                 
                                 
-                                <div className={classes.item}>
+                                <FormControl className={classes.item}>
                                     <KeyboardDatePicker
                                         margin="normal"
                                         id="date-picker-dialog"
-                                        placeholder={t(strings.date)}
+                                        label={t(strings.date)}
                                         format={t(strings.apiDateFormat)}
                                         value={date}
                                         onChange={handleChangeDate}
@@ -314,10 +330,10 @@ const DialogReferralUpdate = (props) => {
                                         }}
                                         className={classes.inputControlDate} 
                                     />
-                                </div>
+                                </FormControl>
                                 
                             </Grid>
-                            <Grid item xs={6} className={classes.rightContent}>
+                            <Grid item  className={classes.rightContent}>
                             
                             
                             
@@ -327,12 +343,12 @@ const DialogReferralUpdate = (props) => {
                         </Grid>
                         :
                         <Grid container spacing={5} className={classes.input}>
-                            <Grid item xs={6} className={classes.leftContent}>
-                                <div className={classes.item}>
+                            <Grid item  className={classes.leftContent}>
+                                <FormControl className={classes.item}>
                                         <KeyboardDatePicker
                                             margin="normal"
                                             id="date-picker-dialog"
-                                            placeholder={t(strings.date)}
+                                            label={t(strings.date)}
                                             format={t(strings.apiDateFormat)}
                                             value={date}
                                             onChange={handleChangeDate}
@@ -345,7 +361,7 @@ const DialogReferralUpdate = (props) => {
                                             }}
                                             className={classes.inputControlDateSmall} 
                                         />
-                                </div>
+                                </FormControl>
                             </Grid>
                               
                         </Grid>

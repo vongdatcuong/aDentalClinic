@@ -9,8 +9,8 @@ const insertPersonStyle = (theme) => ({
         
         '& .MuiInputLabel-outlined':{
             //color:theme.primaryColor[2],
-            marginLeft:'30px',
-
+            // marginLeft:'30px',
+            
         }
     },
     
@@ -101,7 +101,8 @@ const insertPersonStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            // marginBottom:'15px',
+            // transform:'translate(14px, 18px) scale(1)',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -143,7 +144,7 @@ const insertPersonStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            // marginLeft:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -247,8 +248,13 @@ const insertPersonStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
+        
+    },
+    itemSelect:{
+        marginTop:'15px',
         '& .MuiInputLabel-animated':{
             marginLeft:'30px',
+            marginTop:'10px',
         }
     },
     itemMedium:{

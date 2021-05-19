@@ -11,7 +11,9 @@ const insertPatientPrescriptionStyle = (theme) => ({
             //color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        borderRadius:'15px',
+        boxShadow:'3px 3px 3px gray',
     },
     
     searchControl:{
@@ -101,7 +103,8 @@ const insertPatientPrescriptionStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
+            marginBottom:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -151,13 +154,68 @@ const insertPatientPrescriptionStyle = (theme) => ({
         }
 
     },
+    inputControlDate:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginBottom:'20px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            padding: '7px',
+            // paddingTop:'7px',
+            width:'1.6em',
+            height:'1.6em',
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'3px',
+            
+        },
+        '& .MuiInputBase-input':{
+            marginLeft:'15px',
+            
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'1px',
+        },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'15px',
+            // marginTop:'10px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     insertButton:{
        
         height:'35px',
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'30px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),
@@ -172,10 +230,10 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        
     },
     itemSelect:{
-        marginTop:'30px',
+        marginTop:'35px',
         marginLeft:'30px',
         // border:`1px solid ${theme.primaryColor[0]}`,
         // minWidth:'100%'
@@ -195,6 +253,9 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     input:{
         marginTop:'10px',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
     },
     checkbox:{
         marginLeft:'30px',
@@ -231,8 +292,14 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     menu:{
         minWidth:'36vw',
-        marginLeft:'30px',
-        marginTop:'15px',
+        // marginLeft:'30px',
+        marginTop:'30px',
+        border:'1px solid lightgray',
+        borderRadius:'5px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'15px',
+            // marginTop:'10px',
+        },
     },
     drugDialog:{
         minWidth:'90vw',

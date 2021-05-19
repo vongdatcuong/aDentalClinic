@@ -201,6 +201,7 @@ const UpdatePatientPrescription = (props) => {
             {
                     
                 toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
             }
             else
             {

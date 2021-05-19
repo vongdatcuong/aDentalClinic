@@ -13,7 +13,8 @@ import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    
+    FormControl,
+    InputLabel,
     FormControlLabel,
     Button,
     TextField,
@@ -265,7 +266,14 @@ const DialogReferralInsert = (props) => {
         {
             setEmailErrorMessage(null);
         }
-       
+        if(emailErrorMessage!==null && type!==t(strings.newReferral))
+        {
+            setEmailErrorMessage(null);
+        }
+        if(nameErrorMessage!==null && type!==t(strings.newReferral))
+        {
+            setNameErrorMessage(null);
+        }
     })
     if(listPatient.length!==0 && listStaff.length!==0 && listReferral.length!==0)
     {
@@ -275,25 +283,29 @@ const DialogReferralInsert = (props) => {
                 <div className={classes.content}>
                     
                     {props.type==="FROM" ? 
-                    <Grid container spacing={5} className={classes.input}>
+                    <Grid container spacing={5} >
                         <Grid item xs={6} className={classes.leftContent}>
+                        <FormControl>
+                            <InputLabel shrink>
+                                {type===t(strings.existedReferral) ? 
+                                t(strings.referral)
+                                :
+                                type===t(strings.patient) ?
+                                t(strings.patient)
+                                :
+                                type===t(strings.staffs) &&
+                                t(strings.staffs)
 
-                        <Select 
+                                }     
+                            </InputLabel>
+                            <Select 
                                 value={referral}
                                 onChange={handleChangeReferral}
                                 disableUnderline 
                                 className={classes.status}
                                 disabled={type===t(strings.newReferral)}
-                        >
-                                {type===t(strings.existedReferral) ? 
-                                <MenuItem value={null}>{t(strings.referral)}</MenuItem>
-                                :
-                                type===t(strings.patient) ?
-                                <MenuItem value={null}>{t(strings.patient)}</MenuItem>
-                                :
-                                type===t(strings.staffs) &&
-                                <MenuItem value={null}>{t(strings.staffs)}</MenuItem>
-                                }      
+                            >
+                                 
                                 {type===t(strings.existedReferral) ? 
                                 renderListReferral()
                                 :
@@ -303,10 +315,12 @@ const DialogReferralInsert = (props) => {
                                 renderListStaff()
                                 }        
                         </Select>
+                        
+                        </FormControl>
                         </Grid>
                         <Grid item xs={6} className={classes.rightContent}>
-
-                        <FormControlLabel value={t(strings.patient)} 
+                            <div style={{marginTop:'20px'}}>
+                            <FormControlLabel value={t(strings.patient)} 
                                          control={<Radio 
                                                      checked={type === t(strings.patient)}
                                                      onChange={handleChangeType}
@@ -339,28 +353,33 @@ const DialogReferralInsert = (props) => {
                                                      inputProps={{ 'aria-label': 'A' }}
                                                  />} 
                                          label={t(strings.newReferral)}  /> 
+                            </div>
+
                         </Grid>
                     </Grid>
                     :
-                    <Grid container spacing={5} className={classes.input}>
+                    <Grid container spacing={5} >
                         <Grid item xs={6} className={classes.leftContent}>
-
-                        <Select 
+                        <FormControl>
+                            <InputLabel shrink>
+                                {t(strings.referral)}
+                            </InputLabel>
+                            <Select 
                             value={referral}
                             onChange={handleChangeReferral}
                             disableUnderline 
                             className={classes.status}
-                    >
-                            <MenuItem value={t(strings.referral)}>{t(strings.referral)}</MenuItem>
-                            
+                                >                            
                             {renderListReferral()}
 
     
                         </Select>
+                        </FormControl>
+                       
                         </Grid>
                         <Grid item xs={6} className={classes.rightContent}>
-
-                        <FormControlLabel value={t(strings.existedReferral)} 
+                            <div style={{marginTop:'20px'}}>
+                                <FormControlLabel value={t(strings.existedReferral)} 
                                         control={<Radio 
                                                     checked={type === t(strings.existedReferral)}
                                                     onChange={handleChangeType}
@@ -368,19 +387,21 @@ const DialogReferralInsert = (props) => {
                                                     inputProps={{ 'aria-label': 'A' }}
                                                 />} 
                                         label={t(strings.existedReferral)}  />
+                            </div>
+                        
                         
                        
                         </Grid>
                     </Grid>
                     }
                     {props.type==="FROM" ? 
-                        <Grid container spacing={5} className={classes.input}>
+                        <Grid container spacing={5} >
                             <Grid item xs={6} className={classes.leftContent}>
-                                <div className={classes.item}>
+                                <FormControl className={classes.item}>
                                     
                                     <TextField className={classes.inputControl} 
                                                 required 
-                                                placeholder={t(strings.name)}  
+                                                label={t(strings.name)}  
                                                 variant="outlined" 
                                                 onChange={handleChangeName}
                                                 value={name}
@@ -388,37 +409,39 @@ const DialogReferralInsert = (props) => {
                                                 error={nameErrorMessage !== null}
                                                 helperText={nameErrorMessage}
                                                 /> 
-                                </div>
-                                <div className={classes.item}>
+                                </FormControl>
+                                <FormControl className={classes.item}>
                                     <TextField className={classes.inputControl} 
-                                                required 
-                                                placeholder={t(strings.address)}  
+                                                label={t(strings.address)}  
                                                 variant="outlined" 
                                                 onChange={handleChangeAddress}
                                                 value={address}
                                                 disabled={type!==t(strings.newReferral)}
                                                 /> 
-                                </div>
-                                <div className={classes.item}>
+                                </FormControl>
+                                <FormControl className={classes.item}>
                                     <TextField className={classes.inputControl} 
-                                                required 
-                                                placeholder={t(strings.phone)}  
+                                                label={t(strings.phone)}  
                                                 variant="outlined" 
                                                 onChange={handleChangePhone}
                                                 value={phone}
                                                 disabled={type!==t(strings.newReferral)}
 
                                                 /> 
-                                </div>
+                                </FormControl>
                                 
-                                <div className={classes.item}>
+                                <FormControl className={classes.item}>
+                                    {/* <InputLabel shrink>
+                                        {t(strings.date)}
+                                    </InputLabel> */}
                                     <KeyboardDatePicker
                                         margin="normal"
                                         id="date-picker-dialog"
-                                        placeholder={t(strings.date)}
+                                        label={t(strings.date)}
                                         format={t(strings.apiDateFormat)}
                                         value={date}
                                         onChange={handleChangeDate}
+                                        readOnly={true}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
@@ -428,25 +451,25 @@ const DialogReferralInsert = (props) => {
                                         }}
                                         className={classes.inputControlDate} 
                                     />
-                                </div>
+                                </FormControl>
                                 
                             </Grid>
                             <Grid item xs={6} className={classes.rightContent}>
                             
-                            <div className={classes.item}>
+                            <FormControl className={classes.item}>
                                 <TextField className={classes.inputControl} 
-                                            required 
-                                            placeholder={t(strings.fax)}  
+                                            label={t(strings.fax)}  
                                             variant="outlined" 
                                             onChange={handleChangeFax}
                                             value={fax}
                                             disabled={type!==t(strings.newReferral)}
 
                                             /> 
-                            </div>
-                            <div className={classes.item}>
+                            </FormControl>
+                            <FormControl className={classes.item}>
                                 <TextField className={classes.inputControl} 
-                                            placeholder={t(strings.email)}  
+                                            required
+                                            label={t(strings.email)}  
                                             variant="outlined" 
                                             onChange={handleChangeEmail}
                                             value={email}
@@ -454,12 +477,12 @@ const DialogReferralInsert = (props) => {
                                             error={emailErrorMessage !== null}
                                             helperText={emailErrorMessage}
                                             /> 
-                            </div>
+                            </FormControl>
                             
                    
-                            <div className={classes.item}>
+                            <FormControl className={classes.item}>
                                 <TextField className={classes.inputControlBig} 
-                                            placeholder={t(strings.additionalInfo)}  
+                                            label={t(strings.additionalInfo)}  
                                             variant="outlined" 
                                             onChange={handleChangeAdditionalInfo}
                                             value={additionalInfo}
@@ -467,19 +490,19 @@ const DialogReferralInsert = (props) => {
                                             multiline
                                             /> 
 
-                            </div>
+                            </FormControl>
               
                         </Grid>
                         </Grid>
                         :
-                        <Grid container spacing={5} className={classes.input}>
+                        <Grid container spacing={5} >
                             <Grid item xs={6} className={classes.leftContent}>
 
-                                <div className={classes.item}>
+                                <FormControl className={classes.item}>
                                         <KeyboardDatePicker
                                             margin="normal"
                                             id="date-picker-dialog"
-                                            placeholder={t(strings.date)}
+                                            label={t(strings.date)}
                                             format={t(strings.apiDateFormat)}
                                             value={date}
                                             onChange={handleChangeDate}
@@ -492,7 +515,7 @@ const DialogReferralInsert = (props) => {
                                             }}
                                             className={classes.inputControlDateSmall} 
                                         />
-                                </div>
+                                </FormControl>
                             </Grid>
                               
                         </Grid>

@@ -20,6 +20,8 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import {
     KeyboardDatePicker
@@ -37,7 +39,7 @@ import strings from "../../../configs/strings";
 
 //import icons
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-
+import NoDataIcon from '../../common/NoDataIcon';
 
 //import component
 import TableCustom from "../../common/TableCustom";
@@ -124,7 +126,11 @@ const InsertPatientPrescription = (props) => {
         setSelectedRow(value);
     }
     const insertDrug=(e)=>{
-        if(currentDrug!==t(strings.drug))
+        if(currentDrug!==t(strings.drug) && dispensed!==null && dispensed!=="" &&
+            quantity!==null && quantity!=="" &&
+            description!==null && description!=="" &&
+            refill!==null && refill!=="" &&
+            expired!==null && expired!=="")
         {
             handleCloseDialog();
             let temp=drug;
@@ -140,6 +146,10 @@ const InsertPatientPrescription = (props) => {
             setQuantity(null);
             setRefill(null);
             setCurrentDrug(t(strings.drug));
+        }
+        else
+        {
+            toast.error(t(strings.errorInput))
         }
         
     }
@@ -185,6 +195,7 @@ const InsertPatientPrescription = (props) => {
             if(result.success)
             {
                 toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
             }
             else
             {
@@ -250,7 +261,11 @@ const InsertPatientPrescription = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         {listProvider.length!==0 ?
-                        <div className={classes.itemSelect}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel>
+                                {t(strings.provider)}
+                            </InputLabel>
+
                             <Select
                                 
                                 value={provider}
@@ -258,12 +273,11 @@ const InsertPatientPrescription = (props) => {
                                 disableUnderline 
                                 className={classes.status}
                                 >
-                            <MenuItem value={t(strings.provider)}>{t(strings.provider)}</MenuItem>
                             {renderListProvider()}
 
                         </Select>
                         
-                        </div>
+                        </FormControl>
                         :
                         <div></div>
 
@@ -274,12 +288,12 @@ const InsertPatientPrescription = (props) => {
                     <Grid item xs={6} className={classes.rightContent}>
                     
                     {listDrug.length!==0?
-                    <div className={classes.containerAddRecord}>
+                    <FormControl className={classes.containerAddRecord}>
                         <Button simple className={classes.btnAddRecord} onClick={handleOpenDialog}>
                             <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
                             {t(strings.addMoreDrug)}
                         </Button>
-                    </div>
+                    </FormControl>
                     :
                     <div></div>
                     }
@@ -302,7 +316,10 @@ const InsertPatientPrescription = (props) => {
                         handleCloseDialog={handleCloseDialog2}
                     />
                     :
-                    <div></div>
+                    <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                        <NoDataIcon/>
+
+                    </div>
                 }
                 
                 
@@ -325,17 +342,21 @@ const InsertPatientPrescription = (props) => {
                 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel>
+                                {t(strings.drug)}
+                            </InputLabel>
                             <Select
                                 value={currentDrug}
                                 onChange={handleChangeCurrentDrug}
                                 className={classes.menu}
+                                disableUnderline
+
                             >
-                                <MenuItem value={t(strings.drug)}>{t(strings.drug)}</MenuItem>
                                 {renderListDrug()}
                             </Select>
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         
                                         placeholder={t(strings.description)}  
@@ -344,8 +365,8 @@ const InsertPatientPrescription = (props) => {
                                         value={description}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.refill)}  
@@ -354,12 +375,30 @@ const InsertPatientPrescription = (props) => {
                                         value={refill}
                                         
                                         /> 
-                        </div>
+                        </FormControl>
                         
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <div className={classes.item}>
+                    <FormControl className={classes.item}>
+                            
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="date-picker-dialog"
+                                label={t(strings.expired)}
+                                format={t(strings.apiDateFormat)}
+                                value={expired}
+                                onChange={handleChangeExpired}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                                InputProps={{
+                                    disableUnderline:true
+                                }}
+                                className={classes.inputControlDate} 
+                            />
+                        </FormControl>
+                    <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.dispensed)}  
@@ -368,8 +407,8 @@ const InsertPatientPrescription = (props) => {
                                         value={dispensed}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         placeholder={t(strings.quantity)}  
                                         variant="outlined" 
@@ -377,22 +416,8 @@ const InsertPatientPrescription = (props) => {
                                         value={quantity}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                placeholder={t(strings.expired)}
-                                format={t(strings.apiDateFormat)}
-                                value={expired}
-                                onChange={handleChangeExpired}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                                className={classes.inputControl} 
-                            />
-                        </div>
+                        </FormControl>
+                        
                        
                     </Grid>
                 </Grid>

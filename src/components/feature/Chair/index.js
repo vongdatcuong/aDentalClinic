@@ -51,6 +51,7 @@ const Chairs = () => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [originalData,setOriginalData]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isInsert,setIsInsert]=useState(false);
@@ -77,7 +78,10 @@ const Chairs = () => {
     }
     
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.name.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -114,9 +118,12 @@ const Chairs = () => {
 
         })
         setRows(temp);
+        setOriginalData(temp);
+        setIsLoading(false);
     }
     const getChair=async()=>{
         const result=await ChairService.getChair();
+        console.log("CHeck chair:",result);
         if(result.success)
         {
             changeData(result.data);
@@ -135,7 +142,6 @@ const Chairs = () => {
             
             getChair();
             getUser();
-            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {

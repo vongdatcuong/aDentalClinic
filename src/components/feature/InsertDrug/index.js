@@ -11,7 +11,8 @@ import { useTranslation } from 'react-i18next';
 // @material-ui/core Component
 import { 
     Button,
-    TextField
+    TextField,
+    FormControl,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 // import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -112,67 +113,69 @@ const InsertPatient = (props) => {
               
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                         
-                                        placeholder={t(strings.name)}  
+                                        required
+                                        label={t(strings.name)}  
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
                                        
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        
-                                        placeholder={t(strings.description)}  
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}     
+                                        required
+                                        label={t(strings.description)}  
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.refill)}  
+                                        label={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
                                         
                                         /> 
-                        </div>
+                        </FormControl>
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <div className={classes.item}>
+                    <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.dispensed)}  
+                                        label={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.quantity)}  
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}
+                                        required 
+                                        label={t(strings.quantity)}  
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.note)}  
+                                        required
+                                        label={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
                                         
                                         /> 
-                        </div>
+                        </FormControl>
                        
                     </Grid>
                 </Grid>

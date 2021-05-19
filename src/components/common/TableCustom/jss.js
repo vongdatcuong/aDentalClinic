@@ -4,7 +4,7 @@ const tableStyle = (theme) => ({
         margin:"0px"
     },
     table:{
-        borderRadius:'10px',
+        // borderRadius:'10px',
         boxShadow:`3px 3px 3px ${theme.grayColor[0]}`,
         
         

@@ -101,7 +101,7 @@ const insertDrugStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {

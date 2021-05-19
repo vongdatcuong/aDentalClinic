@@ -81,6 +81,7 @@ const InsertPatient = (props) => {
     const [referredTo,setReferredTo]=useState(null);
     const [referralType,setReferralType]=useState(null);
     const [openDialog,setOpenDialog]=useState(false);
+    const [patientNote,setPatientNote]=useState(null);
     const [selectedFile,setSelectedFile]=useState(null);
 
     //handle
@@ -127,7 +128,9 @@ const InsertPatient = (props) => {
     const handleChangeOtherInfo=(e)=>{
         setOtherInfo(e.target.value);
     }
-    
+    const handleChangePatientNote=(e)=>{
+        setPatientNote(e.target.value);
+    }
     const handleChangeReferredTo=(e)=>{
         setReferredTo(e.target.value);
     }
@@ -161,58 +164,76 @@ const InsertPatient = (props) => {
         })
     }
     const insertPerson=async(e)=>{
-        let genderData;
-        if(gender===true)
+        if(firstNameError===null && lastNameError === null && usernameError===null && passwordError===null && emailError===null)
         {
-            genderData="MALE";
+            let genderData;
+            let maritalData;
+
+            if(maritalStatus===t(strings.notSpecify))
+            {
+                maritalData="NOT_SPECIFY";
+            }
+            if(maritalStatus===t(strings.married))
+            {
+                maritalData="MARRIED";
+            }
+            if(maritalStatus===t(strings.divorced))
+            {
+                maritalData="DIVORCED";
+            }
+            if(maritalStatus===t(strings.single))
+            {
+                maritalData="SINGLE";
+            }
+            if(maritalStatus===t(strings.widowed))
+            {
+                maritalData="WIDOWED";
+            }
+            if(gender===t(strings.notSpecify))
+            {
+                genderData="NOT_SPECIFY";
+            }
+            if(gender===t(strings.male))
+            {
+                genderData="MALE";
+            }
+            if(gender===t(strings.female))
+            {
+                genderData="FEMALE";
+            }
+            const data={
+                gender:genderData,
+                marital_status:maritalData,
+                facebook: facebook,
+                fax: fax,
+                mobile_phone: mobile,
+                home_phone: homePhone,
+                staff_photo: staffPhoto,
+                address: address,
+                other_info:otherInfo,
+                patient_note:patientNote,
+                //yeu cau
+                first_name: firstName,
+                last_name: lastName,
+                username: username,
+                password: password,
+                email: email,
+            };
+            const result=await PatientService.insert(data);
+            if(result.success)
+            {
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+            }
+            else
+            {
+                toast.error(t(strings.insertFail));
+            }
         }
         else
         {
-            genderData="FEMALE";
+            toast.error(t(strings.errorInput));
         }
-        const data={
-            display_id: "",
-		    is_active:active, 
-            
-            drug_lic: "",
-            npi: "",
-            specialty: null, 
-            access_group: null, 
-		
-            notify_staff_msg: true, 
-            notify_patient_msg: true, 
-            notify_meeting: true,
-            user_type: props.userType,
-            theme:"",
-            language:"EN",
-            
-            gender:genderData,
-            facebook: facebook,
-            email: email,
-            fax: fax,
-            mobile_phone: mobile,
-            home_phone: homePhone,
-            staff_photo: staffPhoto,
-            address: address,
-            other_info:otherInfo,
-		    //yeu cau
-            first_name: firstName,
-            last_name: lastName,
-            username: username,
-            password: password,
-
-        };
-        const result=await PatientService.insert(data);
-        if(result.success)
-        {
-            toast.success(t(strings.insertSuccess));
-            props.handleChangeIsInsert();
-        }
-        else
-        {
-            toast.error(t(strings.insertFail));
-        }
-
     }
     useEffect(()=>{
         if(!isPropValid(validators.properties.username, username))
@@ -266,7 +287,6 @@ const InsertPatient = (props) => {
                     <input
                         accept="image/*"
                         className={classes.inputAvatarDisplay}
-                        // id="contained-button-file"
                         multiple
                         type="file"
                         onChange={handleUploadClick}
@@ -288,12 +308,10 @@ const InsertPatient = (props) => {
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
                         <FormControl className={classes.item}>
-                            <InputLabel shrink id="username">
-                                {t(strings.username)}
-                            </InputLabel>
+                            
                             <TextField className={classes.inputControl} 
                                         required 
-                                        // placeholder={t(strings.username)}  
+                                        label={t(strings.username)}
                                         variant="outlined" 
                                         onChange={handleChangeUsername}
                                         value={username}
@@ -302,12 +320,11 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <InputLabel id="password">
-                                {t(strings.password)}
-                            </InputLabel>
+                            
                             <TextField className={classes.inputControl} 
                                         required 
                                         type="password"
+                                        label={t(strings.password)}
                                         variant="outlined" 
                                         onChange={handleChangePassword}
                                         value={password}
@@ -316,11 +333,10 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <InputLabel id="firstName">
-                                {t(strings.firstName)}
-                            </InputLabel>
+                            
                             <TextField className={classes.inputControl} 
                                         required 
+                                        label={t(strings.firstName)}
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
@@ -329,9 +345,10 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.lastName)}  
+                                        label={t(strings.lastName)}
                                         variant="outlined" 
                                         onChange={handleChangeLastName}
                                         value={lastName}
@@ -340,8 +357,10 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.email)}  
+                                        required
+                                        label={t(strings.email)}
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
@@ -349,12 +368,11 @@ const InsertPatient = (props) => {
                                         helperText={emailError}
                                         /> 
                         </FormControl>
-                        <FormControl className={classes.item}>
+                        <FormControl className={classes.itemSelect}>
                             <InputLabel id="gender">
                                 {t(strings.gender)}
                             </InputLabel>
                             <Select
-                                labelId="gender"
                                 value={gender}
                                 onChange={handleChangeGender}
                                 disableUnderline 
@@ -364,47 +382,21 @@ const InsertPatient = (props) => {
                                 {renderListGender()}
                             </Select>
                         </FormControl>
-                        <div className={classes.item}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id="maritalStatus">
+                                {t(strings.maritalStatus)}
+                            </InputLabel>
                             <Select
-                            
                                 value={maritalStatus}
                                 onChange={handleChangeMaritalStatus}
                                 disableUnderline 
                                 className={classes.status}
                                 >
                             
-                                <MenuItem value={null}>{t(strings.maritalStatus)}</MenuItem>
                                 {renderListMaritalStatus()}
                             </Select>
-                        </div>
-                        <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                />
-                                }
-                                label={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div>
-                        <div className={classes.itemSmall}>
+                        </FormControl>
+                        <FormControl className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -430,63 +422,78 @@ const InsertPatient = (props) => {
                                 }
                                 label={t(strings.inactive)}
                             />
-                        </div>
+                        </FormControl>
                         
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.facebook)}  
+                                        label={t(strings.facebook)}
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.mobilePhone)}  
+                                        label={t(strings.mobilePhone)}
                                         variant="outlined" 
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.homePhone)}  
+                                        label={t(strings.homePhone)}
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
+                                        label={t(strings.fax)}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
+                                        label={t(strings.address)}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
                             <TextField className={classes.inputControlBig} 
-                                         
-                                        placeholder={t(strings.additionalInfo)}  
+                                        label={t(strings.additionalInfo)}
                                         variant="outlined" 
                                         onChange={handleChangeOtherInfo}
                                         value={otherInfo}
                                         multiline
                                         /> 
-                        </div>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            
+                            <TextField className={classes.inputControlBig} 
+                                        label={t(strings.note)}
+                                        variant="outlined" 
+                                        onChange={handleChangePatientNote}
+                                        value={patientNote}
+                                        multiline
+                                        /> 
+                        </FormControl>
                         
                     </Grid>
                 </Grid>

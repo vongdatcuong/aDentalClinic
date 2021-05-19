@@ -30,6 +30,8 @@ import strings from "../../../configs/strings";
 
 //import icons
 import SearchIcon from '@material-ui/icons/Search';
+import NoDataIcon from '../../common/NoDataIcon';
+
 // import FilterList from '@material-ui/icons/FilterList';
 import AddBox from '@material-ui/icons/AddBox';
 
@@ -49,17 +51,18 @@ const PatientRecallPage = ({patientID}) => {
     const {t, i18n } = useTranslation();
     const classes = useStyles();
     //
-    const createData=(id,recallDate,appointment,note,procedure)=>{
-        return {id,recallDate,appointment,note,procedure};
+    const createData=(id,recallDate,appointment,note,procedure,status)=>{
+        return {id,recallDate,appointment,note,procedure,status};
     };
     
-    const dataColumnsName=["index","recallDate","appointment","note","procedure"];
+    const dataColumnsName=["index","recallDate","appointment","note","procedure","status"];
     const titles=[
         t(strings.index),
         t(strings.recallDate),
         t(strings.appointment),
         t(strings.note),
         t(strings.procedure),
+        t(strings.status),
     ];
     
     //state
@@ -68,6 +71,7 @@ const PatientRecallPage = ({patientID}) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
     const [rows,setRows]=useState([]);
+    const [originalData,setOriginalData]=useState([]);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -76,6 +80,7 @@ const PatientRecallPage = ({patientID}) => {
     const [isUpdate,setIsUpdate]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
+    const [isEmpty,setIsEmpty]=useState(null);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
     const handleChangeSelectedRow=(value)=>{
@@ -89,7 +94,10 @@ const PatientRecallPage = ({patientID}) => {
         setPage(0);
     };
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value;
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.recallDate !==null && row.recallDate.indexOf(value) !== -1);
+        setRows(newData);
     };
 
     const handleChangeInsertPatientRecall=(e)=>{
@@ -119,19 +127,37 @@ const PatientRecallPage = ({patientID}) => {
     const changeData=(data)=>{
         let temp=[];
         data.map((a,index)=>{
-            
-            let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),a.appointment? moment(a.appointment.appointment_date).format("DD/MM/YYYY") : null,a.note,a.procedure ? a.procedure.procedure_code : null);
+            let status;
+            if(a.is_active===true)
+            {
+                status=t(strings.active);
+            }
+            if(a.is_active===false)
+            {
+                status=t(strings.inactive);
+            }
+            let newData=createData(a._id,moment(a.recall_date).format("DD/MM/YYYY"),
+            a.appointment? moment(a.appointment.appointment_date).format("DD/MM/YYYY") : null,
+            a.note,
+            a.procedure ? a.procedure.procedure_code : null,
+            status);
             temp=temp.concat(newData);
         })
         setRows(temp);
+        setOriginalData(temp);
     }
     const getPatientRecall=async()=>{
         const result=await PatientRecallService.getPatientRecallByID(patientID);
-        if(result.success)
+        if(result.data.length!==0 && result.success===true)
         {
+            setIsEmpty(false);
             changeData(result.data);
-
         }
+        else
+        {
+            setIsEmpty(true);
+        }
+        
     };
     const getUser=async()=>{
         const result=await AuthService.getCurrentUser();
@@ -139,7 +165,7 @@ const PatientRecallPage = ({patientID}) => {
     }
     useEffect(()=>{
         
-        if(rows.length===0)
+        if(rows.length===0 && isEmpty===null)
         {
             
             getPatientRecall();
@@ -156,6 +182,11 @@ const PatientRecallPage = ({patientID}) => {
                 setSelectedRowData(rows[selectedRow])
             }
 
+        }
+        if(searchText==="")
+        {
+            setSearchText(null);
+            setRows(originalData);
         }
         if(isInsert===true)
         {
@@ -255,6 +286,7 @@ const PatientRecallPage = ({patientID}) => {
 
                     />
                     :
+                    isEmpty===false ?
                         <TableCustom titles={titles}
                                 data={rows}
                                 dataColumnsName={dataColumnsName}
@@ -265,6 +297,12 @@ const PatientRecallPage = ({patientID}) => {
                                 numberColumn={dataColumnsName.length}
                                 
                                 />
+
+                    :
+                    <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                        <NoDataIcon/>
+
+                    </div>
                 }
                
                

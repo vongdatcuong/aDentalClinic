@@ -11,7 +11,9 @@ const insertProcedureStyle = (theme) => ({
             //color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        borderRadius:"10px",
+        boxShadow:'3px 3px 3px gray',
     },
     
     searchControl:{
@@ -102,7 +104,7 @@ const insertProcedureStyle = (theme) => ({
             //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -156,7 +158,7 @@ const insertProcedureStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'30px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),
@@ -173,13 +175,19 @@ const insertProcedureStyle = (theme) => ({
         marginTop:'15px',
 
     },
+    itemSelect:{
+        marginTop:'15px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        }
+    },
     inputCombobox:{
         height:'35px',
         width:'36vw',
         marginLeft:'30px',
-        marginTop:'15px',
+        marginTop:'10px',
         borderRadius: 4,
-        position: 'relative',
+        // position: 'relative',
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #ced4da',
         fontSize: 16,

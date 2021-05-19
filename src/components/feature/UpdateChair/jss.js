@@ -11,7 +11,9 @@ const updatePersonStyle = (theme) => ({
             color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        borderRadius:"15px",
+        boxShadow:'3px 3px 3px gray',
     },
     
     searchControl:{
@@ -149,13 +151,43 @@ const updatePersonStyle = (theme) => ({
         },
 
     },
+    inputControlColor:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        padding:'10px',
+        borderRadius:'5px',
+        border:'1px solid lightgray',
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'1px',
+        },
+        '& .MuiFormControl-root':{
+            height:'25px',
+            width:'36vw',
+            display:'flex',
+            flexDirection:'row',
+            alignItems:'center',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'30px',
+            width:'32.2vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
+        },
+    },
     updateButton:{
        
         height:'35px',
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'30px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),
@@ -170,6 +202,15 @@ const updatePersonStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        },
+    },
+    itemColor:{
+        marginTop:'20px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        },
 
     },
     itemSmall:{

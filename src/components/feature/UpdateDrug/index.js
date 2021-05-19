@@ -11,7 +11,9 @@ import { useTranslation } from 'react-i18next';
 // @material-ui/core Component
 import { 
     Button,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 // import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -134,72 +136,84 @@ const UpdateDrug = (props) => {
               
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.name)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                         
-                                        placeholder={t(strings.name)}  
+                                        
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
                                         inputProps={{ readOnly: !props.editable }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.description)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         
-                                        placeholder={t(strings.description)}  
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.refill)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
+                        </FormControl>
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.dispensed)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.quantity)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.quantity)}  
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.note)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
+                        </FormControl>
                        
                     </Grid>
                 </Grid>

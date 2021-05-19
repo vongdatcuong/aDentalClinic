@@ -143,7 +143,7 @@ const insertTemplateStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -230,6 +230,12 @@ const insertTemplateStyle = (theme) => ({
     item:{
         marginTop:'15px',
 
+    },
+    itemSelect:{
+        marginTop:'15px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        },
     },
     itemSmall:{
         display:'flex',

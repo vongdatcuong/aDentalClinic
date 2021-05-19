@@ -1,4 +1,4 @@
-const updatePatientStyle = (theme) => ({
+const updatePersonStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -9,8 +9,8 @@ const updatePatientStyle = (theme) => ({
         
         '& .MuiInputLabel-outlined':{
             //color:theme.primaryColor[2],
-            marginLeft:'30px',
-
+            // marginLeft:'30px',
+            
         }
     },
     
@@ -101,7 +101,51 @@ const updatePatientStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            // marginBottom:'15px',
+            // transform:'translate(14px, 18px) scale(1)',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
+    inputControlOutline:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginTop:'15px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            // marginBottom:'15px',
+            // transform:'translate(14px, 18px) scale(1)',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -143,7 +187,7 @@ const updatePatientStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            // marginLeft:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -247,7 +291,22 @@ const updatePatientStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-        
+        "& .MuiInputLabel-formControl":{
+            marginLeft:'40px',
+        },
+    },
+    itemOutline:{
+        marginTop:'20px',
+        "& .MuiInputLabel-formControl":{
+            marginLeft:'20px',
+        },
+    },
+    itemSelect:{
+        marginTop:'15px',
+        '& .MuiInputLabel-animated':{
+            marginLeft:'30px',
+            marginTop:'10px',
+        }
     },
     itemMedium:{
         flexDirection:'row',
@@ -284,9 +343,20 @@ const updatePatientStyle = (theme) => ({
     },
     dialog:{
         
-    }
-
+    },
+    status:{
+        marginLeft:'30px',
+        marginRight:'10px',
+        marginTop:'20px',
+        minWidth:'16vw',
+        border:`1px solid ${theme.grayColor[0]}`,
+        borderRadius:'5px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+            paddingLeft:'10px',
+        },
+    },
 });
 
   
-export default updatePatientStyle;  
+export default updatePersonStyle;  
