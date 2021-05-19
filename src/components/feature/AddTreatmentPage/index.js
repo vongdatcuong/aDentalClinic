@@ -634,8 +634,14 @@ const AddTreatmentPage = ({ patientID }) => {
       setProcedureErrMsg("");
     }
     // select tooth
-    if (activeStep === 2) {
-        alert("daf");
+    if (activeStep === 1) {
+        let selectCount = 0;
+        selectedTooth_Raw.forEach((tooth) => {
+            if (tooth.isSelected === true) {
+                selectCount++;
+            }
+        });
+        if (!allowNoTooth && selectCount === 0) isValid = false;
     }
     return isValid;
   }
