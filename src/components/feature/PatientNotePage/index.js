@@ -105,11 +105,12 @@ const PatientNotePage = ({ patientID }) => {
       const result = await ProgressNoteService.getPatientProgressNote(
         patientID
       );
+      //console.log(result.data);
       if (result.success) {
         setNotes(result.data);
         return true;
       }
-      toast.error(result.message);
+      toast.error(result.data.message);
       return false;
     } catch (err) {
       toast.error(t(strings.errorLoadData));
