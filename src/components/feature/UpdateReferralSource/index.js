@@ -11,7 +11,9 @@ import { useTranslation } from 'react-i18next';
 // @material-ui/core Component
 import { 
     Button,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 // import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -143,10 +145,12 @@ const UpdateReferralSource = (props) => {
               
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                         
-                                        placeholder={t(strings.name)}  
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.name)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl}    
+                                        required                                      
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
@@ -154,36 +158,40 @@ const UpdateReferralSource = (props) => {
                                         error={nameErrorMessage !== null}
                                         helperText={nameErrorMessage}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        
-                                        placeholder={t(strings.address)}  
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.address)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl}                                         
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.phone)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        required 
-                                        placeholder={t(strings.phone)}  
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
                                         inputProps={{ readOnly: !props.editable }}
                                         
                                         /> 
-                        </div>
+                        </FormControl>
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.email)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.email)}  
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
@@ -191,27 +199,31 @@ const UpdateReferralSource = (props) => {
                                         error={emailErrorMessage !== null}
                                         helperText={emailErrorMessage}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.fax)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
                                         inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.additionalInfo)}
+                            </InputLabel>
                             <TextField className={classes.inputControlBig} 
-                                        placeholder={t(strings.additionalInfo)}  
                                         variant="outlined" 
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
                                         inputProps={{ readOnly: !props.editable }}
                                         multiline
                                         /> 
-                        </div>
+                        </FormControl>
                        
                     </Grid>
                 </Grid>

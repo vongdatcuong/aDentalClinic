@@ -30,6 +30,7 @@ import {
     Select,
     MenuItem,
     FormHelperText,
+    InputLabel,
 } from '@material-ui/core';
 import {
     KeyboardTimePicker
@@ -62,8 +63,8 @@ const Practice = () => {
     const [address,setAddress]=useState(null);
     const [phone,setPhone]=useState(null);
     const [fax,setFax]=useState(null);
-    const [startTime,setStartTime]=useState(null);
-    const [endTime,setEndTime]=useState(null);
+    const [startTime,setStartTime]=useState(new Date());
+    const [endTime,setEndTime]=useState(new Date());
     const [nameErrorMessage,setNameErrorMessage]=useState(null);
     const [phoneErrorMessage,setPhoneErrorMessage]=useState(null);
     const [user,setUser]=useState(null);
@@ -85,7 +86,6 @@ const Practice = () => {
         if(editable)
         {
             setStartTime(date);
-            
             if(moment(date).format("HH:mm")<moment(endTime).format("HH:mm"))
             {
             }
@@ -97,9 +97,11 @@ const Practice = () => {
             setEndTime(date);
             if(date>startTime)
             {
+
             }
             else
             {
+
             }
         }
     }
@@ -122,7 +124,8 @@ const Practice = () => {
             setStartTime(a.start_time);
             setEndTime(a.end_time);
             setRows(newData);
-            
+            setIsLoading(false);
+
         }
 
     }
@@ -137,8 +140,8 @@ const Practice = () => {
                 address:address,
                 phone:phone,
                 fax:fax,
-                start_time:start,
-                end_time:end,
+                start_time:startTime,
+                end_time:endTime,
     
             }
             const res=await PracticeService.update(rows.id,data);
@@ -166,7 +169,6 @@ const Practice = () => {
         {
             getPractice();
             getUser();
-            setIsLoading(false);
         }
         if(!isPropValid(validators.properties.name, name))
         {
@@ -237,7 +239,7 @@ const Practice = () => {
                         </Typography>
                 
                        
-                        <div>
+                        <FormControl>
                             <FormControl variant="filled">
                                     <OutlinedInput
                                         className={classes.inputControl}
@@ -264,9 +266,9 @@ const Practice = () => {
                                     </FormHelperText>
                                    
                             </FormControl>   
-                        </div>
+                        </FormControl>
 
-                        <div>
+                        <FormControl>
                             <FormControl variant="filled">
                                 <OutlinedInput
                                     className={classes.inputControl}
@@ -287,8 +289,8 @@ const Practice = () => {
                             </FormControl>
                             
                     
-                        </div>
-                        <div>
+                        </FormControl>
+                        <FormControl>
                             <FormControl variant="filled">
                                     <OutlinedInput
                                         className={classes.inputControl}
@@ -315,8 +317,8 @@ const Practice = () => {
                             </FormControl>
                             
                             
-                        </div>
-                        <div>
+                        </FormControl>
+                        <FormControl>
                             <FormControl variant="filled">
                                 <OutlinedInput
                                     className={classes.inputControl}
@@ -336,7 +338,7 @@ const Practice = () => {
                                 
                             </FormControl>
                         
-                        </div>
+                        </FormControl>
                         <div className={classes.inputDate}>
                             <KeyboardTimePicker
                                 margin="normal"

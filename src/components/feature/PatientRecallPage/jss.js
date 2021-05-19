@@ -1,7 +1,8 @@
 const patientRecallPageStyle = (theme) => ({
     container: {
         flexGrow: 1,
-        margin:"0px"
+        margin:"0px",
+        marginTop:'20px',
     },
 
     searchControl:{

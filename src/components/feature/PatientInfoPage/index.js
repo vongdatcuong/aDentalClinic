@@ -35,16 +35,21 @@ import {
   Tooltip,
   Select,
   MenuItem,
+  InputLabel
 } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import EditIcon from '@material-ui/icons/Edit';
 
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
+import DialogReferral from '../DialogReferral';
+
 // utils
 import ConvertDateTimes from "../../../utils/datetimes/convertDateTimes";
 import strings from "../../../configs/strings";
 //api
+import PatientReferralService from "../../../api/patientReferral/patientReferral.service";
 import PatientService from "../../../api/patient/patient.service";
 //validators
 import validators, { isPropValid } from "../../../utils/validators";
@@ -76,9 +81,44 @@ const PatientInfoPage = ({ patientID }) => {
   const [gender, setGender] = useState(true);
   const [active, setActive] = useState(true);
   const [staffPhoto, setStaffPhoto] = useState(null);
-
+  const [referredBy,setReferredBy]=useState(null);
+  const [referredTo,setReferredTo]=useState(null);
+  const [displayBy,setDisplayBy]=useState(null);
+  const [displayTo,setDisplayTo]=useState(null);
+  const [referralType,setReferralType]=useState(null);
+  const [openDialog,setOpenDialog]=useState(false);
+  const [isInsert,setIsInsert]=useState(false);
+  const [isUpdate,setIsUpdate]=useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  //handle
+  const handleChangeOpenReferredBy=(e)=>{
+    if(editInfo)
+    {
+        setReferralType("FROM");
+        setOpenDialog(true);
+    }
+  }
+  const handleChangeOpenReferredTo=(e)=>{
+    if(editInfo)
+    {
+        setReferralType("TO");
+        setOpenDialog(true);
+    }  
+  }
+  const handleChangeCloseDialog=(e)=>{
+    setReferralType(null);
+    setOpenDialog(false);
+  }
+  const handleChangeOpenDialog=(e)=>{
+    setOpenDialog(true);
+  }
+  const handleChangeIsInsert=()=>{
+    setIsInsert(!isInsert);
+  }
+  const handleChangeIsUpdate=()=>{
+    setIsUpdate(!isUpdate);
+  }
   const handleChangeActive = (e) => {
     setActive(!active);
   };
@@ -91,12 +131,7 @@ const PatientInfoPage = ({ patientID }) => {
   const handleChangeLastName = (e) => {
     setLastName(e.target.value);
   };
-  //   const handleChangeUsername = (e) => {
-  //     setUsername(e.target.value);
-  //   };
-  //   const handleChangePassword = (e) => {
-  //     setPassword(e.target.value);
-  //   };
+  
   const handleChangeFacebook = (e) => {
     setFacebook(e.target.value);
   };
@@ -126,11 +161,69 @@ const PatientInfoPage = ({ patientID }) => {
     };
 
     setSelectedFile(event.target.files[0]);
-    //console.log("Url:", reader);
   };
   const onClickEdit = async () => {
     setEditInfo(true);
   };
+  const getReferredBy=(data)=>{
+    let temp=[];
+    data.map((a,index)=>{
+        if(a.referral_type==="FROM")
+        {
+            temp=temp.concat(a);
+        }
+    })
+
+    if(temp.length>0)
+    {
+        if(temp[temp.length-1].ref_patient!==null)
+        {
+            setDisplayBy(temp[temp.length-1].ref_patient.user.first_name + " " + temp[temp.length-1].ref_patient.user.last_name)
+        }
+        if(temp[temp.length-1].ref_staff!==null)
+        {
+            setDisplayBy(temp[temp.length-1].ref_staff.user.first_name + " " + temp[temp.length-1].ref_staff.user.last_name)
+        }
+        if(temp[temp.length-1].referral_source!==null)
+        {
+            setDisplayBy(temp[temp.length-1].referral_source.name)
+        }
+        setReferredBy(temp);
+    }
+    
+  }
+  const getReferredTo=(data)=>{
+    let temp=[];
+    data.map((a,index)=>{
+        if(a.referral_type==="TO")
+        {
+            temp=temp.concat(a);
+        }
+    })
+    if(temp.length>0)
+    {
+        if(temp[temp.length-1].ref_patient!==null)
+        {
+            setDisplayTo(temp[temp.length-1].ref_patient.user.first_name + " " + temp[temp.length-1].ref_patient.user.last_name)
+        }
+        if(temp[temp.length-1].ref_staff!==null)
+        {
+            setDisplayTo(temp[temp.length-1].ref_staff.user.first_name + " " + temp[temp.length-1].ref_staff.user.last_name)
+        }
+        if(temp[temp.length-1].referral_source!==null)
+        {
+            setDisplayTo(temp[temp.length-1].referral_source.name)
+        }
+        setReferredTo(temp);
+    }
+    
+  }
+  const searchPatientReferral=async()=>{
+    const res=await PatientReferralService.searchByPatient(userData.id);
+    getReferredBy(res.data);
+    getReferredTo(res.data);
+
+  }
   const onClickUpdate = async () => {
     if (firstNameError === null && lastNameError === null) {
       let genderData;
@@ -189,6 +282,10 @@ const PatientInfoPage = ({ patientID }) => {
         }
       }
     };
+    if(referredBy===null && referredTo===null && userData!==null)
+    {
+        searchPatientReferral();
+    }
     if (patientID && username === null) {
       searchPatient();
     }
@@ -409,9 +506,69 @@ const PatientInfoPage = ({ patientID }) => {
                     label={t(strings.inactive)}
                   />
                 </div>
+                <FormControl variant="filled" className={classes.itemOutline}>
+                                    <InputLabel shrink>
+                                        {t(strings.referredBy)}
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        className={classes.inputControlOutline}
+                                        type={'text'}
+                                        value={displayBy}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredBy}/>
+
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                  
+                                   
+                            </FormControl>   
+                        
+                        <FormControl variant="filled" className={classes.itemOutline}>
+                                    <InputLabel shrink>
+                                        {t(strings.referredTo)}
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        className={classes.inputControlOutline}
+                                        type={'text'}
+                                        value={displayTo}
+                                        readOnly={true}
+                                        endAdornment={
+                                        <InputAdornment position="start" >
+                                            <EditIcon className={classes.iconButton} onClick={handleChangeOpenReferredTo}/>
+
+                                        </InputAdornment>
+                                        }
+                                        
+                                        
+                                    />
+                                    
+                            </FormControl>   
+                       
+                    
               </Grid>
             </Grid>
-
+            {referralType!==null ? 
+                <DialogReferral 
+                    isOpen={openDialog}
+                    close={handleChangeCloseDialog}
+                    open={handleChangeOpenDialog}
+                    type={referralType}
+                    patientID={patientID}
+                    referredBy={referredBy}
+                    referredTo={referredTo}
+                    handleChangeIsInsert={handleChangeIsInsert}
+                    handleChangeIsUpdate={handleChangeIsUpdate}
+                    editable={editInfo}
+                    
+                />
+                :
+                <div></div>
+            }
             <div>
               {editInfo ? (
                 <Button

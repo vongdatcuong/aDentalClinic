@@ -185,6 +185,13 @@ const practiceStyle=(theme)=>({
         // alignItems:'space-between',
 
         width:'36vw',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'15px',
+            
+        },
+        '& .MuiSvgIcon-root':{
+            marginBottom:'5px',
+        }
     },
     status:{
         marginLeft:'20px',

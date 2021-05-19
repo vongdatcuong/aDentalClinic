@@ -131,7 +131,7 @@ const Patients = () => {
     const [rowsAll,setRowsAll]=useState([]);
     const [rowsActive,setRowsActive]=useState([]);
     const [rowsInactive,setRowsInactive]=useState([]);
-
+    const [originalData,setOriginalData]=useState([]);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -160,21 +160,27 @@ const Patients = () => {
         setPage(0);
     };
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.fullname !==null && row.fullname.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeStatus=(event)=>{
         setStatus(event.target.value);
         if(event.target.value===t(strings.active))
         {
             setRows(rowsActive);
+            setOriginalData(rowsActive);
         }
         if(event.target.value===t(strings.inactive))
         {
             setRows(rowsInactive);
+            setOriginalData(rowsInactive);
         }
         if(event.target.value===t(strings.all))
         {
             setRows(rowsAll);
+            setOriginalData(rowsAll)
         }
     }
     const handleChangeSelectedRow=(value)=>{
@@ -248,16 +254,18 @@ const Patients = () => {
 
         })
         setRows(tempActive);
+        setOriginalData(tempActive);
         setRowsAll(temp);
         setRowsActive(tempActive);
         setRowsInactive(tempInactive);
-        setIsLoading(false);
+
     }
     const getPatient=async()=>{
         const result=await PatientService.getPatient();
         if(result.success)
         {
             changeData(result.data);
+            setIsLoading(false);
 
         }
     };
@@ -283,6 +291,11 @@ const Patients = () => {
                 setSelectedRowData(rows[selectedRow])
             }
 
+        }
+        if(searchText==="")
+        {
+            setSearchText(null);
+            setRows(originalData);
         }
         if(isInsert===true)
         {

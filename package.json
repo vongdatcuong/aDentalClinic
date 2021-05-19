@@ -24,6 +24,7 @@
     "html-react-parser": "^1.2.4",
     "i18next": "^19.8.9",
     "joi": "^17.4.0",
+    "material-ui-color-picker": "^3.5.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-chat-widget": "^3.0.5",

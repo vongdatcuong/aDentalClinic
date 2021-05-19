@@ -12,9 +12,12 @@ import {
     FormControlLabel,
     Checkbox,
     Button,
-    TextField
- } from '@material-ui/core';
+    TextField,
+    FormControl,
+    InputLabel,
+} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import ColorPicker from 'material-ui-color-picker'
 
 import styles from "./jss";
 import { toast } from 'react-toastify';
@@ -40,7 +43,7 @@ const InsertChair = (props) => {
     //state
     const [name,setName]=useState(null);
     const [order,setOrder]=useState(null);
-    const [color,setColor]=useState(null);
+    const [color,setColor]=useState("#000");
     const [isDeleted,setIsDeleted]=useState(false);
     const handleChangeName=(e)=>{
         setName(e.target.value);
@@ -70,9 +73,10 @@ const InsertChair = (props) => {
                     name:name,
                     order:order,
                     color:color,
-                    //is_deleted:isDeleted,
+                    is_deleted:isDeleted,
                 };
                 const result=await ChairService.insert(data);
+                console.log("Check result insert chair:",result);
                 if(result.success)
                 {
                     toast.success(t(strings.insertSuccess));
@@ -98,43 +102,42 @@ const InsertChair = (props) => {
     })
     return (
         <div className={classes.container}>
-            
             <div className={classes.content}>
-                
-               
-                <Grid container className={classes.input}>
-                    <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                          
-                                        placeholder={t(strings.name)}  
+                                        label={t(strings.name)}  
                                         variant="outlined" 
                                         onChange={handleChangeName}
                                         value={name}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                          
-                                        placeholder={t(strings.order)}  
+                                        label={t(strings.order)}  
                                         variant="outlined" 
                                         onChange={handleChangeOrder}
                                         value={order}
                                         
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                         
-                                        placeholder={t(strings.color)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeColor}
+                        </FormControl>
+                        <FormControl className={classes.itemColor}>
+                            <InputLabel shrink>
+                                {t(strings.color)}
+                            </InputLabel>
+                            <div className={classes.inputControlColor} >
+                                <ColorPicker  
+                                        name="color"
+                                        InputProps={{ disableUnderline: true }}
+                                        style={{width:'100%',backgroundColor:color}}
+                                        onChange={color => setColor(color)}
                                         value={color}
-                                       
                                         /> 
-                        </div>
-                        <div className={classes.itemSmall}>
+                            </div>
+                        </FormControl>
+                        <FormControl className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -160,10 +163,8 @@ const InsertChair = (props) => {
                                 }
                                 label={t(strings.inactive)}
                             />
-                        </div>
-                        
-                    </Grid>
-                </Grid>
+                        </FormControl>
+
                 <div>
                     <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertChair}>
                         {t(strings.insert)}

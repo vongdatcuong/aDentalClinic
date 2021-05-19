@@ -12,7 +12,8 @@ import {
     
     Button,
     TextField,
-   
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
@@ -92,31 +93,27 @@ const UpdateTemplate = (props) => {
             <div className={classes.content}>
                 
               
-                <Grid container className={classes.input}>
-                    <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.content)}
+                            </InputLabel>
                             <TextField className={props.contentBig===true ? classes.inputControlBig : classes.inputControl} 
                                          
-                                        placeholder={t(strings.content)}  
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
                                         inputProps={{ readOnly: !props.editable }}
                                         multiline={props.contentBig}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
                          
                         
-                        </div>
+                        </FormControl>
                        
                         
-                    </Grid>
-                    <Grid item xs={6} className={classes.rightContent}>
                     
-                        
-                    </Grid>
-                </Grid>
                 {props.editable ?
                 <div>
                     <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>

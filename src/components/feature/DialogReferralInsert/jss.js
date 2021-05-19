@@ -101,7 +101,7 @@ const dialogReferralInsert = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'2px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -155,8 +155,8 @@ const dialogReferralInsert = (theme) => ({
             color:theme.grayColor[0],
         },
         '& .MuiInputLabel-formControl':{
-            marginLeft:'10x',
-            
+            marginLeft:'15px',
+            marginTop:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -169,7 +169,9 @@ const dialogReferralInsert = (theme) => ({
         //         borderColor: theme.primaryColor[0],
         //     },
         // },
-        
+        '& .MuiFormLabel-formControl':{
+            padding:'10px',
+        }
     
 
     },
@@ -210,8 +212,8 @@ const dialogReferralInsert = (theme) => ({
             color:theme.grayColor[0],
         },
         '& .MuiInputLabel-formControl':{
-            marginLeft:'10x',
-            
+            marginLeft:'15px',
+            marginTop:'10px',            
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -253,7 +255,7 @@ const dialogReferralInsert = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -357,7 +359,7 @@ const dialogReferralInsert = (theme) => ({
     },
     status:{
         marginRight:'1vw',
-        minWidth:'36vw',
+        minWidth:'16vw',
         border:`1px solid ${theme.grayColor[0]}`,
             borderRadius:'5px',
         '& .MuiSelect-select':{

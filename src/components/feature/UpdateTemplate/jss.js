@@ -227,7 +227,9 @@ const updateTemplateStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        }
     },
     itemSmall:{
         display:'flex',

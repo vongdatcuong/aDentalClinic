@@ -3,6 +3,8 @@ const tableRowItemCustomStyle = (theme) => ({
     tableCell: {
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
+        minWidth:'5vw',
+        maxWidth:'45vw',
         '& .MuiGrid-container':{
             alignItems:'center',
         },

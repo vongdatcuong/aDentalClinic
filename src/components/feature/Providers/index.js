@@ -65,6 +65,7 @@ const Providers = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText,setSearchText]=useState(null);
+    const [originalData,setOriginalData]=useState([]);
     const [rows,setRows]=useState([]);
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
@@ -94,7 +95,11 @@ const Providers = () => {
         setPage(0);
     };
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value = event.target.value.toLowerCase();
+        setSearchText(value);
+
+        const newData = originalData.filter((row) => row.fullname.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
 
     const handleChangeInsertPerson=(e)=>{
@@ -134,6 +139,9 @@ const Providers = () => {
 
         })
         setRows(temp);
+        setOriginalData(temp);
+        setIsLoading(false);
+
     }
     const getProvider=async()=>{
         const result=await ProviderService.getProvider();
@@ -157,7 +165,6 @@ const Providers = () => {
         if(user===null)
         {
             getUser();
-            setIsLoading(false);
         }
         if(selectedRow!==-1)
         {
@@ -262,6 +269,7 @@ const Providers = () => {
                                     editable={editable}
                                     id={selectedRowData.id}
                                     handleChangeIsUpdate={handleChangeIsUpdate}
+                                    staffType={t(strings.staffTypeProvider)}
 
                     />
                     :
