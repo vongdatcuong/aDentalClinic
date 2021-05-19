@@ -94,9 +94,9 @@ const DialogReferral = (props) => {
 
  
     const handleChangeSearchText = (event) => {
-        let value=event.target.value;
+        let value=event.target.value.toLowerCase();
         setSearchText(value);
-        const newData = originalData.filter((row) =>row.name !==null && row.name.indexOf(value) !== -1);
+        const newData = originalData.filter((row) =>row.name !==null && row.name.toLowerCase().indexOf(value) !== -1);
         setRows(newData);
     };
     const handleChangeInsertPatietReferral=(e)=>{
