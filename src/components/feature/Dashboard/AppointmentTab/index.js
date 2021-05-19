@@ -703,7 +703,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Patient information */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>
@@ -867,7 +867,7 @@ const AppointmentTab = ({
                         </Grid>
                     </Grid>
                     {/* Schedule */}
-                    <Grid container md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                    <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
                         {/* Group title */}
                         <Grid item md={12} sm={12} xs={12}>
                             <Typography component="h6" varient="h6" className={classes.formGroupHeader}>

@@ -327,9 +327,9 @@ const Report = () => {
           setCardValues(newCardValues);
 
           // Circular Reports
-          const startTimeSplit = dat.practice.start_time.split(":");
-          const endTimeSplit = dat.practice.end_time.split(":");
-          const workingHour = Number(endTimeSplit[0]) + Number(endTimeSplit[1]) / 60 - Number(startTimeSplit[0]) + Number(startTimeSplit[1]) / 60;
+          const startTime = dat.practice.start_time;
+          const endTime = dat.practice.end_time;
+          const workingHour = Number(endTime.slice(0, 2)) + Number(endTime.slice(2)) / 60 - Number(startTime.slice(0, 2)) + Number(startTime.slice(2)) / 60;
           newCircularReportVals = [
             {
               main: Math.round(workingHour * 100) / 100,
