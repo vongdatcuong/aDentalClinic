@@ -9,7 +9,7 @@ import figures from "../../../configs/figures";
 import lists from "../../../configs/lists";
 
 // moment
-import moment from 'moment';
+import moment from "moment";
 
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
@@ -53,13 +53,13 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import StepConnector from "@material-ui/core/StepConnector";
 import Typography from "@material-ui/core/Typography";
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from "@material-ui/core/FormControl";
 
 // React-select
-import AsyncSelect from 'react-select/async';
+import AsyncSelect from "react-select/async";
 
 // @material-ui/core Datepicker
-import { DatePicker  } from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
 
 // API
 import api from "../../../api/base-api";
@@ -69,7 +69,7 @@ import TreatmentService from "../../../api/treatment/treatment.service";
 import { loadingStore } from "../../../contexts/loading-context";
 
 // Utils
-import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
+import ConvertDateTimes from "../../../utils/datetimes/convertDateTimes";
 
 const ColorlibConnector = withStyles(style.colorlibConnector)(StepConnector);
 
@@ -111,14 +111,13 @@ const AddTreatmentPage = ({ patientID }) => {
   const history = useHistory();
 
   // None option
-  const noneOption = {value: "", label: t(strings.none)};
+  const noneOption = { value: "", label: t(strings.none) };
 
   // Async select Style
   const asyncSelectStyle = {
-    menu: ({...provided}, state) => ({
-        ...provided,
-        zIndex: 2
-        
+    menu: ({ ...provided }, state) => ({
+      ...provided,
+      zIndex: 2,
     }),
   };
 
@@ -134,8 +133,10 @@ const AddTreatmentPage = ({ patientID }) => {
   const [procedures, setProcedures] = useState([]);
   const [selectedProcedureCate, setselectedProcedureCate] = useState(null);
   const [selectedProcedure, setSelectedProcedure] = useState(null);
-  const [selectedProcedureCate_text, setselectedProcedureCate_text] = useState("Not selected");
-  const [selectedProcedure_text, setSelectedProcedure_text] = useState("Not selected");
+  const [selectedProcedureCate_text, setselectedProcedureCate_text] =
+    useState("Not selected");
+  const [selectedProcedure_text, setSelectedProcedure_text] =
+    useState("Not selected");
   const [treatmentNote, setTreatmentNote] = useState("");
   const [provider, setProvider] = React.useState(null);
   const [assistant, setAssistant] = React.useState(null);
@@ -145,6 +146,10 @@ const AddTreatmentPage = ({ patientID }) => {
   const [procedureErrMsg, setProcedureErrMsg] = useState("");
   const [providerErrMsg, setProviderErrMsg] = useState("");
   const [dateErrMsg, setDateErrMsg] = useState("");
+  // Tooth constraints
+  const [allowMultipleTooth, setAllowMultipleTooth] = useState(false);
+  const [allowNoTooth, setAllowNoTooth] = useState(false);
+  const [allowedTeeth, setAllowedTeeth] = useState({});
 
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
   const [selectedTooth, setSelectedTooth] = React.useState([]); // các răng đã chọn - tạm thời
@@ -205,11 +210,11 @@ const AddTreatmentPage = ({ patientID }) => {
       const result = await Promise.all(promises);
       if (result[0].success) {
         setselectedProcedureCate(newSelectedCate);
-        procedureCates.forEach(cate => {
-            if (cate.id === newSelectedCate) {
-                setselectedProcedureCate_text(cate.name);
-            }
-        })
+        procedureCates.forEach((cate) => {
+          if (cate.id === newSelectedCate) {
+            setselectedProcedureCate_text(cate.name);
+          }
+        });
         const codes = result[0].payload.procedure_code.map((code) => ({
           id: code._id,
           procedure_code: code.procedure_code,
@@ -241,13 +246,57 @@ const AddTreatmentPage = ({ patientID }) => {
       const result = await Promise.all(promises);
       if (result[0].success) {
         setSelectedProcedure(newSelectedProcedure);
-        procedures.forEach(procd => {
-            if (procd.procedure_code === newSelectedProcedure.procedure_code) {
-                setSelectedProcedure_text(procd.description);
-            }
-        })
+        procedures.forEach((procd) => {
+          if (procd.procedure_code === newSelectedProcedure.procedure_code) {
+            setSelectedProcedure_text(procd.description);
+          }
+        });
         clearSelectedTooth();
         resetSelectedToothArray();
+        setSelectedProcedure(newSelectedProcedure);
+        const _selectedTooth = result[0].payload.tooth_select;
+        if (_selectedTooth) {
+          const tokens = _selectedTooth.split(":");
+          if (tokens[0] == strings.selectNoneTooth) {
+            setAllowNoTooth(true);
+            setAllowMultipleTooth(false);
+            setAllowedTeeth({});
+          } else {
+            if (tokens[0] == strings.selectMultiTooth) {
+              setAllowMultipleTooth(true);
+            } else {
+              setAllowMultipleTooth(false);
+            }
+            let isOpt = false;
+            if (tokens[tokens.length - 1] == "opt") {
+              setAllowNoTooth(true);
+              isOpt = true;
+            } else {
+              setAllowNoTooth(false);
+            }
+            // Allowed teeth
+            let newAllowedTeeth = {};
+            let toks;
+            for (let i = 1; i < tokens.length - isOpt; i++) {
+              if (tokens[i].indexOf("-") != -1) {
+                toks = tokens[i].split("-");
+                for (let j = Number(toks[0]); j <= Number(toks[1]); j++) {
+                  newAllowedTeeth[j] = true;
+                }
+              } else {
+                toks = tokens[i].split(",");
+                for (let j = 0; j < toks.length; j++) {
+                  newAllowedTeeth[toks[j]] = true;
+                }
+              }
+            }
+            setAllowedTeeth(newAllowedTeeth);
+          }
+        } else {
+          setAllowMultipleTooth(false);
+          setAllowNoTooth(false);
+          setAllowedTeeth({});
+        }
       } else {
         toast.error(result.message);
       }
@@ -265,7 +314,8 @@ const AddTreatmentPage = ({ patientID }) => {
   useEffect(() => {
     fetchToothCondition();
   }, []);
-  const fetchToothCondition = async () => { // this run when page open
+  const fetchToothCondition = async () => {
+    // this run when page open
     try {
       const result = await ToothService.getAllPatientTooth(patientID);
       if (result.success) {
@@ -288,92 +338,120 @@ const AddTreatmentPage = ({ patientID }) => {
       return false;
     }
   };
-
+  const isCheckAvailableTooth = (toothNumber) => {
+    //let isAvailable = true;
+    if (toothCondition[toothNumber - 1] === "MISSING") {
+      //isAvailable = false;
+      return false;
+    }
+    // Todo: kiểm tra xem toothNumber có nằm trong range quy định của procedure ko
+    if (!allowedTeeth[toothNumber])  return false;
+    if (!allowMultipleTooth && selectedTooth.length > 0) return false;
+    return true
+  };
   const handleSelectToothQuickselect = (toothID) => {
-    let intToothID = parseInt(toothID.replace("Tooth",""));
-    if (selectedTooth.includes(toothID)) { //răng này đã được chọn => bỏ chọn răng
-      // pop tooth ID
-      let pos = selectedTooth.indexOf(toothID);
-      let removedItem = selectedTooth.splice(pos, 1);
-      setSelectedTooth(selectedTooth.slice());
-      if (selectedTooth.length === 0) {
-        //setShowQuickselectMenu(false);
-        clearSelectedTooth();
-      }
-      else if (selectedTooth.length === 1) {    // mới chỉ chọn 1 răng
-        // hiển thị menu theo răng được chọn
-        let selectedToothID = parseInt(selectedTooth[0].replace("Tooth",""));
-        setShowUnselectBtn(selectedTooth_Raw[selectedToothID-1].isSelected === true);
-        setSelectedFacial(selectedTooth_Raw[selectedToothID-1].facial === true);
-        setSelectedLingual(selectedTooth_Raw[selectedToothID-1].lingual === true);
-        setSelectedMesial(selectedTooth_Raw[selectedToothID-1].mesial === true);
-        setSelectedDistal(selectedTooth_Raw[selectedToothID-1].distal === true);
-        setSelectedTop(selectedTooth_Raw[selectedToothID-1].top === true);
-        setSelectedRoot(selectedTooth_Raw[selectedToothID-1].root === true);
-      }
-      else {    // sau khi bỏ chọn, nếu những răng còn lại đều đã được selected => hiện nút unselect
-        groupToothBySelectedSurface();
-      }
-    } else { // răng này chưa được chọn => chọn răng
-      // push tooth ID
-      selectedTooth.push(toothID);
-      setSelectedTooth(selectedTooth.slice());
-      if (!showQuickselectMenu) {   // mới chỉ chọn 1 răng
-        // hiển thị menu theo răng vừa chọn
-        setShowUnselectBtn(selectedTooth_Raw[intToothID-1].isSelected === true);
-        setSelectedFacial(selectedTooth_Raw[intToothID-1].facial === true);
-        setSelectedLingual(selectedTooth_Raw[intToothID-1].lingual === true);
-        setSelectedMesial(selectedTooth_Raw[intToothID-1].mesial === true);
-        setSelectedDistal(selectedTooth_Raw[intToothID-1].distal === true);
-        setSelectedTop(selectedTooth_Raw[intToothID-1].top === true);
-        setSelectedRoot(selectedTooth_Raw[intToothID-1].root === true);
-        setShowQuickselectMenu(true);
-      }
-      else {    // đã chọn nhiều răng => nếu tất cả các răng trong selectedTooth đều có isSlected = 1 thì hiện nút bỏ chọn
-        setSelectedFacial(false);
-        setSelectedLingual(false);
-        setSelectedMesial(false);
-        setSelectedDistal(false);
-        setSelectedTop(false);
-        setSelectedRoot(false);
-        groupToothBySelectedSurface();
-
+    let toothNumber = parseInt(toothID.replace("Tooth", ""));
+    if (isCheckAvailableTooth(toothNumber)) {
+      if (selectedTooth.includes(toothID)) {
+        //răng này đã được chọn => bỏ chọn răng
+        // pop tooth ID
+        let pos = selectedTooth.indexOf(toothID);
+        let removedItem = selectedTooth.splice(pos, 1);
+        setSelectedTooth(selectedTooth.slice());
+        if (selectedTooth.length === 0) {
+          //setShowQuickselectMenu(false);
+          clearSelectedTooth();
+        } else if (selectedTooth.length === 1) {
+          // mới chỉ chọn 1 răng
+          // hiển thị menu theo răng được chọn
+          let selectedToothID = parseInt(selectedTooth[0].replace("Tooth", ""));
+          setShowUnselectBtn(
+            selectedTooth_Raw[selectedToothID - 1].isSelected === true
+          );
+          setSelectedFacial(
+            selectedTooth_Raw[selectedToothID - 1].facial === true
+          );
+          setSelectedLingual(
+            selectedTooth_Raw[selectedToothID - 1].lingual === true
+          );
+          setSelectedMesial(
+            selectedTooth_Raw[selectedToothID - 1].mesial === true
+          );
+          setSelectedDistal(
+            selectedTooth_Raw[selectedToothID - 1].distal === true
+          );
+          setSelectedTop(selectedTooth_Raw[selectedToothID - 1].top === true);
+          setSelectedRoot(selectedTooth_Raw[selectedToothID - 1].root === true);
+        } else {
+          // sau khi bỏ chọn, nếu những răng còn lại đều đã được selected => hiện nút unselect
+          groupToothBySelectedSurface();
+        }
+      } else {
+        // răng này chưa được chọn => chọn răng
+        // push tooth ID
+        selectedTooth.push(toothID);
+        setSelectedTooth(selectedTooth.slice());
+        if (!showQuickselectMenu) {
+          // mới chỉ chọn 1 răng
+          // hiển thị menu theo răng vừa chọn
+          setShowUnselectBtn(
+            selectedTooth_Raw[toothNumber - 1].isSelected === true
+          );
+          setSelectedFacial(selectedTooth_Raw[toothNumber - 1].facial === true);
+          setSelectedLingual(
+            selectedTooth_Raw[toothNumber - 1].lingual === true
+          );
+          setSelectedMesial(selectedTooth_Raw[toothNumber - 1].mesial === true);
+          setSelectedDistal(selectedTooth_Raw[toothNumber - 1].distal === true);
+          setSelectedTop(selectedTooth_Raw[toothNumber - 1].top === true);
+          setSelectedRoot(selectedTooth_Raw[toothNumber - 1].root === true);
+          setShowQuickselectMenu(true);
+        } else {
+          // đã chọn nhiều răng => nếu tất cả các răng trong selectedTooth đều có isSlected = 1 thì hiện nút bỏ chọn
+          setSelectedFacial(false);
+          setSelectedLingual(false);
+          setSelectedMesial(false);
+          setSelectedDistal(false);
+          setSelectedTop(false);
+          setSelectedRoot(false);
+          groupToothBySelectedSurface();
+        }
       }
     }
   };
-  function resetSelectedToothArray () {
+  function resetSelectedToothArray() {
     let tSelectedTooth_Raw = [];
     let toothSelectedSurfaces = [];
     for (let i = 0; i < 32; i++) {
-        let tooth = {
-            toothNumber: i+1,
-            isSelected: false,
-            // distal: false,
-            // mesial: false,
-            // facial: false,
-            // lingual: false,
-            // top: false,
-            // root: false,
-        }
-        tSelectedTooth_Raw.push(tooth);
-        let surfaces = {
-            toothNumber: i+1,
-            isSelected: false,
-            distal: false,
-            mesial: false,
-            facial: false,
-            lingual: false,
-            top: false,
-            root: false,
-        }
-        toothSelectedSurfaces.push(surfaces);
+      let tooth = {
+        toothNumber: i + 1,
+        isSelected: false,
+        // distal: false,
+        // mesial: false,
+        // facial: false,
+        // lingual: false,
+        // top: false,
+        // root: false,
+      };
+      tSelectedTooth_Raw.push(tooth);
+      let surfaces = {
+        toothNumber: i + 1,
+        isSelected: false,
+        distal: false,
+        mesial: false,
+        facial: false,
+        lingual: false,
+        top: false,
+        root: false,
+      };
+      toothSelectedSurfaces.push(surfaces);
     }
     setSelectedTooth_Raw(tSelectedTooth_Raw);
     setToothSelectedSurfaces(toothSelectedSurfaces);
     setSelectedTooth_Display("");
   }
 
-  function groupToothBySelectedSurface(){
+  function groupToothBySelectedSurface() {
     let showUnselectForAll = true;
     let showFacialForAll = true;
     let showLingualForAll = true;
@@ -382,28 +460,28 @@ const AddTreatmentPage = ({ patientID }) => {
     let showTopForAll = true;
     let showRootForAll = true;
     selectedTooth.forEach((tooth) => {
-        let intTooth = parseInt(tooth.replace("Tooth",""));
-        if (selectedTooth_Raw[intTooth-1].isSelected === false) {
-            showUnselectForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].facial === true)) {
-            showFacialForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].lingual === true)) {
-            showLingualForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].mesial === true)) {
-            showMesialForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].distal === true)) {
-            showDistalForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].top === true)) {
-            showTopForAll = false;
-        }
-        if (!(selectedTooth_Raw[intTooth-1].root === true)) {
-            showRootForAll = false;
-        }
+      let intTooth = parseInt(tooth.replace("Tooth", ""));
+      if (selectedTooth_Raw[intTooth - 1].isSelected === false) {
+        showUnselectForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].facial === true)) {
+        showFacialForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].lingual === true)) {
+        showLingualForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].mesial === true)) {
+        showMesialForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].distal === true)) {
+        showDistalForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].top === true)) {
+        showTopForAll = false;
+      }
+      if (!(selectedTooth_Raw[intTooth - 1].root === true)) {
+        showRootForAll = false;
+      }
     });
     setShowUnselectBtn(showUnselectForAll);
     setSelectedFacial(showFacialForAll);
@@ -437,22 +515,22 @@ const AddTreatmentPage = ({ patientID }) => {
     let tselectedTooth_Raw = selectedTooth_Raw.slice();
     let tToothSelectedSurfaces = toothSelectedSurfaces.slice();
     selectedTooth.forEach((tooth) => {
-        let toothNumber = parseInt(tooth.replace("Tooth",""));
-        tselectedTooth_Raw[toothNumber-1].isSelected = false;
-        tselectedTooth_Raw[toothNumber-1].facial = false;
-        tselectedTooth_Raw[toothNumber-1].lingual = false;
-        tselectedTooth_Raw[toothNumber-1].mesial = false;
-        tselectedTooth_Raw[toothNumber-1].distal = false;
-        tselectedTooth_Raw[toothNumber-1].top = false;
-        tselectedTooth_Raw[toothNumber-1].root = false;
+      let toothNumber = parseInt(tooth.replace("Tooth", ""));
+      tselectedTooth_Raw[toothNumber - 1].isSelected = false;
+      tselectedTooth_Raw[toothNumber - 1].facial = false;
+      tselectedTooth_Raw[toothNumber - 1].lingual = false;
+      tselectedTooth_Raw[toothNumber - 1].mesial = false;
+      tselectedTooth_Raw[toothNumber - 1].distal = false;
+      tselectedTooth_Raw[toothNumber - 1].top = false;
+      tselectedTooth_Raw[toothNumber - 1].root = false;
 
-        tToothSelectedSurfaces[toothNumber-1].isSelected = false;
-        tToothSelectedSurfaces[toothNumber-1].facial = false;
-        tToothSelectedSurfaces[toothNumber-1].lingual = false;
-        tToothSelectedSurfaces[toothNumber-1].mesial = false;
-        tToothSelectedSurfaces[toothNumber-1].distal = false;
-        tToothSelectedSurfaces[toothNumber-1].top = false;
-        tToothSelectedSurfaces[toothNumber-1].root = false;
+      tToothSelectedSurfaces[toothNumber - 1].isSelected = false;
+      tToothSelectedSurfaces[toothNumber - 1].facial = false;
+      tToothSelectedSurfaces[toothNumber - 1].lingual = false;
+      tToothSelectedSurfaces[toothNumber - 1].mesial = false;
+      tToothSelectedSurfaces[toothNumber - 1].distal = false;
+      tToothSelectedSurfaces[toothNumber - 1].top = false;
+      tToothSelectedSurfaces[toothNumber - 1].root = false;
     });
     setSelectedTooth_Raw(tselectedTooth_Raw);
     setToothSelectedSurfaces(tToothSelectedSurfaces);
@@ -462,22 +540,22 @@ const AddTreatmentPage = ({ patientID }) => {
     let tselectedTooth_Raw = selectedTooth_Raw.slice();
     let tToothSelectedSurfaces = toothSelectedSurfaces.slice();
     selectedTooth.forEach((tooth) => {
-        let toothNumber = parseInt(tooth.replace("Tooth",""));
-        tselectedTooth_Raw[toothNumber-1].isSelected = true;
-        tselectedTooth_Raw[toothNumber-1].facial = selectedFacial;
-        tselectedTooth_Raw[toothNumber-1].lingual = selectedLingual;
-        tselectedTooth_Raw[toothNumber-1].mesial = selectedMesial;
-        tselectedTooth_Raw[toothNumber-1].distal = selectedDistal;
-        tselectedTooth_Raw[toothNumber-1].top = selectedTop;
-        tselectedTooth_Raw[toothNumber-1].root = selectedRoot;
+      let toothNumber = parseInt(tooth.replace("Tooth", ""));
+      tselectedTooth_Raw[toothNumber - 1].isSelected = true;
+      tselectedTooth_Raw[toothNumber - 1].facial = selectedFacial;
+      tselectedTooth_Raw[toothNumber - 1].lingual = selectedLingual;
+      tselectedTooth_Raw[toothNumber - 1].mesial = selectedMesial;
+      tselectedTooth_Raw[toothNumber - 1].distal = selectedDistal;
+      tselectedTooth_Raw[toothNumber - 1].top = selectedTop;
+      tselectedTooth_Raw[toothNumber - 1].root = selectedRoot;
 
-        tToothSelectedSurfaces[toothNumber-1].isSelected = true;
-        tToothSelectedSurfaces[toothNumber-1].facial = selectedFacial;
-        tToothSelectedSurfaces[toothNumber-1].lingual = selectedLingual;
-        tToothSelectedSurfaces[toothNumber-1].mesial = selectedMesial;
-        tToothSelectedSurfaces[toothNumber-1].distal = selectedDistal;
-        tToothSelectedSurfaces[toothNumber-1].top = selectedTop;
-        tToothSelectedSurfaces[toothNumber-1].root = selectedRoot;
+      tToothSelectedSurfaces[toothNumber - 1].isSelected = true;
+      tToothSelectedSurfaces[toothNumber - 1].facial = selectedFacial;
+      tToothSelectedSurfaces[toothNumber - 1].lingual = selectedLingual;
+      tToothSelectedSurfaces[toothNumber - 1].mesial = selectedMesial;
+      tToothSelectedSurfaces[toothNumber - 1].distal = selectedDistal;
+      tToothSelectedSurfaces[toothNumber - 1].top = selectedTop;
+      tToothSelectedSurfaces[toothNumber - 1].root = selectedRoot;
     });
     // update selectedTooth_Raw
     setSelectedTooth_Raw(tselectedTooth_Raw);
@@ -498,26 +576,26 @@ const AddTreatmentPage = ({ patientID }) => {
   }
 
   const handleNext = () => {
-      if (validateData()) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        // update setSelectedTooth_Display
-        let displayString = "";
-        selectedTooth_Raw.forEach(tooth => {
-            if(tooth.isSelected === true) {
-                displayString += "\n\tTooth " + tooth.toothNumber + ": ";
-                displayString += tooth.distal === true ? "D" : "";
-                displayString += tooth.mesial === true ? "M" : "";
-                displayString += tooth.facial === true ? "F" : "";
-                displayString += tooth.lingual === true ? "L" : "";
-                displayString += tooth.top === true ? "T" : "";
-                displayString += tooth.root === true ? "R" : "";
-            }
-        });
-        setSelectedTooth_Display(displayString);
-        if (activeStep === steps.length-1) {
-            handleSubmit();
+    if (validateData()) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      // update setSelectedTooth_Display
+      let displayString = "";
+      selectedTooth_Raw.forEach((tooth) => {
+        if (tooth.isSelected === true) {
+          displayString += "\n\tTooth " + tooth.toothNumber + ": ";
+          displayString += tooth.distal === true ? "D" : "";
+          displayString += tooth.mesial === true ? "M" : "";
+          displayString += tooth.facial === true ? "F" : "";
+          displayString += tooth.lingual === true ? "L" : "";
+          displayString += tooth.top === true ? "T" : "";
+          displayString += tooth.root === true ? "R" : "";
         }
+      });
+      setSelectedTooth_Display(displayString);
+      if (activeStep === steps.length - 1) {
+        handleSubmit();
       }
+    }
   };
 
   const handleBack = () => {
@@ -542,11 +620,11 @@ const AddTreatmentPage = ({ patientID }) => {
       setDateErrMsg("");
     }
     // Provider
-    if (!provider?.value){
-        setProviderErrMsg(t(strings.appointProviderErrMsg));
-        isValid = false;
+    if (!provider?.value) {
+      setProviderErrMsg(t(strings.appointProviderErrMsg));
+      isValid = false;
     } else {
-        setProviderErrMsg("");
+      setProviderErrMsg("");
     }
     //Procedure code
     if (selectedProcedure == null) {
@@ -555,69 +633,74 @@ const AddTreatmentPage = ({ patientID }) => {
     } else {
       setProcedureErrMsg("");
     }
+    // select tooth
+    if (activeStep === 2) {
+        alert("daf");
+    }
     return isValid;
   }
 
   function handleSubmit() {
-    const submitAddTreatment=async()=>{
-        try {
-            const data = { // Todo: cập nhật đầy đủ các value ///////
-                treatment_date: ConvertDateTimes.formatDate(date, strings.apiDateFormat),
-                patient: patientID,
-                provider: provider.value,
-                assistant: assistant?.value,
-                procedure_code: selectedProcedure?.id,
-                selected_tooth_raw: selectedTooth_Raw,
-                note: treatmentNote,
-                status: "PLAN",  // hardcode
-            }
-            const result = await TreatmentService.addTreatment(data);
-            if (result.success){
-                return true;
-            }
-            toast.error(result.message);
-            return false;
-        } 
-        catch(err)  {
-            toast.error(t(strings.updateFail));    
-            return false;
+    const submitAddTreatment = async () => {
+      try {
+        const data = {
+          treatment_date: ConvertDateTimes.formatDate(
+            date,
+            strings.apiDateFormat
+          ),
+          patient: patientID,
+          provider: provider.value,
+          assistant: assistant?.value,
+          procedure_code: selectedProcedure?.id,
+          selected_tooth_raw: selectedTooth_Raw,
+          note: treatmentNote,
+          status: "PLAN", // hardcode
+        };
+        const result = await TreatmentService.addTreatment(data);
+        if (result.success) {
+          return true;
         }
+        toast.error(result.message);
+        return false;
+      } catch (err) {
+        toast.error(t(strings.updateFail));
+        return false;
+      }
     };
     submitAddTreatment();
-  };
+  }
 
   // Select Date
   const handleOnDateChange = (date) => {
     setDate(date._d);
-  }
+  };
   // Select Assistant
   const handleOnAssistantChange = (option) => {
     setAssistant(option);
-  
-  }
+  };
   // Autocomplete Assistant
-  const loadAssistantOptions  = (inputValue) => {
+  const loadAssistantOptions = (inputValue) => {
     return new Promise(async (resolve) => {
       try {
-          let options = [];
-          const result = await api.httpGet({
-              url: apiPath.staff.staff + apiPath.common.autocomplete,
-              query: {
-                  data: inputValue,
-                  limit: figures.autocomplete.limit,
-                  staffType: lists.staff.staffType.staff
-              }
-          });
-          if (result.success){
-              options = result.payload.map((option) => ({
-                  value: option._id,
-                  label: `${option.first_name} ${option.last_name} (${option.display_id})`
-              }));
-          }
-          options.unshift(noneOption);
-          resolve(options);
-      } catch(err){
-          toast.error(err);
+        let options = [];
+        const result = await api.httpGet({
+          url: apiPath.staff.staff + apiPath.common.autocomplete,
+          query: {
+            data: inputValue,
+            limit: figures.autocomplete.limit,
+            staffType: lists.staff.staffType.staff,
+          },
+        });
+        if (result.success) {
+          options = result.payload.map((option) => ({
+            value: option._id,
+            label: `${option.first_name} ${option.last_name} (${option.display_id})`,
+          }));
+        }
+        options.unshift(noneOption);
+        resolve(options);
+      } catch (err) {
+        toast.error(err);
       }
     });
   };
@@ -625,54 +708,50 @@ const AddTreatmentPage = ({ patientID }) => {
   // Select Provider
   const handleOnProviderChange = (option) => {
     setProvider(option);
-  }
+  };
 
   // Autocomplete Provider
-  const loadProviderOptions  = (inputValue) => {
+  const loadProviderOptions = (inputValue) => {
     return new Promise(async (resolve) => {
       try {
-          let options = [];
-          const result = await api.httpGet({
-              url: apiPath.staff.staff + apiPath.common.autocomplete,
-              query: {
-                  data: inputValue,
-                  limit: figures.autocomplete.limit,
-                  staffType: lists.staff.staffType.provider,
-              }
+        let options = [];
+        const result = await api.httpGet({
+          url: apiPath.staff.staff + apiPath.common.autocomplete,
+          query: {
+            data: inputValue,
+            limit: figures.autocomplete.limit,
+            staffType: lists.staff.staffType.provider,
+          },
+        });
+        if (result.success) {
+          options = result.payload.map((option, index) => {
+            return {
+              value: option._id,
+              label: `${option.first_name} ${option.last_name} (${option.display_id})`,
+            };
           });
-          if (result.success){
-              options = result.payload.map((option, index) => {
-                  return {
-                      value: option._id,
-                      label: `${option.first_name} ${option.last_name} (${option.display_id})`
-                  }
-              });
-          }
-          options.unshift({value: -1, label: t(strings.none)});
-          resolve(options);
-      } catch(err){
-          toast.error(err);
+        }
+        options.unshift({ value: -1, label: t(strings.none) });
+        resolve(options);
+      } catch (err) {
+        toast.error(err);
       }
     });
   };
 
   // for quickly select tooth
   const selectAllTopTeeth = () => {
-    for (let i = 1; i <=16 ; i++) {
-        let tooth = "Tooth" + i;
-        if (toothCondition[i-1] !== "MISSING") {
-            handleSelectToothQuickselect(tooth);
-        }
+    for (let i = 1; i <= 16; i++) {
+      let tooth = "Tooth" + i;
+      handleSelectToothQuickselect(tooth);
     }
-  }
+  };
   const selectAllBottomTeeth = () => {
-    for (let i = 17; i <=32 ; i++) {
-        let tooth = "Tooth" + i;
-        if (toothCondition[i-1] !== "MISSING") {
-            handleSelectToothQuickselect(tooth);
-        }
+    for (let i = 17; i <= 32; i++) {
+      let tooth = "Tooth" + i;
+      handleSelectToothQuickselect(tooth);
     }
-  }
+  };
 
   function getStepContent(step) {
     switch (step) {
@@ -681,69 +760,105 @@ const AddTreatmentPage = ({ patientID }) => {
           <div className={classes.stepContent}>
             <h1>{t(strings.selectTreatment)}</h1>
             {/* Date */}
-            <Grid item md={4} sm={6} xs={8} className={classes.selectProviderAssistant}>
+            <Grid
+              item
+              md={4}
+              sm={6}
+              xs={8}
+              className={classes.selectProviderAssistant}
+            >
               <DatePicker
-                  label={t(strings.date)}
-                  id="treatment-date"
-                  margin="dense"
-                  inputVariant="outlined"
-                  size="small"
-                  fullWidth
-                  format={strings.defaultDateFormat}
-                  value={date}
-                  onChange={() => {}}
-                  onAccept={handleOnDateChange}
-                  InputLabelProps={{
-                      shrink: true,
-                  }}
-                  helperText={dateErrMsg}
-                  error={Boolean(dateErrMsg)}
+                label={t(strings.date)}
+                id="treatment-date"
+                margin="dense"
+                inputVariant="outlined"
+                size="small"
+                fullWidth
+                format={strings.defaultDateFormat}
+                value={date}
+                onChange={() => {}}
+                onAccept={handleOnDateChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                helperText={dateErrMsg}
+                error={Boolean(dateErrMsg)}
               />
             </Grid>
             {/* Select Provider/Assistant */}
-            <Grid item container md={8} sm={6} xs={12} className={classes.selectProviderAssistant} spacing={2}>
+            <Grid
+              item
+              container
+              md={8}
+              sm={6}
+              xs={12}
+              className={classes.selectProviderAssistant}
+              spacing={2}
+            >
               {/* Provider */}
-              <Grid item md={6} sm={12} xs={12} className={classes.selectProvider}>
-                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
-                    <label htmlFor="treatment-provider" className={classes.autocompleteLabel}>{t(strings.provider)}</label>
-                    <AsyncSelect
-                        inputId="treatment-provider"
-                        item
-                        cacheOptions 
-                        defaultOptions 
-                        loadOptions={loadProviderOptions}
-                        styles={asyncSelectStyle}
-                        placeholder={t(strings.select) + " " + t(strings.provider)}
-                        noOptionsMessage={() => t(strings.noOptions)}
-                        value={provider || null}
-                        onChange={handleOnProviderChange}
-                    />
-                    {Boolean(providerErrMsg) && 
-                      <FormHelperText
-                          className={classes.formMessageFail}
-                          error={true}
-                      >
-                          {t(providerErrMsg)}
-                      </FormHelperText>
-                    }
+              <Grid
+                item
+                md={6}
+                sm={12}
+                xs={12}
+                className={classes.selectProvider}
+              >
+                <FormControl
+                  color="secondary"
+                  className={classes.asyncSelectFormControl}
+                >
+                  <label
+                    htmlFor="treatment-provider"
+                    className={classes.autocompleteLabel}
+                  >
+                    {t(strings.provider)}
+                  </label>
+                  <AsyncSelect
+                    inputId="treatment-provider"
+                    item
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={loadProviderOptions}
+                    styles={asyncSelectStyle}
+                    placeholder={t(strings.select) + " " + t(strings.provider)}
+                    noOptionsMessage={() => t(strings.noOptions)}
+                    value={provider || null}
+                    onChange={handleOnProviderChange}
+                  />
+                  {Boolean(providerErrMsg) && (
+                    <FormHelperText
+                      className={classes.formMessageFail}
+                      error={true}
+                    >
+                      {t(providerErrMsg)}
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </Grid>
               {/* Assistant */}
               <Grid item md={6} sm={12} xs={12}>
-                <FormControl color="secondary" className={classes.asyncSelectFormControl}>
-                    <label htmlFor="treatment-assistant" className={classes.autocompleteLabel}>{t(strings.assistant)}</label>
-                    <AsyncSelect
-                        inputId="treatment-assistant"
-                        item
-                        cacheOptions 
-                        defaultOptions 
-                        loadOptions={loadAssistantOptions}
-                        styles={asyncSelectStyle}
-                        placeholder={t(strings.select) + " " + t(strings.assistant)}
-                        noOptionsMessage={() => t(strings.noOptions)}
-                        value={assistant || null}
-                        onChange={handleOnAssistantChange}
-                    />
+                <FormControl
+                  color="secondary"
+                  className={classes.asyncSelectFormControl}
+                >
+                  <label
+                    htmlFor="treatment-assistant"
+                    className={classes.autocompleteLabel}
+                  >
+                    {t(strings.assistant)}
+                  </label>
+                  <AsyncSelect
+                    inputId="treatment-assistant"
+                    item
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={loadAssistantOptions}
+                    styles={asyncSelectStyle}
+                    placeholder={t(strings.select) + " " + t(strings.assistant)}
+                    noOptionsMessage={() => t(strings.noOptions)}
+                    value={assistant || null}
+                    onChange={handleOnAssistantChange}
+                  />
                 </FormControl>
               </Grid>
             </Grid>
@@ -862,28 +977,47 @@ const AddTreatmentPage = ({ patientID }) => {
                   aria-label="large outlined primary button group"
                   className={classes.quickselectMenu}
                 >
-                  <Button onClick={handleClickToothFacial} variant={ selectedFacial? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothFacial}
+                    variant={selectedFacial ? "contained" : ""}
+                  >
                     <b>{t(strings.facial)}</b>
                   </Button>
-                  <Button onClick={handleClickToothLingual} variant={ selectedLingual? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothLingual}
+                    variant={selectedLingual ? "contained" : ""}
+                  >
                     <b>{t(strings.lingual)}</b>
                   </Button>
-                  <Button onClick={handleClickToothMesial} variant={ selectedMesial? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothMesial}
+                    variant={selectedMesial ? "contained" : ""}
+                  >
                     <b>{t(strings.mesial)}</b>
                   </Button>
-                  <Button onClick={handleClickToothDistal} variant={ selectedDistal? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothDistal}
+                    variant={selectedDistal ? "contained" : ""}
+                  >
                     <b>{t(strings.distal)}</b>
                   </Button>
-                  <Button onClick={handleClickToothTop} variant={ selectedTop? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothTop}
+                    variant={selectedTop ? "contained" : ""}
+                  >
                     <b>{t(strings.top)}</b>
                   </Button>
-                  <Button onClick={handleClickToothRoot} variant={ selectedRoot? "contained" : ""}>
+                  <Button
+                    onClick={handleClickToothRoot}
+                    variant={selectedRoot ? "contained" : ""}
+                  >
                     <b>{t(strings.root)}</b>
                   </Button>
-                  { showUnselectBtn && 
-                  <Button onClick={handleClickToothUnselect}>
-                    <b>{t(strings.unselect)}</b>
-                  </Button> }
+                  {showUnselectBtn && (
+                    <Button onClick={handleClickToothUnselect}>
+                      <b>{t(strings.unselect)}</b>
+                    </Button>
+                  )}
                   <Button onClick={handleClickToothSelect}>
                     <b>{t(strings.select)}</b>
                   </Button>
@@ -891,37 +1025,50 @@ const AddTreatmentPage = ({ patientID }) => {
               </Grow>
             </span>
             <div className={classes.btnQuickSelect}>
-                  <Button
-                    onClick={ selectAllTopTeeth }
-                    className={classes.button}
-                  >
-                    <svg height="20" width="20" className={classes.coverIconBot}> </svg> 
-                    <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
-                  </Button>
-                  <Button
-                    onClick={ selectAllBottomTeeth }
-                    className={classes.button}
-                  >
-                    <svg height="20" width="20" className={classes.coverIconTop}> </svg> 
-                    <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
-                  </Button>
-                </div>
+              <Button onClick={selectAllTopTeeth} className={classes.button}>
+                <svg height="20" width="20" className={classes.coverIconBot}>
+                  {" "}
+                </svg>
+                <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
+              </Button>
+              <Button onClick={selectAllBottomTeeth} className={classes.button}>
+                <svg height="20" width="20" className={classes.coverIconTop}>
+                  {" "}
+                </svg>
+                <FaTeethOpen className={classes.teethIcon}></FaTeethOpen>
+              </Button>
+            </div>
           </div>
         );
       case 2:
         return (
-            <div className={classes.stepContent}>
-              <h1>{t(strings.reviewTreatmentInfo)}</h1>
-              <Grid item md={8} sm={6} xs={12}>
-                <div>{t(strings.treatment)}: {selectedProcedureCate_text} {" - "} {selectedProcedure_text}</div>
-                <div>{t(strings.date)}: {ConvertDateTimes.formatDate(date, strings.defaultDateFormat)}</div>
-                <div>{t(strings.provider)}: {provider.label}</div>
-                <div>{t(strings.assistant)}: {assistant?.label}</div>
-                <div className={classes.treatmentNote}>{t(strings.note)}: {treatmentNote === "" ? "None" : treatmentNote}</div>
-                <div className={classes.selectedToothDisplay}>{t(strings.selectedTooth)}: {selectedTooth_Display}</div>
-              </Grid>
-            </div>
-          );
+          <div className={classes.stepContent}>
+            <h1>{t(strings.reviewTreatmentInfo)}</h1>
+            <Grid item md={8} sm={6} xs={12}>
+              <div>
+                {t(strings.treatment)}: {selectedProcedureCate_text} {" - "}{" "}
+                {selectedProcedure_text}
+              </div>
+              <div>
+                {t(strings.date)}:{" "}
+                {ConvertDateTimes.formatDate(date, strings.defaultDateFormat)}
+              </div>
+              <div>
+                {t(strings.provider)}: {provider.label}
+              </div>
+              <div>
+                {t(strings.assistant)}: {assistant?.label}
+              </div>
+              <div className={classes.treatmentNote}>
+                {t(strings.note)}:{" "}
+                {treatmentNote === "" ? "None" : treatmentNote}
+              </div>
+              <div className={classes.selectedToothDisplay}>
+                {t(strings.selectedTooth)}: {selectedTooth_Display}
+              </div>
+            </Grid>
+          </div>
+        );
       default:
         return "Unknown step";
     }
@@ -959,7 +1106,16 @@ const AddTreatmentPage = ({ patientID }) => {
                 <Button onClick={handleReset} className={classes.button}>
                   {t(strings.reset)}
                 </Button>
-                <Button onClick={() => history.push(path.patientProfilePath.replace(':patientID', patientID))} className={classes.button} variant="contained" color="primary">
+                <Button
+                  onClick={() =>
+                    history.push(
+                      path.patientProfilePath.replace(":patientID", patientID)
+                    )
+                  }
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
                   {t(strings.back)}
                 </Button>
               </div>
