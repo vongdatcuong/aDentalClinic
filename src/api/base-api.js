@@ -1,17 +1,15 @@
-import figures from '../configs/figures';
-import strings from '../configs/strings';
-import AuthService from './authentication/auth.service';
+import figures from "../configs/figures";
+import strings from "../configs/strings";
+import AuthService from "./authentication/auth.service";
 
 // i18next
-import { getI18n } from 'react-i18next';
+import { getI18n } from "react-i18next";
 
 // Toast
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
 
 const BASE_URL_API = "http://localhost:4000/api";
 const secretKey = "The way of Reactjs";
-
 
 /** REQUEST MODEL
  *  url: string
@@ -30,10 +28,10 @@ const initializeAPIService = () => {
 const parseQueryObject = (queryObj) => {
   let ans = "";
   Object.keys(queryObj).forEach((key, index) => {
-    ans+= ((index === 0)? "?" : "&") + key + "=" + queryObj[key];
+    ans += (index === 0 ? "?" : "&") + key + "=" + queryObj[key];
   });
   return ans;
-}
+};
 
 //GET METHOD
 const httpGet = async (requestModel) => {
@@ -41,31 +39,40 @@ const httpGet = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      method: "GET",
-      ...requestModel.option,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + tokens.token,
-      },
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        method: "GET",
+        ...requestModel.option,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens.token,
+        },
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            method: "GET",
-            ...requestModel.option,
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + tokens.token,
-            },
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              method: "GET",
+              ...requestModel.option,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + tokens.token,
+              },
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -88,33 +95,42 @@ const httpPost = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      ...requestModel.option,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + tokens.token,
-      },
-      body: JSON.stringify(requestModel.body),
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        ...requestModel.option,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens.token,
+        },
+        body: JSON.stringify(requestModel.body),
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            ...requestModel.option,
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + tokens.token,
-            },
-            body: JSON.stringify(requestModel.body),
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              ...requestModel.option,
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + tokens.token,
+              },
+              body: JSON.stringify(requestModel.body),
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -137,31 +153,40 @@ const httpPut = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      ...requestModel.option,
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + tokens.token,
-      },
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        ...requestModel.option,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens.token,
+        },
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            ...requestModel.option,
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + tokens.token,
-            },
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              ...requestModel.option,
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + tokens.token,
+              },
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -184,33 +209,42 @@ const httpPatch = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      ...requestModel.option,
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + tokens.token,
-      },
-      body: JSON.stringify(requestModel.body),
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        ...requestModel.option,
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens.token,
+        },
+        body: JSON.stringify(requestModel.body),
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            ...requestModel.option,
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + tokens.token,
-            },
-            body: JSON.stringify(requestModel.body),
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              ...requestModel.option,
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + tokens.token,
+              },
+              body: JSON.stringify(requestModel.body),
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -233,33 +267,42 @@ const httpDelete = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      ...requestModel.option,
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + tokens.token,
-      },
-      body: JSON.stringify(requestModel.body),
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        ...requestModel.option,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens.token,
+        },
+        body: JSON.stringify(requestModel.body),
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            ...requestModel.option,
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + tokens.token,
-            },
-            body: JSON.stringify(requestModel.body),
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              ...requestModel.option,
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + tokens.token,
+              },
+              body: JSON.stringify(requestModel.body),
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -282,31 +325,40 @@ const httpGetPdf = async (requestModel) => {
   requestModel.url = requestModel.url || "";
   requestModel.option = requestModel.option || {};
   requestModel.query = requestModel.query || {};
-  requestModel.query.lang = requestModel.query.lang || getI18n()?.language || "en";
+  requestModel.query.lang =
+    requestModel.query.lang || getI18n()?.language || "en";
   requestModel.body = requestModel.body || {};
   let tokens = AuthService.getToken();
   try {
-    let response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-      method: "GET",
-      ...requestModel.option,
-      headers: {
-        "Content-Type": "application/pdf",
-        Authorization: "Bearer " + tokens.token,
-      },
-    });
-    if (response.status === figures.apiStatus.unauthorized){
-      if (await AuthService.refreshToken()){
+    let response = await fetch(
+      BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query),
+      {
+        method: "GET",
+        ...requestModel.option,
+        headers: {
+          "Content-Type": "application/pdf",
+          Authorization: "Bearer " + tokens.token,
+        },
+      }
+    );
+    if (response.status === figures.apiStatus.unauthorized) {
+      if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
-          response = await fetch(BASE_URL_API + requestModel.url + parseQueryObject(requestModel.query), {
-            method: "GET",
-            ...requestModel.option,
-            headers: {
-              "Content-Type": "application/pdf",
-              Authorization: "Bearer " + tokens.token,
-            },
-          });
-        } catch(err){
+          response = await fetch(
+            BASE_URL_API +
+              requestModel.url +
+              parseQueryObject(requestModel.query),
+            {
+              method: "GET",
+              ...requestModel.option,
+              headers: {
+                "Content-Type": "application/pdf",
+                Authorization: "Bearer " + tokens.token,
+              },
+            }
+          );
+        } catch (err) {
           throw err;
         }
       } else {
@@ -321,7 +373,16 @@ const httpGetPdf = async (requestModel) => {
   }
 };
 
-export { secretKey, initializeAPIService, httpGet, httpPost, httpPut, httpPatch, httpDelete, httpGetPdf };
+export {
+  secretKey,
+  initializeAPIService,
+  httpGet,
+  httpPost,
+  httpPut,
+  httpPatch,
+  httpDelete,
+  httpGetPdf,
+};
 
 export default {
   secretKey,
@@ -331,5 +392,5 @@ export default {
   httpPut,
   httpPatch,
   httpDelete,
-  httpGetPdf
-}
+  httpGetPdf,
+};
