@@ -350,7 +350,7 @@ const AddTreatmentPage = ({ patientID }) => {
         if (!isAutoQuickSelectTooth) toast.error(t(strings.notAllowedTooth));
         return false;
     }
-    if (!allowMultipleTooth && totalSelectedToothCount > 0) {
+    if (!allowMultipleTooth && (totalSelectedToothCount > 0 || selectedTooth.length > 0)) {
         if (!isAutoQuickSelectTooth) toast.error(t(strings.notAllowSellectMultipleTooth));
         return false;
     }
