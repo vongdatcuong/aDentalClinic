@@ -421,8 +421,8 @@ const Report = () => {
     const handleOnExport = (type, patient, fromDate, toDate) => {
       if (type === lists.exportObj.type.appointment){
         handleViewAppointDocument(patient.value || "", fromDate, toDate);
-      } else if (type === lists.exportObj.type.patient && patient, fromDate, toDate){
-        handleViewPatientDocument(patient.value);
+      } else if (type === lists.exportObj.type.patient && patient){
+        handleViewPatientDocument(patient.value, fromDate, toDate);
       }
     };
 
