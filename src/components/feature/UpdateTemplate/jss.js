@@ -11,7 +11,9 @@ const updateTemplateStyle = (theme) => ({
             color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        boxShadow:'3px 3px 3px gray',
+        borderRadius:'15px',
     },
     
     searchControl:{
@@ -212,7 +214,7 @@ const updateTemplateStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'20px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),

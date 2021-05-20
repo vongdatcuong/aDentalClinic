@@ -190,6 +190,23 @@ const InsertPerson = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setFirstName("");
+            setLastName("");
+            setUsername("");
+            setPassword("");
+            setEmail("");
+            setBiography("");
+            setProviderColor("#000");
+            setDisplayId("");
+            setFacebook("");
+            setMobile("");
+            setHomePhone("");
+            setFax("");
+            setAddress("");
+            setDrugLic("");
+            setNpi("");
+            setActive(true);
+            setStartDate(new Date());
         }
         
 
@@ -403,6 +420,7 @@ const InsertPerson = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
+                                        type="number"
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -439,7 +457,6 @@ const InsertPerson = (props) => {
                                         format={t(strings.apiDateFormat)}
                                         value={startDate}
                                         onChange={handleChangeStartDate}
-                                        readOnly={true}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}

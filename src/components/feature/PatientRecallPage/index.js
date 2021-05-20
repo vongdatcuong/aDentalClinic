@@ -165,7 +165,7 @@ const PatientRecallPage = ({patientID}) => {
     }
     useEffect(()=>{
         
-        if(rows.length===0 && isEmpty===null)
+        if(rows.length===0 && isEmpty===null && searchText===null)
         {
             
             getPatientRecall();

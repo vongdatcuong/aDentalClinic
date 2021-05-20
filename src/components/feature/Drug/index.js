@@ -98,6 +98,7 @@ const Drug = () => {
     };
     const handleChangeInsertDrug=(e)=>{
         setInsertDrug(!insertDrug);
+        setIsDelete(false);
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
@@ -173,7 +174,7 @@ const Drug = () => {
         setUser(result);
     }
     useEffect(()=>{
-        if(rows.length===0)
+        if(rows.length===0 && searchText===null)
         {
             
             getDrug();
@@ -263,7 +264,7 @@ const Drug = () => {
                                 <IconButton onClick={handleChangeInsertDrug}>
                                     <AddBox />            
                                 </IconButton>
-                                <IconButton onClick={handleChangeIsDelete}>
+                                <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                 <DeleteIcon />            
 
                             </IconButton>

@@ -61,7 +61,7 @@ const InsertTemplate = (props) => {
     
     
     const insertTemplate=async(e)=>{
-        if(content!==null && content!=='' && noteType!==null)
+        if(content!==null && content!=='' && noteType!==null && noteType!=="")
         {
             const data={
                 content:content,
@@ -78,6 +78,8 @@ const InsertTemplate = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setContent("");
+            setNoteType("");
         }
         else
         {

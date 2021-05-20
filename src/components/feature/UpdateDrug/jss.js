@@ -11,7 +11,9 @@ const updateDrugStyle = (theme) => ({
             color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        boxShadow:'3px 3px 3px gray',
+        borderRadius:'15px',
     },
     
     searchControl:{
@@ -117,6 +119,48 @@ const updateDrugStyle = (theme) => ({
         // },
 
     },
+    inputControlBig:{
+        minHeight:'100px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            minHeight:'80px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'1px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     inputControlSmall:{
         height:'35px',
         width:'10.2vw',
@@ -156,7 +200,7 @@ const updateDrugStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'20px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),

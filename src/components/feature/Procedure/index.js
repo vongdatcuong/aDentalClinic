@@ -105,7 +105,7 @@ const Procedure = () => {
         let temp=[];
         data.map((a,index)=>{
             
-            let newData=createData(a._id,a.abbreviation,a.code,a.description,a.tooth_select,a.tooth_type);
+            let newData=createData(a._id,a.abbreviation,a.procedure_code,a.description,a.tooth_select,a.tooth_type);
             temp=temp.concat(newData);
             
         })
@@ -127,7 +127,7 @@ const Procedure = () => {
         setUser(result);
     }
     useEffect(()=>{
-        if(rows.length===0)
+        if(rows.length===0 && searchText===null)
         {
             
             getProcedure();

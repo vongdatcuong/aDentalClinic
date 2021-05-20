@@ -83,6 +83,8 @@ const InsertPatientRecall = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }     
+            setRecallDate(new Date());
+            setNote("");
         }
         else
         {

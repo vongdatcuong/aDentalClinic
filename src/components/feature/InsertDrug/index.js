@@ -95,6 +95,12 @@ const InsertPatient = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setName("");
+            setDescription("");
+            setDispensed("");
+            setNote("");
+            setRefill("");
+            setQuantity("");
         }
         else
         {
@@ -167,13 +173,13 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         required
                                         label={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        
+                                        multiline
                                         /> 
                         </FormControl>
                        

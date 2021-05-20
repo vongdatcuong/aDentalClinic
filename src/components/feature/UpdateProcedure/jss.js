@@ -158,7 +158,7 @@ const updateProcedureStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-        marginBottom:'40px',
+        marginBottom:'20px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),

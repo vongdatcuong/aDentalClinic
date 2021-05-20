@@ -16,8 +16,9 @@ class ProgressNote {
       const result = await httpGet({
         url: `${apiPath.progressNote.progressNoteByPatient}/${patientID}`,
       });
+      //console.log(result.payload);
       return {
-        success: true,
+        success: result.success,
         data: result.payload,
       };
     } catch (error) {
@@ -36,7 +37,8 @@ class ProgressNote {
         body: data,
       });
       return {
-        success: true,
+        success: result.success,
+        message: result.message,
       };
     } catch (error) {
       console.log("Failed to insert note: ", error);
@@ -52,7 +54,7 @@ class ProgressNote {
         body: data,
       });
       return {
-        success: true,
+        success: result.success,
       };
     } catch (error) {
       console.log("Failed to update note: ", error);
@@ -67,7 +69,7 @@ class ProgressNote {
         url: `${apiPath.progressNote.progressNote}/${id}`
       });
       return {
-        success: true,
+        success: result.success,
       };
     } catch (error) {
       console.log("Failed to delete note: ", error);

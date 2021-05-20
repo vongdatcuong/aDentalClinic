@@ -162,6 +162,11 @@ const roseBoxShadow = {
     hexToRgb(roseColor[0]) +
     ",.4)",
 };
+const scheduleMonthlyItemColor = "#8c8daf";
+const scheduleWeeklyItemColor = "#ba9187";
+const scheduleAutoItemColor = "#639f88";
+const pageBackgroundColor = "#fafafa";
+const materialPrimaryColor = "#3f51b5";
 
 const warningCardHeader = {
   background:
@@ -288,6 +293,7 @@ export default {
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,
   pageBackgroundColor,
+  materialPrimaryColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

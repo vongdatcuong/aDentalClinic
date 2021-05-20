@@ -136,7 +136,17 @@ const InsertProcedure = (props) => {
             toast.error(t(strings.errorInput));
 
         }
-        
+        setAbbreviation("");
+        setProcedureCode("");
+        setProcedureFee("");
+        setProcedureTime("");
+        setProcedureType("");
+        setCategory("");
+        setToothSelect("");
+        setToothType("");
+        setDescription("");
+        setSurface("");
+       
        
     }
 

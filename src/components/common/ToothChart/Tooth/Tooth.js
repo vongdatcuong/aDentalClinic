@@ -21,8 +21,19 @@ const useStyles = makeStyles(styles);
 
 const Tooth = function (props) {
   const classes = useStyles();
-  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, toothNote, ...other } = props;
+  const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, toothNote, toothSelectedSurfaces, ...other } = props;
   //const [isSelected, setIsSelected] = useState(false);
+  const toothNumber = parseInt(id.replace("Tooth",""));
+  let selectedFullTooth, facial, lingual, mesial, distal, top, root = false;
+  if (viewType === "add-treatment" && toothSelectedSurfaces !== null) {
+      facial = toothSelectedSurfaces.facial;
+      lingual = toothSelectedSurfaces.lingual;
+      mesial = toothSelectedSurfaces.mesial;
+      distal = toothSelectedSurfaces.distal;
+      top = toothSelectedSurfaces.top;
+      root = toothSelectedSurfaces.root;
+      selectedFullTooth = toothSelectedSurfaces.isSelected && !(facial || lingual || mesial || distal || top || root);
+  }
 
   function handlePickToothOverview() {}
 
@@ -58,12 +69,14 @@ const Tooth = function (props) {
         aria-label={id}
       >
         <span
-          className={
+          className={clsx(
             jaw === "upperJaw"
               ? classes.upperJawTooth
               : jaw === "lowerJaw"
               ? classes.lowerJawTooth
-              : ""
+              : "",
+              
+              )
           }
         >
           <span
@@ -77,11 +90,20 @@ const Tooth = function (props) {
               toothCondition === "PONTICS" ? classes.ponticsTooth : 
               toothCondition === "CROWN" ? classes.crownTooth : 
               toothCondition === "ENDOTESTS" ? classes.endotestsTooth : 
-              classes.normalTooth
+              classes.normalTooth,
+              
+              // display surface for treatment
+              selectedFullTooth ? classes.selectedFullTooth : "",
+              facial ? classes.facial : "",
+              lingual ? classes.lingual : "",
+              mesial ? (toothNumber <= 8 || toothNumber >= 25 ? classes.leftMesial : classes.rightMesial) : "",
+              distal ? (toothNumber <= 8 || toothNumber >= 25 ? classes.leftDistal : classes.rightDistal) : "",
+              top ? classes.top : "",
+              root ? classes.root : "",
             )}
           >
             {svgString}
-            {viewType === "quickselect" ? (
+            {(viewType === "quickselect" || viewType === "add-treatment") ? (
               <CheckCircleIcon></CheckCircleIcon>
             ) : (
               ""
@@ -89,6 +111,20 @@ const Tooth = function (props) {
             <svg height="20" width="20" className="conditionLayer">
             </svg> 
             <svg height="20" width="20" className="maskLayer">
+            </svg> 
+            <svg height="20" width="20" className="surfaceFull">
+            </svg> 
+            <svg height="20" width="20" className="surfaceFacial">
+            </svg> 
+            <svg height="20" width="20" className="surfaceLingual">
+            </svg> 
+            <svg height="20" width="20" className="surfaceMesial">
+            </svg> 
+            <svg height="20" width="20" className="surfaceDistal">
+            </svg> 
+            <svg height="20" width="20" className="surfaceTop">
+            </svg> 
+            <svg height="20" width="20" className="surfaceRoot">
             </svg> 
           </span>
         </span>

@@ -91,6 +91,10 @@ const InsertChair = (props) => {
             {
                 toast.error(t(strings.errorInput));
             }
+            setName("");
+            setColor("#000");
+            setOrder("");
+            setIsDeleted(false);
         }
         
         

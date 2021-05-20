@@ -116,6 +116,7 @@ const Template = () => {
     };
     const handleChangeInsertTemplate=(e)=>{
         setInsertTemplate(!insertTemplate);
+        setIsDelete(false);
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
@@ -386,7 +387,7 @@ const Template = () => {
                             <IconButton onClick={handleChangeInsertTemplate}>
                                 <AddBox />            
                             </IconButton>
-                            <IconButton onClick={handleChangeIsDelete}>
+                            <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                 <DeleteIcon />      
                             </IconButton>
 

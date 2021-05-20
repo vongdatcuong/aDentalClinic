@@ -206,12 +206,12 @@ const UpdateDrug = (props) => {
                             <InputLabel shrink>
                                 {t(strings.note)}
                             </InputLabel>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        multiline
                                         /> 
                         </FormControl>
                        

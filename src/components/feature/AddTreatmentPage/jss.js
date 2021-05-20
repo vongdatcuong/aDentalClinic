@@ -68,9 +68,68 @@ const styles = (theme) => ({
       marginTop: theme.spacing(4),
       marginRight: theme.spacing(5),
   },
+  btnQuickSelect: {
+    display: "grid",
+    position: "fixed",
+    right: 0,
+    top: 0,
+    marginTop: theme.spacing(37),
+    marginRight: theme.spacing(5),
+  },
   selectProcedure: {
     marginTop: theme.spacing(4),
-  }
+  },
+  selectedToothDisplay: {
+      whiteSpace: "pre-wrap",
+  },
+  treatmentNote: {
+      whiteSpace: "pre-wrap",
+  },
+  asyncSelectFormControl: {
+    width: '100%',
+    '& label': {
+        opacity: theme.secondaryOpacity
+    }
+  },
+  autocompleteLabel: {
+    fontSize: '12px'
+  },
+  selectCategory: {
+    marginTop: theme.spacing(4),
+  },
+  selectProviderAssistant: {
+    marginTop: theme.spacing(4),
+  },
+  selectProvider: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(1.7),
+    },
+  },
+  formMessageFail: {
+    textAlign: "left",
+    fontSize: "12px",
+    color: theme.dangerColor[0],
+    marginTop: '4px',
+    marginLeft: theme.spacing(1.5),
+    marginBottom: theme.spacing(1.5)
+  },
+  teethIcon: {
+      fontSize: "4rem",
+  },
+  coverIconTop: {
+      height: "2rem",
+      width: "4rem",
+      position: "absolute",
+      bottom: "50%",
+      backgroundColor: theme.pageBackgroundColor,
+  },
+  coverIconBot: {
+      height: "2rem",
+      width: "4rem",
+      position: "absolute",
+      top: "50%",
+      backgroundColor: theme.pageBackgroundColor,
+  },
 });
 
 const colorlibStepIconStyles = (theme) => ({

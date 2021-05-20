@@ -155,8 +155,7 @@ const UpdatePatientPrescription = (props) => {
             let newData=createData(a.drug._id,a.drug.name,a.dispensed,a.quantity,a.description ,
                                     a.refill,moment(a.expiry_date).format(t(strings.apiDateFormat)));
             temp=temp.concat(newData);
-
-        })
+        });
         setDrug(temp);
     }
     const changeDataDrug=(data)=>{
