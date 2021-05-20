@@ -95,6 +95,12 @@ const InsertPatient = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setName("");
+            setDescription("");
+            setDispensed("");
+            setNote("");
+            setRefill("");
+            setQuantity("");
         }
         else
         {

@@ -93,6 +93,12 @@ const InsertReferralSource = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setName("");
+            setEmail("");
+            setPhone("");
+            setFax("");
+            setAddress("");
+            setAdditionalInfo("");
         }
         
 
@@ -153,7 +159,7 @@ const InsertReferralSource = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangePhone}
                                         value={phone}
-                                        
+                                        type="number"
                                         /> 
                         </FormControl>
                         

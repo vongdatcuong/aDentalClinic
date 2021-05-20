@@ -229,6 +229,22 @@ const InsertPatient = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setUsername("");
+            setPassword("");
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setGender(t(strings.notSpecify));
+            setMaritalStatus(t(strings.notSpecify));
+            setActive(true);
+            setFacebook("");
+            setMobile("");
+            setHomePhone("");
+            setFax("");
+            setAddress("");
+            setOtherInfo("");
+            setPatientNote("");
+
         }
         else
         {
@@ -454,6 +470,7 @@ const InsertPatient = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
+                                        type="number"
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>

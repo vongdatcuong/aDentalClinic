@@ -207,6 +207,8 @@ const InsertPatientPrescription = (props) => {
             {
                 toast.error(t(strings.insertFail));
             }
+            setDrug([]);
+            setProvider(t(strings.provider));
         }
         if(drug.length===0)
         {
