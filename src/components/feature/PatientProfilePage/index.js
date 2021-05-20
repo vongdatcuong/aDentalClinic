@@ -297,21 +297,23 @@ const PatientProfilePage = ({ patientID }) => {
                   className={classes.medicalIssuesHeader}
                 >
                   {t(strings.medicalIssues)}{" "}
-                  {editMedicalIssues ? (
-                    <Tooltip title="Macro" aria-label="Macro">
-                      <IconButton size="small" onClick={() => setMedOpen(true)}>
-                        <FaScroll />
-                      </IconButton>
-                    </Tooltip>
-                  ) : null}
-                  <Button
-                    color="primary"
-                    onClick={handleClickEditMedicalIssues}
-                    className={classes.btnEdit}
-                    simple
-                  >
-                    {editMedicalIssues ? t(strings.save) : t(strings.edit)}
-                  </Button>
+                  <div className={classes.medicalIssuesBtns}>
+                    {editMedicalIssues ? (
+                      <Tooltip title="Macro" aria-label="Macro">
+                        <IconButton size="small" onClick={() => setMedOpen(true)}>
+                          <FaScroll />
+                        </IconButton>
+                      </Tooltip>
+                    ) : null}
+                    <Button
+                      color="primary"
+                      onClick={handleClickEditMedicalIssues}
+                      className={classes.btnEdit}
+                      simple
+                    >
+                      {editMedicalIssues ? t(strings.save) : t(strings.edit)}
+                    </Button>
+                  </div>
                 </Typography>
                 <TextField
                   id="outlined-multiline-static"
