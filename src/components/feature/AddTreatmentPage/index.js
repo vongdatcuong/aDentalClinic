@@ -456,6 +456,7 @@ const AddTreatmentPage = ({ patientID }) => {
     setSelectedTooth_Raw(tSelectedTooth_Raw);
     setToothSelectedSurfaces(toothSelectedSurfaces);
     setSelectedTooth_Display("");
+    countTotalSelectedTooth();
   }
 
   function groupToothBySelectedSurface() {
