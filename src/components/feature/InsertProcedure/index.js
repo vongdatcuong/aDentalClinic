@@ -12,6 +12,8 @@ import {
     TextField,
     Select,
     MenuItem,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 // import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -52,7 +54,18 @@ const InsertProcedure = (props) => {
     const [category,setCategory]=useState(null);
     const [description,setDescription]=useState(null);
     const [listCategory,setListCategory]=useState([]);
-
+    const [listSurface,setListSurface]=useState([
+        "1",
+        "1+",
+        "2",
+        "2+",
+        "3",
+        "3+",
+        "4",
+        "4+",
+        "5"
+    ])
+    const [surface,setSurface]=useState(null);
     const handleChangeAbbreviation=(e)=>{
         setAbbreviation(e.target.value);
     }
@@ -82,50 +95,46 @@ const InsertProcedure = (props) => {
     const handleChangeCategory=(e)=>{
         setCategory(e.target.value);
     }
-
+    const handleChangeSurface=(e)=>{
+        setSurface(e.target.value);
+    }
 
     const handleChangeDescription=(e)=>{
         setDescription(e.target.value);
     }
     const onClickInsertProcedure=async(e)=>{
-        if(category!=='' || abbreviation!=='' || procedureCode!=='' || procedureFee!=='' || procedureTime!==''
-        || procedureType!=='' || toothSelect!=='' || toothType!=='' || description!=='')
+        if(category!=='' && abbreviation!=='' && procedureCode!=='' && procedureFee!=='' && procedureTime!==''
+        && procedureType!=='' && toothSelect!=='' && toothType!=='' && description!==''
+        && surface!==null)
         {
-            toast.error(t(strings.errorInput));
-
-        }
-        else
-        {
-            if(category!==null && abbreviation!==null && procedureCode!==null && procedureFee!==null && procedureTime!==null
-                && procedureType!==null && toothSelect!==null && toothType!==null && description!==null)
+            const data={
+                abbreviation:abbreviation,
+                procedure_code:procedureCode,
+                procedure_fee:procedureFee,
+                procedure_time:procedureTime,
+                procedure_type:procedureType,
+                category:category,
+                tooth_select:toothSelect,
+                tooth_type:toothType,
+                description:description,
+                surface_number:surface,
+            }
+            const result=await ProcedureService.insert(data);
+            if(result.success)
             {
-                const data={
-                    abbreviation:abbreviation,
-                    procedure_code:procedureCode,
-                    procedure_fee:procedureFee,
-                    procedure_time:procedureTime,
-                    procedure_type:procedureType,
-                    category:category,
-                    tooth_select:toothSelect,
-                    tooth_type:toothType,
-                    description:description,
-                }
-                const result=await ProcedureService.insert(data);
-                if(result.success)
-                {
-                    toast.success(t(strings.insertSuccess));
-                    props.handleChangeIsInsert();
-    
-                }
-                else
-                {
-                    toast.error(t(strings.insertFail));
-                }
+                toast.success(t(strings.insertSuccess));
+                props.handleChangeIsInsert();
+
             }
             else
             {
-                toast.error(t(strings.errorInput));
+                toast.error(t(strings.insertFail));
             }
+        }
+        else
+        {
+            toast.error(t(strings.errorInput));
+
         }
         
        
@@ -149,6 +158,11 @@ const InsertProcedure = (props) => {
 
         })
     }
+    const renderListSurface=()=>{
+        return listSurface.map((sur,index)=>{
+            return <MenuItem key={index} value={sur}>{sur}</MenuItem>
+        })
+    }
     useEffect(()=>{
         if(listCategory.length===0)
         {
@@ -165,84 +179,38 @@ const InsertProcedure = (props) => {
             <div className={classes.content}>        
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.abbreviation)}  
+                                        label={t(strings.abbreviation)}  
                                         variant="outlined" 
                                         onChange={handleChangeAbbreviation}
                                         value={abbreviation}
                                         /> 
-                        </div>
+                        </FormControl>
                         
                         
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureCode)}  
+                                        label={t(strings.procedureCode)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureCode}
                                         value={procedureCode}/>
                              
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureTime)}  
+                                        label={t(strings.procedureFee)}  
                                         variant="outlined"
-                                        onChange={handleChangeProcedureTime}
-                                        value={procedureTime}/>
-                             
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureFee)}  
-                                        variant="outlined"
+                                        type="number"
                                         onChange={handleChangeProcedureFee}
                                         value={procedureFee}/>
                              
-                        </div>
-                        <div className={classes.item}>
-                            
-                            {listCategory.length!==0 ?
-
-                                <Select
-                                    value={category}
-                                    onChange={handleChangeCategory}
-                                    disableUnderline 
-                                    displayEmpty
-                                    className={classes.inputCombobox}
-                                    
-                                    >
-                                    <MenuItem value={category}>{t(strings.category)}</MenuItem>
-                                    {renderListCategory()}
-                                </Select>
-                                :
-                                <div></div>
-                            }
-                           
-
-                        </div>
-                        
-                        
-                    </Grid>
-                    <Grid item xs={6} className={classes.rightContent}>
-                     
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        placeholder={t(strings.description)}  
-                                        variant="outlined"
-                                        onChange={handleChangeDescription}
-                                        value={description}/> 
-
-                        </div>
-                        <div className={classes.item}>
-                            <TextField className={classes.inputControl}
-                                        placeholder={t(strings.toothSelect)}  
-                                        variant="outlined"
-                                        onChange={handleChangeToothSelect}
-                                        value={toothSelect}/>
-                             
-                        </div>
-                        <div className={classes.item}>
-                            
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>   
+                            <InputLabel shrink>
+                                {t(strings.toothType)}
+                            </InputLabel>
                             {listToothType.length!==0 ?
 
                                 <Select
@@ -253,17 +221,70 @@ const InsertProcedure = (props) => {
                                     className={classes.inputCombobox}
                                     
                                     >
-                                    <MenuItem value={toothType}>{t(strings.toothType)}</MenuItem>
                                     {renderListToothType()}
                                 </Select>
                                 :
-                                <div></div>
+                                <FormControl></FormControl>
+                            }
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.category)}
+                            </InputLabel>
+                            {listCategory.length!==0 ?
+
+                                <Select
+                                    value={category}
+                                    onChange={handleChangeCategory}
+                                    disableUnderline 
+                                    displayEmpty
+                                    className={classes.inputCombobox}
+                                    
+                                    >
+                                    {renderListCategory()}
+                                </Select>
+                                :
+                                <FormControl></FormControl>
                             }
                            
 
-                        </div>
+                        </FormControl>
                         
-                        <div className={classes.item}>
+                        
+                    </Grid>
+                    <Grid item xs={6} className={classes.rightContent}>
+                     
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}
+                                        label={t(strings.description)}  
+                                        variant="outlined"
+                                        onChange={handleChangeDescription}
+                                        value={description}/> 
+
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}
+                                        label={t(strings.toothSelect)}  
+                                        variant="outlined"
+                                        onChange={handleChangeToothSelect}
+                                        value={toothSelect}/>
+                             
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl}
+                                        type="number"
+                                        label={t(strings.procedureTime)}  
+                                        variant="outlined"
+                                        onChange={handleChangeProcedureTime}
+                                        value={procedureTime}/>
+                             
+                        </FormControl>
+                        
+
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.procedureType)}
+                            </InputLabel>
                             {listProcedureType.length!==0 ?
                                 <Select
                                 value={procedureType}
@@ -273,15 +294,29 @@ const InsertProcedure = (props) => {
                                 className={classes.inputCombobox}
                                 
                                 >
-                                <MenuItem value={procedureType}>{t(strings.procedureType)}</MenuItem>
                                 {renderListProcedureType()}
                             </Select>
                             :
-                            <div></div>
+                            <FormControl></FormControl>
                             }
                            
                              
-                        </div>
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.surface)}
+                            </InputLabel>
+                            <Select
+                                value={surface}
+                                onChange={handleChangeSurface}
+                                disableUnderline 
+                                displayEmpty
+                                className={classes.inputCombobox}
+                                
+                                >
+                                {renderListSurface()}
+                            </Select>
+                        </FormControl>
                         
                     </Grid>
                 </Grid>

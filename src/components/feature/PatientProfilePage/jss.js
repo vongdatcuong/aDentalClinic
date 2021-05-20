@@ -71,6 +71,9 @@ const loginStyle = (theme) => ({
     width: "100%",
     paddingTop: theme.spacing(2),
   },
+  medicalIssuesBtns: {
+    display: 'inline-block'
+  },
   TabsContainer: {
     width: "100%",
   },

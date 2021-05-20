@@ -154,8 +154,8 @@ const DialogReferralUpdate = (theme) => ({
             color:theme.grayColor[0],
         },
         '& .MuiInputLabel-formControl':{
-            marginLeft:'10x',
-            
+            marginLeft:'15px',
+            marginTop:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -209,8 +209,8 @@ const DialogReferralUpdate = (theme) => ({
             color:theme.grayColor[0],
         },
         '& .MuiInputLabel-formControl':{
-            marginLeft:'10x',
-            
+            marginLeft:'15px',
+            marginTop:'10px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -355,7 +355,7 @@ const DialogReferralUpdate = (theme) => ({
     },
     status:{
         marginRight:'1vw',
-        minWidth:'36vw',
+        minWidth:'16vw',
         border:`1px solid ${theme.grayColor[0]}`,
             borderRadius:'5px',
         '& .MuiSelect-select':{

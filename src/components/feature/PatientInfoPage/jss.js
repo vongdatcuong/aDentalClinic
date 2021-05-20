@@ -11,7 +11,8 @@ const style = (theme) => ({
             color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        boxShadow:'3px 3px 3px gray'
     },
     
     searchControl:{
@@ -118,6 +119,49 @@ const style = (theme) => ({
         // },
 
     },
+    inputControlOutline:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginTop:'15px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            // marginBottom:'15px',
+            // transform:'translate(14px, 18px) scale(1)',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
+
+    },
     inputControlSmall:{
         height:'35px',
         width:'10.2vw',
@@ -179,6 +223,12 @@ const style = (theme) => ({
     item:{
         marginTop:'15px',
 
+    },
+    itemOutline:{
+        marginTop:'20px',
+        "& .MuiInputLabel-formControl":{
+            marginLeft:'20px',
+        },
     },
     itemSmall:{
         display:'flex',

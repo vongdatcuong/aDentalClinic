@@ -13,10 +13,14 @@ import {
     FormControlLabel,
     Checkbox,
     Button,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+import ColorPicker from 'material-ui-color-picker'
 
 import styles from "./jss";
 import darkTheme from "../../../themes/darkTheme";
@@ -62,12 +66,20 @@ const UpdateChair = (props) => {
     const [gender,setGender]=useState(true);
     const [active,setActive]=useState(true);
     const [staffPhoto,setStaffPhoto]=useState(null);
-
+    const [displayId,setDisplayId]=useState(null);
+    const [providerColor,setProviderColor]=useState("#000");
+    const [drugLic,setDrugLic]=useState(null);
+    const [startDate,setStartDate]=useState(new Date());
+    const [npi,setNpi]=useState(null);
+    const [biography,setBiography]=useState(null);
 
     const [selectedFile,setSelectedFile]=useState(null);
 
     const handleChangeActive=(e)=>{
-        setActive(!active);
+        if(props.editable===true)
+        {
+            setActive(!active);
+        }
     }
     const handleChangeAddress=(e)=>{
         setAddress(e.target.value);
@@ -102,7 +114,24 @@ const UpdateChair = (props) => {
     const handleChangeGender=(e)=>{
         setGender(!gender);
     }
-
+    const handleChangeDisplayId=(e)=>{
+        setDisplayId(e.target.value);
+    }
+    const handleChangeProviderColor=(e)=>{
+        setProviderColor(e.target.value);
+    }
+    const handleChangeDrugLic=(e)=>{
+        setDrugLic(e.target.value);
+    }
+    const handleChangeStartDate=(e,date)=>{
+        setStartDate(date);
+    }
+    const handleChangeNpi=(e)=>{
+        setNpi(e.target.value);
+    }
+    const handleChangeBiography=(e)=>{
+        setBiography(e.target.value);
+    }
     const handleUploadClick = event => {
         var file = event.target.files[0];
         const reader = new FileReader();
@@ -122,8 +151,12 @@ const UpdateChair = (props) => {
         if(firstNameError===null && lastNameError===null && emailError===null && props.editable===true)
         {
             const data={
-
-            
+                display_id: displayId,
+                drug_lic: drugLic,
+                npi: npi,
+                provider_color:providerColor,
+                start_date:startDate,
+                biography:biography,            
                 //change
                 facebook: facebook,
                 email: email,
@@ -171,7 +204,12 @@ const UpdateChair = (props) => {
                 setAddress(result.data.payload.user.address);
                 setMobile(result.data.payload.user.mobile_phone);
                 setHomePhone(result.data.payload.user.home_phone);
-                
+                setDisplayId(result.data.payload.display_id);
+                setDrugLic(result.data.payload.drug_lic);
+                setProviderColor(result.data.payload.provider_color);
+                setStartDate(result.data.payload.start_date);
+                setBiography(result.data.payload.biography);
+                setNpi(result.data.payload.npi);
             }
         }
         if(props.id && username===null)
@@ -223,8 +261,11 @@ const UpdateChair = (props) => {
     
     return (
         <div className={classes.container}>
+            
             <div className={classes.content}>
-                    <label className={classes.inputAvatar}>
+                
+                
+                <label className={classes.inputAvatar}>
                     <input
                         accept="image/*"
                         className={classes.inputAvatarDisplay}
@@ -244,104 +285,198 @@ const UpdateChair = (props) => {
                     }
                 
                     
-                    </label>
+                </label>
                 
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
 
-                    
-                    
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.firstName)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.firstName)}  
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
-                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.lastName)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.lastName)}  
                                         variant="outlined" 
                                         onChange={handleChangeLastName}
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
-                                        inputProps={{ readOnly: !props.editable }}
-
                                         /> 
-                    </div>
-                    <div className={classes.item}>
-                            <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.address)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeAddress}
-                                        value={address}
-                                        inputProps={{ readOnly: !props.editable }}
-                                        /> 
-                    </div>
-                    <div className={classes.item}>
-                        <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.email)}  
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.email)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
+                                        required
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
-                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
-                    </div>
+                        </FormControl>
+                        
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.biography)}
+                            </InputLabel>
+                            <TextField className={classes.inputControlBig} 
+                                        variant="outlined" 
+                                        onChange={handleChangeBiography}
+                                        value={biography}
+                                        multiline
+                                        /> 
+                        </FormControl>
+                        {props.staffType===t(strings.staffTypeProvider) ? 
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.drugLic)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
+                                    variant="outlined" 
+                                    onChange={handleChangeDrugLic}
+                                    value={drugLic}
+                                   
+                                    /> 
+                        </FormControl>
+                        :
+                        <div></div>
+                        }
+                        
+                        {props.staffType===t(strings.staffTypeProvider) ?
+                        <FormControl className={classes.itemColor}>
+                            <InputLabel shrink id="providerColor">
+                                {t(strings.providerColor)}
+                            </InputLabel>
+                            <div className={classes.inputControlColor} >
+                                <ColorPicker
+                                    name="color"
+                                    InputProps={{ disableUnderline: true }}
+                                    style={{width:'100%',backgroundColor:providerColor,}}
+                                    onChange={color => setProviderColor(color)}
+                                    value={providerColor}
+                                />
+                            </div>
+                            
+                        </FormControl>
+                        :
+                        <div></div>
+                        }
+                        
+                        
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.displayId)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.facebook)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeDisplayId}
+                                        value={displayId}
+                                       
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.facebook)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
-                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.mobilePhone)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.mobilePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
-                                        inputProps={{ readOnly: !props.editable }}
 
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.homePhone)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.homePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
-                                        type="number"
-                                        inputProps={{ readOnly: !props.editable }}
-
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.fax)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
-                                        inputProps={{ readOnly: !props.editable }}
-
                                         /> 
-                        </div>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.address)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl}  
+                                        variant="outlined" 
+                                        onChange={handleChangeAddress}
+                                        value={address}
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.npi)}
+                            </InputLabel>
+                            <TextField className={classes.inputControl} 
+                                        variant="outlined" 
+                                        onChange={handleChangeNpi}
+                                        value={npi}
+                                       
+                                        /> 
+                        </FormControl>
                         
-                        <div className={classes.itemSmall}>
+                        <FormControl >
+                            <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label={t(strings.startDate)}
+                                        format={t(strings.apiDateFormat)}
+                                        value={startDate}
+                                        onChange={handleChangeStartDate}
+                                        readOnly={true}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                        InputProps={{
+                                            disableUnderline: true,
+                                            
+                                        }}
+                                        className={classes.inputControlDate} 
+                                    />
+                        </FormControl>
+                        
+                        <FormControl className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -350,8 +485,7 @@ const UpdateChair = (props) => {
                                     name={t(strings.active)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
-                                    />
+                                />
                                 }
                                 label={t(strings.active)}
                             />
@@ -363,30 +497,27 @@ const UpdateChair = (props) => {
                                     name={t(strings.inactive)}
                                     color="primary"
                                     className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
 
                                 />
                                 }
                                 label={t(strings.inactive)}
                             />
-                        </div>
-                        
-                       
+                        </FormControl>
                         
                         
                     </Grid>
                 </Grid>
-                {props.editable ?
+                {props.editable===true ?
                 <div>
-                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate} disabled={!props.editable}>
+                    <Button variant="contained" color="primary" className={classes.updateButton} onClick={onClickUpdate}>
                         {t(strings.update)}
                     </Button>
                 </div>
                 :
-                <div></div>
+                <div/>
                 }
-                        
-        </div>  
+
+        </div>
     </div>
     )
 }

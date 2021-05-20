@@ -1,4 +1,4 @@
-const updateChairStyle = (theme) => ({
+const updatePersonStyle = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
@@ -8,7 +8,7 @@ const updateChairStyle = (theme) => ({
         },
         
         '& .MuiInputLabel-outlined':{
-            color:theme.primaryColor[2],
+            //color:theme.primaryColor[2],
             marginLeft:'30px',
 
         }
@@ -84,7 +84,7 @@ const updateChairStyle = (theme) => ({
         // display:'flex',
         // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
-        //color:theme.primaryColor[2],
+        color:theme.primaryColor[2],
         '& .MuiOutlinedInput-input': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -102,7 +102,7 @@ const updateChairStyle = (theme) => ({
             //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -115,6 +115,126 @@ const updateChairStyle = (theme) => ({
         //         borderColor: theme.primaryColor[0],
         //     },
         // },
+
+    },
+    inputControlBig:{
+        height:'115px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            height:'115px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+            //color:theme.primaryColor[2],
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'1px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+
+    },
+    inputControlColor:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        padding:'10px',
+        borderRadius:'5px',
+        border:'1px solid lightgray',
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+
+        
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'1px',
+        },
+        '& .MuiFormControl-root':{
+            height:'25px',
+            width:'36vw',
+            display:'flex',
+            flexDirection:'row',
+            
+        },
+    },
+    inputControlDate:{
+        height:'35px',
+        width:'36vw',
+        marginLeft:'30px',
+        marginBottom:'20px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            padding: '7px',
+            // paddingTop:'7px',
+            width:'1.6em',
+            height:'1.6em',
+        },
+        '& .MuiInputBase-root':{
+            height:'35px',
+            width:'36vw',
+            border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'3px',
+            
+        },
+        '& .MuiInputBase-input':{
+            marginLeft:'15px',
+            
+        },
+        '& .MuiInputLabel-outlined':{
+            marginLeft:'10px',
+        },
+        '& .MuiInputBase-input.Mui-disabled':{
+            color:theme.grayColor[0],
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'15px',
+            // marginTop:'10px',
+        },
+        // '& .MuiOutlinedInput-root': {
+        //     '& fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&:hover fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        //     '&.Mui-focused fieldset': {
+        //         borderColor: theme.primaryColor[0],
+        //     },
+        // },
+        
+    
 
     },
     inputControlSmall:{
@@ -171,12 +291,20 @@ const updateChairStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'30px',
+        }
+    },
+    itemColor:{
+        marginTop:'20px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'30px',
+        }
     },
     itemSmall:{
         display:'flex',
         flexDirection:'row',
-        marginTop:'20px',
+        marginTop:'25px',
     },
     input:{
         marginTop:'10px',
@@ -206,4 +334,4 @@ const updateChairStyle = (theme) => ({
 });
 
   
-export default updateChairStyle;  
+export default updatePersonStyle;  

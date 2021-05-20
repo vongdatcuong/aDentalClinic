@@ -289,7 +289,8 @@ export default {
         "MEDICAL ALERT":"MEDICAL ALERT",
         "PROGRESS":"PROGRESS",
         "TREATMENT":"TREATMENT",
-
+        "Medical alert":"Cảnh báo y tế",
+        "Progress":"Đang tiến triển",
         //provider
         "#":"#",
         "ID":"ID",
@@ -320,6 +321,11 @@ export default {
         "STAFF":"STAFF",
         "PROVIDER":"PROVIDER",
         "PATIENT":"PATIENT",
+        "Display Id":"Id hiển thị",
+        "Provider color":"Màu bác sĩ",
+        "Drug license":"Giấy phép thuốc",
+        "Npi":"Npi",
+        "Biography":"Tiểu sử",
         //procedure
         "Code":"Code",
         "Fee":"Tiền công",

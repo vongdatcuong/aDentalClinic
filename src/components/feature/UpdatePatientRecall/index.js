@@ -59,7 +59,10 @@ const UpdatePatientRecall = (props) => {
         setNote(e.target.value);
     }
     const handleChangeIsActive=(e)=>{
-        setIsActive(!isActive);
+        if(props.editable===true)
+        {
+            setIsActive(!isActive);
+        }
     }
     
     const updatePatientRecall=async(e)=>{
@@ -71,17 +74,17 @@ const UpdatePatientRecall = (props) => {
                 recall_date:recallDate,
                 note:note,
                 is_active:isActive,
-             };
-             const result=await PatientRecallService.update(props.id,data);
-             if(result.success)
-             {
-                 toast.success(t(strings.updateSuccess));
-                 props.handleChangeIsUpdate();
-             }
-             else
-             {
-                 toast.error(t(strings.updateFail));
-             }
+            };
+            const result=await PatientRecallService.update(props.id,data);
+            if(result.success)
+            {
+                toast.success(t(strings.updateSuccess));
+                props.handleChangeIsUpdate();
+            }
+            else
+            {
+                toast.error(t(strings.updateFail));
+            }
         }
         else
         {
@@ -185,11 +188,16 @@ const UpdatePatientRecall = (props) => {
                        
                     </Grid>
                 </Grid>
+                {props.editable===true ?
                 <div>
                     <Button variant="contained" color="primary" className={classes.updateButton} onClick={updatePatientRecall}>
                         {t(strings.update)}
                     </Button>
                 </div>
+                :
+                <div/>
+                }
+                
             </div>
         </div>
     )

@@ -65,6 +65,11 @@ const mobilePhone="Mobile phone";
 const staffTypeStaff="STAFF";
 const staffTypeProvider="PROVIDER";
 const userTypePatient="PATIENT";
+const displayId="Display Id";
+const providerColor="Provider color";
+const drugLic="Drug license";
+const npi="Npi";
+const biography="Biography";
 //procedure
 const code="Code";
 const fee="Fee";
@@ -128,6 +133,8 @@ const templateDefault="DEFAULT";
 const templateMedicalAlert="MEDICAL ALERT";
 const templateProgress="PROGRESS";
 const templateTreatment="TREATMENT";
+const medicalAlert="Medical alert";
+const progress="Progress";
 //patient
 const maritalStatus="Marital status";
 const notSpecify="NOT_SPECIFY";
@@ -709,6 +716,11 @@ export default {
     staffTypeStaff,
     staffTypeProvider,
     userTypePatient,
+    displayId,
+    providerColor,
+    drugLic,
+    npi,
+    biography,
     filepath,
     category,
     order,
@@ -734,6 +746,8 @@ export default {
     templateMedicalAlert,
     templateProgress,
     templateTreatment,
+    medicalAlert,
+    progress,
     // Settings
     general,
     account,

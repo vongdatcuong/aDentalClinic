@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 // @material-ui/core Component
 import { 
-    
+    FormControl,
+    InputLabel,
     Button,
     TextField,
     Select,
@@ -189,20 +190,24 @@ const UpdateProcedure = (props) => {
             <div className={classes.content}>        
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.abbreviation)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.abbreviation)}  
                                         variant="outlined" 
                                         onChange={handleChangeAbbreviation}
                                         value={abbreviation}
                                         inputProps={{ readOnly: !props.editable }}
                                         /> 
-                        </div>
+                        </FormControl>
                         
                         
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.procedureCode)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureCode)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureCode}
                                         value={procedureCode}
@@ -210,10 +215,12 @@ const UpdateProcedure = (props) => {
 
                                         />
                              
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.procedureTime)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureTime)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureTime}
                                         value={procedureTime}
@@ -221,10 +228,12 @@ const UpdateProcedure = (props) => {
 
                                         />
                              
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.procedureFee)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.procedureFee)}  
                                         variant="outlined"
                                         onChange={handleChangeProcedureFee}
                                         value={procedureFee}
@@ -232,9 +241,11 @@ const UpdateProcedure = (props) => {
 
                                         />
                              
-                        </div>
-                        <div className={classes.item}>
-                            
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.category)}
+                            </InputLabel>
                             {listCategory.length!==0 ?
 
                                 <Select
@@ -250,19 +261,21 @@ const UpdateProcedure = (props) => {
                                     {renderListCategory()}
                                 </Select>
                                 :
-                                <div></div>
+                                <FormControl></FormControl>
                             }
                            
 
-                        </div>
+                        </FormControl>
                         
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
                         
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.description)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.description)}  
                                         variant="outlined"
                                         onChange={handleChangeDescription}
                                         value={description}
@@ -270,10 +283,12 @@ const UpdateProcedure = (props) => {
 
                                         /> 
 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.toothSelect)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}
-                                        placeholder={t(strings.toothSelect)}  
                                         variant="outlined"
                                         onChange={handleChangeToothSelect}
                                         value={toothSelect}
@@ -281,9 +296,11 @@ const UpdateProcedure = (props) => {
 
                                         />
                              
-                        </div>
-                        <div className={classes.item}>
-                            
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.toothType)}
+                            </InputLabel>
                             {listToothType.length!==0 ?
 
                                 <Select
@@ -299,13 +316,16 @@ const UpdateProcedure = (props) => {
                                     {renderListToothType()}
                                 </Select>
                                 :
-                                <div></div>
+                                <FormControl></FormControl>
                             }
                            
 
-                        </div>
+                        </FormControl>
                         
-                        <div className={classes.item}>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.procedureType)}
+                            </InputLabel>
                             {listProcedureType.length!==0 ?
                                 <Select
                                 value={procedureType}
@@ -320,11 +340,11 @@ const UpdateProcedure = (props) => {
                                 {renderListProcedureType()}
                             </Select>
                             :
-                            <div></div>
+                            <FormControl></FormControl>
                             }
                             
                              
-                        </div>
+                        </FormControl>
                         
                     </Grid>
                 </Grid>

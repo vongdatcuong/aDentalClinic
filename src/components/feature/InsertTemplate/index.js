@@ -14,6 +14,8 @@ import {
     TextField,
     Select,
     MenuItem,
+    FormControl,
+    InputLabel,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 // import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -100,18 +102,20 @@ const InsertTemplate = (props) => {
               
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControlBig} 
                                          
-                                        placeholder={t(strings.content)}  
+                                        label={t(strings.content)}  
                                         variant="outlined" 
                                         onChange={handleChangeContent}
                                         value={content}
                                         multiline
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                        
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel shrink>
+                                {t(strings.noteType)}
+                            </InputLabel>
                             {listTypeTemplate.length!==0 ?
 
                             <Select
@@ -122,13 +126,12 @@ const InsertTemplate = (props) => {
                                 className={classes.inputCombobox}
                                 
                                 >
-                                <MenuItem value={noteType}>{t(strings.noteType)}</MenuItem>
                                 {renderListTypeTemplate()}
                             </Select>
                             :
-                            <div></div>
+                            <FormControl></FormControl>
                             }
-                        </div>
+                        </FormControl>
                        
                         
                     </Grid>

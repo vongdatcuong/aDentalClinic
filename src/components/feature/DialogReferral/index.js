@@ -36,7 +36,7 @@ import strings from "../../../configs/strings";
 import SearchIcon from '@material-ui/icons/Search';
 import AddBox from '@material-ui/icons/AddBox';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import NoDataIcon from '../../common/NoDataIcon';
 //import component
 import TableCustom from "../../common/TableCustom";
 import DialogReferralInsert from "../DialogReferralInsert";
@@ -59,6 +59,7 @@ const DialogReferral = (props) => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [originalData,setOriginalData]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [openDialog,setOpenDialog]=useState(false);
@@ -70,7 +71,7 @@ const DialogReferral = (props) => {
     const [isLoading,setIsLoading]=useState(true);
     const [referredBy,setReferredBy]=useState([]);
     const [referredTo,setReferredTo]=useState([]);
-    
+    const [isEmpty,setIsEmpty]=useState(null);
     //handle
     const handleChangeIsInsert=()=>{
         setIsInsert(!isInsert);
@@ -93,7 +94,10 @@ const DialogReferral = (props) => {
 
  
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.name !==null && row.name.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeInsertPatietReferral=(e)=>{
         setInsertPatientReferral(!insertPatientReferral);
@@ -141,6 +145,7 @@ const DialogReferral = (props) => {
 
         })
         setRows(temp);
+        setOriginalData(temp);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
@@ -153,6 +158,7 @@ const DialogReferral = (props) => {
                 let temp=rows;
                 temp.splice(selectedRow,1);
                 setRows(temp);
+                setOriginalData(temp);
                 setSelectedRow(-1);
                 setSelectedRowData(null);
                 props.handleChangeIsUpdate();
@@ -178,13 +184,21 @@ const DialogReferral = (props) => {
                 temp=temp.concat(a);
             }
         })
-
-        setReferredBy(temp);
-        if(props.type==="FROM")
+        if(temp.length!==0)
         {
-            changeData(temp);
-
+            setReferredBy(temp);
+            if(props.type==="FROM")
+            {
+                changeData(temp);
+    
+            }
+            setIsEmpty(false);
         }
+        else
+        {
+            setIsEmpty(true);
+        }
+        
 
     }
     const getReferredTo=(data)=>{
@@ -195,11 +209,20 @@ const DialogReferral = (props) => {
                 temp=temp.concat(a);
             }
         })
-        setReferredTo(temp);
-        if(props.type==="TO")
+        if(temp.length!==0)
         {
-            changeData(temp);
+            setReferredTo(temp);
+            if(props.type==="TO")
+            {
+                changeData(temp);
+    
+            }
+            setIsEmpty(false);
 
+        }
+        else
+        {
+            setIsEmpty(true);
         }
     }
     const searchPatientReferral=async()=>{
@@ -214,7 +237,7 @@ const DialogReferral = (props) => {
 
     }
     useEffect(()=>{
-        if(rows.length===0)
+        if(rows.length===0 && isEmpty===null)
         {
             searchPatientReferral();
             getUser();
@@ -248,9 +271,18 @@ const DialogReferral = (props) => {
             setIsUpdate(false);
             props.handleChangeIsUpdate();
         }
+        if(searchText==="")
+        {
+            setSearchText(null);
+            setRows(originalData);
+        }
     })
     return (
-        <Dialog onClose={props.close} open={props.isOpen} className={classes.dialogContainer}>
+        <Dialog onClose={props.close} open={props.isOpen} className={props.type==="TO" &&
+             ((insertPatientReferral===true && isEdited=== false)||
+             (isEdited===true &&selectedRowData!==null && isDelete===false))  ? 
+             classes.dialogContainerSmall :
+              classes.dialogContainer}>
             <DialogContent>
 
                 <div className={classes.container}>
@@ -339,6 +371,8 @@ const DialogReferral = (props) => {
                                                
                                 />
                                 :
+                                isEmpty===false ?
+
                                     <TableCustom titles={titles}
                                             data={rows}
                                             dataColumnsName={dataColumnsName}
@@ -351,6 +385,11 @@ const DialogReferral = (props) => {
                                             handleOpenDialog={handleOpenDialog}
                                             handleCloseDialog={handleCloseDialog}
                                             />
+                                :
+                                <div style={{justifyContent:'center',alignItems:'center',display:'flex'}}>
+                                    <NoDataIcon/>
+
+                                </div>
                             }
                         
                         

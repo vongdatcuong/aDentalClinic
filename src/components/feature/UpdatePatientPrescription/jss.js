@@ -11,7 +11,9 @@ const updatePatientPrescriptionStyle = (theme) => ({
             //color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        borderRadius:'15px',
+        boxShadow:'3px 3px 3px gray',
     },
     space:{
         marginTop:'5px',
@@ -207,7 +209,7 @@ const updatePatientPrescriptionStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'30px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),

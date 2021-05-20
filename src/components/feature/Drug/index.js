@@ -61,6 +61,7 @@ const Drug = () => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [originalData,setOriginalData]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
     const [selectedRowData,setSelectedRowData]=useState(null);
     const [isDelete,setIsDelete]=useState(false);
@@ -90,7 +91,10 @@ const Drug = () => {
     }
     
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.name !==null && row.name.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeInsertDrug=(e)=>{
         setInsertDrug(!insertDrug);
@@ -129,6 +133,8 @@ const Drug = () => {
 
         })
         setRows(temp);
+        setOriginalData(temp);
+        setIsLoading(false);
     }
     const deleteRow=(e)=>{
         handleCloseDialog();
@@ -140,6 +146,7 @@ const Drug = () => {
                 let temp=rows;
                 temp.splice(selectedRow,1);
                 setRows(temp);
+                setOriginalData(temp);
                 setSelectedRowData(null);
                 setSelectedRowData(-1);
             }
@@ -171,7 +178,11 @@ const Drug = () => {
             
             getDrug();
             getUser();
-            setIsLoading(false);
+        }
+        if(searchText==="")
+        {
+            setSearchText(null);
+            setRows(originalData);
         }
         if(selectedRow!==-1)
         {

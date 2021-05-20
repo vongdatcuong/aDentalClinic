@@ -11,7 +11,9 @@ const updateProcedureStyle = (theme) => ({
             //color:theme.primaryColor[2],
             marginLeft:'30px',
 
-        }
+        },
+        borderRadius:'15px',
+        boxShadow:'3px 3px 3px gray',
     },
     
     searchControl:{
@@ -156,7 +158,7 @@ const updateProcedureStyle = (theme) => ({
         width:'30vw',
         marginLeft:"30px",
         marginTop:'40px',
-
+        marginBottom:'40px',
     },
     titleDivider: {
         marginLeft: theme.spacing(4),
@@ -171,7 +173,15 @@ const updateProcedureStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        },
+    },
+    itemSelect:{
+        marginTop:'15px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        },
     },
     itemSmall:{
         display:'flex',
@@ -242,7 +252,7 @@ const updateProcedureStyle = (theme) => ({
             //color:theme.primaryColor[2],
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'1px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {

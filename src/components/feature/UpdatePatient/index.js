@@ -14,14 +14,15 @@ import { useTranslation } from 'react-i18next';
 // import Container from '@material-ui/core/Container';
 import { 
     FormControlLabel,
+    InputLabel,
     Checkbox,
     Button,
     TextField,
-    
     InputAdornment,
-  
     FormControl,
     OutlinedInput,
+    Select,
+    MenuItem,
  } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -69,7 +70,20 @@ const UpdatePatient = (props) => {
     const [mobile,setMobile]=useState(null);
     const [homePhone,setHomePhone]=useState(null);
     const [address,setAddress]=useState(null);
-    const [gender,setGender]=useState(true);
+    const [gender,setGender]=useState(t(strings.notSpecify));
+    const [listGender,setListGender]=useState([
+        t(strings.notSpecify),
+        t(strings.male),
+        t(strings.female),
+    ]);
+    const [maritalStatus,setMaritalStatus]=useState(t(strings.notSpecify));
+    const [listMaritalStatus,setListMaritalStatus]=useState([
+        t(strings.notSpecify),
+        t(strings.married),
+        t(strings.divorced),
+        t(strings.single),
+        t(strings.widowed),
+    ]);
     const [active,setActive]=useState(true);
     // const [staffPhoto,setStaffPhoto]=useState(null);
     const [otherInfo,setOtherInfo]=useState(null);
@@ -81,6 +95,7 @@ const UpdatePatient = (props) => {
     const [openDialog,setOpenDialog]=useState(false);
     const [isInsert,setIsInsert]=useState(false);
     const [isUpdate,setIsUpdate]=useState(false);
+    const [patientNote,setPatientNote]=useState(null);
     const [selectedFile,setSelectedFile]=useState(null);
     //handle change
     
@@ -127,10 +142,15 @@ const UpdatePatient = (props) => {
     const handleChangeGender=(e)=>{
         setGender(!gender);
     }
+    const handleChangeMaritalStatus=(e)=>{
+        setMaritalStatus(e.target.value);
+    }
     const handleChangeOtherInfo=(e)=>{
         setOtherInfo(e.target.value);
     }
-    
+    const handleChangePatientNote=(e)=>{
+        setPatientNote(e.target.value);
+    }
     const handleChangeOpenReferredBy=(e)=>{
         if(props.editable)
         {
@@ -168,22 +188,58 @@ const UpdatePatient = (props) => {
         setSelectedFile(event.target.files[0]);
 
     };
-
+    const renderListGender=()=>{
+        return listGender.map((gend,index)=>{
+            return <MenuItem key={index} value={gend}>{gend}</MenuItem>
+        })
+    }
+    const renderListMaritalStatus=()=>{
+        return listMaritalStatus.map((mar,index)=>{
+            return <MenuItem key={index} value={mar}>{mar}</MenuItem>
+        })
+    }
     const onClickUpdate=async()=>{
-        if(firstNameError===null && lastNameError===null )
+        if(firstNameError===null && lastNameError === null && emailError===null)
         {
             let genderData;
-            if(gender===true)
+            let maritalData;
+
+            if(maritalStatus===t(strings.notSpecify))
+            {
+                maritalData="NOT_SPECIFY";
+            }
+            if(maritalStatus===t(strings.married))
+            {
+                maritalData="MARRIED";
+            }
+            if(maritalStatus===t(strings.divorced))
+            {
+                maritalData="DIVORCED";
+            }
+            if(maritalStatus===t(strings.single))
+            {
+                maritalData="SINGLE";
+            }
+            if(maritalStatus===t(strings.widowed))
+            {
+                maritalData="WIDOWED";
+            }
+            if(gender===t(strings.notSpecify))
+            {
+                genderData="NOT_SPECIFY";
+            }
+            if(gender===t(strings.male))
             {
                 genderData="MALE";
             }
-            else
+            if(gender===t(strings.female))
             {
                 genderData="FEMALE";
             }
             const data={
                 //change
                 gender:genderData,
+                marital_status:maritalData,
                 facebook: facebook,
                 email: email,
                 fax: fax,
@@ -192,6 +248,7 @@ const UpdatePatient = (props) => {
                 address: address,
                 is_active:active, 
                 other_info:otherInfo,
+                patient_note:patientNote,
                 //yeu cau
                 first_name: firstName,
                 last_name: lastName,
@@ -217,6 +274,9 @@ const UpdatePatient = (props) => {
         const result=await PatientService.search(props.id);
         if(result.success)
         {
+            console.log("User data:",result.data.payload);
+            let marital=result.data.payload.marital_status;
+            let genderData=result.data.payload.gender;
             setUserData(result.data.payload);
             setFirstName(result.data.payload.user.first_name);
             setLastName(result.data.payload.user.last_name);
@@ -230,14 +290,40 @@ const UpdatePatient = (props) => {
             setMobile(result.data.payload.user.mobile_phone);
             setHomePhone(result.data.payload.user.home_phone);
             setOtherInfo(result.data.payload.user.other_info);
-            if(result.data.payload.gender==="FEMALE")
+            setPatientNote(result.data.payload.user.patient_note);
+            if(marital==="NOT_SPECIFY")
             {
-                setGender(false);
+                setMaritalStatus(t(strings.notSpecify));
             }
-            else
+            if(marital==="MARRIED")
             {
-                setGender(true);
+                setMaritalStatus(t(strings.married));
             }
+            if(marital==="DIVORCED")
+            {
+                setMaritalStatus(t(strings.divorced));
+            }
+            if(marital==="SINGLE")
+            {
+                setMaritalStatus(t(strings.single));
+            }
+            if(marital==="WIDOWED")
+            {
+                setMaritalStatus(t(strings.widowed));
+            }
+            if(genderData==="NOT_SPECIFY")
+            {
+                setGender(t(strings.notSpecify));
+            }
+            if(genderData==="MALE")
+            {
+                setGender(t(strings.male));
+            }
+            if(genderData==="FEMALE")
+            {
+                setGender(t(strings.female));
+            }
+            
         }
     }
     const getReferredBy=(data)=>{
@@ -389,58 +475,65 @@ const UpdatePatient = (props) => {
 
                 <Grid container className={classes.input}>
                     <Grid item xs={6} className={classes.leftContent}>
-                        
-                    
-                   
-                    <div className={classes.item}>
+
+                    <FormControl className={classes.item}>
+                        <InputLabel shrink>
+                            {t(strings.firstName)}
+                        </InputLabel>
                         <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.firstName)}  
                                         variant="outlined" 
                                         onChange={handleChangeFirstName}
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
+                    </FormControl>
+                    <FormControl className={classes.item}>
+                        <InputLabel shrink>
+                            {t(strings.lastName)}
+                        </InputLabel>
                         <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.lastName)}  
                                         variant="outlined" 
                                         onChange={handleChangeLastName}
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
+                    </FormControl>
+                    <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.fax)}
+                            </InputLabel>
                             <TextField className={classes.inputControl}  
-                                        placeholder={t(strings.fax)}  
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
                                         inputProps={{ readOnly: !props.editable }}
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                    </div>
-                    <div className={classes.item}>
+                    </FormControl>
+                    <FormControl className={classes.item}>
+                        <InputLabel shrink>
+                            {t(strings.email)}
+                        </InputLabel>
                         <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.email)}  
                                         variant="outlined" 
                                         onChange={handleChangeEmail}
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
                                         inputProps={{ readOnly: !props.editable }}
-
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                    </div>
-                    <div className={classes.itemSmall}>
+                    </FormControl>
+
+                    <FormControl className={classes.itemSmall}>
                             <FormControlLabel
                                 control={
                                 <Checkbox
@@ -469,90 +562,109 @@ const UpdatePatient = (props) => {
                                 }
                                 label={t(strings.inactive)}
                             />
-                        </div>
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id="gender">
+                                {t(strings.gender)}
+                            </InputLabel>
+                            <Select
+                                value={gender}
+                                onChange={handleChangeGender}
+                                disableUnderline 
+                                className={classes.status}
+                                >
+                            
+                                {renderListGender()}
+                            </Select>
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id="maritalStatus">
+                                {t(strings.maritalStatus)}
+                            </InputLabel>
+                            <Select
+                                value={maritalStatus}
+                                onChange={handleChangeMaritalStatus}
+                                disableUnderline 
+                                className={classes.status}
+                                >
+                            
+                                {renderListMaritalStatus()}
+                            </Select>
+                        </FormControl>
                         
-                        <div className={classes.itemSmall}>
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.male)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
-
-                                />
-                                }
-                                label={t(strings.male)}
-                            />
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    checked={!gender}
-                                    onChange={handleChangeGender}
-                                    name={t(strings.female)}
-                                    color="primary"
-                                    className={classes.checkbox}
-                                    inputProps={{ readOnly: !props.editable }}
-
-                                />
-                                }
-                                label={t(strings.female)}
-                            />
-                        </div>
                     
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                        <div className={classes.item}>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.facebook)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.facebook)}  
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.mobilePhone)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.mobilePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.homePhone)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.homePhone)}  
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
                                         type="number"
                                         inputProps={{ readOnly: !props.editable }}
-
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.note)}
+                            </InputLabel>
                             <TextField className={classes.inputControlBig} 
-                                         
-                                        placeholder={t(strings.additionalInfo)}  
+                                        variant="outlined" 
+                                        onChange={handleChangePatientNote}
+                                        value={patientNote}
+                                        multiline
+                                        InputLabelProps={{ shrink: true }}
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.additionalInfo)}
+                            </InputLabel>
+                            <TextField className={classes.inputControlBig} 
                                         variant="outlined" 
                                         onChange={handleChangeOtherInfo}
                                         value={otherInfo}
                                         multiline
+                                        InputLabelProps={{ shrink: true }}
                                         /> 
-                        </div>
-                        <div className={classes.item}>
-                            <FormControl variant="filled">
+                        </FormControl>
+                        <FormControl variant="filled" className={classes.itemOutline}>
+                                    <InputLabel shrink>
+                                        {t(strings.referredBy)}
+                                    </InputLabel>
                                     <OutlinedInput
-                                        className={classes.inputControl}
+                                        className={classes.inputControlOutline}
                                         type={'text'}
                                         value={displayBy}
-                                        placeholder={t(strings.referredBy)}
                                         readOnly={true}
                                         endAdornment={
                                         <InputAdornment position="start" >
@@ -567,14 +679,14 @@ const UpdatePatient = (props) => {
                                    
                             </FormControl>   
                         
-                        </div>
-                        <div >
-                            <FormControl variant="filled">
+                        <FormControl variant="filled" className={classes.itemOutline}>
+                                    <InputLabel shrink>
+                                        {t(strings.referredTo)}
+                                    </InputLabel>
                                     <OutlinedInput
-                                        className={classes.inputControl}
+                                        className={classes.inputControlOutline}
                                         type={'text'}
                                         value={displayTo}
-                                        placeholder={t(strings.referredTo)}
                                         readOnly={true}
                                         endAdornment={
                                         <InputAdornment position="start" >
@@ -587,9 +699,7 @@ const UpdatePatient = (props) => {
                                     />
                                     
                             </FormControl>   
-                        
                        
-                        </div>
                     
                     </Grid>
                 </Grid>

@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { makeStyles  } from "@material-ui/core/styles";
 //api
-import AuthService from "../../../api/authentication/auth.service";
 import PrescriptionService from "../../../api/prescription/prescription.service";
 //translation
 import { useTranslation } from 'react-i18next';
@@ -70,6 +69,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     const [editable,setEditable]=useState(false);
     const [isEdited,setIsEdited]=useState(false);
     const [rows,setRows]=useState([]);
+    const [originalData,setOriginalData]=useState([]);
     const [providers,setProviders]=useState([]);
     const [prescriptions,setPrescriptions]=useState([]);
     const [selectedRow,setSelectedRow]=useState(-1);
@@ -77,7 +77,8 @@ const PatientPrescriptionPage = ({patientID}) => {
     const [isDelete,setIsDelete]=useState(false);
     const [user,setUser]=useState(null);
     const [isLoading,setIsLoading]=useState(true);
-
+    const [isInsert,setIsInsert]=useState(false);
+    const [isUpdate,setIsUpdate]=useState(false);
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     
    
@@ -86,6 +87,8 @@ const PatientPrescriptionPage = ({patientID}) => {
     }
     const handleCloseDialog=(e)=>{
         setOpenDialog(false);
+        setSelectedRow(-1);
+        setSelectedRowData(null);
     }
     const handleChangeIsDelete=(e)=>{
         setIsDelete(!isDelete);
@@ -101,13 +104,18 @@ const PatientPrescriptionPage = ({patientID}) => {
         setPage(0);
     };
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value;
+        setSearchText(value);
+        const newData = originalData.filter((row) =>row.date !==null && row.date.indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeInsertPrescription=(e)=>{
         setInsertPatientPrescription(!insertPatientPrescription);
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
+        setIsDelete(false);
+        
     }
     const handleChangeSelectedRow=(value)=>{
         setSelectedRow(value);
@@ -117,6 +125,12 @@ const PatientPrescriptionPage = ({patientID}) => {
         setIsEdited(false);
         setSelectedRow(-1);
         setSelectedRowData(null);
+    }
+    const handleChangeIsInsert=()=>{
+        setIsInsert(!isInsert);
+    }
+    const handleChangeIsUpdate=()=>{
+        setIsUpdate(!isUpdate);
     }
     const handleChangeIsEdited=(e)=>{
         setIsEdited(!isEdited);
@@ -163,7 +177,8 @@ const PatientPrescriptionPage = ({patientID}) => {
                 toast.success(t(strings.deleteSuccess));
                 let temp=rows;
                 temp.splice(selectedRow,1);
-                setRows(rows);
+                setRows(temp);
+                setOriginalData(temp);
             }
             else
             {
@@ -173,26 +188,22 @@ const PatientPrescriptionPage = ({patientID}) => {
         deletePrescription();
        
     }
-    const getUser=async()=>{
-        const result=await AuthService.getCurrentUser();
-        setUser(result);
-    }
+    const getPrescription=async()=>{
+        const result1=await PrescriptionService.searchByPatient(patientID);
+        if(result1.success && result1.data.payload.length!==0)
+        {
+            changeData(result1.data.payload);
+        }
+       
+    };
     useEffect(()=>{
         
         if(rows.length===0)
         {
            
-            const getPrescription=async()=>{
-                const result1=await PrescriptionService.searchByPatient(patientID);
-                if(result1.success && result1.data.payload.length!==0)
-                {
-                    changeData(result1.data.payload);
-                }
-               
-            };
+            
             
             getPrescription();
-            getUser();
             setIsLoading(false);
 
         }
@@ -211,12 +222,27 @@ const PatientPrescriptionPage = ({patientID}) => {
             }
 
         }
+        if(searchText==="")
+        {
+            setSearchText(null);
+            setRows(originalData)
+        }
+        if(isInsert===true)
+        {
+            setIsInsert(false);
+            getPrescription();
+        }
+        if(isUpdate===true)
+        {
+            setIsUpdate(false);
+            getPrescription();
+        }
     })
     return (  <React.Fragment>
         <TreatmentMenu patientID = { patientID }/>
         <Container className={classes.containerTable}>
-          
-            <div>
+
+            <div style={{marginTop:'20px'}}>
             <div >
                 <Grid container>
                     <Grid item xs={7}>
@@ -251,7 +277,6 @@ const PatientPrescriptionPage = ({patientID}) => {
                                     }
                                 />
                             </FormControl>
-                            {user!==null && user.user_type==="ADMIN" ? 
                             <div>
                                 <Select 
                                     value={editable}
@@ -272,9 +297,7 @@ const PatientPrescriptionPage = ({patientID}) => {
 
                                 </IconButton>
                             </div>
-                            :
-                            <div></div>
-                            }
+                            
 
                            
                         </Grid>
@@ -287,6 +310,7 @@ const PatientPrescriptionPage = ({patientID}) => {
                 {insertPatientPrescription===true && isEdited=== false  ?
                     <InsertPatientPrescription
                                  patientID={patientID}
+                                 handleChangeIsInsert={handleChangeIsInsert}
                     />
                     : 
                     
@@ -295,6 +319,7 @@ const PatientPrescriptionPage = ({patientID}) => {
                                         id={selectedRowData.id}
                                         patientID={patientID}
                                         editable={editable}
+                                        handleChangeIsUpdate={handleChangeIsUpdate}
                     />
                     :
                     rows.length!==0 ?

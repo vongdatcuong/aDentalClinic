@@ -54,7 +54,7 @@ const Staffs = () => {
 
     //state
     const [rows,setRows]=useState([]);
-
+    const [originalData,setOriginalData]=useState([]);
     const [insertPerson,setInsertPerson]=useState(false);
    
     const [searchText,setSearchText]=useState(null);
@@ -86,7 +86,10 @@ const Staffs = () => {
     }
     
     const handleChangeSearchText = (event) => {
-        setSearchText(event.target.value);
+        let value=event.target.value.toLowerCase();
+        setSearchText(value);
+        const newData = originalData.filter((row) => row.fullname.toLowerCase().indexOf(value) !== -1);
+        setRows(newData);
     };
     const handleChangeInsertPerson=(e)=>{
         setInsertPerson(!insertPerson);
@@ -116,6 +119,9 @@ const Staffs = () => {
 
         })
         setRows(temp);
+        setOriginalData(temp);
+        setIsLoading(false);
+
     }
     const titles=[
         t(strings.index),
@@ -144,7 +150,6 @@ const Staffs = () => {
             
             getStaff();
             getUser();
-            setIsLoading(false);
         }
 
         if(selectedRow!==-1)

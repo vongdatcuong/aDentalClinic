@@ -290,6 +290,8 @@ export default {
         "MEDICAL ALERT":"MEDICAL ALERT",
         "PROGRESS":"PROGRESS",
         "TREATMENT":"TREATMENT",
+        "Medical alert":"Medical alert",
+        "Progress":"Progress",
         //provider
         "#":"#",
         "ID":"ID",
@@ -320,6 +322,11 @@ export default {
         "STAFF":"STAFF",
         "PROVIDER":"PROVIDER",
         "PATIENT":"PATIENT",
+        "Display Id":"Display Id",
+        "Provider color":"Provider color",
+        "Drug license":"Drug license",
+        "Npi":"Npi",
+        "Biography":"Biography",
         //procedure
         "Code":"Code",
         "Fee":"Fee",
