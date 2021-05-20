@@ -91,11 +91,6 @@ const electricityColor = "#ffffcc";
 const tableInsertLinkIconColor = "#bb001b";
 const tableAddIconColor = "#34a853";
 
-const scheduleMonthlyItemColor = "#8c8daf";
-const scheduleWeeklyItemColor = "#ba9187";
-const scheduleAutoItemColor = "#639f88";
-const pageBackgroundColor = "#fafafa";
-
 // Google map
 const mapMinWidth = 500;
 const mapMinHeight = 500;
