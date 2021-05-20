@@ -137,7 +137,7 @@ const Chairs = () => {
         setUser(result);
     }
     useEffect(()=>{
-        if(rows.length===0)
+        if(rows.length===0 && searchText===null)
         {
             
             getChair();

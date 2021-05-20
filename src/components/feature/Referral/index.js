@@ -108,6 +108,7 @@ const Referral = () => {
     };
     const handleChangeInsertReferralSource=(e)=>{
         setInsertReferralSource(!insertReferralSource);
+        setIsDelete(false);
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
@@ -182,7 +183,7 @@ const Referral = () => {
         setUser(result);
     }
     useEffect(()=>{
-        if(rows.length===0)
+        if(rows.length===0 && searchText===null)
         {
             
             getReferralSource();
@@ -273,7 +274,7 @@ const Referral = () => {
                                 <IconButton onClick={handleChangeInsertReferralSource}>
                                     <AddBox />            
                                 </IconButton>
-                                <IconButton onClick={handleChangeIsDelete}>
+                                <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true? 'red':'gray'}}>
                                     <DeleteIcon />            
                                 </IconButton>
                             </div>

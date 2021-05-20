@@ -111,6 +111,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     };
     const handleChangeInsertPrescription=(e)=>{
         setInsertPatientPrescription(!insertPatientPrescription);
+        setIsDelete(false);
     }
     const handleChangeEditable=(e)=>{
         setEditable(!editable);
@@ -198,7 +199,7 @@ const PatientPrescriptionPage = ({patientID}) => {
     };
     useEffect(()=>{
         
-        if(rows.length===0)
+        if(rows.length===0 && searchText===null)
         {
            
             
@@ -292,7 +293,7 @@ const PatientPrescriptionPage = ({patientID}) => {
                                 <IconButton onClick={handleChangeInsertPrescription}>
                                     <AddBox />            
                                 </IconButton>
-                                <IconButton onClick={handleChangeIsDelete}>
+                                <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                     <DeleteIcon />            
 
                                 </IconButton>

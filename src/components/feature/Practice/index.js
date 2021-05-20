@@ -115,14 +115,23 @@ const Practice = () => {
         if(res.success)
         {
             let a=res.data;
-            
+            //get time
+            let start=a.start_time[0]+a.start_time[1]+":"+a.start_time[2]+a.start_time[3];
+            let end=a.end_time[0]+a.end_time[1]+":"+a.end_time[2]+a.end_time[3];
+            let now=new Date();
+            let nowDateTime = now.toISOString();
+            let nowDate = nowDateTime.split('T')[0];
+            let startRes = new Date(nowDate +" "+ start);
+            let endRes= new Date(nowDate + " "+end);
+           
+            //
             let newData=createData(a._id,a.name,a.address,a.phone,a.fax,a.start_time,a.end_time);
             setName(a.name);
             setAddress(a.address);
             setPhone(a.phone);
             setFax(a.fax);
-            setStartTime(a.start_time);
-            setEndTime(a.end_time);
+            setStartTime(startRes);
+            setEndTime(endRes);
             setRows(newData);
             setIsLoading(false);
 
@@ -131,8 +140,8 @@ const Practice = () => {
     }
 
     const onClickUpdate=async()=>{
-        let start=moment(startTime).format("HH:mm");
-        let end=moment(endTime).format("HH:mm");
+        let start=moment(startTime).format("HHmm");
+        let end=moment(endTime).format("HHmm");
         if(start<end && editable===true)
         {
             const data={
@@ -140,8 +149,8 @@ const Practice = () => {
                 address:address,
                 phone:phone,
                 fax:fax,
-                start_time:startTime,
-                end_time:endTime,
+                start_time:start,
+                end_time:end,
     
             }
             const res=await PracticeService.update(rows.id,data);

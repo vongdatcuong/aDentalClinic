@@ -167,13 +167,13 @@ const InsertPatient = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <TextField className={classes.inputControl} 
+                            <TextField className={classes.inputControlBig} 
                                         required
                                         label={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
-                                        
+                                        multiline
                                         /> 
                         </FormControl>
                        

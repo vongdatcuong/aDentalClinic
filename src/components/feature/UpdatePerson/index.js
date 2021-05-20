@@ -124,7 +124,11 @@ const UpdateChair = (props) => {
         setDrugLic(e.target.value);
     }
     const handleChangeStartDate=(e,date)=>{
-        setStartDate(date);
+        if(props.editable)
+        {
+            setStartDate(date);
+
+        }
     }
     const handleChangeNpi=(e)=>{
         setNpi(e.target.value);
@@ -302,6 +306,8 @@ const UpdateChair = (props) => {
                                         value={firstName}
                                         error={firstNameError !== null}
                                         helperText={firstNameError}
+                                        inputProps={{ readOnly: !props.editable }}
+
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -315,6 +321,8 @@ const UpdateChair = (props) => {
                                         value={lastName}
                                         error={lastNameError !== null}
                                         helperText={lastNameError}
+                                        inputProps={{ readOnly: !props.editable }}
+
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -328,6 +336,7 @@ const UpdateChair = (props) => {
                                         value={email}
                                         error={emailError !== null}
                                         helperText={emailError}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         
@@ -340,6 +349,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeBiography}
                                         value={biography}
                                         multiline
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         {props.staffType===t(strings.staffTypeProvider) ? 
@@ -351,7 +361,7 @@ const UpdateChair = (props) => {
                                     variant="outlined" 
                                     onChange={handleChangeDrugLic}
                                     value={drugLic}
-                                   
+                                    inputProps={{ readOnly: !props.editable }}
                                     /> 
                         </FormControl>
                         :
@@ -368,7 +378,13 @@ const UpdateChair = (props) => {
                                     name="color"
                                     InputProps={{ disableUnderline: true }}
                                     style={{width:'100%',backgroundColor:providerColor,}}
-                                    onChange={color => setProviderColor(color)}
+                                    onChange={color => {
+                                        if(props.editable)
+                                        {
+                                            setProviderColor(color)
+
+                                        }
+                                    }}
                                     value={providerColor}
                                 />
                             </div>
@@ -389,7 +405,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeDisplayId}
                                         value={displayId}
-                                       
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -400,6 +416,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFacebook}
                                         value={facebook}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -411,7 +428,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeMobile}
                                         value={mobile}
                                         type="number"
-
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -422,6 +439,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeHomePhone}
                                         value={homePhone}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -432,6 +450,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeFax}
                                         value={fax}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -442,6 +461,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeAddress}
                                         value={address}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -452,7 +472,7 @@ const UpdateChair = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeNpi}
                                         value={npi}
-                                       
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         
@@ -464,7 +484,6 @@ const UpdateChair = (props) => {
                                         format={t(strings.apiDateFormat)}
                                         value={startDate}
                                         onChange={handleChangeStartDate}
-                                        readOnly={true}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}

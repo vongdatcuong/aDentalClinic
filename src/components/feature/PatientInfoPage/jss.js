@@ -12,9 +12,23 @@ const style = (theme) => ({
             marginLeft:'30px',
 
         },
-        boxShadow:'3px 3px 3px gray'
     },
-    
+    containerContent: {
+        flexGrow: 1,
+        margin:"0px",
+        '& .MuiFormControl-root': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        
+        '& .MuiInputLabel-outlined':{
+            color:theme.primaryColor[2],
+            marginLeft:'30px',
+
+        },
+        boxShadow:'3px 3px 3px gray',
+        borderRadius:'15px'
+    },
     searchControl:{
         height:40,
         width:200,
@@ -222,7 +236,9 @@ const style = (theme) => ({
     },
     item:{
         marginTop:'15px',
-
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+        }
     },
     itemOutline:{
         marginTop:'20px',

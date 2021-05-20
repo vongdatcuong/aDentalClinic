@@ -43,6 +43,7 @@ import NoDataIcon from '../../common/NoDataIcon';
 
 //import component
 import TableCustom from "../../common/TableCustom";
+import moment from 'moment'
 // import Footer from "../../../layouts/Footer";
 const useStyles = makeStyles(styles);
 
@@ -67,7 +68,7 @@ const InsertPatientPrescription = (props) => {
     const [quantity,setQuantity]=useState(null);
     const [dispensed,setDispensed]=useState(null);
     const [description,setDescription]=useState(null);
-    const [expired,setExpired]=useState(null);
+    const [expired,setExpired]=useState(new Date());
     const [provider,setProvider]=useState(t(strings.provider));
     const [listProvider,setListProvider]=useState([]);
     const [listDrug,setListDrug]=useState([]);
@@ -98,8 +99,13 @@ const InsertPatientPrescription = (props) => {
         setOpenDialog2(false);
     }
     const handleChangeCurrentDrug=(e)=>{
-        setCurrentDrug(e.target.value);
+        let index=e.target.value;
+        setCurrentDrug(index);
+        setDescription(listDrug[index].description);
+        setDispensed(listDrug[index].dispensed);
         
+        setQuantity(listDrug[index].quantity);
+        setRefill(listDrug[index].refill);
     }
     const handleChangeProvider=(e)=>{
         setProvider(e.target.value);
@@ -135,10 +141,10 @@ const InsertPatientPrescription = (props) => {
             handleCloseDialog();
             let temp=drug;
             temp=temp.concat(createData(listDrug[currentDrug].id,listDrug[currentDrug].name,dispensed,
-                                        quantity,description,refill,expired
+                                        quantity,description,refill,moment(expired).format(t(strings.apiDateFormat))
                 ));
-
-           
+            console.log("Check date insert drug:",moment(expired).format(t(strings.apiDateFormat)))
+            
             setDrug(temp);
             setDescription(null);
             setDispensed(null);
@@ -177,7 +183,7 @@ const InsertPatientPrescription = (props) => {
                 let temp=details;
                 temp=temp.concat({
                     drug:a.id,
-                    expiry_date:a.expired,
+                    expiry_date:new Date(a.expired),
                     description:a.description,
                     dispensed:a.dispensed,
                     refill:a.refill,

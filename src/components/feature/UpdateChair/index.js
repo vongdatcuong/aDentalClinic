@@ -156,9 +156,14 @@ const UpdatePerson = (props) => {
                             <div className={classes.inputControlColor} >
                                 <ColorPicker  
                                         name="color"
-                                        InputProps={{ disableUnderline: true }}
+                                        InputProps={{ disableUnderline: true}}
                                         style={{width:'100%',backgroundColor:color}}
-                                        onChange={color => setColor(color)}
+                                        onChange={color => {
+                                            if(props.editable)
+                                            {
+                                                setColor(color)
+                                            }
+                                        }}
                                         value={color}
                                         /> 
                             </div>

@@ -334,6 +334,16 @@ const PatientInfoPage = ({ patientID }) => {
     ) {
       setEmailError(null);
     }
+    if(isInsert===true)
+    {
+      setIsInsert(false);
+      searchPatientReferral();
+    }
+    if(isUpdate===true)
+    {
+      setIsUpdate(false);
+      searchPatientReferral();
+    }
   });
 
   return (
@@ -342,7 +352,7 @@ const PatientInfoPage = ({ patientID }) => {
       <Container className={classes.container}>
         <PopupChat></PopupChat>
         <Grid container></Grid>
-        <div className={classes.container}>
+        <div className={classes.containerContent}>
           <div className={classes.content}>
             <label className={classes.inputAvatar}>
               <input
@@ -366,90 +376,104 @@ const PatientInfoPage = ({ patientID }) => {
 
             <Grid container className={classes.input}>
               <Grid item xs={6} className={classes.leftContent}>
-                <div className={classes.item}>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.firstName)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
                     required
-                    placeholder={t(strings.firstName)}
                     variant="outlined"
                     onChange={handleChangeFirstName}
                     value={firstName}
                     error={firstNameError !== null}
                     helperText={firstNameError}
                   />
-                </div>
-                <div className={classes.item}>
+                </FormControl>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.lastName)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
                     required
-                    placeholder={t(strings.lastName)}
                     variant="outlined"
                     onChange={handleChangeLastName}
                     value={lastName}
                     error={lastNameError !== null}
                     helperText={lastNameError}
                   />
-                </div>
-                <div className={classes.item}>
+                </FormControl>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.fax)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
-                    placeholder={t(strings.fax)}
                     variant="outlined"
                     onChange={handleChangeFax}
                     value={fax}
                   />
-                </div>
-                <div className={classes.item}>
+                </FormControl>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.email)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
-                    placeholder={t(strings.email)}
                     variant="outlined"
                     onChange={handleChangeEmail}
                     value={email}
                     error={emailError !== null}
                     helperText={emailError}
                   />
-                </div>
+                </FormControl>
               </Grid>
               <Grid item xs={6} className={classes.rightContent}>
-                <div className={classes.item}>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.facebook)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
-                    placeholder={t(strings.facebook)}
                     variant="outlined"
                     onChange={handleChangeFacebook}
                     value={facebook}
                   />
-                </div>
-                <div className={classes.item}>
+                </FormControl>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.mobilePhone)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
-                    placeholder={t(strings.mobilePhone)}
                     variant="outlined"
                     onChange={handleChangeMobile}
                     value={mobile}
                     type="number"
                   />
-                </div>
-                <div className={classes.item}>
+                </FormControl>
+                <FormControl className={classes.item}>
+                  <InputLabel shrink>
+                    {t(strings.homePhone)}
+                  </InputLabel>
                   <TextField
                     disabled={!editInfo}
                     className={classes.inputControl}
-                    placeholder={t(strings.homePhone)}
                     variant="outlined"
                     onChange={handleChangeHomePhone}
                     value={homePhone}
                     type="number"
                   />
-                </div>
+                </FormControl>
 
-                <div className={classes.itemSmall}>
+                <FormControl className={classes.itemSmall}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -476,9 +500,9 @@ const PatientInfoPage = ({ patientID }) => {
                     }
                     label={t(strings.female)}
                   />
-                </div>
+                </FormControl>
 
-                <div className={classes.itemSmall}>
+                <FormControl className={classes.itemSmall}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -505,7 +529,7 @@ const PatientInfoPage = ({ patientID }) => {
                     }
                     label={t(strings.inactive)}
                   />
-                </div>
+                </FormControl>
                 <FormControl variant="filled" className={classes.itemOutline}>
                                     <InputLabel shrink>
                                         {t(strings.referredBy)}
@@ -567,7 +591,7 @@ const PatientInfoPage = ({ patientID }) => {
                     
                 />
                 :
-                <div></div>
+                <FormControl></FormControl>
             }
             <div>
               {editInfo ? (
