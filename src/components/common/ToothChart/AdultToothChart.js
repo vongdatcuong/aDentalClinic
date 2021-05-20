@@ -23,6 +23,7 @@ const AdultToothChart = function (props) {
                 isSelectedTooth={props.selectedTooth.includes(tooth.fullTooth.id) ? true : false}
                 toothCondition={props.toothCondition[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
                 toothNote={props.toothNotes[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
+                toothSelectedSurfaces={ props.viewType === "add-treatment" ? props.toothSelectedSurfaces[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1] : null}
               ></Tooth>
             );
           })}
@@ -41,6 +42,7 @@ const AdultToothChart = function (props) {
               isSelectedTooth={props.selectedTooth.includes(tooth.fullTooth.id) ? true : false}
               toothCondition={props.toothCondition[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
               toothNote={props.toothNotes[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1]}
+              toothSelectedSurfaces={ props.viewType === "add-treatment" ? props.toothSelectedSurfaces[parseInt(tooth.fullTooth.id.replace("Tooth",""))-1] : null}
             ></Tooth>
           );
         })}

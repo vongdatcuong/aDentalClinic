@@ -146,6 +146,8 @@ export default {
         "Load Appointment Document fail": "Tải tài liệu cuộc hẹn thất bại",
         "Load Patient Document fail": "Tải tài liệu bệnh nhân thất bại",
         "Load Appointment of Patient Document fail": "Tải tài liệu cuộc hẹn của bệnh nhân thất bại",
+        // Error Messages Treatment
+        "Treatment date must be in the future": "Ngày điều trị phải ở tương lai",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",
@@ -182,13 +184,18 @@ export default {
         "All steps completed - you are finished": "Bạn đã hoàn thành",
         "Select Treatment": "Chọn liệu trình",
         "Select Tooth": "Chọn răng",
-        "Preview Treatment Information": "Kiểm tra lại thông tin điều trị",
+        "Selected Tooth": "Răng đã chọn",
+        "Review Treatment Information": "Kiểm tra lại thông tin điều trị",
         "Facial": "Mặt ngoài",
         "Lingual": "Mặt trong",
         "Mesial": "Mặt gần",
         "Distal": "Mặt xa",
         "Top": "Mặt nhai",
         "Root": "Chân răng",
+        "Please select tooth": "Vui lòng chọn răng để điều trị",
+        "Cannot select missing tooth": "Không thể chọn răng bị thiếu",
+        "Not allowed to select this tooth": "Không thể chọn răng này",
+        "Not allowed to select multiple tooth": "Không cho phép chọn nhiều răng",
 
         // Tooth chart page
         "Overview": "Tổng quan",

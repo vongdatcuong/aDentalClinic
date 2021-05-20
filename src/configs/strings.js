@@ -265,6 +265,8 @@ const loadStatisticsErrMsg = "Load Report fail";
 const loadAppointDocErrMsg = "Load Appointment Document fail";
 const loadPatientDocErrMsg = "Load Patient Document fail";
 const loadAppointPatientDocErrMsg = "Load Appointment of Patient Document fail";
+    // Error Messages Treatments
+const treatmentDateErrMsg = "Treatment date must be in the future";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -445,7 +447,12 @@ const finish = "finish";
 const allStepsCompleted = "All steps completed - you are finished";
 const selectTreatment = "Select Treatment";
 const selectTooth = "Select Tooth";
-const previewTreatmentInfo = "Preview Treatment Information";
+const selectedTooth = "Selected Tooth";
+const reviewTreatmentInfo = "Review Treatment Information";
+const pleaseSelectTooth = "Please select tooth";
+const notSelectMissingTooth = "Cannot select missing tooth";
+const notAllowedTooth = "Not allowed to select this tooth";
+const notAllowSellectMultipleTooth = "Not allowed to select multiple tooth";
 
 const facial = "Facial";
 const lingual = "Lingual";
@@ -600,6 +607,8 @@ export default {
     loadAppointDocErrMsg,
     loadPatientDocErrMsg,
     loadAppointPatientDocErrMsg,
+    // Error Messages Treatments
+    treatmentDateErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
@@ -873,13 +882,18 @@ export default {
     allStepsCompleted,
     selectTreatment,
     selectTooth,
-    previewTreatmentInfo,
+    reviewTreatmentInfo,
     facial,
     lingual,
     mesial,
     distal,
     top,
     root,
+    selectedTooth,
+    pleaseSelectTooth,
+    notSelectMissingTooth,
+    notAllowedTooth,
+    notAllowSellectMultipleTooth,
     // Report
     patientsShort,
     viewPatientDocument,

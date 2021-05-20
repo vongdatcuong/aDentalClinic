@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Select treatment code', 'Select tooth', 'Preview treatment information'];
+  return ['Select treatment code', 'Select tooth', 'Review treatment information'];
 }
 
 function getStepContent(step) {

@@ -147,6 +147,8 @@ export default {
         "Load Appointment Document fail": "Load Appointment Document fail",
         "Load Patient Document fail": "Load Patient Document fail",
         "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
+        // Error Messages Treatment
+        "Treatment date must be in the future": "Treatment date must be in the future",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -183,13 +185,18 @@ export default {
         "All steps completed - you are finished": "All steps completed - you are finished",
         "Select Treatment": "Select Treatment",
         "Select Tooth": "Select Tooth",
-        "Preview Treatment Information": "Preview Treatment Information",
+        "Selected Tooth": "Selected Tooth",
+        "Review Treatment Information": "Review Treatment Information",
         "Facial": "Facial",
         "Lingual": "Lingual",
         "Mesial": "Mesial",
         "Distal": "Distal",
         "Top": "Top",
         "Root": "Root",
+        "Please select tooth": "Please select tooth",
+        "Cannot select missing tooth": "Cannot select missing tooth",
+        "Not allowed to select this tooth": "Not allowed to select this tooth",
+        "Not allowed to select multiple tooth": "Not allowed to select multiple tooth",
 
         // Tooth chart page
         "Overview": "Overview",
