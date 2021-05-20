@@ -151,6 +151,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const [allowNoTooth, setAllowNoTooth] = useState(false);
   const [allowedTeeth, setAllowedTeeth] = useState({});
 
+  const [totalSelectedToothCount, setTotalSelectedToothCount] = useState(0);
   const [showQuickselectMenu, setShowQuickselectMenu] = React.useState(false);
   const [selectedTooth, setSelectedTooth] = React.useState([]); // các răng đã chọn - tạm thời
   const [toothCondition, setToothCondition] = React.useState([]);
@@ -338,20 +339,26 @@ const AddTreatmentPage = ({ patientID }) => {
       return false;
     }
   };
-  const isCheckAvailableTooth = (toothNumber) => {
+  const checkAvailableTooth = (toothNumber, isAutoQuickSelectTooth) => {
     //let isAvailable = true;
     if (toothCondition[toothNumber - 1] === "MISSING") {
-      //isAvailable = false;
-      return false;
+        if (!isAutoQuickSelectTooth) toast.error(t(strings.notSelectMissingTooth));
+        return false;
     }
     // Todo: kiểm tra xem toothNumber có nằm trong range quy định của procedure ko
-    if (!allowedTeeth[toothNumber])  return false;
-    if (!allowMultipleTooth && selectedTooth.length > 0) return false;
+    if (!allowedTeeth[toothNumber]) {
+        if (!isAutoQuickSelectTooth) toast.error(t(strings.notAllowedTooth));
+        return false;
+    }
+    if (!allowMultipleTooth && totalSelectedToothCount > 0) {
+        if (!isAutoQuickSelectTooth) toast.error(t(strings.notAllowSellectMultipleTooth));
+        return false;
+    }
     return true
   };
-  const handleSelectToothQuickselect = (toothID) => {
+  const handleSelectToothQuickselect = (toothID, isAutoQuickSelectTooth) => {
     let toothNumber = parseInt(toothID.replace("Tooth", ""));
-    if (isCheckAvailableTooth(toothNumber)) {
+    if (checkAvailableTooth(toothNumber, isAutoQuickSelectTooth)) {
       if (selectedTooth.includes(toothID)) {
         //răng này đã được chọn => bỏ chọn răng
         // pop tooth ID
@@ -534,6 +541,7 @@ const AddTreatmentPage = ({ patientID }) => {
     });
     setSelectedTooth_Raw(tselectedTooth_Raw);
     setToothSelectedSurfaces(tToothSelectedSurfaces);
+    countTotalSelectedTooth();
     clearSelectedTooth();
   };
   const handleClickToothSelect = () => {
@@ -561,6 +569,7 @@ const AddTreatmentPage = ({ patientID }) => {
     setSelectedTooth_Raw(tselectedTooth_Raw);
     // update toothSelectedSurfaces to display tooth UI
     setToothSelectedSurfaces(tToothSelectedSurfaces);
+    countTotalSelectedTooth();
     clearSelectedTooth();
   };
   function clearSelectedTooth() {
@@ -575,25 +584,29 @@ const AddTreatmentPage = ({ patientID }) => {
     setSelectedRoot(false);
   }
 
-  const handleNext = () => {
+  const handleNext =  async () => {
     if (validateData()) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      // update setSelectedTooth_Display
-      let displayString = "";
-      selectedTooth_Raw.forEach((tooth) => {
-        if (tooth.isSelected === true) {
-          displayString += "\n\tTooth " + tooth.toothNumber + ": ";
-          displayString += tooth.distal === true ? "D" : "";
-          displayString += tooth.mesial === true ? "M" : "";
-          displayString += tooth.facial === true ? "F" : "";
-          displayString += tooth.lingual === true ? "L" : "";
-          displayString += tooth.top === true ? "T" : "";
-          displayString += tooth.root === true ? "R" : "";
-        }
-      });
-      setSelectedTooth_Display(displayString);
-      if (activeStep === steps.length - 1) {
-        handleSubmit();
+      if (activeStep === steps.length - 1) {    // đang ở bước submit
+        let submited = await handleSubmit();
+        if (submited) setActiveStep((prevActiveStep) => prevActiveStep + 1); // ko cho finish nếu gọi API ko thành công
+        else toast.error(t(strings.updateFail));
+      }
+      else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // update setSelectedTooth_Display
+        let displayString = "";
+        selectedTooth_Raw.forEach((tooth) => {
+          if (tooth.isSelected === true) {
+            displayString += "\n\tTooth " + tooth.toothNumber + ": ";
+            displayString += tooth.distal === true ? "D" : "";
+            displayString += tooth.mesial === true ? "M" : "";
+            displayString += tooth.facial === true ? "F" : "";
+            displayString += tooth.lingual === true ? "L" : "";
+            displayString += tooth.top === true ? "T" : "";
+            displayString += tooth.root === true ? "R" : "";
+          }
+        });
+        setSelectedTooth_Display(displayString);
       }
     }
   };
@@ -635,18 +648,27 @@ const AddTreatmentPage = ({ patientID }) => {
     }
     // select tooth
     if (activeStep === 1) {
-        let selectCount = 0;
-        selectedTooth_Raw.forEach((tooth) => {
-            if (tooth.isSelected === true) {
-                selectCount++;
-            }
-        });
-        if (!allowNoTooth && selectCount === 0) isValid = false;
+        if (!allowNoTooth && totalSelectedToothCount === 0) 
+        {
+            toast.error(t(strings.pleaseSelectTooth));
+            isValid = false;
+        }
     }
     return isValid;
   }
 
-  function handleSubmit() {
+  function countTotalSelectedTooth(){
+    let selectCount = 0;
+    selectedTooth_Raw.forEach((tooth) => {
+        if (tooth.isSelected === true) {
+            selectCount++;
+        }
+    });
+    setTotalSelectedToothCount(selectCount);
+  }
+
+  async function handleSubmit() {
+    toast.info(t(strings.loading));
     const submitAddTreatment = async () => {
       try {
         const data = {
@@ -664,6 +686,8 @@ const AddTreatmentPage = ({ patientID }) => {
         };
         const result = await TreatmentService.addTreatment(data);
         if (result.success) {
+          toast.dismiss();  
+          toast.success(t(strings.updateSuccess));
           return true;
         }
         toast.error(result.message);
@@ -673,7 +697,7 @@ const AddTreatmentPage = ({ patientID }) => {
         return false;
       }
     };
-    submitAddTreatment();
+    return submitAddTreatment();
   }
 
   // Select Date
@@ -749,13 +773,13 @@ const AddTreatmentPage = ({ patientID }) => {
   const selectAllTopTeeth = () => {
     for (let i = 1; i <= 16; i++) {
       let tooth = "Tooth" + i;
-      handleSelectToothQuickselect(tooth);
+      handleSelectToothQuickselect(tooth, true);
     }
   };
   const selectAllBottomTeeth = () => {
     for (let i = 17; i <= 32; i++) {
       let tooth = "Tooth" + i;
-      handleSelectToothQuickselect(tooth);
+      handleSelectToothQuickselect(tooth, true);
     }
   };
 

@@ -193,6 +193,10 @@ export default {
         "Distal": "Distal",
         "Top": "Top",
         "Root": "Root",
+        "Please select tooth": "Please select tooth",
+        "Cannot select missing tooth": "Cannot select missing tooth",
+        "Not allowed to select this tooth": "Not allowed to select this tooth",
+        "Not allowed to select multiple tooth": "Not allowed to select multiple tooth",
 
         // Tooth chart page
         "Overview": "Overview",

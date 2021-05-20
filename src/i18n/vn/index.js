@@ -192,6 +192,10 @@ export default {
         "Distal": "Mặt xa",
         "Top": "Mặt nhai",
         "Root": "Chân răng",
+        "Please select tooth": "Vui lòng chọn răng để điều trị",
+        "Cannot select missing tooth": "Không thể chọn răng bị thiếu",
+        "Not allowed to select this tooth": "Không thể chọn răng này",
+        "Not allowed to select multiple tooth": "Không cho phép chọn nhiều răng",
 
         // Tooth chart page
         "Overview": "Tổng quan",

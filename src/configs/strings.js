@@ -435,6 +435,10 @@ const selectTreatment = "Select Treatment";
 const selectTooth = "Select Tooth";
 const selectedTooth = "Selected Tooth";
 const reviewTreatmentInfo = "Review Treatment Information";
+const pleaseSelectTooth = "Please select tooth";
+const notSelectMissingTooth = "Cannot select missing tooth";
+const notAllowedTooth = "Not allowed to select this tooth";
+const notAllowSellectMultipleTooth = "Not allowed to select multiple tooth";
 
 const facial = "Facial";
 const lingual = "Lingual";
@@ -858,6 +862,10 @@ export default {
     top,
     root,
     selectedTooth,
+    pleaseSelectTooth,
+    notSelectMissingTooth,
+    notAllowedTooth,
+    notAllowSellectMultipleTooth,
     // Report
     patientsShort,
     viewPatientDocument,
