@@ -363,7 +363,7 @@ const Practice = () => {
                                     readOnly: !editable
                                 }}
                                 className={classes.inputControlSmall} 
-
+                                minutesStep={30}
                             />
                             <KeyboardTimePicker
                                 margin="normal"
@@ -379,7 +379,7 @@ const Practice = () => {
                                     readOnly: !editable
                                 }}
                                 className={classes.inputControlSmall} 
-
+                                minutesStep={30}
                             />
                             
                         </div>
