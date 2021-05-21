@@ -74,7 +74,7 @@ const TreatmentItem = ({
   function generateTreatmentTitle() {
     let fullTreatmentTitle = treatmentProcedure;
     fullTreatmentTitle += treatmentToothShort ? " | " + treatmentToothShort : "";
-    fullTreatmentTitle += " (Provider: " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
+    fullTreatmentTitle += " ("+t(strings.provider)+": " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
     return fullTreatmentTitle.trim();
   }
   function parseSelectedTooth() {
@@ -119,6 +119,9 @@ const TreatmentItem = ({
             <div>
                 <div>
                 {t(strings.treatment)}: {treatmentProcedure}
+                </div>
+                <div>
+                {t(strings.description)}: {treatmentDescription}
                 </div>
                 <div>
                 {t(strings.date)}:{" "}
