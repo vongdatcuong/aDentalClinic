@@ -72,11 +72,10 @@ const TreatmentItem = ({
   const classes = useStyles();
 
   function generateTreatmentTitle() {
-    let fullTreatmentTitle = "";
-    fullTreatmentTitle += treatmentToothShort ? treatmentToothShort + ": " : "";
-    fullTreatmentTitle +=
-      treatmentProcedure + " (Provider: " + treatmentProvider + ")";
-    return fullTreatmentTitle;
+    let fullTreatmentTitle = treatmentProcedure;
+    fullTreatmentTitle += treatmentToothShort ? " | " + treatmentToothShort : "";
+    fullTreatmentTitle += " (Provider: " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
+    return fullTreatmentTitle.trim();
   }
   function parseSelectedTooth() {
     let displayString = "";
@@ -132,10 +131,10 @@ const TreatmentItem = ({
                 {t(strings.provider)}: {treatmentProvider.first_name + " " + treatmentProvider.last_name}
                 </div>
                 <div>
-                {t(strings.assistant)}: {treatmentAssistant.first_name + " " + treatmentAssistant.last_name}
+                {t(strings.assistant)}: {treatmentAssistant ? treatmentAssistant.first_name + " " + treatmentAssistant.last_name : t(strings.none)}
                 </div>
                 <div className={classes.treatmentNote}>
-                {t(strings.note)}: {treatmentNote === "" ? "None" : treatmentNote}
+                {t(strings.note)}: {treatmentNote === "" ? t(strings.none) : treatmentNote}
                 </div>
                 <div className={classes.selectedToothDisplay}>
                 { treatmentSelectedTooth && t(strings.selectedTooth) + ": " + parseSelectedTooth()}

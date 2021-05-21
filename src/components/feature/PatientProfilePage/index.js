@@ -232,12 +232,13 @@ const PatientProfilePage = ({ patientID }) => {
                                 key={index}
                                 treatmentID={treatmentItem._id}
                                 treatmentTime={treatmentItem.treatment_date}
-                                treatmentProvider={treatmentItem.provider.user}
-                                treatmentAssistant={treatmentItem.assistant.user}
+                                treatmentProvider={treatmentItem.provider?.user}
+                                treatmentAssistant={treatmentItem.assistant?.user}
                                 treatmentDescription={treatmentItem.description}
                                 treatmentNote={treatmentItem.note}
                                 treatmentToothShort={treatmentItem.tooth}
                                 treatmentSelectedTooth={treatmentItem.selected_tooth_raw}
+                                treatmentProcedure={treatmentItem.procedure_code.procedure_code}
                                 // handleDeleteTreatment={() => {
                                 // handleDeleteTreatment(treatmentItem._id);
                                 // }}
