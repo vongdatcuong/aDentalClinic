@@ -31,12 +31,14 @@ import TabPanel from '../../common/TabPanel';
 import TreatmentHistory from './TreatmentHistory.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import Footer from "../../../layouts/Footer";
+import TreatmentItem from "./TreatmentItem.js";
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
 import MacroCheckSelectDialog from './MacroCheckSelectDialog';
 import path from "../../../routes/path";
 import { FaScroll } from 'react-icons/fa';
+import TreatmentService from "../../../api/treatment/treatment.service";
 
 const useStyles = makeStyles(styles);
 
@@ -56,6 +58,9 @@ const PatientProfilePage = ({ patientID }) => {
     const [editMedicalIssues, setEditMedicalIssues] = useState(false);
     const [editOralHeath, setEditOralHeath] = useState(false);
     const [medOpen, setMedOpen] = useState(false);
+
+    const [treatments, setTreatments] = useState([]);
+
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
     };
@@ -68,31 +73,49 @@ const PatientProfilePage = ({ patientID }) => {
       };
 
     useEffect(()=>{
-    
-        const getPatientProfile=async()=>{
-            try {
-                const result=await PatientService.getPatientProfile(patientID);
-                if (result.success){
-                    setFullname(result.data.payload.user.first_name + " " + result.data.payload.user.last_name);
-                    setGender(result.data.payload.gender);
-                    const currentYear = new Date().getFullYear();
-                    setAge(currentYear - ConvertDateTimes.formatDate(result.data.payload.dob, "YYYY"));
-                    setMedicalIssues(result.data.payload.medical_alert);
-                    setPlaqueIndex(result.data.payload.plaque_index);
-                    setBleedingIndex(result.data.payload.bleeding_index);
-                    setHalitosis(result.data.payload.halitosis);
-                    return true;
-                }
-                toast.error(result.message);
-                return false;
-            } 
-            catch(err)  {
-                toast.error(t(strings.errorLoadData));    
-                return false;
-            }
-        };
         getPatientProfile();
+        fetchTreatments();
     }, []);
+    
+    const getPatientProfile=async()=>{
+        try {
+            const result=await PatientService.getPatientProfile(patientID);
+            if (result.success){
+                setFullname(result.data.payload.user.first_name + " " + result.data.payload.user.last_name);
+                setGender(result.data.payload.gender);
+                const currentYear = new Date().getFullYear();
+                setAge(currentYear - ConvertDateTimes.formatDate(result.data.payload.dob, "YYYY"));
+                setMedicalIssues(result.data.payload.medical_alert);
+                setPlaqueIndex(result.data.payload.plaque_index);
+                setBleedingIndex(result.data.payload.bleeding_index);
+                setHalitosis(result.data.payload.halitosis);
+                return true;
+            }
+            toast.error(result.message);
+            return false;
+        } 
+        catch(err)  {
+            toast.error(t(strings.errorLoadData));    
+            return false;
+        }
+    };
+
+    const fetchTreatments = async () => {
+        try {
+          const result = await TreatmentService.getAllTreatmentsByPatient(patientID);
+          //console.log(result.data);
+          if (result.success) {
+            setTreatments(result.data);
+            console.log(result.data);
+            return true;
+          }
+          toast.error(result.data.message);
+          return false;
+        } catch (err) {
+          toast.error(t(strings.errorLoadData));
+          return false;
+        }
+      };
 
     const handleClickEditMedicalIssues=(e)=>{
         if (editMedicalIssues) {
@@ -195,12 +218,43 @@ const PatientProfilePage = ({ patientID }) => {
                   </Tabs>
                   <Grid item>
                     <TabPanel value={curTab} index={0}>
-                      {t(strings.noTreatmentsPending)}
+                      {treatments.length > 0 ? "" : t(strings.noTreatmentsPending)}
                         <div className={classes.containerAddRecord}>
                             <Button simple className={classes.btnAddRecord} onClick={() => history.push(path.addTreatmentPath.replace(':patientID', patientID))}>
                                 <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
                                 {t(strings.add)}
                             </Button>
+                        </div>
+                        <div className={classes.noteContainer}>
+                        {treatments.map((treatmentItem, index) => {
+                            return (
+                            <TreatmentItem
+                                key={index}
+                                treatmentID={treatmentItem._id}
+                                // treatmentTitle={treatmentItem.title}
+                                // treatmentTooth={treatmentItem.tooth}
+                                treatmentTime={treatmentItem.treatment_date}
+                                treatmentProvider={treatmentItem.provider}
+                                treatmentAssistant={treatmentItem.assistant}
+                                treatmentProcedure={treatmentItem.procedure_code}
+                                treatmentDescription={treatmentItem.description}
+                                treatmentNote={treatmentItem.note}
+                                treatmentToothShort={treatmentItem.tooth}
+                                treatmentSelectedTooth={treatmentItem.selected_tooth_raw}
+                                // handleDeleteTreatment={() => {
+                                // handleDeleteTreatment(treatmentItem._id);
+                                // }}
+                                // handleUpdateTreatment={() => {
+                                // handleUpdateTreatment(
+                                //     treatmentItem._id,
+                                //     treatmentItem.title,
+                                //     treatmentItem.tooth,
+                                //     treatmentItem.surface,
+                                //     treatmentItem.content
+                                // );}}
+                            ></TreatmentItem>
+                            );
+                        })}
                         </div>
                     </TabPanel>
                     <TabPanel value={curTab} index={1}>

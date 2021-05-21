@@ -598,13 +598,16 @@ const AddTreatmentPage = ({ patientID }) => {
         let displayString = "";
         selectedTooth_Raw.forEach((tooth) => {
           if (tooth.isSelected === true) {
-            displayString += "\n\tTooth " + tooth.toothNumber + ": ";
+            displayString += "\n\tTooth " + tooth.toothNumber;
+            if (tooth.distal || tooth.mesial || tooth.facial || tooth.lingual || tooth.top || tooth.root) {
+            displayString += ": ";
             displayString += tooth.distal === true ? "D" : "";
             displayString += tooth.mesial === true ? "M" : "";
             displayString += tooth.facial === true ? "F" : "";
             displayString += tooth.lingual === true ? "L" : "";
             displayString += tooth.top === true ? "T" : "";
             displayString += tooth.root === true ? "R" : "";
+            }
           }
         });
         setSelectedTooth_Display(displayString);
