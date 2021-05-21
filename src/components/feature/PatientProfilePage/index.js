@@ -106,7 +106,7 @@ const PatientProfilePage = ({ patientID }) => {
           //console.log(result.data);
           if (result.success) {
             setTreatments(result.data);
-            console.log(result.data);
+            //console.log(result.data);
             return true;
           }
           toast.error(result.data.message);

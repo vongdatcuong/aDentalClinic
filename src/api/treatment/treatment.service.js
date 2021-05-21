@@ -47,7 +47,6 @@ class TreatmentService {
             });
             if(result.success)
             {
-                console.log(result);//////
                 return {
                     success: true,
                     data:result.payload,
