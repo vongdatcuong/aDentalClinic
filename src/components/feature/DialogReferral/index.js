@@ -187,12 +187,12 @@ const DialogReferral = (props) => {
         if(temp.length!==0)
         {
             setReferredBy(temp);
+            setIsEmpty(false);
             if(props.type==="FROM")
             {
                 changeData(temp);
     
             }
-            setIsEmpty(false);
         }
         else
         {
@@ -212,12 +212,13 @@ const DialogReferral = (props) => {
         if(temp.length!==0)
         {
             setReferredTo(temp);
+            setIsEmpty(false);
+
             if(props.type==="TO")
             {
                 changeData(temp);
     
             }
-            setIsEmpty(false);
 
         }
         else
@@ -371,7 +372,7 @@ const DialogReferral = (props) => {
                                                
                                 />
                                 :
-                                isEmpty===false ?
+                                rows.length>0 ?
 
                                     <TableCustom titles={titles}
                                             data={rows}
@@ -386,6 +387,7 @@ const DialogReferral = (props) => {
                                             handleCloseDialog={handleCloseDialog}
                                             />
                                 :
+                                
                                 <div style={{justifyContent:'center',alignItems:'center',display:'flex'}}>
                                     <NoDataIcon/>
 

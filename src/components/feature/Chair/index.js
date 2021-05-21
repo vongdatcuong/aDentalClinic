@@ -123,7 +123,6 @@ const Chairs = () => {
     }
     const getChair=async()=>{
         const result=await ChairService.getChair();
-        console.log("CHeck chair:",result);
         if(result.success)
         {
             changeData(result.data);

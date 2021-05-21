@@ -133,6 +133,38 @@ const style = (theme) => ({
         // },
 
     },
+    inputControlBig:{
+        minHeight:'98px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            minHeight:'98px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            // marginLeft:'10px',
+        },
+       
+        
+    
+
+    },
     inputControlOutline:{
         height:'35px',
         width:'36vw',
@@ -161,17 +193,7 @@ const style = (theme) => ({
             // marginBottom:'15px',
             // transform:'translate(14px, 18px) scale(1)',
         },
-        // '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&:hover fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        // },
+        
         
     
 
@@ -240,6 +262,13 @@ const style = (theme) => ({
             marginLeft:'40px',
         }
     },
+    itemSelect:{
+        marginTop:'15px',
+        '& .MuiInputLabel-animated':{
+            marginLeft:'30px',
+            marginTop:'10px',
+        }
+    },
     itemOutline:{
         marginTop:'20px',
         "& .MuiInputLabel-formControl":{
@@ -274,7 +303,19 @@ const style = (theme) => ({
     inputAvatarDisplay:{
         display:'none',
 
-    }
+    },
+    status:{
+        marginLeft:'30px',
+        marginRight:'10px',
+        marginTop:'20px',
+        minWidth:'16vw',
+        border:`1px solid ${theme.grayColor[0]}`,
+        borderRadius:'5px',
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+            paddingLeft:'10px',
+        },
+    },
 
 });
 

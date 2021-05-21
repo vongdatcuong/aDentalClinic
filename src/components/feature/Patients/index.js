@@ -233,11 +233,15 @@ const Patients = () => {
             }
             if(a.gender==="FEMALE")
             {
-                gender=t(strings.female);
+                gender=t(strings.FEMALE);
             }
-            else
+            if(a.gender==="MALE")
             {
-                gender=t(strings.male);
+                gender=t(strings.MALE);
+            }
+            if(a.gender==="NOT_SPECIFY")
+            {
+                gender=t(strings.notSpecify)
             }
             let newData=createData(a._id,a.user.first_name+" "+a.user.last_name,a.user.email,a.user.mobile_phone,gender,status,
             <Button size="small" variant="outlined" color="primary" className={classes.actionButton}

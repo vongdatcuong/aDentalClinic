@@ -73,8 +73,8 @@ const UpdatePatient = (props) => {
     const [gender,setGender]=useState(t(strings.notSpecify));
     const [listGender,setListGender]=useState([
         t(strings.notSpecify),
-        t(strings.male),
-        t(strings.female),
+        t(strings.MALE),
+        t(strings.FEMALE),
     ]);
     const [maritalStatus,setMaritalStatus]=useState(t(strings.notSpecify));
     const [listMaritalStatus,setListMaritalStatus]=useState([
@@ -107,7 +107,10 @@ const UpdatePatient = (props) => {
         setOpenDialog(true);
     }
     const handleChangeActive=(e)=>{
-        setActive(!active);
+        if(props.editable)
+        {
+            setActive(!active);
+        }
     }
     const handleChangeAddress=(e)=>{
         setAddress(e.target.value);
@@ -140,7 +143,7 @@ const UpdatePatient = (props) => {
         setHomePhone(e.target.value);
     }
     const handleChangeGender=(e)=>{
-        setGender(!gender);
+        setGender(e.target.value);
     }
     const handleChangeMaritalStatus=(e)=>{
         setMaritalStatus(e.target.value);
@@ -228,11 +231,11 @@ const UpdatePatient = (props) => {
             {
                 genderData="NOT_SPECIFY";
             }
-            if(gender===t(strings.male))
+            if(gender===t(strings.MALE))
             {
                 genderData="MALE";
             }
-            if(gender===t(strings.female))
+            if(gender===t(strings.FEMALE))
             {
                 genderData="FEMALE";
             }
@@ -274,7 +277,6 @@ const UpdatePatient = (props) => {
         const result=await PatientService.search(props.id);
         if(result.success)
         {
-            console.log("User data:",result.data.payload);
             let marital=result.data.payload.marital_status;
             let genderData=result.data.payload.gender;
             setUserData(result.data.payload);
@@ -317,11 +319,11 @@ const UpdatePatient = (props) => {
             }
             if(genderData==="MALE")
             {
-                setGender(t(strings.male));
+                setGender(t(strings.MALE));
             }
             if(genderData==="FEMALE")
             {
-                setGender(t(strings.female));
+                setGender(t(strings.FEMALE));
             }
             
         }
@@ -572,6 +574,7 @@ const UpdatePatient = (props) => {
                                 onChange={handleChangeGender}
                                 disableUnderline 
                                 className={classes.status}
+                                disabled={!props.editable}
                                 >
                             
                                 {renderListGender()}
@@ -586,6 +589,7 @@ const UpdatePatient = (props) => {
                                 onChange={handleChangeMaritalStatus}
                                 disableUnderline 
                                 className={classes.status}
+                                disabled={!props.editable}
                                 >
                             
                                 {renderListMaritalStatus()}

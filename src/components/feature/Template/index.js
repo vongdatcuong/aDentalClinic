@@ -182,7 +182,6 @@ const Template = () => {
         setOriginalData(temp);
         setChooseType(1);
         let temp2=t(strings.template)+" - "+t(strings.medicalAlert);
-        console.log("Vao type 1:",temp2);
         setTitle(temp2);
     }
     const chooseProgress=(data)=>{

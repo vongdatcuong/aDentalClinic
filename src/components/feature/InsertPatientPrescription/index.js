@@ -47,10 +47,10 @@ import moment from 'moment'
 // import Footer from "../../../layouts/Footer";
 const useStyles = makeStyles(styles);
 
-const createData=(id,name,dispensed,quantity,description,refill,expired)=>{
-    return {id,name,dispensed,quantity,description,refill,expired};
+const createData=(id,name,dispensed,quantity,note,refill,expired)=>{
+    return {id,name,dispensed,quantity,note,refill,expired};
 };
-const dataColumnsName=["index","name","dispensed","quantity","description","refill","expired"]
+const dataColumnsName=["index","name","dispensed","quantity","note","refill","expired"]
 
 
 const InsertPatientPrescription = (props) => {
@@ -80,7 +80,7 @@ const InsertPatientPrescription = (props) => {
         t(strings.name),
         t(strings.dispensed),
         t(strings.quantity),
-        t(strings.description),
+        t(strings.note),
         t(strings.refill),
         t(strings.expired),
 
@@ -101,7 +101,7 @@ const InsertPatientPrescription = (props) => {
     const handleChangeCurrentDrug=(e)=>{
         let index=e.target.value;
         setCurrentDrug(index);
-        setDescription(listDrug[index].description);
+        setDescription(listDrug[index].note);
         setDispensed(listDrug[index].dispensed);
         
         setQuantity(listDrug[index].quantity);
@@ -143,7 +143,6 @@ const InsertPatientPrescription = (props) => {
             temp=temp.concat(createData(listDrug[currentDrug].id,listDrug[currentDrug].name,dispensed,
                                         quantity,description,refill,moment(expired).format(t(strings.apiDateFormat))
                 ));
-            console.log("Check date insert drug:",moment(expired).format(t(strings.apiDateFormat)))
             
             setDrug(temp);
             setDescription(null);
@@ -168,9 +167,9 @@ const InsertPatientPrescription = (props) => {
         let temp=[];
         data.map((a,index)=>{
             
-            let newData=createData(a._id,a.name,a.dispensed,a.quantity,a.description,a.note);
+            let newData=createData(a._id,a.name,a.dispensed,a.quantity,a.note,a.refill);
             temp=temp.concat(newData);
-
+            
         })
         setListDrug(temp);
     }
@@ -364,16 +363,7 @@ const InsertPatientPrescription = (props) => {
                                 {renderListDrug()}
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        
-                                        placeholder={t(strings.description)}  
-                                        variant="outlined" 
-                                        onChange={handleChangeDescription}
-                                        value={description}
-                                        
-                                        /> 
-                        </FormControl>
+                        
                         <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
@@ -381,6 +371,15 @@ const InsertPatientPrescription = (props) => {
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
+                                        
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <TextField className={classes.inputControl} 
+                                        placeholder={t(strings.quantity)}  
+                                        variant="outlined" 
+                                        onChange={handleChangeQuantity}
+                                        value={quantity}
                                         
                                         /> 
                         </FormControl>
@@ -406,7 +405,8 @@ const InsertPatientPrescription = (props) => {
                                 className={classes.inputControlDate} 
                             />
                         </FormControl>
-                    <FormControl className={classes.item}>
+                    
+                        <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
                                         placeholder={t(strings.dispensed)}  
@@ -417,15 +417,15 @@ const InsertPatientPrescription = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.quantity)}  
+                            <TextField className={classes.inputControlBig} 
+                                        
+                                        placeholder={t(strings.description)}  
                                         variant="outlined" 
-                                        onChange={handleChangeQuantity}
-                                        value={quantity}
+                                        onChange={handleChangeDescription}
+                                        value={description}
                                         
                                         /> 
                         </FormControl>
-                        
                        
                     </Grid>
                 </Grid>
