@@ -129,10 +129,10 @@ const TreatmentItem = ({
                 )}
                 </div>
                 <div>
-                {t(strings.provider)}: {treatmentProvider}
+                {t(strings.provider)}: {treatmentProvider.first_name + " " + treatmentProvider.last_name}
                 </div>
                 <div>
-                {t(strings.assistant)}: {treatmentAssistant}
+                {t(strings.assistant)}: {treatmentAssistant.first_name + " " + treatmentAssistant.last_name}
                 </div>
                 <div className={classes.treatmentNote}>
                 {t(strings.note)}: {treatmentNote === "" ? "None" : treatmentNote}

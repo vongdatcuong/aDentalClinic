@@ -38,10 +38,16 @@ class TreatmentService {
     {
         try{
             const result = await httpGet({
-                url: `${apiPath.treatment.treatment}${apiPath.treatment.patient}/${patientID}`
+                url: `${apiPath.treatment.treatment}${apiPath.treatment.patient}/${patientID}`,
+                query:{
+                    get_patient:true,
+                    get_staff:true,
+                    get_procedure:true,
+                }
             });
             if(result.success)
             {
+                console.log(result);//////
                 return {
                     success: true,
                     data:result.payload,

@@ -231,12 +231,9 @@ const PatientProfilePage = ({ patientID }) => {
                             <TreatmentItem
                                 key={index}
                                 treatmentID={treatmentItem._id}
-                                // treatmentTitle={treatmentItem.title}
-                                // treatmentTooth={treatmentItem.tooth}
                                 treatmentTime={treatmentItem.treatment_date}
-                                treatmentProvider={treatmentItem.provider}
-                                treatmentAssistant={treatmentItem.assistant}
-                                treatmentProcedure={treatmentItem.procedure_code}
+                                treatmentProvider={treatmentItem.provider.user}
+                                treatmentAssistant={treatmentItem.assistant.user}
                                 treatmentDescription={treatmentItem.description}
                                 treatmentNote={treatmentItem.note}
                                 treatmentToothShort={treatmentItem.tooth}
