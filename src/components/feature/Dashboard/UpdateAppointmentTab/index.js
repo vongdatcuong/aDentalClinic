@@ -419,10 +419,10 @@ const UpdateAppointmentTab = ({
                         }
                     });
                     if (result.success){
-                        let newPatientProviderIdx = -1;
+                        let providerIdx = -1;
                         options = result.payload.map((option, index) => {
-                            if (patient && option._id === patient.provider){
-                                newPatientProviderIdx = index;
+                            if (provider && option._id === provider.value){
+                                providerIdx = index;
                             }
                             return {
                                 value: option._id,
@@ -437,8 +437,10 @@ const UpdateAppointmentTab = ({
                                 setProvider(noneOption);
                             }
                         }*/
+                        if (providerIdx === -1){
+                            options.unshift({...provider});
+                        }
                     }
-                    options.unshift({...provider});
                     options.unshift({value: -1, label: t(strings.none)});
                 }
                 resolve(options);
@@ -524,7 +526,7 @@ const UpdateAppointmentTab = ({
 
     // Next available date
     const handleGetNextAvailableDate = useCallback(async () => {
-        if (!patient?.provider){
+        if (!patient?.provider || !isEditAppointAllowed){
             return;
         }
         try {

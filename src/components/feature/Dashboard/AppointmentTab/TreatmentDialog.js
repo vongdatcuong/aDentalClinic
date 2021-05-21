@@ -128,13 +128,25 @@ const TreatmentDialog = ({
       field: 'tooth',
       headerName: t(strings.tooth),    
       sortable: false,
-      flex: 0.1
+      flex: 0.1,
+      renderCell: (params) =>  {
+        return (
+        <Tooltip title={params.value}>
+          <span className={classes.tooltipCell}>{params.value}</span>
+        </Tooltip>
+      )},
     },
     {
       field: 'surface',
       headerName: t(strings.surface),    
       sortable: false,
-      flex: 0.1
+      flex: 0.1,
+      renderCell: (params) =>  {
+        return (
+        <Tooltip title={params.value}>
+          <span className={classes.tooltipCell}>{params.value}</span>
+        </Tooltip>
+      )},
     },
     {
       field: 'provider',

@@ -501,7 +501,7 @@ const AppointmentTab = ({
                         url: apiPath.staff.staff + apiPath.common.autocomplete,
                         query: {
                             data: inputValue,
-                            limit: figures.autocomplete.limit,
+                            limit: figures.autocomplete.infiniteLimit,
                             staffType: lists.staff.staffType.provider,
                             date: ConvertDateTimes.formatDate(selectedAppointStart, strings.apiDateFormat)
                         }

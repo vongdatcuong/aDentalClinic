@@ -79,7 +79,7 @@ const Schedulerr = (
   })
   let data = [];
   let filterBlocks = [];
-  let providerID = user?._id || "";
+  let providerID = user?.staff_id || "";
   if (patientDisplayObj && Object.keys(patientDisplayObj).length > 0){
     appointments.forEach((appoint) => {
       if (chairMap[appoint.resourceId] && patientDisplayObj[appoint.title]){

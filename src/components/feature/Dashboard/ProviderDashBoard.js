@@ -95,7 +95,7 @@ const DashBoard = () => {
                 api.httpGet({
                     url: apiPath.appointment.appointment + apiPath.appointment.chair,
                     query: {
-                        
+                        active: true
                     },
                 }),
                 api.httpGet({

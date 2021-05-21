@@ -30,7 +30,8 @@ const apiStatus = {
 
 // Autocomplete
 const autocomplete = {
-    limit: 10
+    limit: 10,
+    infiniteLimit: 100000
 }
 
 //Image Mouth
