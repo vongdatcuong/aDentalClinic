@@ -18,7 +18,9 @@ const HtmlTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const useStyles = makeStyles(styles);
-
+const ToothText = (id) => {
+  return id.replace("Tooth", "Tooth ");
+}
 const Tooth = function (props) {
   const classes = useStyles();
   const { id, svgString, jaw, viewType,isSelectedTooth, toothCondition, toothNote, toothSelectedSurfaces, ...other } = props;
@@ -60,7 +62,7 @@ const Tooth = function (props) {
       <HtmlTooltip
         title={
           <React.Fragment>
-            <Typography color="inherit">{id}</Typography>
+            <Typography color="inherit">{ToothText(id)}</Typography>
             {/* <em>{"And here's"}</em> <b>{"some"}</b> <u>{"amazing content"}</u>.{" "}
             {"It's very engaging. Right?"} */}
             <div className="note" dangerouslySetInnerHTML={{__html: toothNote}}></div>
