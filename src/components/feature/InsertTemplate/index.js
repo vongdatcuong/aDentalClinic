@@ -94,8 +94,17 @@ const InsertTemplate = (props) => {
         })
     }
     useEffect(()=>{
-        
-    })
+        const medicalType = t(strings.template)+" - "+t(strings.medicalAlert);
+        const treatmentType =  t(strings.template)+" - "+t(strings.treatment);
+        const noteType = t(strings.template)+" - "+t(strings.progress);
+        if (props.type == medicalType) {
+            setNoteType("MEDICAL ALERT");
+        }else if (props.type == treatmentType) {
+            setNoteType("TREATMENT");
+        }else if (props.type == noteType) {
+            setNoteType("PROGRESS");
+        }
+    }, [props.type])
     return (
         <div className={classes.container}>
             
@@ -112,6 +121,7 @@ const InsertTemplate = (props) => {
                                         onChange={handleChangeContent}
                                         value={content}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.itemSelect}>
@@ -142,7 +152,7 @@ const InsertTemplate = (props) => {
                         
                     </Grid>
                 </Grid>
-                <div>
+                <div  className={classes.input}>
                     <Button variant="contained" color="primary" className={classes.insertButton} onClick={insertTemplate} >
                         {t(strings.insert)}
                     </Button>

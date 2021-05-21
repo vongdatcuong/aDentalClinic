@@ -180,6 +180,7 @@ const InsertPatient = (props) => {
                                         onChange={handleChangeNote}
                                         value={note}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                        

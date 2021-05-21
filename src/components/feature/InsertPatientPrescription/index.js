@@ -367,7 +367,7 @@ const InsertPatientPrescription = (props) => {
                         <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.refill)}  
+                                        label={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
@@ -376,7 +376,7 @@ const InsertPatientPrescription = (props) => {
                         </FormControl>
                         <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
-                                        placeholder={t(strings.quantity)}  
+                                        label={t(strings.quantity)}  
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
@@ -409,7 +409,7 @@ const InsertPatientPrescription = (props) => {
                         <FormControl className={classes.item}>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        placeholder={t(strings.dispensed)}  
+                                        label={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
@@ -419,11 +419,12 @@ const InsertPatientPrescription = (props) => {
                         <FormControl className={classes.item}>
                             <TextField className={classes.inputControlBig} 
                                         
-                                        placeholder={t(strings.description)}  
+                                        label={t(strings.description)}  
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
-                                        
+                                        rows={4}
+                                        multiline
                                         /> 
                         </FormControl>
                        

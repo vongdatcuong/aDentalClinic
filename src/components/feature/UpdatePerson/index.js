@@ -349,6 +349,7 @@ const UpdateChair = (props) => {
                                         onChange={handleChangeBiography}
                                         value={biography}
                                         multiline
+                                        rows={4}
                                         inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>

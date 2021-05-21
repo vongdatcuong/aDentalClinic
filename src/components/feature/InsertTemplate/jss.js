@@ -246,6 +246,9 @@ const insertTemplateStyle = (theme) => ({
     },
     input:{
         marginTop:'10px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     checkbox:{
         marginLeft:'30px',

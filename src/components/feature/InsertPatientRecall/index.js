@@ -137,11 +137,12 @@ const InsertPatientRecall = (props) => {
                         <div className={classes.item}>
                             <TextField className={classes.inputControlBig} 
                                         
-                                        placeholder={t(strings.note)}  
+                                        label={t(strings.note)}  
                                         variant="outlined" 
                                         onChange={handleChangeNote}
                                         value={note}
                                         multiline
+                                        rows={4}
                                         /> 
                         </div>
                     </Grid>

@@ -348,6 +348,7 @@ const InsertPerson = (props) => {
                                         onChange={handleChangeBiography}
                                         value={biography}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                         {props.staffType===t(strings.staffTypeProvider) ? 

@@ -636,6 +636,7 @@ const PatientInfoPage = ({ patientID }) => {
                                         onChange={handleChangePatientNote}
                                         value={patientNote}
                                         multiline
+                                        rows={4}
                                         InputLabelProps={{ shrink: true }}
                                         disabled={!editInfo}
                                         /> 
@@ -649,6 +650,7 @@ const PatientInfoPage = ({ patientID }) => {
                                         onChange={handleChangeOtherInfo}
                                         value={otherInfo}
                                         multiline
+                                        rows={4}
                                         InputLabelProps={{ shrink: true }}
                                         disabled={!editInfo}
                                         /> 

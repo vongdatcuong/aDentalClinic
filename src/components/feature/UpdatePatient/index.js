@@ -646,6 +646,7 @@ const UpdatePatient = (props) => {
                                         onChange={handleChangePatientNote}
                                         value={patientNote}
                                         multiline
+                                        rows={4}
                                         InputLabelProps={{ shrink: true }}
                                         /> 
                         </FormControl>
@@ -658,6 +659,7 @@ const UpdatePatient = (props) => {
                                         onChange={handleChangeOtherInfo}
                                         value={otherInfo}
                                         multiline
+                                        rows={4}
                                         InputLabelProps={{ shrink: true }}
                                         /> 
                         </FormControl>
