@@ -488,6 +488,7 @@ const DialogReferralInsert = (props) => {
                                             value={additionalInfo}
                                             disabled={type!==t(strings.newReferral)}
                                             multiline
+                                            rows={4}
                                             /> 
 
                             </FormControl>

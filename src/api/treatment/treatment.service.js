@@ -33,6 +33,41 @@ class TreatmentService {
         }
     }
 
+    
+    async getAllTreatmentsByPatient(patientID)
+    {
+        try{
+            const result = await httpGet({
+                url: `${apiPath.treatment.treatment}${apiPath.treatment.patient}/${patientID}`,
+                query:{
+                    get_patient:true,
+                    get_staff:true,
+                    get_procedure:true,
+                }
+            });
+            if(result.success)
+            {
+                return {
+                    success: true,
+                    data:result.payload,
+                };  
+            }
+            else
+            {
+                return {
+                    success:false,
+                    data:null
+                }
+            }              
+        }
+        catch(error){
+            console.log("Failed to add treatment: ", error);
+            return {
+                success: false,
+            };
+        }
+    }
+
 }
 
 export default new TreatmentService();

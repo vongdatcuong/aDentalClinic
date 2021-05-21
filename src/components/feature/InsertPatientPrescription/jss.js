@@ -121,6 +121,38 @@ const insertPatientPrescriptionStyle = (theme) => ({
     
 
     },
+    inputControlBig:{
+        minHeight:'98px',
+        width:'35vw',
+        marginLeft:'30px',
+        marginTop:'10px',
+        // display:'flex',
+        // flexDirection:'row',
+        // border:`1px solid ${theme.primaryColor[0]}`,
+        //color:theme.primaryColor[2],
+        '& .MuiOutlinedInput-input': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        '& .MuiSvgIcon-root': {
+            paddingBottom: '15px',
+            width:'1.6em',
+            height:'1.6em',
+
+        },
+        '& .MuiInputBase-root':{
+            minHeight:'98px',
+            width:'36vw',
+            //border:`1px solid ${theme.primaryColor[0]}`,
+        },
+        '& .MuiInputLabel-outlined':{
+            // marginLeft:'10px',
+        },
+        
+        
+    
+
+    },
     inputControlSmall:{
         height:'35px',
         width:'10.2vw',
@@ -253,9 +285,9 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     input:{
         marginTop:'10px',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center'
+        // display:'flex',
+        // justifyContent:'center',
+        // alignItems:'center'
     },
     checkbox:{
         marginLeft:'30px',
@@ -303,7 +335,6 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     drugDialog:{
         minWidth:'90vw',
-        
     }
 });
 

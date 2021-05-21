@@ -182,7 +182,6 @@ const Template = () => {
         setOriginalData(temp);
         setChooseType(1);
         let temp2=t(strings.template)+" - "+t(strings.medicalAlert);
-        console.log("Vao type 1:",temp2);
         setTitle(temp2);
     }
     const chooseProgress=(data)=>{
@@ -406,6 +405,7 @@ const Template = () => {
                     {
                         insertTemplate===true && isEdited=== false  ?
                         <InsertTemplate 
+                                type={title}
                                 handleChangeIsInsert={handleChangeIsInsert}
                         />
                         :
@@ -414,7 +414,7 @@ const Template = () => {
                             id={selectedRowData.id}
                             editable={editable}
                             handleChangeIsUpdate={handleChangeIsUpdate}
-                            contentBig={selectedRowData.noteType === "MEDICAL ALERT" ? false:true}
+                            contentBig={selectedRowData.noteType === "MEDICAL_ALERT" ? false:true}
                         />
                         :
 

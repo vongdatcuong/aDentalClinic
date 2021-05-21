@@ -192,6 +192,7 @@ const InsertReferralSource = (props) => {
                                         onChange={handleChangeAdditionalInfo}
                                         value={additionalInfo}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                        

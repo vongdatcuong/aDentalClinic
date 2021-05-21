@@ -78,7 +78,6 @@ const PatientInfoPage = ({ patientID }) => {
   const [mobile, setMobile] = useState(null);
   const [homePhone, setHomePhone] = useState(null);
   const [address, setAddress] = useState(null);
-  const [gender, setGender] = useState(true);
   const [active, setActive] = useState(true);
   const [staffPhoto, setStaffPhoto] = useState(null);
   const [referredBy,setReferredBy]=useState(null);
@@ -86,6 +85,22 @@ const PatientInfoPage = ({ patientID }) => {
   const [displayBy,setDisplayBy]=useState(null);
   const [displayTo,setDisplayTo]=useState(null);
   const [referralType,setReferralType]=useState(null);
+  const [patientNote,setPatientNote]=useState(null);
+  const [gender,setGender]=useState(t(strings.notSpecify));
+  const [listGender,setListGender]=useState([
+        t(strings.notSpecify),
+        t(strings.MALE),
+        t(strings.FEMALE),
+  ]);
+  const [maritalStatus,setMaritalStatus]=useState(t(strings.notSpecify));
+  const [listMaritalStatus,setListMaritalStatus]=useState([
+        t(strings.notSpecify),
+        t(strings.married),
+        t(strings.divorced),
+        t(strings.single),
+        t(strings.widowed),
+  ]);
+  const [otherInfo,setOtherInfo]=useState(null);
   const [openDialog,setOpenDialog]=useState(false);
   const [isInsert,setIsInsert]=useState(false);
   const [isUpdate,setIsUpdate]=useState(false);
@@ -105,6 +120,18 @@ const PatientInfoPage = ({ patientID }) => {
         setReferralType("TO");
         setOpenDialog(true);
     }  
+  }
+  const handleChangeGender=(e)=>{
+    setGender(e.target.value);
+  }
+  const handleChangeMaritalStatus=(e)=>{
+    setMaritalStatus(e.target.value);
+  }
+  const handleChangeOtherInfo=(e)=>{
+    setOtherInfo(e.target.value);
+  }
+  const handleChangePatientNote=(e)=>{
+    setPatientNote(e.target.value);
   }
   const handleChangeCloseDialog=(e)=>{
     setReferralType(null);
@@ -147,9 +174,7 @@ const PatientInfoPage = ({ patientID }) => {
   const handleChangeHomePhone = (e) => {
     setHomePhone(e.target.value);
   };
-  const handleChangeGender = (e) => {
-    setGender(!gender);
-  };
+  
 
   const handleUploadClick = (event) => {
     var file = event.target.files[0];
@@ -224,17 +249,57 @@ const PatientInfoPage = ({ patientID }) => {
     getReferredTo(res.data);
 
   }
+  const renderListGender=()=>{
+    return listGender.map((gend,index)=>{
+        return <MenuItem key={index} value={gend}>{gend}</MenuItem>
+    })
+  }
+  const renderListMaritalStatus=()=>{
+    return listMaritalStatus.map((mar,index)=>{
+        return <MenuItem key={index} value={mar}>{mar}</MenuItem>
+    })
+  }
   const onClickUpdate = async () => {
     if (firstNameError === null && lastNameError === null) {
       let genderData;
-      if (gender === true) {
-        genderData = "MALE";
-      } else {
-        genderData = "FEMALE";
+      let maritalData;
+
+      if(maritalStatus===t(strings.notSpecify))
+      {
+          maritalData="NOT_SPECIFY";
+      }
+      if(maritalStatus===t(strings.married))
+      {
+          maritalData="MARRIED";
+      }
+      if(maritalStatus===t(strings.divorced))
+      {
+          maritalData="DIVORCED";
+      }
+      if(maritalStatus===t(strings.single))
+      {
+          maritalData="SINGLE";
+      }
+      if(maritalStatus===t(strings.widowed))
+      {
+          maritalData="WIDOWED";
+      }
+      if(gender===t(strings.notSpecify))
+      {
+          genderData="NOT_SPECIFY";
+      }
+      if(gender===t(strings.MALE))
+      {
+          genderData="MALE";
+      }
+      if(gender===t(strings.FEMALE))
+      {
+          genderData="FEMALE";
       }
       const data = {
         //change
         gender: genderData,
+        marital_status:maritalData,
         facebook: facebook,
         email: email,
         fax: fax,
@@ -263,6 +328,8 @@ const PatientInfoPage = ({ patientID }) => {
     const searchPatient = async () => {
       const result = await PatientService.search(patientID);
       if (result.success) {
+        let marital=result.data.payload.marital_status;
+        let genderData=result.data.payload.gender;
         setUserData(result.data.payload);
         setFirstName(result.data.payload.user.first_name);
         setLastName(result.data.payload.user.last_name);
@@ -275,10 +342,37 @@ const PatientInfoPage = ({ patientID }) => {
         setAddress(result.data.payload.user.address);
         setMobile(result.data.payload.user.mobile_phone);
         setHomePhone(result.data.payload.user.home_phone);
-        if (result.data.payload.gender === "FEMALE") {
-          setGender(false);
-        } else {
-          setGender(true);
+        if(marital==="NOT_SPECIFY")
+        {
+            setMaritalStatus(t(strings.notSpecify));
+        }
+        if(marital==="MARRIED")
+        {
+            setMaritalStatus(t(strings.married));
+        }
+        if(marital==="DIVORCED")
+        {
+            setMaritalStatus(t(strings.divorced));
+        }
+        if(marital==="SINGLE")
+        {
+            setMaritalStatus(t(strings.single));
+        }
+        if(marital==="WIDOWED")
+        {
+            setMaritalStatus(t(strings.widowed));
+        }
+        if(genderData==="NOT_SPECIFY")
+        {
+            setGender(t(strings.notSpecify));
+        }
+        if(genderData==="MALE")
+        {
+            setGender(t(strings.MALE));
+        }
+        if(genderData==="FEMALE")
+        {
+            setGender(t(strings.FEMALE));
         }
       }
     };
@@ -432,6 +526,65 @@ const PatientInfoPage = ({ patientID }) => {
                     helperText={emailError}
                   />
                 </FormControl>
+                <FormControl className={classes.itemSmall}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled={!editInfo}
+                        checked={active}
+                        onChange={handleChangeActive}
+                        name={t(strings.active)}
+                        color="primary"
+                        className={classes.checkbox}
+                      />
+                    }
+                    label={t(strings.active)}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        disabled={!editInfo}
+                        checked={!active}
+                        onChange={handleChangeActive}
+                        name={t(strings.inactive)}
+                        color="primary"
+                        className={classes.checkbox}
+                      />
+                    }
+                    label={t(strings.inactive)}
+                  />
+                </FormControl>
+                <FormControl className={classes.itemSelect}>
+                            <InputLabel id="gender">
+                                {t(strings.gender)}
+                            </InputLabel>
+                            <Select
+                                value={gender}
+                                onChange={handleChangeGender}
+                                disableUnderline 
+                                className={classes.status}
+                                disabled={!editInfo}
+                                >
+                            
+                                {renderListGender()}
+                            </Select>
+                        </FormControl>
+                        <FormControl className={classes.itemSelect}>
+                            <InputLabel id="maritalStatus">
+                                {t(strings.maritalStatus)}
+                            </InputLabel>
+                            <Select
+                                value={maritalStatus}
+                                onChange={handleChangeMaritalStatus}
+                                disableUnderline 
+                                className={classes.status}
+                                disabled={!editInfo}
+                                >
+                            
+                                {renderListMaritalStatus()}
+                            </Select>
+                        </FormControl>
+                        
               </Grid>
               <Grid item xs={6} className={classes.rightContent}>
                 <FormControl className={classes.item}>
@@ -473,63 +626,35 @@ const PatientInfoPage = ({ patientID }) => {
                   />
                 </FormControl>
 
-                <FormControl className={classes.itemSmall}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        disabled={!editInfo}
-                        checked={gender}
-                        onChange={handleChangeGender}
-                        name={t(strings.male)}
-                        color="primary"
-                        className={classes.checkbox}
-                      />
-                    }
-                    label={t(strings.male)}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        disabled={!editInfo}
-                        checked={!gender}
-                        onChange={handleChangeGender}
-                        name={t(strings.female)}
-                        color="primary"
-                        className={classes.checkbox}
-                      />
-                    }
-                    label={t(strings.female)}
-                  />
-                </FormControl>
-
-                <FormControl className={classes.itemSmall}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        disabled={!editInfo}
-                        checked={active}
-                        onChange={handleChangeActive}
-                        name={t(strings.active)}
-                        color="primary"
-                        className={classes.checkbox}
-                      />
-                    }
-                    label={t(strings.active)}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        disabled={!editInfo}
-                        checked={!active}
-                        onChange={handleChangeActive}
-                        name={t(strings.inactive)}
-                        color="primary"
-                        className={classes.checkbox}
-                      />
-                    }
-                    label={t(strings.inactive)}
-                  />
-                </FormControl>
+               
+                <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.note)}
+                            </InputLabel>
+                            <TextField className={classes.inputControlBig} 
+                                        variant="outlined" 
+                                        onChange={handleChangePatientNote}
+                                        value={patientNote}
+                                        multiline
+                                        rows={4}
+                                        InputLabelProps={{ shrink: true }}
+                                        disabled={!editInfo}
+                                        /> 
+                        </FormControl>
+                        <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.additionalInfo)}
+                            </InputLabel>
+                            <TextField className={classes.inputControlBig} 
+                                        variant="outlined" 
+                                        onChange={handleChangeOtherInfo}
+                                        value={otherInfo}
+                                        multiline
+                                        rows={4}
+                                        InputLabelProps={{ shrink: true }}
+                                        disabled={!editInfo}
+                                        /> 
+                        </FormControl>
                 <FormControl variant="filled" className={classes.itemOutline}>
                                     <InputLabel shrink>
                                         {t(strings.referredBy)}

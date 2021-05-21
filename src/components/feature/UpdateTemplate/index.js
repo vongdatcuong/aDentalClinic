@@ -105,6 +105,7 @@ const UpdateTemplate = (props) => {
                                         value={content}
                                         inputProps={{ readOnly: !props.editable }}
                                         multiline={props.contentBig}
+                                        rows={props.contentBig ? 6 : 1}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>

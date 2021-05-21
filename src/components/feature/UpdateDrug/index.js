@@ -212,6 +212,7 @@ const UpdateDrug = (props) => {
                                         value={note}
                                         inputProps={{ readOnly: !props.editable }}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                        

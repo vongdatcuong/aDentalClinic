@@ -499,6 +499,7 @@ const InsertPatient = (props) => {
                                         onChange={handleChangeOtherInfo}
                                         value={otherInfo}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -509,6 +510,7 @@ const InsertPatient = (props) => {
                                         onChange={handleChangePatientNote}
                                         value={patientNote}
                                         multiline
+                                        rows={4}
                                         /> 
                         </FormControl>
                         

@@ -53,7 +53,8 @@ const recall = {
 
 // Treatment
 const treatment = {
-    treatment: '/treatment'
+    treatment: '/treatment',
+    patient:'/patient'
 }
 
 // Procedure

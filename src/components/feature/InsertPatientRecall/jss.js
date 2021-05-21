@@ -144,7 +144,7 @@ const insertPatientRecallStyle = (theme) => ({
             //border:`1px solid ${theme.primaryColor[0]}`,
         },
         '& .MuiInputLabel-outlined':{
-            marginLeft:'10px',
+            marginLeft:'0px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
