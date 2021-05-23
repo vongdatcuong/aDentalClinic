@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {
   useHistory
 } from "react-router-dom";
@@ -32,6 +32,9 @@ import Notification from './Notification';
 import NotificationPopover from './Notification/NotificationPopover';
 import styles from "./jss";
 
+// Contexts
+import { socketStore } from '../../contexts/socket-context';
+
 // API
 import AuthService from '../../api/authentication/auth.service';
 
@@ -42,6 +45,9 @@ const LeftSidebar = (props) => {
     const history = useHistory();
 
     const user = AuthService.getCurrentUser();
+
+    // Contexts
+    const {socketState, dispatchSocket} = useContext(socketStore);
 
     // States
     const [openLeftSidebarGhost, setOpenLeftSidebarGhost] = useState(false);
@@ -134,6 +140,7 @@ const LeftSidebar = (props) => {
 
     const handleLogout = () => {
       AuthService.logOut();
+      dispatchSocket({type: strings.disconnectSocket})
       history.push(path.loginPath);
     }
 

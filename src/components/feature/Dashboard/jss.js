@@ -17,7 +17,7 @@ const dashboardStyle = (theme) => ({
     fabAppointRequest: {
         position: 'fixed',
         right: 150,
-        bottom: 100,
+        bottom: 50,
         zIndex: theme.fabZIndex,
         backgroundColor: theme.infoColor[0]
     }

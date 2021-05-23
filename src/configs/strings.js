@@ -274,6 +274,8 @@ const deleteConfirmMessage="Do you want to delete this?";
 // Context Actions
 const setTheme = "Set-Theme";
 const setLoading = "Set-Loading";
+const connectSocket = "Connect-socket";
+const disconnectSocket = "Disconnect-socket";
 
 // Login page
 const loginYourAccount = "<strong>Login</strong> your account";
@@ -615,6 +617,8 @@ export default {
     // Context Actions
     setTheme,
     setLoading,
+    connectSocket,
+    disconnectSocket,
     // Login page
     loginYourAccount,
     username,

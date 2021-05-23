@@ -9,6 +9,7 @@ import { getI18n } from "react-i18next";
 import { toast } from "react-toastify";
 
 const BASE_URL_API = "http://localhost:4000/api";
+const SOCKET_URL = "http://localhost:4000/";
 const secretKey = "The way of Reactjs";
 
 /** REQUEST MODEL
@@ -385,6 +386,8 @@ export {
 };
 
 export default {
+  BASE_URL_API,
+  SOCKET_URL,
   secretKey,
   initializeAPIService,
   httpGet,

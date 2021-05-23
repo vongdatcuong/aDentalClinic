@@ -8,6 +8,7 @@ import i18n from '../i18n';
 
 // Context
 import { themeStore } from '../contexts/theme-context';
+import { socketStore } from '../contexts/socket-context';
 
 // API
 import AuthService from '../api/authentication/auth.service';
@@ -20,6 +21,7 @@ import LoadingPage from '../layouts/LoadingPage';
 const PrivateRoute = ({children, ...rest}) => {
   //const classes = useStyles();
   const {themeState, dispatchTheme} = useContext(themeStore);
+  const {socketState, dispatchSocket} = useContext(socketStore);
 
   // States
   const [isLoading, setIsLoading] = useState(true);
@@ -40,9 +42,13 @@ const PrivateRoute = ({children, ...rest}) => {
             theme: user.theme
           })
         }
+        // Socket Connect
+        if (!socketState.isCheck){
+          dispatchSocket({type: strings.connectSocket});
+        }
       }
     });
-  });
+  }, []);
 
   return (
     <Route {...rest}>

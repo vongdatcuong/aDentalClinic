@@ -482,7 +482,7 @@ const Report = () => {
           toast.error(result.message);
         }
       } catch(err){
-        toast.error(t(strings.loadAppointDocErrMsg));
+        toast.error(t(strings.loadPatientDocErrMsg));
       } finally {
         dispatchLoading({type: strings.setLoading, isLoading: false});
       }
