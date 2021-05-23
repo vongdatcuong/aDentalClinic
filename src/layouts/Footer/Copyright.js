@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     copyright : {
       fontStyle: "italic",
       fontWeight: "bold",
+      color: theme.textColor,
     }
   }));
 

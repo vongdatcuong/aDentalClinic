@@ -56,6 +56,7 @@ const transition = {
 };
 
 const fontColor = "#ffffff";
+const textColor = "#000000";
 const primaryColor = ["#4042E2", "#5658e5", "#6c6ee9", "#8284ec"];
 const secondaryColor = ["#dc004e", "#f50057", "#ff1065", "#ff2975"];
 const warningColor = ["#ff9800", "#ffa726", "#fb8c00", "#ffa21a"];
@@ -264,6 +265,7 @@ export default {
   transition,
   boxShadow,
   fontColor,
+  textColor,
   primaryColor,
   secondaryColor,
   warningColor,

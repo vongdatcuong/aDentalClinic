@@ -1,5 +1,7 @@
 const patientRecallPageStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         margin:"0px",
         marginTop:'20px',

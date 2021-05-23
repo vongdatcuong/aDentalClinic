@@ -1,5 +1,7 @@
 const patientStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
@@ -72,7 +74,9 @@ const patientStyle = (theme) => ({
     // }
 
     
-    // container: {
+    //container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     //     flexGrow: 1,
     //     margin:"0px"
     // },

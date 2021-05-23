@@ -1,5 +1,7 @@
 const templateStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         margin:"0px"
     },
@@ -82,7 +84,9 @@ const templateStyle = (theme) => ({
     dialogButton:{
         marginLeft:'15px',
     },
-    // container: {
+    //container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     //     flexGrow: 1,
     //     margin:"0px"
     // },
