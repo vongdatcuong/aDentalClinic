@@ -5,7 +5,9 @@ const settingsStyle = (theme) => ({
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    height: '100%'
+    height: '100%',
+    background: theme.pageBackgroundColor,
+    color: theme.textColor
   },
   title: {
     fontWeight: 600
