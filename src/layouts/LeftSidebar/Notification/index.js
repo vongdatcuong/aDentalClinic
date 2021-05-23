@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     listItemBtn: {
         width: '60px',
         height: '60px',
-        color: theme.whiteColor,
+        color: theme.fontColor,
         borderRadius: '5px',
         backgroundColor: theme.primaryColor[2],
         '& .MuiIconButton-label': {
