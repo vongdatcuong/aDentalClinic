@@ -1,5 +1,7 @@
 const toothChartPageStyle = (theme) => ({
-  container: {
+ container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     flexGrow: 1,
   },
   navPillsContainer: {

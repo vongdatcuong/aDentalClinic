@@ -1,5 +1,7 @@
 const dialogReferralInsert = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         margin:"0px",
         '& .MuiFormControl-root': {

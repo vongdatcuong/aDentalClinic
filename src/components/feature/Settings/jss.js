@@ -1,13 +1,13 @@
 const settingsStyle = (theme) => ({
-  container: {
+ container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     flexGrow: 1,
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     height: '100%',
-    background: theme.pageBackgroundColor,
-    color: theme.textColor
   },
   title: {
     fontWeight: 600

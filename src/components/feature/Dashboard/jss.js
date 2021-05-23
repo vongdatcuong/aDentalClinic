@@ -1,5 +1,7 @@
 const dashboardStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1), 

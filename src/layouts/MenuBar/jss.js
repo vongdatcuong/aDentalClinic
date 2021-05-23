@@ -1,5 +1,7 @@
 const menuBarStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         
         display: 'flex',
         alignItems: 'center',
