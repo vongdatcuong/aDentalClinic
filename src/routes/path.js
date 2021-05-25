@@ -38,6 +38,7 @@ const toothOverviewInfoPath = '/patient/:patientID/toothChart/toothOverviewInfo'
 const patientInfoPath = '/patient/:patientID/info';
 const profilePath = '/profile';
 const addTreatmentPath = '/patient/:patientID/addTreatment';
+const updateTreatmentPath = '/patient/:patientID/updateTreatment/:treatmentID';
 
 const path = {
     defaultPath,
@@ -75,6 +76,7 @@ const path = {
     managementsWithManagementPath,
     profilePath,
     addTreatmentPath,
+    updateTreatmentPath,
     //insert
     insertPersonPath,
     

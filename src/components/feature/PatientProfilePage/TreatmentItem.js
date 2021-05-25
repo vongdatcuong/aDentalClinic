@@ -11,9 +11,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useParams, useHistory } from "react-router-dom";
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
 
+import path from "../../../routes/path";
 //import styles from "./jss";
 import strings from "../../../configs/strings";
 // utils
@@ -58,6 +60,7 @@ const styles = (theme) => ({
 const useStyles = makeStyles(styles);
 
 const TreatmentItem = ({
+  patientID,
   treatmentID,
   treatmentTime,
   treatmentProvider,
@@ -70,6 +73,7 @@ const TreatmentItem = ({
 }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
 
   function generateTreatmentTitle() {
     let fullTreatmentTitle = treatmentProcedure;
@@ -146,10 +150,14 @@ const TreatmentItem = ({
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button size="small" color="secondary">
+          {/* <Button size="small" color="secondary">
             {t(strings.btnDelete)}
-          </Button>
-          <Button size="small" color="primary">
+          </Button> */}
+          <Button size="small" color="primary" onClick={() =>
+                    history.push(
+                      path.updateTreatmentPath.replace(":patientID", patientID).replace(":treatmentID", treatmentID)
+                    )
+                  }>
             {t(strings.update)}
           </Button>
         </AccordionActions>

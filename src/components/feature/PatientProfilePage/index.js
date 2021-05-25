@@ -230,6 +230,7 @@ const PatientProfilePage = ({ patientID }) => {
                             return (
                             <TreatmentItem
                                 key={index}
+                                patientID={patientID}
                                 treatmentID={treatmentItem._id}
                                 treatmentTime={treatmentItem.treatment_date}
                                 treatmentProvider={treatmentItem.provider?.user}
