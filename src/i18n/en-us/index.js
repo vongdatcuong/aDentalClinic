@@ -59,6 +59,7 @@ export default {
         "Request": "Request",
         "At time": "At",
         "Export": "Export",
+        "Source": "Source",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -147,6 +148,9 @@ export default {
         "Load Appointment Document fail": "Load Appointment Document fail",
         "Load Patient Document fail": "Load Patient Document fail",
         "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
+        "Assistant is required": "Assistant is required",
+        "Staff is required": "Staff is required",
+        "Source is required": "Source is required",
         // Error Messages Treatment
         "Treatment date must be in the future": "Treatment date must be in the future",
         // Confirm Messages
@@ -441,6 +445,6 @@ export default {
         "View patient document": "View patient document",
         "View appointments document": "View appointment document",
         "View appointments of patient document": "View appointment of patient document",
-        "If no patient is provided, all appointments will be loaded": "If no patient is provided, all appointments will be loaded"
+        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded"
     }
 }

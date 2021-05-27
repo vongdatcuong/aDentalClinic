@@ -59,6 +59,7 @@ export default {
         "Request": "Yêu cầu",
         "At time": "Lúc",
         "Export": "Xuất",
+        "Source": "Nguồn",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -130,6 +131,7 @@ export default {
         "Get Next Available Date fail": "Lấy ngày khả dụng tiếp theo thất bại",
         "Provider not working in the near future": "Bác sỹ không có lịch làm việc sắp tới",
         "Delete Appointment Request fail": "Xóa yêu cầu hẹn thất bại",
+        "Staff is required": "Nhân viên không được để trống",
         "Patient is required": "Bệnh nhân không được để trống",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
@@ -146,6 +148,8 @@ export default {
         "Load Appointment Document fail": "Tải tài liệu cuộc hẹn thất bại",
         "Load Patient Document fail": "Tải tài liệu bệnh nhân thất bại",
         "Load Appointment of Patient Document fail": "Tải tài liệu cuộc hẹn của bệnh nhân thất bại",
+        "Assistant is required": "Trợ khám không được để trống",
+        "Source is required": "Nguồn không được để trống",
         // Error Messages Treatment
         "Treatment date must be in the future": "Ngày điều trị phải ở tương lai",
         // Confirm Messages
@@ -440,6 +444,6 @@ export default {
         "View patient document": "Xem tài liệu bệnh nhân",
         "View appointments document": "Xem tài liệu các cuộc hẹn",
         "View appointments of patient document": "Xem tài liệu các cuộc hẹn của bệnh nhân",
-        "If no patient is provided, all appointments will be loaded": "Nếu không có bệnh nhân nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên"
+        "If no patient is provided, all appointments will be loaded": "Nếu không có lựa chọn nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên"
     }
 }

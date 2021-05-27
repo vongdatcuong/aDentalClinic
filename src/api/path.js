@@ -77,6 +77,7 @@ const drug={
 //referral source
 const referralSource={
     referralSource:'/referral-source',
+    autocomplete: '/auto-complete'
 }
 
 //note_macro
@@ -108,14 +109,14 @@ const patientRecall={
 //referral
 const referral={
     referral:'/referral',
-
 }
 
 // report
 const report = {
     report: '/report',
     appointment: '/appointment',
-    treatmentHistory: '/treatment-history'
+    treatmentHistory: '/treatment-history',
+    referral: '/referral'
 }
 
 export {

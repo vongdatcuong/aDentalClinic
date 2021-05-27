@@ -178,7 +178,7 @@ const nextS = "Next S";
 const request = "Request";
 const atTime = "At time";
 const exportStr = "Export";
-
+const source = "Source";
 // Messages
 
     // Success Messages
@@ -265,6 +265,9 @@ const loadStatisticsErrMsg = "Load Report fail";
 const loadAppointDocErrMsg = "Load Appointment Document fail";
 const loadPatientDocErrMsg = "Load Patient Document fail";
 const loadAppointPatientDocErrMsg = "Load Appointment of Patient Document fail";
+const assistantErrMsg = "Assistant is required";
+const staffErrMsg = "Staff is required";
+const referralSourceErrMsg = "Source is required";
     // Error Messages Treatments
 const treatmentDateErrMsg = "Treatment date must be in the future";
     // Confirm Messages
@@ -525,6 +528,7 @@ export default {
     request,
     atTime,
     exportStr,
+    source,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -609,6 +613,9 @@ export default {
     loadAppointDocErrMsg,
     loadPatientDocErrMsg,
     loadAppointPatientDocErrMsg,
+    assistantErrMsg,
+    staffErrMsg,
+    referralSourceErrMsg,
     // Error Messages Treatments
     treatmentDateErrMsg,
     // Confirm Messages
