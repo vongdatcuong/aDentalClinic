@@ -56,7 +56,8 @@ const transition = {
 };
 
 const fontColor = "#000000";
-const primaryColor = ["#4042E2", "#5658e5", "#6c6ee9", "#8284ec"];
+const textColor = "#ffffff";
+const primaryColor = ["#EBB76B", "#CF9C51", "gold", "#ad9302"];
 const secondaryColor = ["#dc004e", "#f50057", "#ff1065", "#ff2975"];
 const warningColor = ["#ff9800", "#ffa726", "#fb8c00", "#ffa21a"];
 const dangerColor = ["#f44336", "#ef5350", "#e53935", "#f55a4e"];
@@ -94,7 +95,8 @@ const tableAddIconColor = "#34a853";
 const scheduleMonthlyItemColor = "#8c8daf";
 const scheduleWeeklyItemColor = "#ba9187";
 const scheduleAutoItemColor = "#639f88";
-const pageBackgroundColor = "#fafafa";
+const pageBackgroundColor = "#16203B";
+const materialPrimaryColor = "#3f51b5";
 
 // Google map
 const mapMinWidth = 500;
@@ -264,6 +266,7 @@ export default {
   transition,
   boxShadow,
   fontColor,
+  textColor,
   primaryColor,
   secondaryColor,
   warningColor,
@@ -288,6 +291,7 @@ export default {
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,
   pageBackgroundColor,
+  materialPrimaryColor,
   // Google Map
   mapMinWidth,
   mapMinHeight,

@@ -4,7 +4,9 @@ const reportStyle = (theme) => ({
         margin: 0,
         maxWidth: 'none',
     },
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),

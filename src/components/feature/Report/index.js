@@ -177,39 +177,7 @@ const Report = () => {
     const treatmentPlanChartId = "treatment-plant-chart";
 
     // Card Report
-
-    const [cardReport, setCardReport] = useState([
-      {
-        label: t(strings.payment),
-        value: '$69',
-        index: 0
-      },
-      {
-        label: t(strings.appointments),
-        value: '0',
-        index: 1
-      },
-      {
-        label: t(strings.procedures),
-        value: '0',
-        index: 2
-      },
-      {
-        label: t(strings.treatments),
-        value: '0',
-        index: 3
-      },
-      {
-        label: t(strings.patient),
-        value: '0',
-        index: 4
-      },
-      {
-        label: t(strings.appointRequest),
-        value: '0',
-        index: 5
-      }
-    ]);
+    const [cardReport, setCardReport] = useState([]);
     const [cardValues, setCardValues] = useState([]);
 
     // Chart
@@ -217,7 +185,7 @@ const Report = () => {
     const [appointChartCanvas, setAppointChartCanvas] = useState(null);
 
     // Circular Report
-    const circularReport = [
+    const [circularReport, setCircularReport] = useState([
       {
         title: t(strings.workHour),
         content: {
@@ -281,7 +249,7 @@ const Report = () => {
         ],
         chartId: treatmentPlanChartId
       }
-    ];
+    ]);
 
     // Dialogs
     const [openExportDialog, setOpenExportDialog] = useState(false);
@@ -299,8 +267,8 @@ const Report = () => {
         const result = await api.httpGet({
           url: apiPath.report.report,
           query: {
-            startDate: ConvertDateTimes.formatDate(fromDate, strings.apiDateFormat),
-            endDate: ConvertDateTimes.formatDate(toDate, strings.apiDateFormat),
+            startDate: ConvertDateTimes.formatDate(applyFromDate, strings.apiDateFormat),
+            endDate: ConvertDateTimes.formatDate(applyToDate, strings.apiDateFormat),
           }
         });
         if (result.success){
@@ -310,6 +278,38 @@ const Report = () => {
             totalAppointReq+= req.count || 0;
           });
           // Card Reports
+          setCardReport([
+            {
+              label: t(strings.payment),
+              value: '$69',
+              index: 0
+            },
+            {
+              label: t(strings.appointments),
+              value: '0',
+              index: 1
+            },
+            {
+              label: t(strings.procedures),
+              value: '0',
+              index: 2
+            },
+            {
+              label: t(strings.treatments),
+              value: '0',
+              index: 3
+            },
+            {
+              label: t(strings.patient),
+              value: '0',
+              index: 4
+            },
+            {
+              label: t(strings.appointRequest),
+              value: '0',
+              index: 5
+            }
+          ]);
           const newCardValues = [
             // Payment
             "$" + dat.payment?.summary?.total_fee?.$numberDecimal || 0,
@@ -327,6 +327,72 @@ const Report = () => {
           setCardValues(newCardValues);
 
           // Circular Reports
+          const newCircularReport = [
+            {
+              title: t(strings.workHour),
+              content: {
+                value: 20,
+                unit: t(strings.hours),
+                chartId: workHourChartId
+              },
+              action: [
+                {
+                  value: 20,
+                  unit: t(strings.hourShort),
+                  group: t(strings.total)
+                },
+                {
+                  value: 0,
+                  unit: t(strings.hourShort),
+                  group: t(strings.busy)
+                }
+              ],
+              chartId: workHourChartId
+            },
+            {
+              title: t(strings.newPatient),
+              content: {
+                value: 5,
+                unit: t(strings.patientsShort),
+                chartId: newPatientChartId
+              },
+              action: [
+                {
+                  value: 4,
+                  unit: "",
+                  group: t(strings.completed)
+                },
+                {
+                  value: 1,
+                  unit: "",
+                  group: t(strings.rejected)
+                }
+              ],
+              chartId: newPatientChartId
+            },
+            {
+              title: t(strings.treatmentPlan),
+              content: {
+                value: 10,
+                unit: "",
+                chartId: treatmentPlanChartId
+              },
+              action: [
+                {
+                  value: 8,
+                  unit: t(strings.percent),
+                  group: t(strings.accept)
+                },
+                {
+                  value: 2,
+                  unit: t(strings.percent),
+                  group: t(strings.reject)
+                }
+              ],
+              chartId: treatmentPlanChartId
+            }
+          ];
+          setCircularReport(newCircularReport);
           const startTime = dat.practice.start_time;
           const endTime = dat.practice.end_time;
           const workingHour = Number(endTime.slice(0, 2)) + Number(endTime.slice(2)) / 60 - Number(startTime.slice(0, 2)) + Number(startTime.slice(2)) / 60;
@@ -350,10 +416,6 @@ const Report = () => {
           const paymentData = dat.payment.chart.map((payment) => Number(payment.total_fee?.$numberDecimal) || 0);
           const appointmentData = dat.appointment.chart.map((appoint) => Number(appoint.count));
 
-          // Disabled Date type
-          //fromRef.current.input.disabled = true;
-          //toRef.current.input.disabled = true;
-
           // Finances Chart
           if (financeChartCanvas){
             financeChartCanvas.destroy();
@@ -368,7 +430,7 @@ const Report = () => {
           setAppointChartCanvas(newAppointCanvas);
 
           // Circular Report
-          circularReport.forEach((report, index) => {
+          newCircularReport.forEach((report, index) => {
             generateCircularChart(report.chartId, newCircularReportVals[index].main + " " + report.content.unit.toUpperCase(), themeState.theme.circularProgressChart);
           });
         } else {
@@ -399,14 +461,16 @@ const Report = () => {
     }
 
     const handleLoadStatistics = (evt) => {
-      const start = moment(fromDate).utc().startOf('day');
+      setApplyFromDate(fromDate);
+      setApplyToDate(toDate);
+      /*const start = moment(fromDate).utc().startOf('day');
       const end = moment(toDate).utc().endOf('day');
       if (start._isValid && end._isValid){
         setApplyFromDate(start._d);
         setApplyToDate(end._d);
       } else {
         toast.error(t(strings.dateRangeInvalid) + '!!!');
-      }
+      }*/
     }
 
     // Export Dialog
@@ -418,25 +482,25 @@ const Report = () => {
       setOpenExportDialog(false);
     }, []);
 
-    const handleOnExport = (type, patient, fromDate, toDate) => {
+    const handleOnExport = (type, targetObj, fromDate, toDate) => {
       if (type === lists.exportObj.type.appointment){
-        handleViewAppointDocument(patient.value || "", fromDate, toDate);
-      } else if (type === lists.exportObj.type.patient && patient){
-        handleViewPatientDocument(patient.value, fromDate, toDate);
+        handleViewAppointDocument(targetObj, fromDate, toDate);
+      } else if (type === lists.exportObj.type.treatment){
+        handleViewPatientDocument(targetObj, fromDate, toDate);
+      } else if (type === lists.exportObj.type.referral){
+        handleViewReferralDocument(targetObj, fromDate, toDate);
       }
     };
 
     // View appointment document
-    const handleViewAppointDocument = useCallback(async (patientID, fromDate, toDate) => {
+    const handleViewAppointDocument = useCallback(async (targetObj, fromDate, toDate) => {
       try {
         dispatchLoading({type: strings.setLoading, isLoading: true});
         let query = {
           startDate: ConvertDateTimes.formatDate(fromDate, strings.apiDateFormat),
           endDate: ConvertDateTimes.formatDate(toDate, strings.apiDateFormat),
+          ...targetObj
         };
-        if (patientID){
-          query.patient_id = patientID;
-        }
         const result = await api.httpGet({
           url: apiPath.report.report + apiPath.report.appointment,
           query: query
@@ -459,15 +523,16 @@ const Report = () => {
       }
     }, []);
 
-    // View appointment document
-    const handleViewPatientDocument = useCallback(async (patientID, fromDate, toDate) => {
+    // View treatment document
+    const handleViewPatientDocument = useCallback(async (targetObj, fromDate, toDate) => {
       try {
         dispatchLoading({type: strings.setLoading, isLoading: true});
         const result = await api.httpGet({
-          url: apiPath.report.report + apiPath.report.treatmentHistory + '/' + patientID,
-          query: {
+          url: apiPath.report.report + apiPath.report.treatmentHistory,
+          query: {            
             startDate: ConvertDateTimes.formatDate(fromDate, strings.apiDateFormat),
             endDate: ConvertDateTimes.formatDate(toDate, strings.apiDateFormat),
+            ...targetObj
           }
         });
         if (result.success){
@@ -482,7 +547,37 @@ const Report = () => {
           toast.error(result.message);
         }
       } catch(err){
-        toast.error(t(strings.loadAppointDocErrMsg));
+        toast.error(t(strings.loadPatientDocErrMsg));
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
+      }
+    }, []);
+
+    // View referral document
+    const handleViewReferralDocument = useCallback(async (targetObj, fromDate, toDate) => {
+      try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
+        const result = await api.httpGet({
+          url: apiPath.report.report + apiPath.report.referral,
+          query: {            
+            startDate: ConvertDateTimes.formatDate(fromDate, strings.apiDateFormat),
+            endDate: ConvertDateTimes.formatDate(toDate, strings.apiDateFormat),
+            ...targetObj
+          }
+        });
+        if (result.success){
+          const file = new Blob(
+            [Buffer.from(result.payload, 'base64')], 
+            {type: 'application/pdf'});
+          //Build a URL from the file
+          const fileURL = URL.createObjectURL(file);
+          //Open the URL on new Window
+          window.open(fileURL);
+        } else {
+          toast.error(result.message);
+        }
+      } catch(err){
+        toast.error(t(strings.loadPatientDocErrMsg));
       } finally {
         dispatchLoading({type: strings.setLoading, isLoading: false});
       }
@@ -595,7 +690,7 @@ const Report = () => {
                       <canvas id={circularReport[0].chartId} className={classes.circularChartCanvas}></canvas>
                     </CardContent>
                     <Divider className={classes.circularCardDivider}/>
-                    <CardActions>
+                    {/*<CardActions>
                       <Grid container justify="center" className={classes.circularAction} spacing={3}>
                         {circularReport[0].action.map((action, index) => {
                           return (
@@ -606,7 +701,7 @@ const Report = () => {
                           )
                         })}
                       </Grid>
-                    </CardActions>
+                    </CardActions>*/}
                   </Card>
                 </Grid>
                 {/* New Patient */}
@@ -617,7 +712,7 @@ const Report = () => {
                       <canvas id={circularReport[1].chartId} className={classes.circularChartCanvas}></canvas>
                     </CardContent>
                     <Divider className={classes.circularCardDivider}/>
-                    <CardActions>
+                    {/*<CardActions>
                       <Grid container justify="center" className={classes.circularAction} spacing={3}>
                         {circularReport[1].action.map((action, index) => {
                           return (
@@ -628,7 +723,7 @@ const Report = () => {
                           )
                         })}
                       </Grid>
-                    </CardActions>
+                    </CardActions>*/}
                   </Card>
                 </Grid>
                 {/* Treatment Plan */}
@@ -639,7 +734,7 @@ const Report = () => {
                       <canvas id={circularReport[2].chartId} className={classes.circularChartCanvas}></canvas>
                     </CardContent>
                     <Divider className={classes.circularCardDivider}/>
-                    <CardActions>
+                    {/*<CardActions>
                       <Grid container justify="center" className={classes.circularAction} spacing={3}>
                         {circularReport[2].action.map((action, index) => {
                           return (
@@ -650,7 +745,7 @@ const Report = () => {
                           )
                         })}
                       </Grid>
-                    </CardActions>
+                    </CardActions>*/}
                   </Card>
                 </Grid>
               </Grid>

@@ -160,6 +160,7 @@ const AppointmentTab = ({
                 label: appointRequest.first_name + " " + appointRequest.last_name,
             });
             noteRef.current.value = appointRequest.note;
+            setNote(appointRequest.note);
         } else {
             resetPatientInfoFields();
         }

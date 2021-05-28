@@ -1,6 +1,8 @@
 import loginBackground from "../../../assets/images/loginBackground.png";
 const loginStyle = (theme) => ({
-  container: {
+ container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     flexGrow: 1,
     height: "100vh",
   },

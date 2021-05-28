@@ -56,8 +56,19 @@ const schedule = {
 const exportObj = {
     type: {
         appointment: 0,
-        patient: 1
-    }
+        treatment: 1,
+        referral: 2
+    },
+    targetType: {
+        all: 0,
+        patient: 1,
+        assistant: 2,
+        provider: 3,
+        patientAll: 4,
+        staff: 5,
+        source: 6,
+    },
+    optionalTargetTypes: [0, 4]
 }
 
 // Tooth chart

@@ -1,5 +1,7 @@
 const dashboardStyle = (theme) => ({
-    container: {
+   container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
         flexGrow: 1,
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1), 
@@ -17,7 +19,7 @@ const dashboardStyle = (theme) => ({
     fabAppointRequest: {
         position: 'fixed',
         right: 150,
-        bottom: 100,
+        bottom: 50,
         zIndex: theme.fabZIndex,
         backgroundColor: theme.infoColor[0]
     }

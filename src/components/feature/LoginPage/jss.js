@@ -1,9 +1,12 @@
 import loginBackground from "../../../assets/images/loginBackground.png";
 const loginStyle = (theme) => ({
-  container: {
+ container: {
+    background: theme.pageBackgroundColor,
+    color: theme.textColor,
     flexGrow: 1,
   },
   root: {
+    background: theme.pageBackgroundColor,
     height: "100vh",
     color: theme.primaryColor[0],
   },
@@ -78,6 +81,7 @@ const loginStyle = (theme) => ({
         '& input': {
             // color: theme.primaryColor[0] + "!important",
             fontWeight: "bold",
+            color: theme.textColor,
         },
         '&::before': {
             borderBottomColor: theme.primaryColor[0]

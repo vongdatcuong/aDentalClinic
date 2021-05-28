@@ -65,19 +65,21 @@ const RightSidebar = ({ handleSelectDate }) => {
               onDayClick={handleSelectDate}
             />
             <Divider />
-            <div className={classes.appointmentHolder}>
-              <Typography component="h6" variant="h6">{t(strings.appointmentHolder)}</Typography>
-              <Box className={classes.appointmentHolderBox}>
-                
-              </Box>
-            </div>
-            <Divider />
-            <div className={classes.todayAppoinment}>
-              <Typography component="h6" variant="h6">{t(strings.todayAppointment)}</Typography>
-              <Box className={classes.todayAppoinmentBox}>
-                
-              </Box>
-            </div>
+            {/*
+              <div className={classes.appointmentHolder}>
+                <Typography component="h6" variant="h6">{t(strings.appointmentHolder)}</Typography>
+                <Box className={classes.appointmentHolderBox}>
+                  
+                </Box>
+              </div>
+              <Divider />
+              <div className={classes.todayAppoinment}>
+                <Typography component="h6" variant="h6">{t(strings.todayAppointment)}</Typography>
+                <Box className={classes.todayAppoinmentBox}>
+                  
+                </Box>
+              </div>
+            */}
           </div>
         </Drawer>
       </div>

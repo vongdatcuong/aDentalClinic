@@ -43,6 +43,7 @@
     "react-swipeable-views": "^0.13.9",
     "react-toastify": "^7.0.3",
     "react-viewer": "^3.2.2",
+    "socket.io-client": "^4.1.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

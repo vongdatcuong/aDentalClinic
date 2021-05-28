@@ -47,6 +47,17 @@ import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 
 // Context
 import { loadingStore } from '../../../contexts/loading-context';
+import { socketStore } from '../../../contexts/socket-context';
+
+// Socket
+import {
+    notifyAppointReqRes,
+    notifyAppointReqResOff,
+    notifyUpdateAppointReqRes,
+    notifyUpdateAppointReqResOff,
+    notifyDeleteAppointReqRes,
+    notifyDeleteAppointReqResOff
+} from '../../../socket/appointment-socket';
 
 const useStyles = makeStyles(styles);
 
@@ -57,9 +68,11 @@ const DashBoard = () => {
 
     // Context
     const {loadingState, dispatchLoading} = useContext(loadingStore);
+    const {socketState, dispatchSocket} = useContext(socketStore);
 
     // Ref
     const calendarRef = useRef(null);
+    const previousDateRef = useRef();
 
     // States
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -360,24 +373,43 @@ const DashBoard = () => {
 
     // Use effect
     useEffect(async () => {
-        try {
-            if (isWillMount){
-                handleWillMount();
-                setIsWillMount(false);
-            } else {
-                handleDidUpdate();
-            }   
-            // Inverval Appointment Request
-        } catch (err){
-
+        if (!previousDateRef.current || previousDateRef.current.getTime() !== selectedDate.getTime()){
+            try {
+                if (isWillMount){
+                    handleWillMount();
+                    setIsWillMount(false);
+                } else {
+                    handleDidUpdate();
+                }   
+                // Inverval Appointment Request
+            } catch (err){
+    
+            }
+            previousDateRef.current = selectedDate;
         }
-        const interval = setInterval(() => {
+        /*const interval = setInterval(() => {
             handleLoadAppointRequests();
-        }, figures.loadAppointReqIntervalTime)
-        return () => {
-            clearInterval(interval);
+        }, figures.loadAppointReqIntervalTime)*/
+        // Get appointment requests socket
+        if (socketState.socket){
+            // Add
+            notifyAppointReqResOff(socketState.socket);
+            notifyAppointReqRes(socketState.socket, appointRequests, setAppointRequests);
+            // Update
+            notifyUpdateAppointReqResOff(socketState.socket);
+            notifyUpdateAppointReqRes(socketState.socket, appointRequests, setAppointRequests);
+            // Delete
+            notifyDeleteAppointReqResOff(socketState.socket);
+            notifyDeleteAppointReqRes(socketState.socket, appointRequests, setAppointRequests);
         }
-    }, [selectedDate]);
+        return () => {
+            if (socketState.socket){
+                notifyAppointReqResOff(socketState.socket);
+                notifyUpdateAppointReqResOff(socketState.socket);
+                notifyDeleteAppointReqResOff(socketState.socket);
+            }
+        }
+    }, [selectedDate, appointRequests]);
 
     // Time Table Cell
     const handleTimeTableCellClick = useCallback((chairID, startDate) => {

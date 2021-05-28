@@ -59,6 +59,7 @@ export default {
         "Request": "Request",
         "At time": "At",
         "Export": "Export",
+        "Source": "Source",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -110,7 +111,7 @@ export default {
         "First name validate (Short)": "1 to 30 character",
         "Last name validate (Short)": "1 to 30 character",
         "Phone validate (Short)": "10 to 15 number",
-        "Provider is required": "Provider is required",
+        "Provider is required": "Dentist is required",
         "Invalid Date (Holiday)": "Invalid Date (Holiday)",
         "Invalid Time": "Invalid Time",
         "Appointment duration must be between 30 - 240 minutes and multiple of 30": "Appointment duration must be between 30 - 240 minutes and multiple of 30",
@@ -129,7 +130,7 @@ export default {
         "Add Appointment fail": "Add Appointment fail",
         "Update Appointment fail": "Update Appointment fail",
         "Get Next Available Date fail": "Get Next Available Date fail",
-        "Provider not working in the near future": "Provider not working in the near future",
+        "Provider not working in the near future": "Dentist not working in the near future",
         "Delete Appointment Request fail": "Delete Appointment Request fail",
         "Patient is required": "Patient is required",
         // Error Messages Settings
@@ -137,7 +138,7 @@ export default {
         "Change theme fail": "Change theme fail",
         "Change Password fail": "Change Password fail",
         // Error Messages Schedule
-        "Load Providers fail": "Load Providers fail",
+        "Load Providers fail": "Load Dentists fail",
         "Start day is required": "Start day is required",
         "Dates are quired": "Dates are quired",
         "Add Schedule fail": "Add Schedule fail",
@@ -147,6 +148,9 @@ export default {
         "Load Appointment Document fail": "Load Appointment Document fail",
         "Load Patient Document fail": "Load Patient Document fail",
         "Load Appointment of Patient Document fail": "Load Appointment of Patient Document fail",
+        "Assistant is required": "Assistant is required",
+        "Staff is required": "Staff is required",
+        "Source is required": "Source is required",
         // Error Messages Treatment
         "Treatment date must be in the future": "Treatment date must be in the future",
         // Confirm Messages
@@ -269,7 +273,7 @@ export default {
         "CURRENCY CHART": "Million VND",
         "CURRENCY_PRE": "$",
         //Menu bar
-        "Providers":"Providers",
+        "Providers":"Dentists",
         "Practices":"Practices",
         "Staffs":"Staffs",
         "Procedure":"Procedure",
@@ -330,7 +334,7 @@ export default {
         "PROVIDER":"PROVIDER",
         "PATIENT":"PATIENT",
         "Display Id":"Display Id",
-        "Provider color":"Provider color",
+        "Provider color":"Dentist color",
         "Drug license":"Drug license",
         "Npi":"Npi",
         "Biography":"Biography",
@@ -365,7 +369,7 @@ export default {
         //chair
         "Number":"Number",
         "Room":"Room",
-        "Provider":"Provider",
+        "Provider":"Dentist",
         "Order":"Order",
         "Color":"Color",
         //schedule
@@ -419,7 +423,7 @@ export default {
         "No Treatment": "No Treatment",
         "Next Available": "Next Available",
         "Only mine": "Only mine",
-        "Next Available date for default provider": "Next available Date for default provider",
+        "Next Available date for default provider": "Next available Date for default dentist",
         "Appointment Date": "Appointment Date",
         "Appointment Request": "Appointment Request",
         //Files
@@ -441,6 +445,6 @@ export default {
         "View patient document": "View patient document",
         "View appointments document": "View appointment document",
         "View appointments of patient document": "View appointment of patient document",
-        "If no patient is provided, all appointments will be loaded": "If no patient is provided, all appointments will be loaded"
+        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded"
     }
 }

@@ -26,6 +26,7 @@ import MomentUtils from '@date-io/moment';
 // Context
 import { LoadingStateProvider } from '../../contexts/loading-context';
 import { ThemeStateProvider } from '../../contexts/theme-context';
+import { SocketStateProvider } from '../../contexts/socket-context';
 
 // Components
 import Loading from '../Loading';
@@ -34,20 +35,22 @@ const App = () => {
   return (
     <ThemeStateProvider> {/* ==> Theme Context Provider */}
         <LoadingStateProvider>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <CssBaseline />
-            <Loading />
-            <ToastContainer
-              autoClose={figures.toastTimeout}
-              hideProgressBar={true}
-              newestOnTop={true}
-              limit={figures.toastLimit}
-              position={toast.POSITION.BOTTOM_RIGHT}
-            />
-            <Router>
-              <Routes/>
-            </Router>
-          </MuiPickersUtilsProvider>
+          <SocketStateProvider>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <CssBaseline />
+              <Loading />
+              <ToastContainer
+                autoClose={figures.toastTimeout}
+                hideProgressBar={true}
+                newestOnTop={true}
+                limit={figures.toastLimit}
+                position={toast.POSITION.BOTTOM_RIGHT}
+              />
+              <Router>
+                <Routes/>
+              </Router>
+            </MuiPickersUtilsProvider>
+          </SocketStateProvider>
         </LoadingStateProvider>
     </ThemeStateProvider>
   );
