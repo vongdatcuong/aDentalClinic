@@ -2,6 +2,8 @@ const style = (theme) => ({
     container: {
         flexGrow: 1,
         margin:"0px",
+        justifyContent:'center',
+        alignItems:'center',
         '& .MuiFormControl-root': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -282,6 +284,8 @@ const style = (theme) => ({
     },
     input:{
         marginTop:'10px',
+        display:'flex',
+        justifyContent:'center',
     },
     checkbox:{
         marginLeft:'30px',

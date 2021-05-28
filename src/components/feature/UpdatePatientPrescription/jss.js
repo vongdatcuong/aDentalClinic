@@ -84,7 +84,7 @@ const updatePatientPrescriptionStyle = (theme) => ({
         height:'35px',
         width:'35vw',
         marginLeft:'30px',
-        marginTop:'10px',
+        marginTop:'20px',
         // display:'flex',
         // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
@@ -110,17 +110,7 @@ const updatePatientPrescriptionStyle = (theme) => ({
         '& .MuiInputBase-input.Mui-disabled':{
             color:theme.grayColor[0],
         },
-        // '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&:hover fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        // },
+        
         
     
 
@@ -162,7 +152,7 @@ const updatePatientPrescriptionStyle = (theme) => ({
         height:'35px',
         width:'35vw',
         marginLeft:'30px',
-        marginBottom:'20px',
+        marginTop:'25px',
         // display:'flex',
         // flexDirection:'row',
         // border:`1px solid ${theme.primaryColor[0]}`,
@@ -173,20 +163,36 @@ const updatePatientPrescriptionStyle = (theme) => ({
         },
         '& .MuiSvgIcon-root': {
             paddingBottom: '15px',
+            // paddingTop:'7px',
             width:'1.6em',
             height:'1.6em',
-
+            marginTop:'5px',
         },
         '& .MuiInputBase-root':{
             height:'35px',
             width:'36vw',
-            //border:`1px solid ${theme.primaryColor[0]}`,
+            border:`1px solid ${theme.grayColor[0]}`,
+            borderRadius:'3px',
+            marginTop:'10px',
         },
         '& .MuiInputLabel-outlined':{
             marginLeft:'10px',
+            marginTop:'-7px',
+
         },
         '& .MuiInputBase-input.Mui-disabled':{
             color:theme.grayColor[0],
+        },
+        '& .MuiInputBase-input':{
+            marginLeft:'20px',
+        },
+        '& .MuiButtonBase-root':{
+            marginTop:'10px',
+            
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'15px',
+            marginTop:'15px',
         },
         // '& .MuiOutlinedInput-root': {
         //     '& fieldset': {
@@ -224,29 +230,29 @@ const updatePatientPrescriptionStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-        '& .MuiFormLabel-root.Mui-disabled':{
-            color:theme.grayColor[0],
-        },
-        '& .MuiFormLabel-root':{
-            paddingBottom:'20px',
-            marginRight:'20px',
+        // '& .MuiFormLabel-root.Mui-disabled':{
+        //     color:theme.grayColor[0],
+        // },
+        // '& .MuiFormLabel-root':{
+        //     paddingBottom:'20px',
+        //     marginRight:'20px',
 
-        },
-        '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
-            transform: 'translate(8px, -6px) scale(0.75)',
+        // },
+        // '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
+        //     transform: 'translate(8px, -6px) scale(0.75)',
+        // }
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+            
         }
     },
     itemDate:{
-        '& .MuiFormLabel-root.Mui-disabled':{
-            color:theme.grayColor[0],
-        },
-        '& .MuiFormLabel-root':{
-            paddingBottom:'20px',
-            marginRight:'20px',
-
-        },
-        '& .MuiInputLabel-outlined.MuiInputLabel-shrink':{
-            transform: 'translate(8px, -6px) scale(0.75)',
+        
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+            marginBottom:'10px',
+            paddingBottom:'10px',
+            marginTop:'15px',
         }
     },
     itemSelect:{
@@ -258,6 +264,10 @@ const updatePatientPrescriptionStyle = (theme) => ({
             border:`1px solid ${theme.grayColor[0]}`,
             width:'36vw',
             borderRadius:'5px',
+            marginTop:'25px',
+        },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'10px',
         },
         '& .MuiSelect-select':{
             paddingLeft:'15px',

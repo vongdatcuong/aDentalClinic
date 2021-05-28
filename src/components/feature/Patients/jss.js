@@ -5,7 +5,10 @@ const patientStyle = (theme) => ({
         marginBottom: theme.spacing(2),
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        maxWidth: '100%'
+        maxWidth: '100%',
+        
+        justifyContent:'center',
+        alignItems:'center',
     },
     // searchControl:{
     //     height:40,
