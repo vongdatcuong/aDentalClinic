@@ -102,6 +102,34 @@ class TreatmentService {
             };
         }
     }
+    async updateTreatment(treatmentID, data)
+    {
+        try{
+            const result = await httpPatch({
+                url: `${apiPath.treatment.treatment}/${treatmentID}`,
+                body:data
+            });
+            console.log("Update treatment: ", result);
+            if(result.success)
+            {
+                return {
+                    success:true,
+                }
+            }
+            else
+            {
+                return {
+                    success: false,
+                }; 
+            }                
+        }
+        catch(error){
+            console.log("Failed to update treatment: ",error);
+            return {
+                success: false,
+            };
+        }
+    }
 }
 
 export default new TreatmentService();

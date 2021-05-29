@@ -99,6 +99,9 @@ const styles = (theme) => ({
   selectCategory: {
     marginTop: theme.spacing(4),
   },
+  selectDate: {
+    marginTop: theme.spacing(5),
+  },
   selectProviderAssistant: {
     marginTop: theme.spacing(4),
   },
