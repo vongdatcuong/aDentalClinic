@@ -648,6 +648,7 @@ const UpdatePatient = (props) => {
                                         multiline
                                         rows={4}
                                         InputLabelProps={{ shrink: true }}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
@@ -661,6 +662,7 @@ const UpdatePatient = (props) => {
                                         multiline
                                         rows={4}
                                         InputLabelProps={{ shrink: true }}
+                                        inputProps={{ readOnly: !props.editable }}
                                         /> 
                         </FormControl>
                         <FormControl variant="filled" className={classes.itemOutline}>
