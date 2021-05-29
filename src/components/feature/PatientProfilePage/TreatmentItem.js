@@ -11,9 +11,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useParams, useHistory } from "react-router-dom";
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
 
+import path from "../../../routes/path";
 //import styles from "./jss";
 import strings from "../../../configs/strings";
 // utils
@@ -26,7 +28,6 @@ const styles = (theme) => ({
     marginBottom: "0.7rem",
     "& .MuiAccordionSummary-root": {
       borderRadius: "0.3rem",
-      backgroundColor: theme.primaryColor[3],
       color: theme.whiteColor,
       "& .MuiAccordionSummary-content": {
         display: "flex",
@@ -35,6 +36,18 @@ const styles = (theme) => ({
       "& .MuiIconButton-label": {
         color: theme.whiteColor,
       },
+    },
+    "& .PLAN": {
+      backgroundColor: theme.primaryColor[1],
+    },
+    "& .CANCEL": {
+      backgroundColor: theme.warningColor[1],
+    },
+    "& .COMPLETED": {
+      backgroundColor: theme.successColor[1],
+    },
+    "& .EXISTING": {
+      backgroundColor: theme.primaryColor[3],
     },
   },
   historyItemTime: {
@@ -58,21 +71,24 @@ const styles = (theme) => ({
 const useStyles = makeStyles(styles);
 
 const TreatmentItem = ({
+  patientID,
   treatmentID,
   treatmentTime,
   treatmentProvider,
   treatmentAssistant,
   treatmentProcedure,
   treatmentDescription,
+  treatmentStatus,
   treatmentNote,
   treatmentToothShort,
   treatmentSelectedTooth /*handleUpdateNote, handleDeleteNote*/,
 }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
 
   function generateTreatmentTitle() {
-    let fullTreatmentTitle = treatmentProcedure;
+    let fullTreatmentTitle = "[" + treatmentStatus + "]: " + treatmentProcedure;
     fullTreatmentTitle += treatmentToothShort ? " | " + treatmentToothShort : "";
     fullTreatmentTitle += " ("+t(strings.provider)+": " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
     return fullTreatmentTitle.trim();
@@ -102,6 +118,7 @@ const TreatmentItem = ({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
+          className={treatmentStatus}
         >
           <span className={classes.historyItemContent}>
             {generateTreatmentTitle()}
@@ -110,7 +127,7 @@ const TreatmentItem = ({
             <span className={classes.historyItemTime}>
               {ConvertDateTimes.formatDate(
                 treatmentTime,
-                strings.defaultDateTimeFormat
+                strings.defaultDateFormat
               )}{" "}
             </span>
           </span>
@@ -127,7 +144,7 @@ const TreatmentItem = ({
                 {t(strings.date)}:{" "}
                 {ConvertDateTimes.formatDate(
                     treatmentTime,
-                    strings.defaultDateTimeFormat
+                    strings.defaultDateFormat
                 )}
                 </div>
                 <div>
@@ -146,10 +163,14 @@ const TreatmentItem = ({
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button size="small" color="secondary">
+          {/* <Button size="small" color="secondary">
             {t(strings.btnDelete)}
-          </Button>
-          <Button size="small" color="primary">
+          </Button> */}
+          <Button size="small" color="primary" onClick={() =>
+                    history.push(
+                      path.updateTreatmentPath.replace(":patientID", patientID).replace(":treatmentID", treatmentID)
+                    )
+                  }>
             {t(strings.update)}
           </Button>
         </AccordionActions>

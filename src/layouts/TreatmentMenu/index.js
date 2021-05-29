@@ -101,6 +101,8 @@ const TreatmentMenu = ({ patientID }) => {
       return curUrl.substring(0, curUrl.lastIndexOf("/"));
     } else if (curUrl.includes("addTreatment")) {
       return curUrl.replace("addTreatment", "profile");
+    } else if (curUrl.includes("updateTreatment")) {
+      return curUrl.substring(0, curUrl.lastIndexOf("/")).replace("updateTreatment", "profile");
     } else {
       return path.patientPath;
     }

@@ -174,7 +174,7 @@ const ToothChartPage = ({ patientID }) => {
   <React.Fragment>
     <TreatmentMenu patientID = { patientID }/>
     <Container className={classes.container}>
-      <PopupChat></PopupChat>
+      {/* <PopupChat></PopupChat> */}
       <Grid
         container
         xs={12}

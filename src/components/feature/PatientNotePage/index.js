@@ -237,7 +237,7 @@ const PatientNotePage = ({ patientID }) => {
     <React.Fragment>
       <TreatmentMenu patientID={patientID} />
       <Container className={classes.container}>
-        <PopupChat></PopupChat>
+        {/* <PopupChat></PopupChat> */}
         <div className={classes.headerContainer}>
           <Typography
             component="h1"

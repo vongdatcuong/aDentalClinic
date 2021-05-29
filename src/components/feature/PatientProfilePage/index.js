@@ -184,7 +184,7 @@ const PatientProfilePage = ({ patientID }) => {
       <React.Fragment>
         <TreatmentMenu patientID={patientID} />
         <Container className={classes.container}>
-          <PopupChat></PopupChat>
+          {/* <PopupChat></PopupChat> */}
           <Grid container>
             <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
               <Grid container className={classes.headerInfo}>
@@ -230,11 +230,13 @@ const PatientProfilePage = ({ patientID }) => {
                             return (
                             <TreatmentItem
                                 key={index}
+                                patientID={patientID}
                                 treatmentID={treatmentItem._id}
                                 treatmentTime={treatmentItem.treatment_date}
                                 treatmentProvider={treatmentItem.provider?.user}
                                 treatmentAssistant={treatmentItem.assistant?.user}
                                 treatmentDescription={treatmentItem.description}
+                                treatmentStatus={treatmentItem.status}
                                 treatmentNote={treatmentItem.note}
                                 treatmentToothShort={treatmentItem.tooth}
                                 treatmentSelectedTooth={treatmentItem.selected_tooth_raw}
