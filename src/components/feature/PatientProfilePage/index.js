@@ -236,6 +236,7 @@ const PatientProfilePage = ({ patientID }) => {
                                 treatmentProvider={treatmentItem.provider?.user}
                                 treatmentAssistant={treatmentItem.assistant?.user}
                                 treatmentDescription={treatmentItem.description}
+                                treatmentStatus={treatmentItem.status}
                                 treatmentNote={treatmentItem.note}
                                 treatmentToothShort={treatmentItem.tooth}
                                 treatmentSelectedTooth={treatmentItem.selected_tooth_raw}

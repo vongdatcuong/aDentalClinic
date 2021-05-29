@@ -28,7 +28,6 @@ const styles = (theme) => ({
     marginBottom: "0.7rem",
     "& .MuiAccordionSummary-root": {
       borderRadius: "0.3rem",
-      backgroundColor: theme.primaryColor[3],
       color: theme.whiteColor,
       "& .MuiAccordionSummary-content": {
         display: "flex",
@@ -37,6 +36,15 @@ const styles = (theme) => ({
       "& .MuiIconButton-label": {
         color: theme.whiteColor,
       },
+    },
+    "& .PLAN": {
+      backgroundColor: theme.primaryColor[0],
+    },
+    "& .EXISTING": {
+      backgroundColor: theme.primaryColor[2],
+    },
+    "& .COMPLETED": {
+      backgroundColor: theme.primaryColor[3],
     },
   },
   historyItemTime: {
@@ -67,6 +75,7 @@ const TreatmentItem = ({
   treatmentAssistant,
   treatmentProcedure,
   treatmentDescription,
+  treatmentStatus,
   treatmentNote,
   treatmentToothShort,
   treatmentSelectedTooth /*handleUpdateNote, handleDeleteNote*/,
@@ -76,7 +85,7 @@ const TreatmentItem = ({
   const history = useHistory();
 
   function generateTreatmentTitle() {
-    let fullTreatmentTitle = treatmentProcedure;
+    let fullTreatmentTitle = "[" + treatmentStatus + "]: " + treatmentProcedure;
     fullTreatmentTitle += treatmentToothShort ? " | " + treatmentToothShort : "";
     fullTreatmentTitle += " ("+t(strings.provider)+": " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
     return fullTreatmentTitle.trim();
@@ -106,6 +115,7 @@ const TreatmentItem = ({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
+          className={treatmentStatus}
         >
           <span className={classes.historyItemContent}>
             {generateTreatmentTitle()}
