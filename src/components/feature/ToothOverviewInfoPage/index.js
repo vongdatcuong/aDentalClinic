@@ -43,7 +43,7 @@ const ToothOverviewInfoPage = ({ patientID }) => {
   return (  <React.Fragment>
     <TreatmentMenu patientID = { patientID }/>
     <div className={classes.container}>
-      <PopupChat></PopupChat>
+      {/* <PopupChat></PopupChat> */}
       <Grid container>
         <Grid item className={classes.tabsContainer}>
           <Tabs

@@ -184,7 +184,7 @@ const PatientProfilePage = ({ patientID }) => {
       <React.Fragment>
         <TreatmentMenu patientID={patientID} />
         <Container className={classes.container}>
-          <PopupChat></PopupChat>
+          {/* <PopupChat></PopupChat> */}
           <Grid container>
             <Grid item xs={9} sm={9} md={9} className={classes.leftGrid}>
               <Grid container className={classes.headerInfo}>
