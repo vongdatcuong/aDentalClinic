@@ -174,7 +174,20 @@ const UpdateTreatmentPage = ({ patientID, treatmentID }) => {
             })
         }
         setDate(new Date(result.data.treatment_date));
-        setSelectedTooth_Raw(result.data.selected_tooth_raw);
+        if (result.data.selected_tooth_raw) {
+            setSelectedTooth_Raw(result.data.selected_tooth_raw);
+        }
+        else {
+            let tSelectedTooth_Raw = [];
+            for (let i = 0; i < 32; i++) {
+                let tooth = {
+                    toothNumber: i + 1,
+                    isSelected: false,
+                };
+                tSelectedTooth_Raw.push(tooth);
+            }
+            setSelectedTooth_Raw(tSelectedTooth_Raw);
+        }
         return true;
       }
       toast.error(result.message);

@@ -38,13 +38,13 @@ const styles = (theme) => ({
       },
     },
     "& .PLAN": {
-      backgroundColor: theme.primaryColor[0],
+      backgroundColor: theme.primaryColor[1],
     },
     "& .CANCEL": {
-      backgroundColor: theme.primaryColor[2],
+      backgroundColor: theme.warningColor[1],
     },
     "& .COMPLETED": {
-      backgroundColor: theme.primaryColor[3],
+      backgroundColor: theme.successColor[1],
     },
     "& .EXISTING": {
       backgroundColor: theme.primaryColor[3],
