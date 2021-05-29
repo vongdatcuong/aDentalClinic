@@ -40,10 +40,13 @@ const styles = (theme) => ({
     "& .PLAN": {
       backgroundColor: theme.primaryColor[0],
     },
-    "& .EXISTING": {
+    "& .CANCEL": {
       backgroundColor: theme.primaryColor[2],
     },
     "& .COMPLETED": {
+      backgroundColor: theme.primaryColor[3],
+    },
+    "& .EXISTING": {
       backgroundColor: theme.primaryColor[3],
     },
   },
@@ -124,7 +127,7 @@ const TreatmentItem = ({
             <span className={classes.historyItemTime}>
               {ConvertDateTimes.formatDate(
                 treatmentTime,
-                strings.defaultDateTimeFormat
+                strings.defaultDateFormat
               )}{" "}
             </span>
           </span>
@@ -141,7 +144,7 @@ const TreatmentItem = ({
                 {t(strings.date)}:{" "}
                 {ConvertDateTimes.formatDate(
                     treatmentTime,
-                    strings.defaultDateTimeFormat
+                    strings.defaultDateFormat
                 )}
                 </div>
                 <div>
