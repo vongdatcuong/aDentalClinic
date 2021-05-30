@@ -384,6 +384,18 @@ const InsertPatient = (props) => {
                                         helperText={emailError}
                                         /> 
                         </FormControl>
+                        
+                        <FormControl className={classes.item}>
+                            
+                            <TextField className={classes.inputControlBig} 
+                                        label={t(strings.note)}
+                                        variant="outlined" 
+                                        onChange={handleChangePatientNote}
+                                        value={patientNote}
+                                        multiline
+                                        rows={4}
+                                        /> 
+                        </FormControl>
                         <FormControl className={classes.itemSelect}>
                             <InputLabel id="gender">
                                 {t(strings.gender)}
@@ -439,7 +451,6 @@ const InsertPatient = (props) => {
                                 label={t(strings.inactive)}
                             />
                         </FormControl>
-                        
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
@@ -502,17 +513,7 @@ const InsertPatient = (props) => {
                                         rows={4}
                                         /> 
                         </FormControl>
-                        <FormControl className={classes.item}>
-                            
-                            <TextField className={classes.inputControlBig} 
-                                        label={t(strings.note)}
-                                        variant="outlined" 
-                                        onChange={handleChangePatientNote}
-                                        value={patientNote}
-                                        multiline
-                                        rows={4}
-                                        /> 
-                        </FormControl>
+                        
                         
                     </Grid>
                 </Grid>
