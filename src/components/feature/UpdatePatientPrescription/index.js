@@ -122,7 +122,11 @@ const UpdatePatientPrescription = (props) => {
         setDispensed(e.target.value);
     }
     const handleChangeExpired=(e,date)=>{
-        setExpired(date);
+        if(props.editable===true)
+        {
+            setExpired(date);
+        }
+        
     }
 
     const handleChangeSelectedRow=(value)=>{

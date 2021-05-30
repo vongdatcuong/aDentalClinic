@@ -63,14 +63,24 @@ const DialogReferralUpdate = (props) => {
     
 
     const handleChangeDate=(e,value)=>{
-        setDate(value);
+        if(props.editable===true)
+        {
+            setDate(value);
+        }
+        
     }
     
     const handleChangeType=(e)=>{
-        setType(e.target.value);
+        if(props.editable===true)
+        {
+            setType(e.target.value);
+        }
     }
     const handleChangeReferral=(e)=>{
-        setReferral(e.target.value);
+        if(props.editable===true)
+        {
+            setReferral(e.target.value);
+        }
     }
     const getPatient=async()=>{
         const res=await PatientService.getPatient();
@@ -225,6 +235,7 @@ const DialogReferralUpdate = (props) => {
                                 value={referral}
                                 onChange={handleChangeReferral}
                                 disableUnderline 
+                                disabled={!props.editable}
                                 className={classes.status}
                             >
                                 
@@ -284,6 +295,7 @@ const DialogReferralUpdate = (props) => {
                             onChange={handleChangeReferral}
                             disableUnderline 
                             className={classes.status}
+                            disabled={!props.editable}
                     >                            
                             {renderListReferral()}
 

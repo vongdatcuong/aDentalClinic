@@ -53,7 +53,10 @@ const UpdatePatientRecall = (props) => {
     const [isActive,setIsActive]=useState(true);
     
     const handleChangeRecallDate=(e,date)=>{
-        setRecallDate(date);
+        if(props.editable===true)
+        {
+            setRecallDate(date);
+        }
     }
     const handleChangeNote=(e)=>{
         setNote(e.target.value);
