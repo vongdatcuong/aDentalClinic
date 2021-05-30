@@ -225,20 +225,10 @@ const insertPatientPrescriptionStyle = (theme) => ({
             color:theme.grayColor[0],
         },
         '& .MuiInputLabel-formControl':{
-            marginLeft:'15px',
+            // marginLeft:'15px',
             // marginTop:'10px',
         },
-        // '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&:hover fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //         borderColor: theme.primaryColor[0],
-        //     },
-        // },
+       
         
     
 
@@ -264,7 +254,16 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     item:{
         marginTop:'15px',
-        
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'40px',
+            marginTop:'-5px',
+        }
+    },
+    itemDate:{
+        marginTop:'15px',
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'10px',
+        }
     },
     itemSelect:{
         marginTop:'35px',
@@ -279,6 +278,9 @@ const insertPatientPrescriptionStyle = (theme) => ({
         '& .MuiSelect-select':{
             paddingLeft:'15px',
         },
+        '& .MuiInputLabel-formControl':{
+            marginLeft:'10px',
+        }
     },
     itemSmall:{
         display:'flex',

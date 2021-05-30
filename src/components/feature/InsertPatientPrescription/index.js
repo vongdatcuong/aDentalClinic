@@ -365,9 +365,11 @@ const InsertPatientPrescription = (props) => {
                         </FormControl>
                         
                         <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.refill)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        label={t(strings.refill)}  
                                         variant="outlined" 
                                         onChange={handleChangeRefill}
                                         value={refill}
@@ -375,8 +377,10 @@ const InsertPatientPrescription = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.quantity)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
-                                        label={t(strings.quantity)}  
                                         variant="outlined" 
                                         onChange={handleChangeQuantity}
                                         value={quantity}
@@ -387,7 +391,7 @@ const InsertPatientPrescription = (props) => {
                         
                     </Grid>
                     <Grid item xs={6} className={classes.rightContent}>
-                    <FormControl className={classes.item}>
+                        <FormControl className={classes.itemDate}>
                             
                             <KeyboardDatePicker
                                 margin="normal"
@@ -407,9 +411,11 @@ const InsertPatientPrescription = (props) => {
                         </FormControl>
                     
                         <FormControl className={classes.item}>
+                            <InputLabel shrink>
+                                {t(strings.dispensed)}
+                            </InputLabel>
                             <TextField className={classes.inputControl} 
                                         required 
-                                        label={t(strings.dispensed)}  
                                         variant="outlined" 
                                         onChange={handleChangeDispensed}
                                         value={dispensed}
@@ -417,9 +423,10 @@ const InsertPatientPrescription = (props) => {
                                         /> 
                         </FormControl>
                         <FormControl className={classes.item}>
-                            <TextField className={classes.inputControlBig} 
-                                        
-                                        label={t(strings.description)}  
+                            <InputLabel shrink>
+                                {t(strings.description)}
+                            </InputLabel>
+                            <TextField className={classes.inputControlBig}                                         
                                         variant="outlined" 
                                         onChange={handleChangeDescription}
                                         value={description}
