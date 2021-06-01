@@ -179,6 +179,7 @@ const request = "Request";
 const atTime = "At time";
 const exportStr = "Export";
 const source = "Source";
+const seconds = "seconds";
 // Messages
 
     // Success Messages
@@ -196,6 +197,9 @@ const updateAppointmentSuccess = "Update Appointment successfully";
     // Success Messages Settings
 const updateUserProfileSuccess = "Update Profile successfully";
 const changePwdSuccess = "Change Password successfully";
+    // Success Messages Payment
+const makePaymentSuccess = "Make payment successfully. Redirect to Patient Profile in";
+const updatePaymentSuccess = "Update payment successfully";
     // Error Messages
 const errorNoDrug="You can't insert prescription if it don't have drug";
 const errorStartEndTime="Time is invalid";
@@ -270,6 +274,12 @@ const staffErrMsg = "Staff is required";
 const referralSourceErrMsg = "Source is required";
     // Error Messages Treatments
 const treatmentDateErrMsg = "Treatment date must be in the future";
+    // Error Messages Payments
+const payErrMsg = "Pay amount is required";
+const payNotEnoughErrMsg = "Pay amount is not enough";
+const makePaymentErrMsg = "Make payment fail";
+const updatePaymentErrMsg = "Update payment fail";
+const deletePaymentErrMsg = "Delete payment fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -473,6 +483,15 @@ const viewAppointDocument = "View appointments document";
 const viewAppointOfPatientDocument = "View appointments of patient document";
 const noPatientLoadAllAppoints = "If no patient is provided, all appointments will be loaded";
 
+// Transaction
+const transaction = "Transaction";
+const amount = "Amount";
+const paid = "Paid";
+const changeMoney = "Change Money";
+const totalAmount = "Total amount";
+const noTransactionsPending = "Currently there are no payments pending";
+const transactionDate = "Transaction Date";
+
 export default {
     appointment,
     patient,
@@ -529,6 +548,7 @@ export default {
     atTime,
     exportStr,
     source,
+    seconds,
     // Messages
     // Success Messages
     updateAccountSuccess,
@@ -547,6 +567,9 @@ export default {
     // Success Messages Settings
     updateUserProfileSuccess,
     changePwdSuccess,
+    // Success Messages Payment
+    makePaymentSuccess,
+    updatePaymentSuccess,
     // Error Messages
     errorNoDrug,
     errorStartEndTime,
@@ -618,6 +641,12 @@ export default {
     referralSourceErrMsg,
     // Error Messages Treatments
     treatmentDateErrMsg,
+    // Error Messages Payments
+    payErrMsg,
+    payNotEnoughErrMsg,
+    makePaymentErrMsg,
+    updatePaymentErrMsg,
+    deletePaymentErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,
@@ -911,4 +940,12 @@ export default {
     viewAppointDocument,
     viewAppointOfPatientDocument,
     noPatientLoadAllAppoints,
+    // Transaction
+    transaction,
+    amount,
+    paid,
+    changeMoney,
+    totalAmount,
+    noTransactionsPending,
+    transactionDate
 };

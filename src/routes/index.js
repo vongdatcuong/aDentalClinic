@@ -41,6 +41,7 @@ import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
 import AddTreatmentPage from '../components/feature/AddTreatmentPage';
 import UpdateTreatmentPage from '../components/feature/UpdateTreatmentPage';
+import AddPaymentPage from '../components/feature/AddPaymentPage';
 
 function PatientProfile() {
     let { patientID } = useParams();
@@ -111,6 +112,11 @@ function AddTreatment() {
 function UpdateTreatment() {
     let { patientID, treatmentID } = useParams();
     return <UpdateTreatmentPage patientID={patientID} treatmentID={treatmentID}/>;
+}
+
+function AddPayment(){
+  let { patientID } = useParams();
+    return <AddPaymentPage patientID={patientID}/>;
 }
 
 
@@ -313,6 +319,12 @@ function Routes() {
           <PageContainer>
             <LeftSidebar/>
             <Management/>
+          </PageContainer>
+        </PrivateRoute>
+        {/* Transaction */}
+        <PrivateRoute path={path.addPaymentPath}>
+          <PageContainer>
+            <AddPayment />
           </PageContainer>
         </PrivateRoute>
     </Switch>

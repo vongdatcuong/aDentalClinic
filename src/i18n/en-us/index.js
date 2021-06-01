@@ -60,6 +60,7 @@ export default {
         "At time": "At",
         "Export": "Export",
         "Source": "Source",
+        "seconds": "seconds",
         // Messages
         // Success Messages
         "Update Account Success": "Update Account Success",
@@ -73,6 +74,9 @@ export default {
         // Success Messages Settings
         "Update Profile successfully": "Update Profile successfully",
         "Change Password successfully": "Change Password successfully",
+        // Success Messages Payment
+        "Make payment successfully. Redirect to Patient Profile in": "Make payment successfully. Redirect to Patient Profile in",
+        "Update payment successfully": "Update payment successfully",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
@@ -153,6 +157,12 @@ export default {
         "Source is required": "Source is required",
         // Error Messages Treatment
         "Treatment date must be in the future": "Treatment date must be in the future",
+        // Error Messages Payments
+        "Pay amount is required": "Pay amount is required",
+        "Pay amount is not enough": "Pay amount is not enough",
+        "Make payment fail": "Make payment fail",
+        "Update payment fail": "Update payment fail",
+        "Delete payment fail": "Delete payment fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",
@@ -445,6 +455,14 @@ export default {
         "View patient document": "View patient document",
         "View appointments document": "View appointment document",
         "View appointments of patient document": "View appointment of patient document",
-        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded"
+        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded",
+        // Transaction
+        "Transaction": "Transaction",
+        "Amount": "Amount",
+        "Paid": "Paid",
+        "Change Money": "Change",
+        "Total amount": "Total amount",
+        "Currently there are no payments pending": "Currently there are no payments pending",
+        "Transaction Date": "Transaction Date"
     }
 }

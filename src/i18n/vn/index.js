@@ -60,6 +60,7 @@ export default {
         "At time": "Lúc",
         "Export": "Xuất",
         "Source": "Nguồn",
+        "seconds": "giây",
         // Messages
         // Success Messages
         "Update Account Success": "Cập nhật tài khoản thành công",
@@ -73,6 +74,9 @@ export default {
         // Success Messages Settings
         "Update Profile successfully": "Cập nhật thông tin thành công",
         "Change Password successfully": "Đổi mật khẩu thành công",
+        // Success Messages Payment
+        "Make payment successfully. Redirect to Patient Profile in": "Thực hiện thanh toán thành công. Về trang hồ sơ bệnh nhân trong",
+        "Update payment successfully": "Cập nhật thanh toán thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
         "You can't insert prescription if it don't have drug":"Không thể thêm đơn thuốc nếu không có thuốc",
@@ -152,6 +156,12 @@ export default {
         "Source is required": "Nguồn không được để trống",
         // Error Messages Treatment
         "Treatment date must be in the future": "Ngày điều trị phải ở tương lai",
+        // Error Messages Payments
+        "Pay amount is required": "Số tiền thanh toán không được để trống",
+        "Pay amount is not enough": "Số tiền thanh toán không đủ",
+        "Make payment fail": "Thực hiện thanh toán thất bại",
+        "Update payment fail": "Cập nhật thanh toán thất bại",
+        "Delete payment fail": "Xóa thanh toán thất bại",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",
@@ -444,6 +454,14 @@ export default {
         "View patient document": "Xem tài liệu bệnh nhân",
         "View appointments document": "Xem tài liệu các cuộc hẹn",
         "View appointments of patient document": "Xem tài liệu các cuộc hẹn của bệnh nhân",
-        "If no patient is provided, all appointments will be loaded": "Nếu không có lựa chọn nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên"
+        "If no patient is provided, all appointments will be loaded": "Nếu không có lựa chọn nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên",
+        // Transaction
+        "Transaction": "Giao dịch",
+        "Amount": "Thành tiền",
+        "Paid": "Tiền trả",
+        "Change Money": "Tiền thối",
+        "Total amount": "Tổng tiền",
+        "Currently there are no payments pending": "Hiện tại không có thanh toán nào nào",
+        "Transaction Date": "Ngày thanh toán"
     }
 }

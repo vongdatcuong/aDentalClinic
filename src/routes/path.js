@@ -39,6 +39,7 @@ const patientInfoPath = '/patient/:patientID/info';
 const profilePath = '/profile';
 const addTreatmentPath = '/patient/:patientID/addTreatment';
 const updateTreatmentPath = '/patient/:patientID/updateTreatment/:treatmentID';
+const addPaymentPath = '/patient/:patientID/addPayment';
 
 const path = {
     defaultPath,
@@ -77,6 +78,7 @@ const path = {
     profilePath,
     addTreatmentPath,
     updateTreatmentPath,
+    addPaymentPath,
     //insert
     insertPersonPath,
     

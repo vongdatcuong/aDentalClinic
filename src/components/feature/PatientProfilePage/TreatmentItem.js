@@ -163,10 +163,10 @@ const TreatmentItem = ({
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          {/* <Button size="small" color="secondary">
+          {/* <Button size="small" color="secondary" variant="outlined">
             {t(strings.btnDelete)}
           </Button> */}
-          <Button size="small" color="primary" onClick={() =>
+          <Button size="small" color="primary" variant="contained" onClick={() =>
                     history.push(
                       path.updateTreatmentPath.replace(":patientID", patientID).replace(":treatmentID", treatmentID)
                     )
