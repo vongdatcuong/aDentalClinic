@@ -1,6 +1,6 @@
-import React,{useState,useEffect, useCallback} from 'react';
+import React,{useState,useEffect, useCallback, useContext} from 'react';
 import { useParams, useHistory } from "react-router-dom";
-import { makeStyles, useTheme  } from "@material-ui/core/styles";
+import { makeStyles  } from "@material-ui/core/styles";
 
 // @material-ui/core Component
 import Container from '@material-ui/core/Container';
@@ -24,6 +24,8 @@ import TransactionItem from './TransactionItem.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import TreatmentItem from "./TreatmentItem.js";
 import UpdatePaymentDialog from "./UpdatePaymentDialog";
+import ConfirmDialog from '../../dialogs/ConfirmDialog';
+
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
@@ -33,12 +35,16 @@ import { FaScroll } from 'react-icons/fa';
 import TreatmentService from "../../../api/treatment/treatment.service";
 import TransactionService from "../../../api/transaction/transaction.service";
 
+// Context
+import {loadingStore} from '../../../contexts/loading-context';
+
 const useStyles = makeStyles(styles);
 
 const PatientProfilePage = ({ patientID }) => {
     const history = useHistory();
     const {t, i18n } = useTranslation();
     const classes = useStyles();
+    const {loadingState, dispatchLoading} = useContext(loadingStore);
 
     const [curTab, setCurTab] = React.useState(0);
     const [fullname, setFullname] = useState("unknown");
@@ -57,7 +63,8 @@ const PatientProfilePage = ({ patientID }) => {
 
     // Dialog
     const [openUpdatePayDialog, setOpenUpdatePayDialog] = useState(false);
-    const [updatedTransactionIdx, setUpdatedTransactionIdx] = useState(0);
+    const [openDeletePayDialog, setOpenDeletePayDialog] = useState(false);
+    const [selectedTransactionIdx, setSelectedTransactionIdx] = useState(0);
 
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
@@ -198,7 +205,7 @@ const PatientProfilePage = ({ patientID }) => {
             return_amount: Number(transaction.return_amount?.$numberDecimal) || 0,
             note: transaction.note || "",
             treatment_list: transaction.treatment_list,
-            is_deleted: transaction.is_deleted,
+            is_delete: transaction.is_delete,
           }))
           setTransactions(newTransactions);
           return true;
@@ -214,7 +221,7 @@ const PatientProfilePage = ({ patientID }) => {
     // Update Payment
     const handleOpenUpdatePayDialog = useCallback((index) => {
       setOpenUpdatePayDialog(true);
-      setUpdatedTransactionIdx(index);
+      setSelectedTransactionIdx(index);
     },[]);
 
     const handleCloseUpdatePayDialog = useCallback(() => {
@@ -223,12 +230,13 @@ const PatientProfilePage = ({ patientID }) => {
 
     const handleUpdateTransaction = useCallback(async (transactionID, note) => {
       try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
         const result = await TransactionService.updatePatientPayment(transactionID, {
           note: note
         });
         if (result.success) {
           let newTransactions = [...transactions];
-          newTransactions[updatedTransactionIdx].note = note;
+          newTransactions[selectedTransactionIdx].note = note;
           setTransactions(newTransactions);
           handleCloseUpdatePayDialog();
         } else {
@@ -236,8 +244,41 @@ const PatientProfilePage = ({ patientID }) => {
         }
       } catch (err) {
         toast.error(t(strings.updatePaymentErrMsg));
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
       }
-    }, [transactions, updatedTransactionIdx]);
+    }, [transactions, selectedTransactionIdx]);
+
+    // Delete Payment
+    const handleOpenDeletePayDialog = useCallback((index) => {
+      setOpenDeletePayDialog(true);
+      setSelectedTransactionIdx(index);
+    },[]);
+
+    const handleCloseDeletePayDialog = useCallback(() => {
+      setOpenDeletePayDialog(false);
+    },[]);
+
+    const handleDeleteTransaction = useCallback(async () => {
+      try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
+        const result = await TransactionService.updatePatientPayment(transactions[selectedTransactionIdx]._id, {
+          is_delete: true
+        });
+        if (result.success) {
+          let newTransactions = [...transactions];
+          newTransactions[selectedTransactionIdx].is_delete = true;
+          setTransactions(newTransactions);
+          handleCloseDeletePayDialog();
+        } else {
+          toast.error(result.message);
+        }
+      } catch (err) {
+        toast.error(t(strings.deletePaymentErrMsg));
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
+      }
+    }, [transactions, selectedTransactionIdx]);
 
     return (
       <React.Fragment>
@@ -328,6 +369,7 @@ const PatientProfilePage = ({ patientID }) => {
                               key={index}
                               data={transaction}
                               onUpdate={() => handleOpenUpdatePayDialog(index)}
+                              onDelete={() => handleOpenDeletePayDialog(index)}
                             />
                           )
                         })
@@ -463,10 +505,17 @@ const PatientProfilePage = ({ patientID }) => {
           />
           <UpdatePaymentDialog
             open={openUpdatePayDialog}
-            transaction={transactions[updatedTransactionIdx]}
+            transaction={transactions[selectedTransactionIdx]}
             onClose={handleCloseUpdatePayDialog}
             onUpdate={handleUpdateTransaction}
           />
+          <ConfirmDialog
+            open={openDeletePayDialog}
+            onClose={handleCloseDeletePayDialog}
+            action={handleDeleteTransaction}
+          >
+            {t(strings.deleteConfirmMessage)}
+          </ConfirmDialog>
         </Container>
       </React.Fragment>
     );

@@ -57,7 +57,7 @@ const useStyles = makeStyles(styles);
 
 const TransactionItem = ({
   data,
-  onUpdate
+  onUpdate, onDelete
 }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
@@ -100,7 +100,7 @@ const TransactionItem = ({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
-          className={clsx(data.is_deleted && classes.deletedPayment)}
+          className={clsx(data.is_delete && classes.deletedPayment)}
         >
           <span className={classes.historyItemContent}>
             {generateTransactionTitle()}
@@ -143,7 +143,7 @@ const TransactionItem = ({
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button size="small" color="secondary" variant="outlined">
+          <Button size="small" color="secondary" variant="outlined" onClick={onDelete}>
             {t(strings.btnDelete)}
           </Button>
           <Button size="small" color="primary" variant="contained" onClick={onUpdate}>
