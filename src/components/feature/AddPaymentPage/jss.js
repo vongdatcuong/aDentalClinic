@@ -31,7 +31,7 @@ const styles = (theme) => ({
   },
   inputPaperWrapper: {
     width: '100%',
-    padding: theme.spacing(1)
+    padding: theme.spacing(2)
   },
   addBtn: {
     paddingLeft: theme.spacing(5),
@@ -40,6 +40,9 @@ const styles = (theme) => ({
   },
   titleColumn: {
     fontWeight: 600
+  },
+  noDataWrapper: {
+    textAlign: 'center'
   }
 });
 

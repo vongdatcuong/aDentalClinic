@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
 import style from "./jss";
 import strings from "../../../configs/strings";
-import figures from "../../../configs/figures";
-import lists from "../../../configs/lists";
 
 // moment
-import moment from "moment";
 
 // use i18next
 import { useTranslation, Trans } from "react-i18next";
@@ -28,6 +25,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
+import NoDataIcon from "../../common/NoDataIcon";
 
 // Toast
 import { toast } from "react-toastify";
@@ -44,6 +42,9 @@ import { loadingStore } from "../../../contexts/loading-context";
 // Utils
 import ConvertDateTimes from "../../../utils/datetimes/convertDateTimes";
 
+// Route
+import path from "../../../routes/path.js";
+
 
 const useStyles = makeStyles(style.styles);
 
@@ -57,47 +58,27 @@ const AddTreatmentPage = ({ patientID }) => {
   const emptyStr = "...";
   
   // States
-  const [treatments, setTreatments] = useState([]);
+  const [transaction, setTransaction] = useState({});
+  const [changeAmount, setChangeAmount] = useState(0);
   const [pay, setPay] = useState(0);
   const [note, setNote] = useState("");
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+
+  const [payErrMsg, setPayErrMsg] = useState("");
 
   // Ref
   const payRef = useRef(null);
   const noteRef = useRef(null);
-
-  const TAX_RATE = 0.07;
-  function ccyFormat(num) {
-    return `${num.toFixed(2)}`;
-  }
-  
-  function priceRow(qty, unit) {
-    return qty * unit;
-  }
-  
-  function createRow(desc, qty, unit) {
-    const price = priceRow(qty, unit);
-    return { desc, qty, unit, price };
-  }
-  
-  function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-  }
-
-  const rows = [
-    createRow('Paperclips (Box)', 100, 1.15),
-    createRow('Paper (Case)', 10, 45.99),
-    createRow('Waste Basket', 2, 17.99),
-  ];
-
-  const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   
   // fetch category
   useEffect(async () => {
     try {
       const result = await TransactionService.getPatientPaymentInfo(patientID);
-      if (result.success) { console.log(result.payload.treatment_list);
-        setTreatments(result.payload.treatment_list);
+      if (result.success) {
+        setTransaction(result.payload);
+        if (result.payload.treatment_list && result.payload.treatment_list.length > 0){
+          setSubmitDisabled(false);
+        }
       } else {
         toast.error(result.message);
       }
@@ -111,18 +92,64 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 
   
   const handleOnPayChange = (evt) => {
-    setPay(evt.target.value);
+    let newPay = Number(evt.target.value);
+    setPay(newPay);
+    let newChangeAmount = newPay - (transaction.amount || 0);
+    setChangeAmount((newChangeAmount > 0)? newChangeAmount : 0);
   }
 
   const handleOnNoteChange = (evt) => {
     setNote(evt.target.value);
   }
 
+  const handleOnAddPayment = useCallback(async (evt) => {
+    evt.preventDefault();
+
+    let isValid = true;
+    // Pay
+    if (!pay){
+        setPayErrMsg(t(strings.payErrMsg));
+        isValid = false;
+    } 
+    // Pay amount > transaction amount
+    else if (pay < transaction.amount){
+      setPayErrMsg(t(strings.payNotEnoughErrMsg));
+      isValid = false;
+    } else {
+      setPayErrMsg("");
+    }
+
+    if (isValid){
+      setSubmitDisabled(true);
+      try {
+        const result = await TransactionService.addPatientPayment({
+          ...transaction,
+          paid_amount: pay || 0,
+          note: note || "",
+        });
+        if (result.success){
+          toast.success(t(strings.makePaymentSuccess) + " 5 " + t(strings.seconds), {
+            hideProgressBar: false,
+            autoClose: 5000,
+            onClose: () => {
+              history.push(path.patientProfilePath.replace(':patientID', patientID));
+            }
+          });
+        } else {
+          toast.error(result.message);
+          setSubmitDisabled(false);
+        }
+      } catch (err){
+        toast.error(t(strings.makePaymentErrMsg));
+          setSubmitDisabled(false);
+      }
+    }
+  }, [transaction, pay, note]);
+
   return (
     <React.Fragment>
       <TreatmentMenu patientID={patientID} />
       <Container className={classes.container}>
-        {/* <PopupChat></PopupChat> */}
         <Typography className={classes.title} variant="h5" component="h5">{t(strings.payment)}</Typography>
         <Grid
           container xs={12} sm={12} md={12} spacing={2}
@@ -133,29 +160,36 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
               <Table className={classes.table} aria-label="spanning table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" className={classes.titleColumn}>#</TableCell>
-                    <TableCell align="center" className={classes.titleColumn}>{t(strings.procedureCode)}</TableCell>
-                    <TableCell align="center" className={classes.titleColumn}>{t(strings.date)}</TableCell>
-                    <TableCell align="center" className={classes.titleColumn}>{t(strings.description)}</TableCell>
-                    <TableCell align="center" className={classes.titleColumn}>{t(strings.fee)}</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="5%">#</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="10%">{t(strings.procedureCode)}</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="15%">{t(strings.date)}</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="45%">{t(strings.description)}</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="15%">{t(strings.fee)} ({t(strings.CURRENCY_PRE)})</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {treatments.map((treatment, index) => (
-                    <TableRow key={treatment._id}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell align="right">{treatment.procedure_code || emptyStr}</TableCell>
-                      <TableCell align="right">{(treatment.treatment_date)? ConvertDateTimes.formatDate(treatment.treatment_date, strings.defaultDateFormat) : emptyStr}</TableCell>
-                      <TableCell align="right">{treatment.description || emptyStr}</TableCell>
-                      <TableCell align="right">{Number(treatment.fee?.$numberDecimal) || emptyStr}</TableCell>
+                  {(transaction.treatment_list && transaction.treatment_list.length > 0)? 
+                    <React.Fragment>
+                      {transaction.treatment_list.map((treatment, index) => (
+                        <TableRow key={treatment._id}>
+                          <TableCell align="center" width="5%">{index + 1}</TableCell>
+                          <TableCell align="center">{treatment.ada_code || emptyStr}</TableCell>
+                          <TableCell align="center">{(treatment.treatment_date)? ConvertDateTimes.formatDate(treatment.treatment_date, strings.defaultDateFormat) : emptyStr}</TableCell>
+                          <TableCell align="left">{treatment.description || emptyStr}</TableCell>
+                          <TableCell align="center">{treatment.fee?.$numberDecimal? Number(treatment.fee?.$numberDecimal) : emptyStr}</TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell rowSpan={3} />
+                        <TableCell colSpan={3} align="right"><b>{t(strings.total)}</b></TableCell>
+                        <TableCell align="center"><b>{transaction.amount}</b></TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                    : 
+                    <TableRow>
+                      <TableCell colSpan={5} className={classes.noDataWrapper}><NoDataIcon/></TableCell>
                     </TableRow>
-                  ))}
-
-                  <TableRow>
-                    <TableCell rowSpan={3} />
-                    <TableCell colSpan={2}>{t(strings.total)}</TableCell>
-                    <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-                  </TableRow>
+                  }
                 </TableBody>
               </Table>
             </TableContainer>
@@ -163,56 +197,56 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
           <Grid container item md={3} sm={3} xs={4}>
             <Paper className={classes.inputPaperWrapper}>
               {/* Pay */}
-              <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
-                  {/* Group title */}
-                  <Grid item md={12} sm={12} xs={12}>
-                      <TextField
-                          label={t(strings.payment) + " ($)"}
-                          id="appointment-note"
-                          className={classes.textField}
-                          margin="dense"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          type="number"
-                          onBlur={handleOnPayChange}
-                          inputRef={payRef}
-                          InputProps={
-                            { 
-                              inputProps: { 
-                                step: 0.01
-                              } 
-                            }
-                          }
-                          InputLabelProps={{
-                              shrink: true
-                          }}
-                      />
-                  </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                  <TextField
+                      label={t(strings.payment) + " ($)"}
+                      id="payment-amount"
+                      className={classes.textField}
+                      margin="dense"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      type="number"
+                      onBlur={handleOnPayChange}
+                      inputRef={payRef}
+                      InputProps={
+                        { 
+                          inputProps: { 
+                            step: 0.01
+                          } 
+                        }
+                      }
+                      InputLabelProps={{
+                          shrink: true
+                      }}
+                      helperText={payErrMsg}
+                      error={Boolean(payErrMsg)}
+                  />
               </Grid>
               <br/>
               {/* Note */}
-              <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
-                  {/* Group title */}
-                  <Grid item md={12} sm={12} xs={12}>
-                      <TextField
-                          label={t(strings.note)}
-                          id="payment-note"
-                          className={classes.textField}
-                          margin="dense"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          type="text"
-                          multiline
-                          rows={6}
-                          onBlur={handleOnNoteChange}
-                          inputRef={noteRef}
-                          InputLabelProps={{
-                              shrink: true
-                          }}
-                      />
-                  </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                  <TextField
+                      label={t(strings.note)}
+                      id="payment-note"
+                      className={classes.textField}
+                      margin="dense"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      type="text"
+                      multiline
+                      rows={6}
+                      onBlur={handleOnNoteChange}
+                      inputRef={noteRef}
+                      InputLabelProps={{
+                          shrink: true
+                      }}
+                  />
+              </Grid>
+              {/* Return amount */}
+              <Grid item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
+                  <span><b>{t(strings.changeMoney)}</b>: ${changeAmount || 0}</span>
               </Grid>
               {/* Button */}
               <Grid container item md={12} sm={12} xs={12} spacing={1} className={classes.formGroup}>
@@ -220,6 +254,8 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
                     variant="contained"
                     color="primary"
                     className={classes.addBtn}
+                    onClick={handleOnAddPayment}
+                    disabled={submitDisabled}
                   >
                     {t(strings.add)}
                   </Button>

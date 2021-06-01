@@ -70,28 +70,6 @@ const TransactionItem = ({
     return fullTransactionTitle.trim();
   }
 
-  function parseSelectedTooth(treatmentSelectedTooth) {
-    if (!treatmentSelectedTooth){
-      return "";
-    }
-    let displayString = "";
-    treatmentSelectedTooth.forEach((tooth) => {
-      if (tooth.isSelected === true) {
-        displayString += "\n\tTooth " + tooth.toothNumber;
-        if (tooth.distal || tooth.mesial || tooth.facial || tooth.lingual || tooth.top || tooth.root) {
-            displayString += ": ";
-            displayString += tooth.distal === true ? "D" : "";
-            displayString += tooth.mesial === true ? "M" : "";
-            displayString += tooth.facial === true ? "F" : "";
-            displayString += tooth.lingual === true ? "L" : "";
-            displayString += tooth.top === true ? "T" : "";
-            displayString += tooth.root === true ? "R" : "";
-        }
-      }
-    });
-    return displayString;
-  }
-
   function renderTreatmentList(treatmentList){
     if (!treatmentList){
       return "";
@@ -104,7 +82,7 @@ const TransactionItem = ({
           <ul>
             <li>{t(strings.description)}: {treatment.description}</li>
             <li>{t(strings.fee)}: ${treatment.fee?.$numberDecimal}</li>
-            <li>{t(strings.date)}: {ConvertDateTimes.formatDate(treatment.treatment_date, strings.defaultDateTimeFormat)}</li>
+            <li>{t(strings.date)}: {ConvertDateTimes.formatDate(treatment.treatment_date, strings.defaultDateFormat)}</li>
             {treatment.tooth && <li>{t(strings.tooth)}: {treatment.tooth}</li>}
             {treatment.surface && <li>{t(strings.surface)}: {treatment.surface}</li>}
           </ul>
@@ -130,7 +108,7 @@ const TransactionItem = ({
             <span className={classes.historyItemTime}>
               {ConvertDateTimes.formatDate(
                 data.transaction_date,
-                strings.defaultDateTimeFormat
+                strings.defaultDateFormat
               )}{" "}
             </span>
           </span>
@@ -138,9 +116,9 @@ const TransactionItem = ({
         <AccordionDetails className={classes.details}>
             <div>
                 <div>
-                {t(strings.date)}: {ConvertDateTimes.formatDate(
+                {t(strings.transactionDate)}: {ConvertDateTimes.formatDate(
                     data.transaction_date,
-                    strings.defaultDateTimeFormat
+                    strings.defaultDateFormat
                 )}
                 </div>
                 <div>
@@ -153,7 +131,7 @@ const TransactionItem = ({
                 {t(strings.paid)}: ${data.paid_amount} 
                 </div>
                 <div>
-                {t(strings.returned)}: ${data.return_amount} 
+                {t(strings.changeMoney)}: ${data.return_amount} 
                 </div>
                 <div>
                 {t(strings.note)}: {data.note || "..."} 

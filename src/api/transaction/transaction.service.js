@@ -21,6 +21,14 @@ class TransactionService {
         });
         return result;
     }
+    async addPatientPayment(body){
+        body = body || {};
+        const result = await httpPost({
+            url: apiPath.transaction.transaction,
+            body: body
+        });
+        return result;
+    }
 }
 
 export default new TransactionService();
