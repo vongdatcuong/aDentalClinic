@@ -159,7 +159,7 @@ const LeftSidebar = (props) => {
         </Tooltip>
 
     const funcList = <FunctionList
-      functions={[notification, logout]}
+      functions={[/*notification,*/ logout]}
     />
 
     const toggleLeftSidebar = (val) => {      
