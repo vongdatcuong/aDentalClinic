@@ -40,6 +40,7 @@ import Report from '../components/feature/Report';
 import Patients from '../components/feature/Patients';
 import InsertPerson from "../components/feature/InsertPerson";
 import AddTreatmentPage from '../components/feature/AddTreatmentPage';
+import AddPaymentPage from '../components/feature/AddPaymentPage';
 
 function PatientProfile() {
     let { patientID } = useParams();
@@ -106,6 +107,11 @@ function ToothChart() {
 function AddTreatment() {
     let { patientID } = useParams();
     return <AddTreatmentPage patientID={patientID}/>;
+}
+
+function AddPayment(){
+  let { patientID } = useParams();
+    return <AddPaymentPage patientID={patientID}/>;
 }
 
 
@@ -303,6 +309,12 @@ function Routes() {
           <PageContainer>
             <LeftSidebar/>
             <Management/>
+          </PageContainer>
+        </PrivateRoute>
+        {/* Transaction */}
+        <PrivateRoute path={path.addPaymentPath}>
+          <PageContainer>
+            <AddPayment />
           </PageContainer>
         </PrivateRoute>
     </Switch>

@@ -11,26 +11,17 @@ import logoADC from '../../../assets/images/logoADC.png'
 import { useTranslation, Trans } from 'react-i18next';
 import {toast} from 'react-toastify';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { Tabs, Tab, TextareaAutosize, TextField, IconButton, Tooltip } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
+import { Tabs, Tab, TextField, IconButton, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 // Component
 import PopupChat from '../../common/Messenger/PopupChat';
 import TabPanel from '../../common/TabPanel';
-import TreatmentHistory from './TreatmentHistory.js';
+import TransactionItem from './TransactionItem.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
-import Footer from "../../../layouts/Footer";
 import TreatmentItem from "./TreatmentItem.js";
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
@@ -39,6 +30,7 @@ import MacroCheckSelectDialog from './MacroCheckSelectDialog';
 import path from "../../../routes/path";
 import { FaScroll } from 'react-icons/fa';
 import TreatmentService from "../../../api/treatment/treatment.service";
+import TransactionService from "../../../api/transaction/transaction.service";
 
 const useStyles = makeStyles(styles);
 
@@ -60,6 +52,7 @@ const PatientProfilePage = ({ patientID }) => {
     const [medOpen, setMedOpen] = useState(false);
 
     const [treatments, setTreatments] = useState([]);
+    const [transactions, setTransactions] = useState([]);
 
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
@@ -72,9 +65,12 @@ const PatientProfilePage = ({ patientID }) => {
         };
       };
 
-    useEffect(()=>{
-        getPatientProfile();
-        fetchTreatments();
+    useEffect(async ()=>{
+        await Promise.all[
+          getPatientProfile(),
+          fetchTreatments(),
+          fetchTransactions()
+        ]
     }, []);
     
     const getPatientProfile=async()=>{
@@ -180,6 +176,36 @@ const PatientProfilePage = ({ patientID }) => {
       setMedicalIssues(newMedValue);
     }
 
+    // Transaction
+    const fetchTransactions = async () => {
+      try {
+        const result = await TransactionService.getPatientTransaction(patientID, {
+          get_staff: true,
+          get_treatment: true
+        });
+        if (result.success) {
+          let newTransactions = result.payload.map((transaction) => ({
+            _id: transaction._id,
+            transaction_date: transaction.transaction_date,
+            amount: Number(transaction.amount?.$numberDecimal) || 0,
+            provider: transaction.provider,
+            paid_amount: Number(transaction.paid_amount?.$numberDecimal) || 0,
+            return_amount: Number(transaction.return_amount?.$numberDecimal) || 0,
+            note: transaction.note || "",
+            treatment_list: transaction.treatment_list,
+            is_deleted: transaction.is_deleted,
+          }))
+          setTransactions(newTransactions);
+          return true;
+        }
+        toast.error(result.message);
+        return false;
+      } catch (err) {
+        toast.error(t(strings.errorLoadData));
+        return false;
+      }
+    };
+
     return (
       <React.Fragment>
         <TreatmentMenu patientID={patientID} />
@@ -212,7 +238,7 @@ const PatientProfilePage = ({ patientID }) => {
                       {...a11yProps(0)}
                     />
                     <Tab
-                      label={t(strings.history).toUpperCase()}
+                      label={t(strings.payment).toUpperCase()}
                       {...a11yProps(1)}
                     />
                   </Tabs>
@@ -256,7 +282,22 @@ const PatientProfilePage = ({ patientID }) => {
                         </div>
                     </TabPanel>
                     <TabPanel value={curTab} index={1}>
-                      <TreatmentHistory></TreatmentHistory>
+                      {transactions.length > 0 ? "" : t(strings.noTransactionsPending)}
+                      <div className={classes.containerAddRecord}>
+                          <Button simple className={classes.btnAddRecord} onClick={() => history.push(path.addPaymentPath.replace(':patientID', patientID))}>
+                              <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
+                              {t(strings.add)}
+                          </Button>
+                      </div>
+                      {transactions.map((transaction, index) => {
+                          return (
+                            <TransactionItem
+                              key={index}
+                              data={transaction}
+                            />
+                          )
+                        })
+                      }
                     </TabPanel>
                   </Grid>
                 </Grid>

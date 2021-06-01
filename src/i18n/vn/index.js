@@ -444,6 +444,13 @@ export default {
         "View patient document": "Xem tài liệu bệnh nhân",
         "View appointments document": "Xem tài liệu các cuộc hẹn",
         "View appointments of patient document": "Xem tài liệu các cuộc hẹn của bệnh nhân",
-        "If no patient is provided, all appointments will be loaded": "Nếu không có lựa chọn nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên"
+        "If no patient is provided, all appointments will be loaded": "Nếu không có lựa chọn nào được chọn, toàn bộ cuộc hẹn sẽ được tải lên",
+        // Transaction
+        "Transaction": "Giao dịch",
+        "Amount": "Thành tiền",
+        "Paid": "Tiền trả",
+        "Return": "Tiền thối",
+        "Total amount": "Tổng tiền",
+        "Currently there are no payments pending": "Hiện tại không có thanh toán nào nào"
     }
 }

@@ -473,6 +473,14 @@ const viewAppointDocument = "View appointments document";
 const viewAppointOfPatientDocument = "View appointments of patient document";
 const noPatientLoadAllAppoints = "If no patient is provided, all appointments will be loaded";
 
+// Transaction
+const transaction = "Transaction";
+const amount = "Amount";
+const paid = "Paid";
+const returned = "Return";
+const totalAmount = "Total amount";
+const noTransactionsPending = "Currently there are no payments pending";
+
 export default {
     appointment,
     patient,
@@ -911,4 +919,11 @@ export default {
     viewAppointDocument,
     viewAppointOfPatientDocument,
     noPatientLoadAllAppoints,
+    // Transaction
+    transaction,
+    amount,
+    paid,
+    returned,
+    totalAmount,
+    noTransactionsPending
 };

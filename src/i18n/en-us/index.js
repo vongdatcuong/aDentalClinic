@@ -445,6 +445,13 @@ export default {
         "View patient document": "View patient document",
         "View appointments document": "View appointment document",
         "View appointments of patient document": "View appointment of patient document",
-        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded"
+        "If no patient is provided, all appointments will be loaded": "If no option is provided, all appointments will be loaded",
+        // Transaction
+        "Transaction": "Transaction",
+        "Amount": "Amount",
+        "Paid": "Paid",
+        "Return": "Return",
+        "Total amount": "Total amount",
+        "Currently there are no payments pending": "Currently there are no payments pending"
     }
 }

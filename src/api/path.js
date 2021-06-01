@@ -119,6 +119,13 @@ const report = {
     referral: '/referral'
 }
 
+// transaction
+const transaction = {
+    transaction: '/transaction',
+    patient: '/patient',
+    new: '/new'
+}
+
 export {
     authorization,
 }
@@ -143,5 +150,6 @@ export default {
     prescription,
     patientRecall,
     referral,
-    report
+    report,
+    transaction
 };

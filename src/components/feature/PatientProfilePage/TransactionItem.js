@@ -1,18 +1,14 @@
 import Button from "@material-ui/core/Button";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import BackspaceIcon from "@material-ui/icons/Backspace";
 import clsx from "clsx";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
-import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 // use i18next
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 //import styles from "./jss";
 import strings from "../../../configs/strings";
@@ -50,34 +46,34 @@ const styles = (theme) => ({
   treatmentNote: {
     whiteSpace: "pre-wrap",
   },
-
   selectedToothDisplay: {
     whiteSpace: "pre-wrap",
   },
+  deletedPayment: {
+    backgroundImage: 'repeating-linear-gradient(60deg,transparent,transparent 2px,#aaaaaa,#aaaaaa 5px)'
+  }
 });
 const useStyles = makeStyles(styles);
 
-const TreatmentItem = ({
-  treatmentID,
-  treatmentTime,
-  treatmentProvider,
-  treatmentAssistant,
-  treatmentProcedure,
-  treatmentDescription,
-  treatmentNote,
-  treatmentToothShort,
-  treatmentSelectedTooth /*handleUpdateNote, handleDeleteNote*/,
+const TransactionItem = ({
+  data
 }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  
+  // Others
+  const emptyStr = "...";
 
-  function generateTreatmentTitle() {
-    let fullTreatmentTitle = treatmentProcedure;
-    fullTreatmentTitle += treatmentToothShort ? " | " + treatmentToothShort : "";
-    fullTreatmentTitle += " ("+t(strings.provider)+": " + (treatmentProvider.first_name + " " + treatmentProvider.last_name).trim() + ")";
-    return fullTreatmentTitle.trim();
+  function generateTransactionTitle() {
+    let fullTransactionTitle = t(strings.provider) + ": " + (data.provider?.user?.first_name + " " + data.provider?.user?.last_name).trim();
+    fullTransactionTitle += "  |  " + t(strings.totalAmount) + ": $" + data.amount;
+    return fullTransactionTitle.trim();
   }
-  function parseSelectedTooth() {
+
+  function parseSelectedTooth(treatmentSelectedTooth) {
+    if (!treatmentSelectedTooth){
+      return "";
+    }
     let displayString = "";
     treatmentSelectedTooth.forEach((tooth) => {
       if (tooth.isSelected === true) {
@@ -93,8 +89,31 @@ const TreatmentItem = ({
         }
       }
     });
-    return displayString
+    return displayString;
   }
+
+  function renderTreatmentList(treatmentList){
+    if (!treatmentList){
+      return "";
+    }
+    let lis = [];
+    treatmentList.forEach((treatment) => {
+      lis.push(
+        <li>
+          {t(strings.treatment)}: <b>{treatment.ada_code || emptyStr}</b>
+          <ul>
+            <li>{t(strings.description)}: {treatment.description}</li>
+            <li>{t(strings.fee)}: ${treatment.fee?.$numberDecimal}</li>
+            <li>{t(strings.date)}: {ConvertDateTimes.formatDate(treatment.treatment_date, strings.defaultDateTimeFormat)}</li>
+            {treatment.tooth && <li>{t(strings.tooth)}: {treatment.tooth}</li>}
+            {treatment.surface && <li>{t(strings.surface)}: {treatment.surface}</li>}
+          </ul>
+        </li>
+      );
+    });
+    return <ul>{[...lis]}</ul>
+  }
+
   return (
     <div className={classes.historyItemContainer}>
       <Accordion>
@@ -102,14 +121,15 @@ const TreatmentItem = ({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
+          className={clsx(data.is_deleted && classes.deletedPayment)}
         >
           <span className={classes.historyItemContent}>
-            {generateTreatmentTitle()}
+            {generateTransactionTitle()}
           </span>
           <span>
             <span className={classes.historyItemTime}>
               {ConvertDateTimes.formatDate(
-                treatmentTime,
+                data.transaction_date,
                 strings.defaultDateTimeFormat
               )}{" "}
             </span>
@@ -118,30 +138,28 @@ const TreatmentItem = ({
         <AccordionDetails className={classes.details}>
             <div>
                 <div>
-                {t(strings.treatment)}: {treatmentProcedure}
-                </div>
-                <div>
-                {t(strings.description)}: {treatmentDescription}
-                </div>
-                <div>
-                {t(strings.date)}:{" "}
-                {ConvertDateTimes.formatDate(
-                    treatmentTime,
+                {t(strings.date)}: {ConvertDateTimes.formatDate(
+                    data.transaction_date,
                     strings.defaultDateTimeFormat
                 )}
                 </div>
                 <div>
-                {t(strings.provider)}: {treatmentProvider.first_name + " " + treatmentProvider.last_name}
+                {t(strings.provider)}: {data.provider?.user?.first_name + " " + data.provider?.user?.last_name}
                 </div>
                 <div>
-                {t(strings.assistant)}: {treatmentAssistant ? treatmentAssistant.first_name + " " + treatmentAssistant.last_name : t(strings.none)}
+                {t(strings.amount)}: <b>${data.amount}</b>
                 </div>
-                <div className={classes.treatmentNote}>
-                {t(strings.note)}: {treatmentNote === "" ? t(strings.none) : treatmentNote}
+                <div>
+                {t(strings.paid)}: ${data.paid_amount} 
                 </div>
-                <div className={classes.selectedToothDisplay}>
-                { treatmentSelectedTooth && t(strings.selectedTooth) + ": " + parseSelectedTooth()}
+                <div>
+                {t(strings.returned)}: ${data.return_amount} 
                 </div>
+                <div>
+                {t(strings.note)}: {data.note || "..."} 
+                </div>
+                {t(strings.treatments)}:
+                {renderTreatmentList(data.treatment_list)}
             </div>
         </AccordionDetails>
         <Divider />
@@ -158,4 +176,4 @@ const TreatmentItem = ({
   );
 };
 
-export default TreatmentItem;
+export default TransactionItem;
