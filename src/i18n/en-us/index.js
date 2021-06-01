@@ -76,6 +76,7 @@ export default {
         "Change Password successfully": "Change Password successfully",
         // Success Messages Payment
         "Make payment successfully. Redirect to Patient Profile in": "Make payment successfully. Redirect to Patient Profile in",
+        "Update payment successfully": "Update payment successfully",
         // Error Messages
         "Update Account Fail": "Update Account Fail",
         "You can't insert prescription if it don't have drug":"You can't insert prescription if it don't have drug",
@@ -160,6 +161,8 @@ export default {
         "Pay amount is required": "Pay amount is required",
         "Pay amount is not enough": "Pay amount is not enough",
         "Make payment fail": "Make payment fail",
+        "Update payment fail": "Update payment fail",
+        "Delete payment fail": "Delete payment fail",
         // Confirm Messages
         "Are you sure want to": "Are you sure want to",
         "Do you want to delete this?":"Do you want to delete this?",

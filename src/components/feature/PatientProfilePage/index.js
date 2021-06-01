@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useCallback} from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 
@@ -23,6 +23,7 @@ import TabPanel from '../../common/TabPanel';
 import TransactionItem from './TransactionItem.js';
 import TreatmentMenu from '../../../layouts/TreatmentMenu';
 import TreatmentItem from "./TreatmentItem.js";
+import UpdatePaymentDialog from "./UpdatePaymentDialog";
 // utils
 import ConvertDateTimes from '../../../utils/datetimes/convertDateTimes';
 import PatientService from "../../../api/patient/patient.service";
@@ -53,6 +54,10 @@ const PatientProfilePage = ({ patientID }) => {
 
     const [treatments, setTreatments] = useState([]);
     const [transactions, setTransactions] = useState([]);
+
+    // Dialog
+    const [openUpdatePayDialog, setOpenUpdatePayDialog] = useState(false);
+    const [updatedTransactionIdx, setUpdatedTransactionIdx] = useState(0);
 
     const handleChangeTab = (event, newTab) => {
         setCurTab(newTab);
@@ -206,6 +211,34 @@ const PatientProfilePage = ({ patientID }) => {
       }
     };
 
+    // Update Payment
+    const handleOpenUpdatePayDialog = useCallback((index) => {
+      setOpenUpdatePayDialog(true);
+      setUpdatedTransactionIdx(index);
+    },[]);
+
+    const handleCloseUpdatePayDialog = useCallback(() => {
+      setOpenUpdatePayDialog(false);
+    },[]);
+
+    const handleUpdateTransaction = useCallback(async (transactionID, note) => {
+      try {
+        const result = await TransactionService.updatePatientPayment(transactionID, {
+          note: note
+        });
+        if (result.success) {
+          let newTransactions = [...transactions];
+          newTransactions[updatedTransactionIdx].note = note;
+          setTransactions(newTransactions);
+          handleCloseUpdatePayDialog();
+        } else {
+          toast.error(result.message);
+        }
+      } catch (err) {
+        toast.error(t(strings.updatePaymentErrMsg));
+      }
+    }, [transactions, updatedTransactionIdx]);
+
     return (
       <React.Fragment>
         <TreatmentMenu patientID={patientID} />
@@ -294,6 +327,7 @@ const PatientProfilePage = ({ patientID }) => {
                             <TransactionItem
                               key={index}
                               data={transaction}
+                              onUpdate={() => handleOpenUpdatePayDialog(index)}
                             />
                           )
                         })
@@ -426,6 +460,12 @@ const PatientProfilePage = ({ patientID }) => {
             open={medOpen}
             title={t(strings.medicalIssues)}
             selected={medicalIssues}
+          />
+          <UpdatePaymentDialog
+            open={openUpdatePayDialog}
+            transaction={transactions[updatedTransactionIdx]}
+            onClose={handleCloseUpdatePayDialog}
+            onUpdate={handleUpdateTransaction}
           />
         </Container>
       </React.Fragment>

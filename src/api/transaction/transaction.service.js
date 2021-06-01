@@ -29,6 +29,14 @@ class TransactionService {
         });
         return result;
     }
+    async updatePatientPayment(transactionID, body){
+        body = body || {};
+        const result = await httpPatch({
+            url: apiPath.transaction.transaction + "/" + transactionID,
+            body: body
+        });
+        return result;
+    }
 }
 
 export default new TransactionService();

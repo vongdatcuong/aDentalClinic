@@ -76,6 +76,7 @@ export default {
         "Change Password successfully": "Đổi mật khẩu thành công",
         // Success Messages Payment
         "Make payment successfully. Redirect to Patient Profile in": "Thực hiện thanh toán thành công. Về trang hồ sơ bệnh nhân trong",
+        "Update payment successfully": "Cập nhật thanh toán thành công",
         // Error Messages
         "Update Account Fail": "Cập nhật tài khoản thất bại",
         "You can't insert prescription if it don't have drug":"Không thể thêm đơn thuốc nếu không có thuốc",
@@ -159,6 +160,8 @@ export default {
         "Pay amount is required": "Số tiền thanh toán không được để trống",
         "Pay amount is not enough": "Số tiền thanh toán không đủ",
         "Make payment fail": "Thực hiện thanh toán thất bại",
+        "Update payment fail": "Cập nhật thanh toán thất bại",
+        "Delete payment fail": "Xóa thanh toán thất bại",
         // Confirm Messages
         "Are you sure want to": "Bạn có chắc muốn",
         "Do you want to delete this?":"Bạn có muốn xóa thông tin này không?",

@@ -199,6 +199,7 @@ const updateUserProfileSuccess = "Update Profile successfully";
 const changePwdSuccess = "Change Password successfully";
     // Success Messages Payment
 const makePaymentSuccess = "Make payment successfully. Redirect to Patient Profile in";
+const updatePaymentSuccess = "Update payment successfully";
     // Error Messages
 const errorNoDrug="You can't insert prescription if it don't have drug";
 const errorStartEndTime="Time is invalid";
@@ -277,6 +278,8 @@ const treatmentDateErrMsg = "Treatment date must be in the future";
 const payErrMsg = "Pay amount is required";
 const payNotEnoughErrMsg = "Pay amount is not enough";
 const makePaymentErrMsg = "Make payment fail";
+const updatePaymentErrMsg = "Update payment fail";
+const deletePaymentErrMsg = "Delete payment fail";
     // Confirm Messages
 const areYouSureWantTo = "Are you sure want to";
 const deleteConfirmMessage="Do you want to delete this?";
@@ -566,6 +569,7 @@ export default {
     changePwdSuccess,
     // Success Messages Payment
     makePaymentSuccess,
+    updatePaymentSuccess,
     // Error Messages
     errorNoDrug,
     errorStartEndTime,
@@ -641,6 +645,8 @@ export default {
     payErrMsg,
     payNotEnoughErrMsg,
     makePaymentErrMsg,
+    updatePaymentErrMsg,
+    deletePaymentErrMsg,
     // Confirm Messages
     areYouSureWantTo,
     deleteConfirmMessage,

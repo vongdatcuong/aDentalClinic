@@ -66,9 +66,6 @@ const AddTreatmentPage = ({ patientID }) => {
 
   const [payErrMsg, setPayErrMsg] = useState("");
 
-  // Ref
-  const payRef = useRef(null);
-  const noteRef = useRef(null);
   
   // fetch category
   useEffect(async () => {
@@ -208,7 +205,6 @@ const AddTreatmentPage = ({ patientID }) => {
                       fullWidth
                       type="number"
                       onBlur={handleOnPayChange}
-                      inputRef={payRef}
                       InputProps={
                         { 
                           inputProps: { 
@@ -238,7 +234,6 @@ const AddTreatmentPage = ({ patientID }) => {
                       multiline
                       rows={6}
                       onBlur={handleOnNoteChange}
-                      inputRef={noteRef}
                       InputLabelProps={{
                           shrink: true
                       }}

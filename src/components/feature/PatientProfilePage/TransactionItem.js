@@ -56,7 +56,8 @@ const styles = (theme) => ({
 const useStyles = makeStyles(styles);
 
 const TransactionItem = ({
-  data
+  data,
+  onUpdate
 }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
@@ -145,7 +146,7 @@ const TransactionItem = ({
           <Button size="small" color="secondary" variant="outlined">
             {t(strings.btnDelete)}
           </Button>
-          <Button size="small" color="primary" variant="contained">
+          <Button size="small" color="primary" variant="contained" onClick={onUpdate}>
             {t(strings.update)}
           </Button>
         </AccordionActions>
