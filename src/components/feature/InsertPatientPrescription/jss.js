@@ -322,7 +322,7 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     btnAddRecord: {
 
-        color: theme.primaryColor[0],
+        color: theme.materialPrimaryColor,
         fontWeight: "bold",
         textTransform: "none",
     },

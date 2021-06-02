@@ -55,9 +55,9 @@ const transition = {
   transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)",
 };
 
-const fontColor = "#000000";
+const fontColor = "#ffffff";
 const textColor = "#ffffff";
-const primaryColor = ["#EBB76B", "#CF9C51", "gold", "#ad9302"];
+const primaryColor = ["#0B0C49", "#4042E2", "#545580", "#0B0C49"];
 const secondaryColor = ["#dc004e", "#f50057", "#ff1065", "#ff2975"];
 const warningColor = ["#ff9800", "#ffa726", "#fb8c00", "#ffa21a"];
 const dangerColor = ["#f44336", "#ef5350", "#e53935", "#f55a4e"];
@@ -83,7 +83,7 @@ const hoverDarkColor = ["#551796", "#5e19a7", "#681cb8", "#711ec9"];
 const blackColor = "#000000";
 const whiteColor = "#ffffff";
 const circularProgressChart = "#8529e6";
-const coldColor = "#dde9ef";
+const coldColor = "#3E4074";
 const percussionColor = "#ccffcc";
 const palpationColor = "#ffd9b3";
 const heatColor = "#ffc2b3";
@@ -95,7 +95,7 @@ const tableAddIconColor = "#34a853";
 const scheduleMonthlyItemColor = "#8c8daf";
 const scheduleWeeklyItemColor = "#ba9187";
 const scheduleAutoItemColor = "#639f88";
-const pageBackgroundColor = "#16203B";
+const pageBackgroundColor = "#0D0424";
 const materialPrimaryColor = "#3f51b5";
 
 // Google map

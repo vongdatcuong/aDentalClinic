@@ -9,7 +9,7 @@ const styles = (theme) => ({
   headerContainer: {
     display: "flex",
     justifyContent: "space-between",
-    borderBottom: "solid " + theme.blackColor + " 0.05rem",
+    borderBottom: "solid " + theme.textColor + " 0.05rem",
   },
   bodyContainer: {
     paddingTop: theme.spacing(5),
@@ -40,7 +40,7 @@ const styles = (theme) => ({
     },
   },
   btnAddRecord: {
-    color: theme.primaryColor[0],
+    color: theme.materialPrimaryColor,
     fontWeight: "bold",
     textTransform: "none",
   },
@@ -57,6 +57,10 @@ const styles = (theme) => ({
   },
   selectImgPerPage: {
     marginLeft: theme.spacing(1),
+    color: theme.textColor,
+    "& .MuiSelect-root": {
+        color: theme.textColor,
+    }
   },
   noDataIcon: {
     textAlign: 'center',
