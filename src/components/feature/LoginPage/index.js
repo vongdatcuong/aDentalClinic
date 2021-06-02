@@ -58,7 +58,7 @@ const LoginPage = () => {
         } else {
             setIsLoadingPage(false);
         }
-    })
+    }, []);
     
 
     // States

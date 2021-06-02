@@ -90,7 +90,10 @@ const loginStyle = (theme) => ({
   },
   patientAgeGender: {
     width: "100%",
-    marginTop: theme.spacing(-4),
+    marginTop: theme.spacing(-2),
+    '& div': {
+      marginTop: theme.spacing(0.5)
+    }
   },
   btnEdit: {
     textTransform: "none",

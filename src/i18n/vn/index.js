@@ -191,6 +191,8 @@ export default {
         "Agree":"Đồng ý",
         "Info":"Info",
         "Expired date":"Ngày hết hạn",
+        "Total treatment fee": "Tổng tiền điều trị",
+        "Total paid treatment fee": "Tổng tiền điều trị đã thanh toán",
         // Treatment
         "back": "Trước",
         "next": "Sau",

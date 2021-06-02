@@ -192,6 +192,8 @@ export default {
         "Expired date":"Expired date",
         "Agree":"Agree",
         "Info":"Info",
+        "Total treatment fee": "Total treatment fee",
+        "Total paid treatment fee": "Total paid treatment fee",
         // Treatment
         "back": "back",
         "next": "next",

@@ -317,6 +317,8 @@ const addMoreDrug="Add more drug";
 const expired="Expired date";
 const agree="Agree";
 const info = "Info";
+const totalTreatmentFee = "Total treatment fee";
+const totalPaidTreatmentFee = "Total paid treatment fee";
 // Tooth chart page
 const overView = "Overview";
 const quickSelect = "Quickselect";
@@ -681,6 +683,8 @@ export default {
     expired,
     agree,
     info,
+    totalTreatmentFee,
+    totalPaidTreatmentFee,
     // Tooth chart page
     overView,
     quickSelect,

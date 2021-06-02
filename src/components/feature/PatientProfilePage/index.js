@@ -57,6 +57,8 @@ const PatientProfilePage = ({ patientID }) => {
     const [editMedicalIssues, setEditMedicalIssues] = useState(false);
     const [editOralHeath, setEditOralHeath] = useState(false);
     const [medOpen, setMedOpen] = useState(false);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [totalPaidAmount, setTotalPaidAmount] = useState(0);
 
     const [treatments, setTreatments] = useState([]);
     const [transactions, setTransactions] = useState([]);
@@ -97,6 +99,9 @@ const PatientProfilePage = ({ patientID }) => {
                 setPlaqueIndex(result.data.payload.plaque_index);
                 setBleedingIndex(result.data.payload.bleeding_index);
                 setHalitosis(result.data.payload.halitosis);
+
+                setTotalAmount(Number(result.data.payload.total_amount?.$numberDecimal));
+                setTotalPaidAmount(Number(result.data.payload.paid_amount?.$numberDecimal));
                 return true;
             }
             toast.error(result.message);
@@ -296,7 +301,12 @@ const PatientProfilePage = ({ patientID }) => {
                   {fullname}
                 </Typography>
                 <div className={classes.patientAgeGender}>
-                  {gender}, {age}y
+                  <div>{gender}, {age}y</div>
+                  <div>{t(strings.totalTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + totalAmount}</div>
+                  <div>{t(strings.totalPaidTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + totalPaidAmount}</div>
+                </div>
+                <div>
+                  
                 </div>
               </Grid>
               <Grid container className={classes.detailProfileContainer}>
