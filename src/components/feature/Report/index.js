@@ -591,7 +591,7 @@ const Report = () => {
             <Grid container className={classes.titleGrid}>
               <Grid item md={6} sm={12} xs={12}>
                 <Typography className={classes.title}  variant="h5" component="h5">
-                  {t(strings.report)}
+                  <span>{t(strings.report)}</span>
                 <CalendarTodayIcon className={classes.calendarIcon}/>
                   <div className={classes.inputFrom}>
                     <DayPickerInput
@@ -755,8 +755,8 @@ const Report = () => {
           {/* Dialogs */}
           <ExportDocumentDialog
               open={openExportDialog}
-              fromDate={applyFromDate}
-              toDate={applyToDate}
+              applyFromDate={applyFromDate}
+              applyToDate={applyToDate}
               onClose={handleCloseExportDialog}
               onExport={handleOnExport}
           />

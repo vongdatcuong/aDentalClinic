@@ -26,6 +26,7 @@ const apiStatus = {
     unauthorized: 401,
     notFound: 404,
     exception: 500,
+    refreshToken: 402
 }
 
 // Autocomplete

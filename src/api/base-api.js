@@ -56,7 +56,7 @@ const httpGet = async (requestModel) => {
         },
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
@@ -113,7 +113,7 @@ const httpPost = async (requestModel) => {
         body: JSON.stringify(requestModel.body),
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
@@ -170,7 +170,7 @@ const httpPut = async (requestModel) => {
         },
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
@@ -227,7 +227,7 @@ const httpPatch = async (requestModel) => {
         body: JSON.stringify(requestModel.body),
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
@@ -285,7 +285,7 @@ const httpDelete = async (requestModel) => {
         body: JSON.stringify(requestModel.body),
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();
@@ -342,7 +342,7 @@ const httpGetPdf = async (requestModel) => {
         },
       }
     );
-    if (response.status === figures.apiStatus.unauthorized) {
+    if (response.status === figures.apiStatus.refreshToken) {
       if (await AuthService.refreshToken()) {
         try {
           tokens = AuthService.getToken();

@@ -32,7 +32,9 @@ const reportStyle = (theme) => ({
         }
     },
     title: {
-        fontWeight: 600,
+        '& span': {
+            fontWeight: 600,
+        }
     },
     calendarIcon: {
         color: theme.primaryColor[0],

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback, useRef} from 'react';
 import { makeStyles, useTheme  } from "@material-ui/core/styles";
 import strings from '../../../configs/strings';
 import lists from '../../../configs/lists';
@@ -28,6 +28,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 // React-select
 import AsyncSelect from 'react-select/async';
 
+// React-day-picker
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { formatDate, parseDate } from 'react-day-picker/moment';
+
 // Icons
 
 // API
@@ -41,7 +45,7 @@ const useStyles = makeStyles((theme) => {
         paper: {
             width: theme.appointExportDialogWidth,
             maxWidth: '100%',
-            maxHeight: theme.appointExportDialogMaxHeight,
+            height: theme.appointExportDialogHeight,
             [theme.breakpoints.down('sm')]: {
                 width: theme.appointExportDialogWidthSm,
             },
@@ -62,7 +66,7 @@ const useStyles = makeStyles((theme) => {
             }
         },
         dialogContent: {
-
+            textAlign: 'center'
         },
         formMessageSuccess: {
             textAlign: "left",
@@ -81,12 +85,50 @@ const useStyles = makeStyles((theme) => {
         note: {
             fontSize: '0.9em',
             color: '#666666'
-        }
+        },
+        inputFrom: {
+            display: 'inline-block',
+            verticalAlgin: 'text-bottom',
+            marginLeft: theme.spacing(1),
+            marginBottom: theme.spacing(3),
+            '& input': {
+                border: `2px solid ${theme.hoverDarkColor[1]}`,
+                borderRadius: '5px',
+                padding: theme.spacing(1),
+                '&::placeholder': {
+                    color: theme.fontColor,
+                    opacity: 1,
+                },
+                [theme.breakpoints.down('xs')]: {
+                    width: '120px'
+                },
+                '&:hover': {
+                    cursor: 'text'
+                }
+            },
+        },
+        inputTo: {
+            '& input': {
+                border: `2px solid ${theme.hoverDarkColor[1]}`,
+                borderRadius: '5px',
+                padding: theme.spacing(1),
+                '&::placeholder': {
+                    color: theme.fontColor,
+                    opacity: 1,
+                },
+                [theme.breakpoints.down('xs')]: {
+                    width: '120px'
+                },
+                '&:hover': {
+                    cursor: 'text'
+                }
+            }
+        },
     }
 });
 
 const ExportDocumentDialog = ({
-  open, fromDate, toDate,
+  open, applyFromDate, applyToDate,
   onClose, onExport
 }) => {
   const classes = useStyles();
@@ -113,6 +155,13 @@ const ExportDocumentDialog = ({
   const [staff, setStaff] = useState({...noneOption});
   const [source, setSource] = useState({...noneOption});
 
+  const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+    const fromRef = useRef(null);
+    const toRef = useRef(null);
+
+    const dateModifiers = { start: fromDate, end: toDate };
+
   // Appointment Document Target
   const [targetType, setTargetType] = useState(0);  //0: all, 1: patient, 2: assistant, 3: provider, 4: staff (staff + provider), 5: source
 
@@ -121,8 +170,9 @@ const ExportDocumentDialog = ({
 
   // use effect
   useEffect(async () => {
-    
-  }, [fromDate, toDate])
+    setFromDate(applyFromDate);
+    setToDate(applyToDate);
+  }, [applyFromDate, applyToDate])
 
   const handleOnClose = () => {
     onClose();
@@ -399,6 +449,18 @@ const ExportDocumentDialog = ({
         }
     }
 
+    const handleFromChange = (from) => {
+        if (from && from != fromDate){
+          setFromDate(from);
+        }
+    }
+    
+      const handleToChange = (to) => {
+        if (to && to != toDate){
+          setToDate(to);
+        }
+    }
+
   return (
     <Paper className={classes.paper}>
       <Dialog
@@ -412,6 +474,46 @@ const ExportDocumentDialog = ({
       >
         <DialogTitle id="export-dialog-title" className={classes.dialogTitle}>{t(strings.select) + " " + t(strings.document)}</DialogTitle>
         <DialogContent className={classes.dialogContent}>
+            <div className={classes.inputFrom}>
+                <DayPickerInput
+                    ref={fromRef}
+                    value={fromDate}
+                    placeholder={t(strings.from)}
+                    format="LL"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    dayPickerProps={{
+                    selectedDays: [fromDate, { fromDate, toDate }],
+                    disabledDays: { after:  toDate},
+                    dateModifiers,
+                    month: toDate,
+                    toMonth: toDate,
+                    numberOfMonths: 1,
+                    onDayClick: () => toRef.current.input.focus(),
+                    }}
+                    onDayChange={handleFromChange}
+                />{' '}
+                    —{' '}
+                <span className={classes.inputTo}>
+                    <DayPickerInput
+                    ref={toRef}
+                    value={toDate}
+                    placeholder={t(strings.to)}
+                    format="LL"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    dayPickerProps={{
+                        selectedDays: [toDate, { fromDate, toDate }],
+                        disabledDays: { before: fromDate, after: new Date()},
+                        dateModifiers,
+                        month: fromDate,
+                        fromMonth: fromDate,
+                        numberOfMonths: 1,
+                    }}
+                    onDayChange={handleToChange}
+                    />
+                </span>
+            </div>
             <DialogContentText>
                 <FormControl component="fieldset" className={classes.radioBtnFormControl}>
                     <RadioGroup 

@@ -41,8 +41,10 @@ const scheduleAutoItemMinWidth = 150;
 const addScheduleMonthlyWidth = 600;
 const addScheduleMonthlyHeight = 500;
 const appointExportDialogWidth = "40%";
-const appointExportDialogWidthSm = "70%";
-const appointExportDialogMaxHeight = 300;
+const appointExportDialogWidthSm = "90%";
+const appointExportDialogHeight = 500;
+const appointUpdatePayDialogWidth = "40%";
+const appointUpdatePayDialogMaxHeight = 400;
 
 // Z-index
 const miniLeftSidebarZIndex = 999;
@@ -255,7 +257,9 @@ export default {
   addScheduleMonthlyHeight,
   appointExportDialogWidth,
   appointExportDialogWidthSm,
-  appointExportDialogMaxHeight,
+  appointExportDialogHeight,
+  appointUpdatePayDialogWidth,
+  appointUpdatePayDialogMaxHeight,
   // Z-index
   miniLeftSidebarZIndex,
   loadingZIndex,
