@@ -158,7 +158,7 @@ const AppointmentTab = ({
             handleOnSelectPatient({
                 value: appointRequest.patient,
                 label: appointRequest.first_name + " " + appointRequest.last_name,
-            });
+            }, null, true);
             noteRef.current.value = appointRequest.note;
             setNote(appointRequest.note);
         } else {
@@ -200,7 +200,7 @@ const AppointmentTab = ({
         noteRef.current.value = "";
     }, []);
 
-    const handleOnSelectPatient = useCallback(async (option) => {
+    const handleOnSelectPatient = useCallback(async (option, evt, isAppointReqSelectPatient) => {
         if (option.value == -1){
             handleOnNewPatient();
             return;
@@ -208,6 +208,9 @@ const AppointmentTab = ({
             return;
         }
         try {
+            if (appointRequest && !isAppointReqSelectPatient){
+                setSelectedAppointReqIdx(-1);
+            }
             dispatchLoading({ type: strings.setLoading, isLoading: true});
             const promises = [
                 api.httpGet({

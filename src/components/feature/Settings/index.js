@@ -88,13 +88,13 @@ const Settings = () => {
       setTabValue(newValue);
     };
 
-    const tabs = [t(strings.general), t(strings.account), t(strings.password), t(strings.termPolicy), t(strings.notifications), t(strings.location)];
+    const tabs = [t(strings.general), t(strings.account), t(strings.password), t(strings.termPolicy),/* t(strings.notifications),*/ t(strings.location)];
     const tablePanels = [
       <General/>,
       <Account/>,
       <Password/>,
       <TermPrivacy/>,
-      <Notifications/>,
+      /*<Notifications/>,*/
       <Location/>,
     ]
 

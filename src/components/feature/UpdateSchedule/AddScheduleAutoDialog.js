@@ -124,7 +124,7 @@ const AddScheduleAuto = ({
     })
 
     const data = {
-      start_date: new Date(),
+      start_date: ConvertDateTimes.formatDate(new Date(), strings.apiDateFormat),
       mode: lists.schedule.mode.auto,
       value: val
     }

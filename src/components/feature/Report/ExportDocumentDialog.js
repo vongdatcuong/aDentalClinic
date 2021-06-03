@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => {
             }
         },
         dialogContent: {
-            textAlign: 'center'
+            
         },
         formMessageSuccess: {
             textAlign: "left",
@@ -88,6 +88,8 @@ const useStyles = makeStyles((theme) => {
         },
         inputFrom: {
             display: 'inline-block',
+            width: '100%',
+            textAlign: 'center',
             verticalAlgin: 'text-bottom',
             marginLeft: theme.spacing(1),
             marginBottom: theme.spacing(3),

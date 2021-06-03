@@ -198,8 +198,8 @@ const AddScheduleMonthly = ({
     tempDate.sort((a, b) => a - b);
 
     const data = {
-      start_date: fromDate,
-      end_date: toDate,
+      start_date: ConvertDateTimes.formatDate(fromDate, strings.apiDateFormat),
+      end_date: toDate? ConvertDateTimes.formatDate(toDate, strings.apiDateFormat) : null,
       mode: lists.schedule.mode.monthly,
       value: tempDate.join(","),
     }

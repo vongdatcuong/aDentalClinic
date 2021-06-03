@@ -119,6 +119,7 @@ const AddTreatmentPage = ({ patientID }) => {
     if (isValid){
       setSubmitDisabled(true);
       try {
+        dispatchLoading({type: strings.setLoading, isLoading: true});
         const result = await TransactionService.addPatientPayment({
           ...transaction,
           paid_amount: pay || 0,
@@ -139,6 +140,8 @@ const AddTreatmentPage = ({ patientID }) => {
       } catch (err){
         toast.error(t(strings.makePaymentErrMsg));
           setSubmitDisabled(false);
+      } finally {
+        dispatchLoading({type: strings.setLoading, isLoading: false});
       }
     }
   }, [transaction, pay, note]);
@@ -158,7 +161,7 @@ const AddTreatmentPage = ({ patientID }) => {
                 <TableHead>
                   <TableRow>
                     <TableCell align="center" className={classes.titleColumn} width="5%">#</TableCell>
-                    <TableCell align="center" className={classes.titleColumn} width="10%">{t(strings.procedureCode)}</TableCell>
+                    <TableCell align="center" className={classes.titleColumn} width="10%">{t(strings.procedure)}</TableCell>
                     <TableCell align="center" className={classes.titleColumn} width="15%">{t(strings.date)}</TableCell>
                     <TableCell align="center" className={classes.titleColumn} width="45%">{t(strings.description)}</TableCell>
                     <TableCell align="center" className={classes.titleColumn} width="15%">{t(strings.fee)} ({t(strings.CURRENCY_PRE)})</TableCell>

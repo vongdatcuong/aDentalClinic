@@ -752,14 +752,16 @@ const Report = () => {
               <Footer/>
             </Container>
           </div>
-          {/* Dialogs */}
-          <ExportDocumentDialog
-              open={openExportDialog}
-              applyFromDate={applyFromDate}
-              applyToDate={applyToDate}
-              onClose={handleCloseExportDialog}
-              onExport={handleOnExport}
-          />
+          <div style={{display: 'none'}}>
+            {/* Dialogs */}
+            <ExportDocumentDialog
+                open={openExportDialog}
+                applyFromDate={applyFromDate}
+                applyToDate={applyToDate}
+                onClose={handleCloseExportDialog}
+                onExport={handleOnExport}
+            />
+          </div>
       </Container>
     )
 }
