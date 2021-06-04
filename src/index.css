@@ -1,10 +1,17 @@
+html {
+  height: 100% !important;
+}
 body {
   margin: 0;
+  height: 100% !important;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Roboto Segoe UI",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body div#root {
+  height: 100% !important;
 }
 
 code {
