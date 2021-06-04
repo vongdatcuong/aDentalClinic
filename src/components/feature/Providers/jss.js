@@ -7,6 +7,7 @@ const providerStyle = (theme) => ({
   },
 
   searchControl: {
+    color: theme.textColor,
     height: 40,
     width: "100%",
     "& .MuiOutlinedInput-input": {
@@ -55,6 +56,9 @@ const providerStyle = (theme) => ({
       maxWidth: "none",
       width: "99%",
     },
+  },
+  btnAddBox: {
+      color: "gray",
   },
 });
 

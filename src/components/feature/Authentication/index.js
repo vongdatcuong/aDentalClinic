@@ -136,7 +136,7 @@ const Authentication = () => {
                             </Select>
                         
                         <IconButton >
-                            <AddBox />            
+                            <AddBox className={classes.btnAddBox}/>             
 
                         </IconButton>
                     </Grid>

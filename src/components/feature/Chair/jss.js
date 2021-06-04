@@ -63,6 +63,9 @@ const chairStyle = (theme) => ({
         }
     },
     
+    btnAddBox: {
+        color: "gray",
+    },
 });
 
   

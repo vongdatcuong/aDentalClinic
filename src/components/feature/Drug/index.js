@@ -262,7 +262,7 @@ const Drug = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertDrug}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                                 <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                 <DeleteIcon />            

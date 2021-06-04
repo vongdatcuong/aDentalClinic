@@ -288,7 +288,7 @@ const PatientPrescriptionPage = ({patientID}) => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertPrescription}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                                 <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                     <DeleteIcon />            

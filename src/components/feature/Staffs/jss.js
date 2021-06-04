@@ -61,6 +61,9 @@ const staffStyle = (theme) => ({
             width:'99%',
         }
     },
+    btnAddBox: {
+        color: "gray",
+    },
 });
   
 export default staffStyle;  

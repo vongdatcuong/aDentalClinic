@@ -118,7 +118,7 @@ const Portal = () => {
 
                         </IconButton>
                         <IconButton >
-                            <AddBox />            
+                            <AddBox className={classes.btnAddBox}/>             
 
                         </IconButton>
                     </Grid>        

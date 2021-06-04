@@ -253,7 +253,7 @@ const PatientRecallPage = ({patientID}) => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertPatientRecall}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                             </div>
                             :

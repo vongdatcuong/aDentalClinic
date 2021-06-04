@@ -209,7 +209,7 @@ const Procedure = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertProcedure}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>            
                                 </IconButton>
                             </div>
                             :
