@@ -589,62 +589,58 @@ const Report = () => {
 
           <div className={classes.reportWrapper} style={{visibility: !isLoadingPage? 'visible' : 'hidden'}}>
             <Grid container className={classes.titleGrid}>
-              <Grid item md={6} sm={12} xs={12}>
-                <Typography className={classes.title}  variant="h5" component="h5">
-                  <span>{t(strings.report)}</span>
+              <Typography className={classes.title}  variant="h5" component="h5">
+                <span>{t(strings.report)}</span>
                 <CalendarTodayIcon className={classes.calendarIcon}/>
-                  <div className={classes.inputFrom}>
+                <div className={classes.inputFrom}>
+                  <DayPickerInput
+                    ref={fromRef}
+                    value={fromDate}
+                    placeholder={t(strings.from)}
+                    format="LL"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    dayPickerProps={{
+                      selectedDays: [fromDate, { fromDate, toDate }],
+                      disabledDays: { after:  toDate},
+                      dateModifiers,
+                      month: toDate,
+                      toMonth: toDate,
+                      numberOfMonths: 1,
+                      onDayClick: () => toRef.current.input.focus(),
+                    }}
+                    onDayChange={handleFromChange}
+                  />{' '}
+                  —{' '}
+                  <span className={classes.inputTo}>
                     <DayPickerInput
-                      ref={fromRef}
-                      value={fromDate}
-                      placeholder={t(strings.from)}
+                      ref={toRef}
+                      value={toDate}
+                      placeholder={t(strings.to)}
                       format="LL"
                       formatDate={formatDate}
                       parseDate={parseDate}
                       dayPickerProps={{
-                        selectedDays: [fromDate, { fromDate, toDate }],
-                        disabledDays: { after:  toDate},
+                        selectedDays: [toDate, { fromDate, toDate }],
+                        disabledDays: { before: fromDate, after: new Date() },
                         dateModifiers,
-                        month: toDate,
-                        toMonth: toDate,
+                        month: fromDate,
+                        fromMonth: fromDate,
                         numberOfMonths: 1,
-                        onDayClick: () => toRef.current.input.focus(),
                       }}
-                      onDayChange={handleFromChange}
-                    />{' '}
-                    —{' '}
-                    <span className={classes.inputTo}>
-                      <DayPickerInput
-                        ref={toRef}
-                        value={toDate}
-                        placeholder={t(strings.to)}
-                        format="LL"
-                        formatDate={formatDate}
-                        parseDate={parseDate}
-                        dayPickerProps={{
-                          selectedDays: [toDate, { fromDate, toDate }],
-                          disabledDays: { before: fromDate, after: new Date() },
-                          dateModifiers,
-                          month: fromDate,
-                          fromMonth: fromDate,
-                          numberOfMonths: 1,
-                        }}
-                        onDayChange={handleToChange}
-                      />
-                    </span>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    size="small"
-                    className={classes.applyBtn}
-                    onClick={handleLoadStatistics}
-                  >
-                    {t(strings.apply)}
-                  </Button>
-                </Typography>
-              </Grid>
-              <Grid item md={6} sm={12} xs={12}>
+                      onDayChange={handleToChange}
+                    />
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  variant="contained"
+                  size="small"
+                  className={classes.applyBtn}
+                  onClick={handleLoadStatistics}
+                >
+                  {t(strings.apply)}
+                </Button>
                 <div className={classes.actionWrapper}>
                   <Tooltip title={t(strings.viewAppointDocument)} aria-label="view-appointment-document">
                     <IconButton color="primary" aria-label="appointment-pdf" onClick={handleOpenExportDialog}>
@@ -652,7 +648,7 @@ const Report = () => {
                     </IconButton>
                   </Tooltip>
                 </div>
-              </Grid>
+              </Typography>
             </Grid>
             <Container className={classes.container}>
               {/* Card Report */}

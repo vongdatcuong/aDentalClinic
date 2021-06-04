@@ -32,8 +32,12 @@ const reportStyle = (theme) => ({
         }
     },
     title: {
-        '& span': {
+        color: theme.blackColor,
+        '& > span': {
             fontWeight: 600,
+            [theme.breakpoints.down('sm')]: {
+                display: 'block'
+            },
         }
     },
     calendarIcon: {
@@ -96,8 +100,11 @@ const reportStyle = (theme) => ({
     },
     actionWrapper: {
         '& .MuiButtonBase-root': {
-            fontSize: '1.2em'
-        }
+            fontSize: '.8em'
+        },
+        [theme.breakpoints.up('md')]: {
+            marginLeft: theme.spacing(4)
+        },
     },
     cardReport: {
         marginTop: theme.spacing(9),
