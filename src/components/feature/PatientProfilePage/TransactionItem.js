@@ -142,14 +142,14 @@ const TransactionItem = ({
             </div>
         </AccordionDetails>
         <Divider />
-        <AccordionActions>
+        {!data.is_delete ? <AccordionActions>
           <Button size="small" color="secondary" variant="outlined" onClick={onDelete}>
             {t(strings.btnDelete)}
           </Button>
           <Button size="small" color="primary" variant="contained" onClick={onUpdate}>
             {t(strings.update)}
           </Button>
-        </AccordionActions>
+        </AccordionActions> : null}
       </Accordion>
     </div>
   );
