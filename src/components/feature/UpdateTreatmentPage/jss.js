@@ -8,6 +8,9 @@ const styles = (theme) => ({
         marginLeft: "auto",
         marginRight: "auto",
         paddingBottom: 0,
+        "& .MuiTypography-root": {
+            color: theme.textColor,
+        },
     },
   },
   pageContainer: {
@@ -58,10 +61,53 @@ const styles = (theme) => ({
   stepContent: {
     //   marginLeft: "auto",
     //   marginRight: "auto",
+    "& $fieldset": {
+        borderColor: theme.textColor + "!important",
+    },
+    "& .MuiOutlinedInput-root": {
+        color: theme.textColor,
+    },
+    "& .MuiFormLabel-root": {
+        color: theme.textColor,
+    },
+    "& .MuiSelect-root": {
+        "& .MuiSvgIcon-root": {
+            color: theme.textColor,
+        },
+    },
+    "& $label": {
+        color: theme.textColor,
+    },
+    "& .css-yk16xz-control": {
+        color: theme.textColor,
+        backgroundColor: theme.pageBackgroundColor,
+    },
+    "& .css-1uccc91-singleValue": {
+        color: theme.textColor,
+    },
+    "& .css-9g7j0m-menu": {
+        backgroundColor: theme.pageBackgroundColor,
+    },
+    "& .css-1pahdxg-control": {
+        backgroundColor: theme.pageBackgroundColor,
+    }
   },
   stepContainer: {
       marginLeft: "auto",
       marginRight: "auto",
+      "& .MuiButton-label": {
+            color: theme.textColor,
+      },
+      "& .Mui-disabled": {
+          "& .MuiButton-label": {
+              color: theme.inputDisabledColor
+          }
+      },
+      "& .MuiButton-containedPrimary": {
+        "& .MuiButton-label": {
+              color: theme.whiteColor,
+        },
+      }
   },
   stepButtons: {
       position: "fixed",
@@ -69,6 +115,19 @@ const styles = (theme) => ({
       top: 0,
       marginTop: theme.spacing(4),
       marginRight: theme.spacing(5),
+      "& .MuiButton-label": {
+            color: theme.textColor,
+      },
+      "& .Mui-disabled": {
+          "& .MuiButton-label": {
+              color: theme.inputDisabledColor
+          }
+      },
+      "& .MuiButton-containedPrimary": {
+        "& .MuiButton-label": {
+              color: theme.whiteColor,
+        },
+      }
   },
   btnQuickSelect: {
     display: "grid",
@@ -120,6 +179,7 @@ const styles = (theme) => ({
   },
   teethIcon: {
       fontSize: "4rem",
+      color: theme.textColor,
   },
   coverIconTop: {
       height: "2rem",
