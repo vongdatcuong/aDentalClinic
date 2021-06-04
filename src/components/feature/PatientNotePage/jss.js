@@ -14,6 +14,8 @@ const styles = (theme) => ({
   noteContainer: {
     padding: theme.spacing(10),
     paddingTop: theme.spacing(5),
+    maxHeight: "90vh", 
+    overflow: "auto",
   },
   btnAddRecord: {
     color: theme.materialPrimaryColor,

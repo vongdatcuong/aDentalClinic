@@ -375,6 +375,7 @@ const PatientProfilePage = ({ patientID }) => {
                               {t(strings.add)}
                           </Button>
                       </div>
+                      <div className={classes.noteContainer}>
                       {transactions.map((transaction, index) => {
                           return (
                             <TransactionItem
@@ -386,6 +387,7 @@ const PatientProfilePage = ({ patientID }) => {
                           )
                         })
                       }
+                      </div>
                     </TabPanel>
                   </Grid>
                 </Grid>

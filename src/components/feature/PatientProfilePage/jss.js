@@ -118,7 +118,6 @@ const loginStyle = (theme) => ({
       display:'flex',
       justifyContent:'flex-end',
       marginRight:'30px',
-      marginTop:'30px',
   },
   btnAddRecord: {
 
@@ -126,6 +125,11 @@ const loginStyle = (theme) => ({
       fontWeight: "bold",
       textTransform: "none",
   },
+  noteContainer: {
+    maxHeight: theme.spacing(57), 
+    overflow: "auto",
+    paddingRight: theme.spacing(2), 
+  }
 });
 
 export default loginStyle;
