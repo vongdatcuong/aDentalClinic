@@ -13,6 +13,7 @@ const patientPrescriptionPageStyle = (theme) => ({
         }
     },
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -30,7 +31,10 @@ const patientPrescriptionPageStyle = (theme) => ({
         },
         '& .MuiIconButton-root':{
             padding:'8px',
-        }
+        },
+        // "&. MuiInputBase-root":{
+        //     color: theme.textColor,
+        // }
     },
     iconButton:{
         cursor:'pointer',

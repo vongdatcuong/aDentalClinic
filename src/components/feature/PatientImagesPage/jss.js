@@ -24,6 +24,7 @@ const styles = (theme) => ({
         position: "absolute",
         right: "12vw",
         top: "13vh",
+        color: theme.blackColor,
         "@media (max-width: 1024px)": {
           right: "25vw",
           top: "7vh",

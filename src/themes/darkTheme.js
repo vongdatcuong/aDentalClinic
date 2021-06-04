@@ -91,6 +91,7 @@ const electricityColor = "#ffffcc";
 
 const tableInsertLinkIconColor = "#bb001b";
 const tableAddIconColor = "#34a853";
+const tableBackgroundColor = "#0B0C49";
 
 const scheduleMonthlyItemColor = "#8c8daf";
 const scheduleWeeklyItemColor = "#ba9187";
@@ -287,6 +288,7 @@ export default {
   hoverDarkColor,
   tableInsertLinkIconColor,
   tableAddIconColor,
+  tableBackgroundColor,
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,

@@ -93,6 +93,7 @@ const electricityColor = "#ffffcc";
 
 const tableInsertLinkIconColor = "#bb001b";
 const tableAddIconColor = "#34a853";
+const tableBackgroundColor = "#ffffff";
 
 // Google map
 const mapMinWidth = 500;
@@ -290,6 +291,7 @@ export default {
   hoverDarkColor,
   tableInsertLinkIconColor,
   tableAddIconColor,
+  tableBackgroundColor,
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,
