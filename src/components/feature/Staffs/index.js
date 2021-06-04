@@ -224,7 +224,7 @@ const Staffs = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertPerson}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                             </div>
                             :

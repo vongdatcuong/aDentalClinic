@@ -262,7 +262,7 @@ const Schedule = () => {
                                             <MenuItem value={true}>{t(strings.edit)}</MenuItem>
                                         </Select>
                                         <IconButton style={{visibility: 'hidden'}}>
-                                            <AddBox />            
+                                            <AddBox className={classes.btnAddBox}/>             
                                         </IconButton>
                                     </div>
                                 }

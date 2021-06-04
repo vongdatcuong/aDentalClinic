@@ -9,14 +9,14 @@ const styles = (theme) => ({
   headerContainer: {
     display: "flex",
     justifyContent: "space-between",
-    borderBottom: "solid " + theme.blackColor + " 0.05rem",
+    borderBottom: "solid " + theme.textColor + " 0.05rem",
   },
   bodyContainer: {
     padding: theme.spacing(10),
     paddingTop: theme.spacing(5),
   },
   btnAddRecord: {
-    color: theme.primaryColor[0],
+    color: theme.materialPrimaryColor,
     fontWeight: "bold",
     textTransform: "none",
   },

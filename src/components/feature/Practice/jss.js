@@ -7,7 +7,7 @@ const practiceStyle=(theme)=>({
         
     },
     content:{
-        // background:theme.whiteColor,
+        // background:theme.pageBackgroundColor,
         marginTop:"30px",
         display:'flex',
         flexDirection:'column',
@@ -201,11 +201,49 @@ const practiceStyle=(theme)=>({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
+        },
     },
     information:{
-        backgroundColor:theme.whiteColor,
+        backgroundColor:theme.pageBackgroundColor,
+        color: theme.textColor,
         justifyContent:'center',
         alignItems:'center',
+        "& .MuiInputBase-root": {
+            color: theme.textColor,
+        },
+        "& $fieldset": {
+            borderColor: theme.textColor + "!important",
+        },
+        "& .MuiOutlinedInput-root": {
+            color: theme.textColor,
+        },
+        "& .MuiFormLabel-root": {
+            color: theme.textColor,
+        },
+        "& .MuiCheckbox-colorPrimary.Mui-disabled": {
+            color: theme.textColor,
+        },
+        "& .MuiTypography-root": {
+            color: theme.textColor,
+        },
+        "& .MuiSelect-root": {
+            color: theme.textColor,
+        },
+        "& .MuiInputBase-root": {
+            borderColor: theme.textColor,
+        },
+        "& .MuiInput-input": {
+            color: theme.textColor,
+        },
+        "& .MuiIconButton-label": {
+            color: theme.textColor,
+        }
     },
     logoContainer:{
         justifyContent:'center',

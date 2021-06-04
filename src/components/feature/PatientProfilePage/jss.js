@@ -28,6 +28,7 @@ const loginStyle = (theme) => ({
     }
   },
   inputOralHeath: {
+      color: theme.textColor,
       marginLeft: theme.spacing(0.2),
       maxWidth: "3rem",
       textAlign: "center",
@@ -50,6 +51,12 @@ const loginStyle = (theme) => ({
       "& .MuiTabs-scroller.MuiTabs-fixed": {
         borderBottom: "solid gray 0.01rem",
       },
+      "& .MuiTab-root": {
+        color: theme.textColor,
+      },
+      "& .MuiTab-root.Mui-selected": {
+        color: theme.materialPrimaryColor,
+      }
     },
   },
   medicalIssuesContainer: {
@@ -58,11 +65,11 @@ const loginStyle = (theme) => ({
       minWidth: "18vw",
     },
     "& .MuiOutlinedInput-inputMultiline": {
-
+        color: theme.textColor,
     },
     "& .Mui-disabled": {
         "& $textarea": {
-            color: theme.blackColor,
+            color: theme.textColor,
         },
         "& $fieldset": {
             border: "0px",
@@ -115,7 +122,7 @@ const loginStyle = (theme) => ({
   },
   btnAddRecord: {
 
-      color: theme.primaryColor[0],
+      color: theme.materialPrimaryColor,
       fontWeight: "bold",
       textTransform: "none",
   },

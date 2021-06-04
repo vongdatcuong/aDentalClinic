@@ -7,6 +7,7 @@ const patientReferralStyle = (theme) => ({
     },
 
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -54,6 +55,13 @@ const patientReferralStyle = (theme) => ({
         // marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
     dialog:{

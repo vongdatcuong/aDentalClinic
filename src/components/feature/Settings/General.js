@@ -44,16 +44,21 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiListItemText-root': {
         marginTop: 0,
+        '& .MuiTypography-root': {
+            color: theme.textColor,
+        },
         '& .MuiListItemText-primary': {
-            fontWeight: 600
+            fontWeight: 600,
         },
         '& .MuiButtonBase-root.MuiIconButton-root': {
             marginLeft: theme.spacing(2),
-            paddingTop: theme.spacing(0.3)
+            paddingTop: theme.spacing(0.3),
+            color: theme.textColor,
         }
     },
     changeIconBtn: {
         
+    color: theme.textColor,
         
     }
   }

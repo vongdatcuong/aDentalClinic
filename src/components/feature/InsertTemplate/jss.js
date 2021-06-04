@@ -19,6 +19,7 @@ const insertTemplateStyle = (theme) => ({
     },
     
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
@@ -43,7 +44,7 @@ const insertTemplateStyle = (theme) => ({
         fontWeight:'bold',
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         // marginTop:"30px",
         display:'flex',
         flexDirection:'column',

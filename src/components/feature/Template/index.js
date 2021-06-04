@@ -384,7 +384,7 @@ const Template = () => {
 
                             </Select>
                             <IconButton onClick={handleChangeInsertTemplate}>
-                                <AddBox />            
+                                <AddBox className={classes.btnAddBox}/>             
                             </IconButton>
                             <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true ? 'red':'gray'}}>
                                 <DeleteIcon />      

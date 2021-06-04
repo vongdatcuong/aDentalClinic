@@ -7,6 +7,7 @@ const drugStyle = (theme) => ({
     },
 
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -23,6 +24,7 @@ const drugStyle = (theme) => ({
         },
         '& .MuiIconButton-root':{
             padding:'8px',
+            color: "gray",
         }
     },
     iconButton:{
@@ -53,6 +55,13 @@ const drugStyle = (theme) => ({
     status:{
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
     dialog:{

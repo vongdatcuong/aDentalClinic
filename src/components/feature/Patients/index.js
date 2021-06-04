@@ -376,7 +376,7 @@ const Patients = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertPerson}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                             </div>
                             :

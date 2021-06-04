@@ -34,6 +34,7 @@ const style = (theme) => ({
         borderRadius:'15px'
     },
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
@@ -58,14 +59,14 @@ const style = (theme) => ({
         fontWeight:'bold',
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
+        color: theme.textColor,
         // marginTop:"30px",
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center',
         paddingBottom:theme.spacing(10),
-
     },
     
     logo:{
@@ -289,6 +290,41 @@ const style = (theme) => ({
         display:'flex',
         justifyContent:'center',
     },
+    editInfo: {
+        "& $fieldset": {
+            borderColor: theme.textColor + "!important",
+        },
+        "& .MuiOutlinedInput-root": {
+            color: theme.textColor,
+        },
+        "& .MuiFormLabel-root": {
+            color: theme.textColor,
+        },
+    },
+    disabledEdit: {
+        "& $fieldset": {
+            borderColor: theme.inputDisabledColor + "!important",
+        },
+        "& .MuiOutlinedInput-root": {
+            color: theme.inputDisabledColor,
+        },
+        "& .MuiFormLabel-root": {
+            color: theme.inputDisabledColor,
+        },
+        "& .MuiCheckbox-colorPrimary.Mui-disabled": {
+            color: theme.inputDisabledColor,
+        },
+        "& .MuiTypography-root": {
+            color: theme.inputDisabledColor,
+        },
+        "& .MuiSelect-root": {
+            color: theme.inputDisabledColor,
+        },
+        "& .MuiInputBase-root": {
+            borderColor: theme.inputDisabledColor,
+        }
+
+    },
     checkbox:{
         marginLeft:'30px',
 
@@ -320,6 +356,13 @@ const style = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
             paddingLeft:'10px',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
 

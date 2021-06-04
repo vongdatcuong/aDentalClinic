@@ -214,7 +214,7 @@ const Chairs = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertChair}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                             </div>
                             :

@@ -8,8 +8,10 @@ const tableStyle = (theme) => ({
     table:{
         // borderRadius:'10px',
         boxShadow:`3px 3px 3px ${theme.grayColor[0]}`,
-        
-        
+        backgroundColor: theme.tableBackgroundColor,
+        "& .MuiTableCell-root": {
+            color: theme.textColor,
+        }
     },
     footer:{
         marginLeft:"300px",
@@ -19,7 +21,7 @@ const tableStyle = (theme) => ({
         
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         marginTop:'30px',
     },
     tableCell: {

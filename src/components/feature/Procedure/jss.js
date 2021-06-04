@@ -7,6 +7,7 @@ const procedureStyle = (theme) => ({
     },
 
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -22,6 +23,9 @@ const procedureStyle = (theme) => ({
             marginRight:'2vw',
 
         }
+    },
+    btnAddBox: {
+        color: "gray",
     },
     iconButton:{
         cursor:'pointer',
@@ -49,6 +53,10 @@ const procedureStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
+        color: theme.textColor,
+        "& .MuiSelect-icon": {
+            color: theme.textColor,
+        },
         marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',

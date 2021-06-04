@@ -19,6 +19,7 @@ const updatePersonStyle = (theme) => ({
     },
     
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
@@ -43,7 +44,7 @@ const updatePersonStyle = (theme) => ({
         fontWeight:'bold',
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         // marginTop:"30px",
         display:'flex',
         flexDirection:'column',
@@ -358,6 +359,13 @@ const updatePersonStyle = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
             paddingLeft:'10px',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
 });

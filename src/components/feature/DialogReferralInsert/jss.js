@@ -17,6 +17,7 @@ const dialogReferralInsert = (theme) => ({
     },
     
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
@@ -41,7 +42,7 @@ const dialogReferralInsert = (theme) => ({
         fontWeight:'bold',
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         // marginTop:"30px",
         display:'flex',
         flexDirection:'column',
@@ -369,6 +370,13 @@ const dialogReferralInsert = (theme) => ({
         },
         '& .MuiInputBase-input':{
             marginLeft:'10px',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
         
     },

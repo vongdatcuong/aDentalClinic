@@ -13,6 +13,8 @@ const patientPrescriptionPageStyle = (theme) => ({
         }
     },
     searchControl:{
+        color: theme.textColor,
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -30,7 +32,8 @@ const patientPrescriptionPageStyle = (theme) => ({
         },
         '& .MuiIconButton-root':{
             padding:'8px',
-        }
+            color: "gray",
+        },
     },
     iconButton:{
         cursor:'pointer',
@@ -58,9 +61,13 @@ const patientPrescriptionPageStyle = (theme) => ({
         marginRight:'15px',
     },
     status:{
+        color: theme.textColor,
         // marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
     dialog:{

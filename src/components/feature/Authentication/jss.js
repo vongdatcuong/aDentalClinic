@@ -7,6 +7,7 @@ const authenticationStyle = (theme) => ({
     },
 
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -41,6 +42,13 @@ const authenticationStyle = (theme) => ({
         marginRight:'10px',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     }
 });

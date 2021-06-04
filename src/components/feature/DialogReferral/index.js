@@ -336,7 +336,7 @@ const DialogReferral = (props) => {
 
                                         </Select>
                                         <IconButton onClick={handleChangeInsertPatietReferral}>
-                                            <AddBox />            
+                                            <AddBox className={classes.btnAddBox}/>             
                                         </IconButton>
                                         <IconButton onClick={handleChangeIsDelete}>
                                             <DeleteIcon />            

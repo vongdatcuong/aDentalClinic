@@ -9,7 +9,7 @@ const styles = (theme) => ({
   headerContainer: {
     display: "flex",
     justifyContent: "space-between",
-    borderBottom: "solid " + theme.blackColor + " 0.05rem",
+    borderBottom: "solid " + theme.textColor + " 0.05rem",
   },
   bodyContainer: {
     padding: theme.spacing(1),
@@ -61,6 +61,16 @@ const styles = (theme) => ({
     padding: "5px",
     flexDirection: "row",
     paddingTop: "5px",
+    color: theme.textColor,
+    "$ .MuiInputBase-root": {
+        color: theme.textColor,
+    },
+    "& .MuiInputLabel-root": {
+        color: theme.textColor,
+    },
+    "& .MuiInputBase-input": {
+        color: theme.textColor,
+    },
   },
   box_no_cursor: {
     background: "#fff",

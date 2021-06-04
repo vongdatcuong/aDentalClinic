@@ -11,6 +11,7 @@ const scheduleStyle = (theme) => ({
         width: '99%'
     },
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:'100%',
         '& .MuiOutlinedInput-input': {
@@ -47,6 +48,13 @@ const scheduleStyle = (theme) => ({
         marginRight:'1vw',
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
+        },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         },
     },
     goBack:{

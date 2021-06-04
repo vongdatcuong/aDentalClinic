@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import clsx from 'clsx';
 // @material-ui/core Component
 import Container from "@material-ui/core/Container";
 import {
@@ -446,7 +446,7 @@ const PatientInfoPage = ({ patientID }) => {
       <Container className={classes.container}>
         {/* <PopupChat></PopupChat> */}
         <Grid container></Grid>
-        <div className={classes.containerContent}>
+        
           <div className={classes.content}>
             <label className={classes.inputAvatar}>
               <input
@@ -468,7 +468,7 @@ const PatientInfoPage = ({ patientID }) => {
               )}
             </label>
 
-            <Grid container className={classes.input}>
+            <Grid container className={clsx(classes.input, editInfo ? classes.editInfo : classes.disabledEdit)}>
               <Grid item xs={6} className={classes.leftContent}>
                 <FormControl className={classes.item}>
                   <InputLabel shrink>
@@ -739,7 +739,7 @@ const PatientInfoPage = ({ patientID }) => {
               )}
             </div>
           </div>
-        </div>
+ 
       </Container>
     </React.Fragment>
   );

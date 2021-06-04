@@ -272,7 +272,7 @@ const Referral = () => {
 
                                 </Select>
                                 <IconButton onClick={handleChangeInsertReferralSource}>
-                                    <AddBox />            
+                                    <AddBox className={classes.btnAddBox}/>             
                                 </IconButton>
                                 <IconButton onClick={handleChangeIsDelete} style={{color: isDelete===true? 'red':'gray'}}>
                                     <DeleteIcon />            

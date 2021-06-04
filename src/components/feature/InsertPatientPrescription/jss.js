@@ -19,6 +19,7 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
@@ -43,7 +44,7 @@ const insertPatientPrescriptionStyle = (theme) => ({
         fontWeight:'bold',
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         // marginTop:"30px",
         display:'flex',
         flexDirection:'column',
@@ -280,6 +281,13 @@ const insertPatientPrescriptionStyle = (theme) => ({
         },
         '& .MuiInputLabel-formControl':{
             marginLeft:'10px',
+            color: theme.textColor,
+        },
+        '& .MuiSelect-root':{
+            color: theme.textColor,
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         }
     },
     itemSmall:{
@@ -322,7 +330,7 @@ const insertPatientPrescriptionStyle = (theme) => ({
     },
     btnAddRecord: {
 
-        color: theme.primaryColor[0],
+        color: theme.materialPrimaryColor,
         fontWeight: "bold",
         textTransform: "none",
     },
