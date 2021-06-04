@@ -21,7 +21,7 @@ const tableStyle = (theme) => ({
         
     },
     content:{
-        background:theme.whiteColor,
+        background:theme.pageBackgroundColor,
         marginTop:'30px',
     },
     tableCell: {
