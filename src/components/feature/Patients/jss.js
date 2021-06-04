@@ -151,6 +151,9 @@ const patientStyle = (theme) => ({
             maxWidth:'none',
             width:'99%',
         }
+    },    
+    btnAddBox: {
+        color: "gray",
     },
 });
 

@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  legend: {
+    color: theme.inputDisabledColor,
   }
 }));
 
@@ -37,7 +40,7 @@ const Notifications = () => {
   };
   return (
       <FormControl component="fieldset">
-        <FormLabel component="legend">{t(strings.notifications)}</FormLabel>
+        <FormLabel className={classes.legend} component="legend">{t(strings.notifications)}</FormLabel>
         <FormGroup>
           <FormControlLabel
             className={classes.formControl}

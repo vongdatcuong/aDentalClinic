@@ -61,6 +61,18 @@ const useStyles = makeStyles((theme) => ({
     color: theme.dangerColor[0],
     marginBottom: theme.spacing(1)
   },
+  form: {
+      
+    "& $fieldset": {
+        borderColor: theme.inputDisabledColor + "!important",
+    },
+    "& .MuiOutlinedInput-root": {
+        color: theme.textColor,
+    },
+    "& .MuiFormLabel-root": {
+        color: theme.inputDisabledColor,
+    },
+  }
 }));
 
 const Password = () => {

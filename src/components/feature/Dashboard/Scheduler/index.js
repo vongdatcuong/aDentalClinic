@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(1),
     '& .fc-timegrid-col-events': {
       margin: 0
-    }
+    },
+    color: theme.textColor,
+    backgroundColor: theme.pageBackgroundColor,
   }
 }));
 
