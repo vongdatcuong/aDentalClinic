@@ -371,6 +371,13 @@ const dialogReferralInsert = (theme) => ({
         '& .MuiInputBase-input':{
             marginLeft:'10px',
         },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
+        },
         
     },
 

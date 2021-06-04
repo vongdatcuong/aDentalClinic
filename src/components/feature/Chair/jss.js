@@ -54,6 +54,13 @@ const chairStyle = (theme) => ({
         '& .MuiSelect-select':{
             backgroundColor:'inherit',
         },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
+        },
     },
     containerTable:{
         marginLeft:'10px',

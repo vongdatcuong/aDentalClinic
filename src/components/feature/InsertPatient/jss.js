@@ -309,6 +309,13 @@ const insertPersonStyle = (theme) => ({
             backgroundColor:'inherit',
             paddingLeft:'10px',
         },
+        color: theme.textColor,
+        '& .MuiSelect-select':{
+            backgroundColor:'inherit',
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
+        },
     },
 });
 
