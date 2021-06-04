@@ -17,6 +17,7 @@ const dialogReferralInsert = (theme) => ({
     },
     
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {

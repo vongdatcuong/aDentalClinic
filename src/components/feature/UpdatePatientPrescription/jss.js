@@ -21,6 +21,7 @@ const updatePatientPrescriptionStyle = (theme) => ({
         marginTop:'5px',
     },
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {

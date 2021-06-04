@@ -34,6 +34,7 @@ const style = (theme) => ({
         borderRadius:'15px'
     },
     searchControl:{
+        color: theme.textColor,
         height:40,
         width:200,
         '& .MuiOutlinedInput-input': {
