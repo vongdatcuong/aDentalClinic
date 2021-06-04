@@ -281,6 +281,13 @@ const insertPatientPrescriptionStyle = (theme) => ({
         },
         '& .MuiInputLabel-formControl':{
             marginLeft:'10px',
+            color: theme.textColor,
+        },
+        '& .MuiSelect-root':{
+            color: theme.textColor,
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
         }
     },
     itemSmall:{

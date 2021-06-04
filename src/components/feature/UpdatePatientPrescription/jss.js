@@ -52,6 +52,15 @@ const updatePatientPrescriptionStyle = (theme) => ({
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center',
+        '& .MuiInputLabel-formControl':{
+            color: theme.textColor,
+        },
+        '& .MuiSelect-root':{
+            color: theme.textColor,
+        },
+        '& .MuiSelect-icon':{
+            color: theme.textColor,
+        }
 
     },
     
