@@ -2,7 +2,6 @@ import React, {useState, useContext} from "react";
 import {
   useHistory
 } from "react-router-dom";
-import clsx from "clsx";
 import { useTranslation } from 'react-i18next';
 import strings from '../../configs/strings';
 // Routes
@@ -37,6 +36,8 @@ import { socketStore } from '../../contexts/socket-context';
 
 // API
 import AuthService from '../../api/authentication/auth.service';
+
+
 
 const useStyles = makeStyles(styles);
 const LeftSidebar = (props) => {
@@ -187,7 +188,7 @@ const LeftSidebar = (props) => {
                   className={classes.drawer}
               >
                 <CustomAvatar
-                    link="https://www.creative-tim.com?ref=mdr-sidebar"
+                    link={path.settingsPath}
                     src="https://www.w3schools.com/w3images/avatar2.png"
                     user={user}
                   />
@@ -208,7 +209,7 @@ const LeftSidebar = (props) => {
                   className={classes.drawer}
               >
                   <CustomAvatar
-                    link="https://www.creative-tim.com?ref=mdr-sidebar"
+                    link={path.settingsPath}
                     src="https://www.w3schools.com/w3images/avatar2.png"
                     user={user}
                   />

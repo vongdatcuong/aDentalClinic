@@ -16,8 +16,7 @@ const CustomAvatar = ({link, src, user, classes}) => {
     return (
         <div className={inClasses.avatarWrapper}>
             <a
-                href={link}
-                target="_blank">
+                href={link}>
                 <Avatar alt={user.first_name + " " + user.last_name} src={src} className={inClasses.avatarLarge}></Avatar>
                 <div className={inClasses.avatarText}>{user.first_name}</div>
             </a>
