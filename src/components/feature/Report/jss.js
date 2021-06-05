@@ -99,6 +99,7 @@ const reportStyle = (theme) => ({
         },
     },
     actionWrapper: {
+        display: 'inline-block',
         '& .MuiButtonBase-root': {
             fontSize: '.8em'
         },
