@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { Tabs, Tab, TextField, IconButton, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 // Component
 import PopupChat from '../../common/Messenger/PopupChat';
@@ -211,6 +212,9 @@ const PatientProfilePage = ({ patientID }) => {
             note: transaction.note || "",
             treatment_list: transaction.treatment_list,
             is_delete: transaction.is_delete,
+            mode: transaction.mode,
+            status: transaction.status,
+            qr_code: transaction.qr_code,
           }))
           setTransactions(newTransactions);
           return true;
@@ -369,22 +373,29 @@ const PatientProfilePage = ({ patientID }) => {
                     </TabPanel>
                     <TabPanel value={curTab} index={1}>
                       {transactions.length > 0 ? "" : t(strings.noTransactionsPending)}
+                      <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+                        <div className={classes.containerAddRecord}>
+                          <Button simple className={classes.btnAddRecord} onClick={() => {fetchTransactions(); getPatientProfile();}}>
+                              <RefreshIcon/> {t(strings.refresh)}
+                          </Button>
+                      </div>
                       <div className={classes.containerAddRecord}>
                           <Button simple className={classes.btnAddRecord} onClick={() => history.push(path.addPaymentPath.replace(':patientID', patientID))}>
                               <AddCircleOutlineIcon></AddCircleOutlineIcon>{" "}
                               {t(strings.add)}
                           </Button>
                       </div>
+                      </div>
                       <div className={classes.noteContainer}>
                       {transactions.map((transaction, index) => {
                           return (
                             <TransactionItem
-                              key={index}
+                              key={transaction._id + transaction.status + transaction.is_delete}
                               data={transaction}
                               onUpdate={() => handleOpenUpdatePayDialog(index)}
                               onDelete={() => handleOpenDeletePayDialog(index)}
                             />
-                          )
+                          );
                         })
                       }
                       </div>

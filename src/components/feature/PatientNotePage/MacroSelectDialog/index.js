@@ -18,14 +18,14 @@ import { toast } from "react-toastify";
 import strings from "../../../../configs/strings";
 import TemplateService from "../../../../api/template/template.service";
 
-export default function MacroSelectDialog({ onClose, open, title, currentContent }) {
+export default function MacroSelectDialog({ onClose, open, title, currentContent, mode }) {
   const [data, setData] = useState([]);
   const [value, setValue] = useState(currentContent);
   const { t, i18n } = useTranslation();
   const radioGroupRef = React.useRef(null);
   const onLoad = async () => {
     try {
-      const result = await TemplateService.getProgressNoteTemplate();
+      const result = mode == "TREATMENT" ? await TemplateService.getTreatmentNoteTemplate() : await TemplateService.getProgressNoteTemplate();
       if (result.success) {
         setData(result.payload);
         return true;

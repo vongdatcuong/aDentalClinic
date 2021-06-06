@@ -15,7 +15,7 @@ import moment from "moment";
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { FaTeethOpen } from "react-icons/fa";
+import { FaScroll, FaTeethOpen } from "react-icons/fa";
 
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
@@ -26,6 +26,8 @@ import {
   MenuItem,
   FormHelperText,
   TextField,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
 import Grow from "@material-ui/core/Grow";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -70,6 +72,7 @@ import { loadingStore } from "../../../contexts/loading-context";
 
 // Utils
 import ConvertDateTimes from "../../../utils/datetimes/convertDateTimes";
+import MacroSelectDialog from "../PatientNotePage/MacroSelectDialog";
 
 const ColorlibConnector = withStyles(style.colorlibConnector)(StepConnector);
 
@@ -145,6 +148,7 @@ const UpdateTreatmentPage = ({ patientID, treatmentID }) => {
   const [toothNotes, setToothNotes] = React.useState([]);
   const [selectedTooth_Raw, setSelectedTooth_Raw] = React.useState([]); // các răng đã chọn - tổng hợp - json
   const [selectedTooth_Display, setSelectedTooth_Display] = React.useState(""); // parse chuỗi json ở trên để hiện thị với user
+  const [openMacro, setOpenMacro] = React.useState(false);
 
   const handleChangeNote = (e) => {
     setTreatmentNote(e.target.value);
@@ -281,7 +285,13 @@ const handleSelectToothQuickselect = (toothID, isAutoQuickSelectTooth) => {
     }
     return isValid;
   }
-
+  const handleMacroClose = (value) => {
+    setOpenMacro(false);
+    if (value == null) {
+      return;
+    }
+    setTreatmentNote(value);
+  };
   async function handleSubmit() {
     toast.info(t(strings.loading));
     const submitUpdateTreatment = async () => {
@@ -522,6 +532,13 @@ const handleSelectToothQuickselect = (toothID, isAutoQuickSelectTooth) => {
               xs={12}
               className={classes.selectProcedure}
             >
+              <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+                <Tooltip title="Macro" aria-label="Macro">
+                  <IconButton size="small" onClick={() => setOpenMacro(true)}>
+                    <FaScroll />
+                  </IconButton>
+                </Tooltip>
+              </div>
               <TextField
                 value={treatmentNote}
                 multiline
@@ -667,6 +684,13 @@ const handleSelectToothQuickselect = (toothID, isAutoQuickSelectTooth) => {
             )}
           </div>
         </Grid>
+        <MacroSelectDialog
+          onClose={handleMacroClose}
+          open={openMacro}
+          title={t(strings.templateTreatment)}
+          currentContent={treatmentNote}
+          mode="TREATMENT"
+        />
       </Container>
     </React.Fragment>
   );

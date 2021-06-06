@@ -85,6 +85,7 @@ const noteMacro={
     noteMacro:'/note-macro',
     medical_alert: "/medical-alert",
     progress_note: "/progress-note",
+    treatment: "/treatment",
 }
 //Images
 const image = {

@@ -464,6 +464,11 @@ export default {
         "Change Money": "Tiền thối",
         "Total amount": "Tổng tiền",
         "Currently there are no payments pending": "Hiện tại không có thanh toán nào nào",
-        "Transaction Date": "Ngày thanh toán"
+        "Transaction Date": "Ngày thanh toán",
+        "Cash": "Tiền mặt",
+        "MoMo": "MoMo",
+        "Refresh": "Làm mới",
+        "Created By":"Tạo bởi",
+        "PENDING": "ĐỢI THANH TOÁN",
     }
 }

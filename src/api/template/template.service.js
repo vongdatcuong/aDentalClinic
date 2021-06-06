@@ -59,6 +59,20 @@ class TemplateService{
             };
         }
     }
+    async getTreatmentNoteTemplate(){
+        try{   
+            const result = await httpGet({
+                url: apiPath.noteMacro.noteMacro + apiPath.noteMacro.treatment,
+            });
+            return result;            
+        }
+        catch(error){
+            return {
+                success: false,
+                data: null
+            };
+        }
+    }
 
     async insert(data)
     {

@@ -465,6 +465,11 @@ export default {
         "Change Money": "Change",
         "Total amount": "Total amount",
         "Currently there are no payments pending": "Currently there are no payments pending",
-        "Transaction Date": "Transaction Date"
+        "Transaction Date": "Transaction Date",
+        "Cash": "Cash",
+        "MoMo": "MoMo",
+        "Refresh": "Refresh",
+        "Created By":"Created By",
+        "PENDING": "PENDING",
     }
 }

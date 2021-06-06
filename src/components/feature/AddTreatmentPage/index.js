@@ -15,7 +15,7 @@ import moment from "moment";
 import { useTranslation, Trans } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { FaTeethOpen } from "react-icons/fa";
+import { FaScroll, FaTeethOpen } from "react-icons/fa";
 
 // Component
 import PopupChat from "../../common/Messenger/PopupChat";
@@ -26,6 +26,8 @@ import {
   MenuItem,
   FormHelperText,
   TextField,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
 import Grow from "@material-ui/core/Grow";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -70,6 +72,7 @@ import { loadingStore } from "../../../contexts/loading-context";
 
 // Utils
 import ConvertDateTimes from "../../../utils/datetimes/convertDateTimes";
+import MacroSelectDialog from "../PatientNotePage/MacroSelectDialog";
 
 const ColorlibConnector = withStyles(style.colorlibConnector)(StepConnector);
 
@@ -166,7 +169,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const [selectedDistal, setSelectedDistal] = React.useState(false);
   const [selectedTop, setSelectedTop] = React.useState(false);
   const [selectedRoot, setSelectedRoot] = React.useState(false);
-
+  const [openMacro, setOpenMacro] = React.useState(false);
   // fetch category
   useEffect(async () => {
     try {
@@ -968,6 +971,13 @@ const AddTreatmentPage = ({ patientID }) => {
               xs={12}
               className={classes.selectProcedure}
             >
+              <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+                <Tooltip title="Macro" aria-label="Macro">
+                  <IconButton size="small" onClick={() => setOpenMacro(true)}>
+                    <FaScroll />
+                  </IconButton>
+                </Tooltip>
+              </div>
               <TextField
                 value={treatmentNote}
                 multiline
@@ -1107,7 +1117,13 @@ const AddTreatmentPage = ({ patientID }) => {
         return "Unknown step";
     }
   }
-
+  const handleMacroClose = (value) => {
+    setOpenMacro(false);
+    if (value == null) {
+      return;
+    }
+    setTreatmentNote(value);
+  };
   return (
     <React.Fragment>
       <TreatmentMenu patientID={patientID} />
@@ -1179,6 +1195,13 @@ const AddTreatmentPage = ({ patientID }) => {
             )}
           </div>
         </Grid>
+        <MacroSelectDialog
+          onClose={handleMacroClose}
+          open={openMacro}
+          title={t(strings.templateTreatment)}
+          currentContent={treatmentNote}
+          mode="TREATMENT"
+        />
       </Container>
     </React.Fragment>
   );
