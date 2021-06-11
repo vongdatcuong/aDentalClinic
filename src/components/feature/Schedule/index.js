@@ -60,7 +60,7 @@ const Schedule = () => {
         t(strings.index),
         t(strings.id),
         t(strings.provider),
-        t(strings.note),
+        t(strings.schedule),
     ];
 
     const days = lists.date.dates.map((day) => t(day));
