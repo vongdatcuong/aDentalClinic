@@ -101,6 +101,7 @@ const scheduleAutoItemColor = "#639f88";
 const pageBackgroundColor = "#0D0424";
 const materialPrimaryColor = "#3f51b5";
 const inputDisabledColor = "#3f51b5";
+const highlightColor = "#EBB76B";
 
 // Google map
 const mapMinWidth = 500;
@@ -295,6 +296,7 @@ export default {
   tableAddIconColor,
   tableBackgroundColor,
   inputDisabledColor,
+  highlightColor,
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,

@@ -95,6 +95,7 @@ const tableInsertLinkIconColor = "#bb001b";
 const tableAddIconColor = "#34a853";
 const tableBackgroundColor = "#ffffff";
 const inputDisabledColor = "#999";
+const highlightColor = "#4042E2";
 
 // Google map
 const mapMinWidth = 500;
@@ -294,6 +295,7 @@ export default {
   tableAddIconColor,
   tableBackgroundColor,
   inputDisabledColor,
+  highlightColor,
   scheduleMonthlyItemColor,
   scheduleWeeklyItemColor,
   scheduleAutoItemColor,

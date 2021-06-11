@@ -156,7 +156,7 @@ const toothStyle = (theme) => ({
     selectedFullTooth: {
         "& .surfaceFull": {
             display: "unset",
-            background: "red",
+            background: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -168,7 +168,7 @@ const toothStyle = (theme) => ({
     facial: {
         "& .surfaceFacial": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -180,7 +180,7 @@ const toothStyle = (theme) => ({
     lingual: {
         "& .surfaceLingual": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -192,7 +192,7 @@ const toothStyle = (theme) => ({
     rightMesial: {
         "& .surfaceMesial": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -204,7 +204,7 @@ const toothStyle = (theme) => ({
     rightDistal: {
         "& .surfaceDistal": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -216,7 +216,7 @@ const toothStyle = (theme) => ({
     leftMesial: {
         "& .surfaceMesial": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -228,7 +228,7 @@ const toothStyle = (theme) => ({
     leftDistal: {
         "& .surfaceDistal": {
             display: "unset",
-            background: "red",
+            stroke: theme.highlightColor,fill: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -240,7 +240,7 @@ const toothStyle = (theme) => ({
     top: {
         "& .surfaceTop": {
             display: "unset",
-            background: "red",
+            background: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
@@ -252,7 +252,7 @@ const toothStyle = (theme) => ({
     root: {
         "& .surfaceRoot": {
             display: "unset",
-            background: "red",
+            background: theme.highlightColor,
             zIndex: theme.selectedToothZIndex-1,
             position: "absolute",
             borderRadius: theme.spacing(3),
