@@ -4,7 +4,7 @@ import ThemeType from '../utils/types/Theme';
 // Languages
 const languages = {
     "en": strings.english,
-    "vn": strings.vietnamese
+    "vi": strings.vietnamese
 };
 
 // Theme
