@@ -8,7 +8,7 @@ const loginStyle = (theme) => ({
   root: {
     background: theme.pageBackgroundColor,
     height: "100vh",
-    color: theme.primaryColor[0],
+    color: theme.highlightColor,
   },
   loginContainer: {
     height: "65vh",
@@ -43,7 +43,7 @@ const loginStyle = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: theme.primaryColor[0],
+    backgroundColor: theme.highlightColor,
     height: "3rem",
     fontWeight: "bold",
   },
@@ -64,13 +64,14 @@ const loginStyle = (theme) => ({
   },
   link : {
     fontWeight: "bold",
+    color: theme.highlightColor + "!important",
   },
   inputContainer: {
     marginTop: "1rem",
     marginBottom: "1rem",
     '& div': {
         '& label': {
-            color: theme.primaryColor[3],
+            color: theme.highlightColor + "!important",
             fontWeight: "bold",
         }
     }
@@ -79,15 +80,15 @@ const loginStyle = (theme) => ({
     height: "3rem",
     '& div': {
         '& input': {
-            // color: theme.primaryColor[0] + "!important",
+            // color: theme.highlightColor + "!important",
             fontWeight: "bold",
             color: theme.textColor,
         },
         '&::before': {
-            borderBottomColor: theme.primaryColor[0]
+            borderBottomColor: theme.highlightColor
         },
         '&::after': {
-            borderBottomColor: theme.primaryColor[0]
+            borderBottomColor: theme.highlightColor
         }
     }
   },
@@ -96,7 +97,7 @@ const loginStyle = (theme) => ({
   },
   btnToggleVisibility: {
     fontWeight: "bold",
-    color: theme.primaryColor[0],
+    color: theme.highlightColor,
   },
   loginIcons: {
     fontSize: "2rem"
