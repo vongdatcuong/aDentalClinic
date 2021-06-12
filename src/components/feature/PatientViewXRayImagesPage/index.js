@@ -15,12 +15,7 @@ import Button from "@material-ui/core/Button";
 import PopupChat from "../../common/Messenger/PopupChat";
 import TreatmentMenu from "../../../layouts/TreatmentMenu";
 import { toast } from "react-toastify";
-import {
-  FaPencilAlt,
-  FaSave,
-  FaTimes,
-  FaTrashAlt,
-} from "react-icons/fa";
+import { FaPencilAlt, FaSave, FaTimes, FaTrashAlt } from "react-icons/fa";
 import ImageFrame from "./components/ImageFrame";
 import MountService from "../../../api/xray/xray.service";
 import MountTemplateService from "../../../api/xray/xray.template.service";
@@ -127,6 +122,12 @@ const PatientViewXRayImagesPage = ({ patientID, MouthID, mode }) => {
       const rs = onSetData(data);
       if (rs) {
         toast.success(t(strings.insertSuccess));
+        history.push(
+          "/patient/" +
+            data.payload.patient +
+            "/xRayImages/view/" +
+            data.payload._id
+        );
       }
     } catch (err) {
       toast.error(t(strings.insertFail));
