@@ -8,8 +8,10 @@ import { getI18n } from "react-i18next";
 // Toast
 import { toast } from "react-toastify";
 
-const BASE_URL_API = "http://localhost:4000/api";
-const SOCKET_URL = "http://localhost:4000/";
+const REACT_APP_SERVER = process.env.REACT_APP_SERVER;
+
+const BASE_URL_API = REACT_APP_SERVER + "/api";
+const SOCKET_URL = REACT_APP_SERVER + "/";
 const secretKey = "The way of Reactjs";
 
 /** REQUEST MODEL
