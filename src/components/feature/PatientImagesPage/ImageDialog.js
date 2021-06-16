@@ -148,7 +148,9 @@ const ImageDialog = ({ open, onClose, patient, onReload, mode, image }) => {
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title">
-        {t(strings.addMoreImage)}
+        {dialogMode === true
+          ? t(strings.addMoreImage)
+          : t(strings.edit)}
       </DialogTitle>
       <DialogContent>
         <TextField
@@ -196,7 +198,12 @@ const ImageDialog = ({ open, onClose, patient, onReload, mode, image }) => {
         <Button onClick={handleCancel} color="secondary" variant="outlined">
           {t(strings.cancel)}
         </Button>
-        <Button onClick={handleSave} color="primary" variant="contained" type="submit">
+        <Button
+          onClick={handleSave}
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           {t(strings.save)}
         </Button>
       </DialogActions>
