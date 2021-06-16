@@ -137,6 +137,7 @@ export default {
         "Delete Appointment Request fail": "Xóa yêu cầu hẹn thất bại",
         "Staff is required": "Nhân viên không được để trống",
         "Patient is required": "Bệnh nhân không được để trống",
+        "Patient has no default provider": "Bệnh nhân không có bác sĩ chỉ định sẵn",
         // Error Messages Settings
         "Change language fail": "Thay đổi ngôn ngữ thất bại",
         "Change theme fail": "Thay đổi chủ đề thất bại",

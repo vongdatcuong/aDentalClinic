@@ -137,6 +137,7 @@ export default {
         "Provider not working in the near future": "Dentist not working in the near future",
         "Delete Appointment Request fail": "Delete Appointment Request fail",
         "Patient is required": "Patient is required",
+        "Patient has no default provider": "Patient has no default provider",
         // Error Messages Settings
         "Change language fail": "Change language fail",
         "Change theme fail": "Change theme fail",

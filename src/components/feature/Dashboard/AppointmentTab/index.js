@@ -631,6 +631,9 @@ const AppointmentTab = ({
     // Next available date
     const handleGetNextAvailableDate = useCallback(async () => {
         if (!patient?.provider){
+            if (patient?.value){
+                toast.error(t(strings.defaultProviderErrMsg));
+            }
             return;
         }
         try {

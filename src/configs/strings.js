@@ -254,6 +254,7 @@ const nextAvaiDateErrMsg = "Get Next Available Date fail";
 const providerNotWorkingErrMsg = "Provider not working in the near future";
 const deleteAppointReqErrMsg = "Delete Appointment Request fail";
 const patientErrMsg = "Patient is required";
+const defaultProviderErrMsg = "Patient has no default provider";
     // Error Messages Settings
 const changeLanguageErrMsg = "Change language fail";
 const changeThemeErrMsg = "Change theme fail";
@@ -628,6 +629,7 @@ export default {
   changePwdErrMsg,
   nextAvaiDateErrMsg,
   providerNotWorkingErrMsg,
+  defaultProviderErrMsg,
   // Settings Error Messages
   changeLanguageErrMsg,
   changeThemeErrMsg,
