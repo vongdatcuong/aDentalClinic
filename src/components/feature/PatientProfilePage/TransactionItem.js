@@ -168,7 +168,7 @@ const TransactionItem = ({ data, onUpdate, onDelete }) => {
               {t(strings.paid)}: ${data.paid_amount}
             </div>
             <div>
-              {t(strings.changeMoney)}: ${data.return_amount}
+              {t(strings.changeMoney)}: ${(Number.isNaN(data.return_amount)? 0 : Math.round((data.return_amount + Number.EPSILON) * 100) / 100)}
             </div>
             <div>
               {t(strings.type)}:{" "}

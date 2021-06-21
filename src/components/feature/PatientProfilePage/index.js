@@ -306,8 +306,8 @@ const PatientProfilePage = ({ patientID }) => {
                 </Typography>
                 <div className={classes.patientAgeGender}>
                   <div>{gender}, {age}y</div>
-                  <div>{t(strings.totalTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + totalAmount}</div>
-                  <div>{t(strings.totalPaidTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + totalPaidAmount}</div>
+                  <div>{t(strings.totalTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + (Number.isNaN(totalAmount)? 0 : Math.round((totalAmount + Number.EPSILON) * 100) / 100)}</div>
+                  <div>{t(strings.totalPaidTreatmentFee) + ": " + t(strings.CURRENCY_PRE) + (Number.isNaN(totalPaidAmount)? 0 : Math.round((totalPaidAmount + Number.EPSILON) * 100) / 100)}</div>
                 </div>
                 <div>
                   
