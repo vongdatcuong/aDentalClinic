@@ -103,7 +103,7 @@ const AddTreatmentPage = ({ patientID }) => {
   const handleOnPayChange = (evt) => {
     let newPay = Number(evt.target.value);
     setPay(newPay);
-    let newChangeAmount = newPay - (transaction.amount || 0);
+    let newChangeAmount = Math.round((newPay - (transaction.amount || 0) + Number.EPSILON) * 100) / 100;
     setChangeAmount(newChangeAmount > 0 ? newChangeAmount : 0);
   };
 
